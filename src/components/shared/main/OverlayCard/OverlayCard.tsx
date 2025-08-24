@@ -5,7 +5,7 @@ interface ReusableCardProps {
   title?: string;
   description?: string;
   icon?: ReactNode;
-  backgroundImage?: any;
+  backgroundImage?: string;
   className?: string;
   onClick?: () => void;
 }

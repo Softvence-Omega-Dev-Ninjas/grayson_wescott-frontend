@@ -1,6 +1,6 @@
 interface ISectionHeaderProps {
-  title: String;
-  description?: String;
+  title: string;
+  description?: string;
 }
 const SectionHeader = ({ title, description }: ISectionHeaderProps) => {
   return (
