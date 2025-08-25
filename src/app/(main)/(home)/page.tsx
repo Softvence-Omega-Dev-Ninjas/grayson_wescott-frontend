@@ -1,6 +1,6 @@
-
-import HeroBanner from "@/components/shared/main/reusable-banner/HeroBanner"
-import img from "@/assets/home/banner.png"
+import HeroBanner from "@/components/shared/main/reusable-banner/HeroBanner";
+import img from "@/assets/home/banner.png";
+import PathToPeak from "./_components/PathToPeak/PathToPeak";
 
 const HomePage = () => {
   return (
@@ -10,11 +10,12 @@ const HomePage = () => {
         subtitle="High-performance programming and coaching for men who demand results."
         button1="Start Your Engine"
         button2="Apply Now"
-       
-        img={img.src}   // ✅ pass img.src, not img
+        img={img.src}
       />
-    </div>
-  )
-}
 
-export default HomePage
+      <PathToPeak />
+    </div>
+  );
+};
+
+export default HomePage;
