@@ -1,69 +1,50 @@
-// import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-// import Container from "@/components/shared/main/Container/Container";
-
-// const PathToPeak = () => {
-//   return (
-//     <Container>
-//       PathToPeak
-//       <div className="container mx-auto space-y-4 sm:space-y-6 px-2">
-//         {/* First row - 3 cards on md+, 1 card per row on small devices */}
-//         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-//           <BaseCard />
-
-//           <BaseCard />
-
-//           <BaseCard />
-//         </div>
-
-//         {/* Second row - 2 cards centered on md+, 1 card per row on small devices */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:max-w-xl lg:max-w-5xl md:mx-auto">
-//           <BaseCard />
-
-//           <BaseCard />
-//         </div>
-//       </div>
-//     </Container>
-//   );
-// };
-
-// export default PathToPeak;
-
 import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
 import Container from "@/components/shared/main/Container/Container";
-import signup from "@/assets/home/path_to_peak/signup.svg";
+import signupIcon from "@/assets/home/path_to_peak/signup.svg";
+import trophieIcon from "@/assets/home/path_to_peak/trophieIcon.svg";
+import assesmentIcon from "@/assets/home/path_to_peak/assesmentIcon.svg";
+import gymIcon from "@/assets/home/path_to_peak/gymIcon.svg";
+import adaptiveIcon from "@/assets/home/path_to_peak/adaptiveIcon.svg";
 import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import { Button } from "@/components/ui/button";
 
 const PathToPeak = () => {
-  const firstRow = [
-    { title: "Sign Up", description: "Choose your system and get instant access", img: signup },
-    { id: 2, title: "Customize", description: "Adjust settings to fit your workflow", img: signup },
-    { id: 3, title: "Launch", description: "Get started with your optimized system", img: signup },
-  ];
-
-  const secondRow = [
-    { id: 4, title: "Track", description: "Monitor your progress over time", img: signup },
-    { id: 5, title: "Achieve", description: "Reach your peak performance goals", img: signup },
+  const data = [
+    { id: 1, title: "Sign Up", description: "Choose your system and get instant access", img: signupIcon.src },
+    { id: 2, title: "Assessment", description: "We measure your baseline to build your plan", img: assesmentIcon.src },
+    { id: 3, title: "Program Launch", description: "Begin your personalized, periodized training", img: gymIcon.src },
+    { id: 4, title: "Adaptive Oversight", description: "Your coach adjusts in real-time for maximum results", img: adaptiveIcon.src },
+    { id: 5, title: "Peak Performance", description: "Hit your goals with measurable, lasting outcomes", img: trophieIcon.src },
   ];
 
   return (
-    <Container>
-      <SectionHeader title={"Path To Peak"} description={"Get personalized guidance to accelerate your progress and achieve breakthrough results "} />
-      <div className="container mx-auto space-y-4 sm:space-y-6 px-2">
-        {/* First row - 3 cards on md+, 1 card per row on small devices */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          {firstRow.map((item, idx) => (
-            <BaseCard key={idx} item={item} />
-          ))}
+    <div className="bg-black py-20">
+      <Container>
+        <SectionHeader
+          title={"Path To Peak"}
+          description={"Get personalized guidance to accelerate your progress and achieve breakthrough results "}
+        />
+        <div className="container mx-auto space-y-4 sm:space-y-6 px-2">
+          {/* First row  */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            {data.slice(0, 3).map((item, idx) => (
+              <BaseCard key={idx} item={item} />
+            ))}
+          </div>
+
+          {/* Second row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:max-w-xl lg:max-w-5xl md:mx-auto">
+            {data.slice(3, 5).map((item, idx) => (
+              <BaseCard key={idx} item={item} />
+            ))}
+          </div>
         </div>
 
-        {/* Second row - 2 cards centered on md+, 1 card per row on small devices */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:max-w-xl lg:max-w-5xl md:mx-auto">
-          {secondRow.map((item, idx) => (
-            <BaseCard key={idx} item={item} />
-          ))}
+        <div className="flex items-center justify-center mt-14">
+          <Button className="bg-[#B9BDC6] uppercase text-black px-6 py-4 rounded-none hover:bg-[#a5a8ae] cursor-pointer">Start Your Build</Button>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 
