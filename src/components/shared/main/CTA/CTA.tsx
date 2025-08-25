@@ -1,0 +1,59 @@
+"use client"
+import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import { usePathname } from "next/navigation"
+import img from '../../../../assets/footerimg.png'
+
+ 
+ interface CTATYPE {
+    title?:string,
+    description?:string,
+    img:string,
+    btn1:string,
+    btn2?:string,
+    onclick?:()=>void
+
+ }
+function CTA({title,description,btn1,btn2,img}:CTATYPE) {
+
+    const path = usePathname()
+    console.log(path)
+
+
+  return (
+    <div className="grid md:grid-cols-2 bg-[#1A1A1A] relative"
+    >
+        <div className="container mx-auto flex flex-col  justify-center items-center gap-4 bg-[#1A1A1A] py-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-white text-center">{title}</h1>
+            <h2 className="text-xl   text-white/30">{description}</h2>
+            
+            <div className="flex flex-col justify-center       md:flex-row  gap-4 mt-4">
+             <Button className="bg-[#B9BDC6]/80   text-black text-lg px-6 py-4 cursor-pointer hover:text-white  ">
+            {btn1}
+            </Button>
+          {path == "/programs" || path== "/adonis-protocol" ? (
+             <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-4 cursor-pointer hover:text-white  ">
+            {btn2}
+            </Button>
+          ):("")}
+            </div>
+          
+
+        </div>
+        <div className="relative w-full h-[60vh] flex items-center"
+      style={{
+        backgroundImage: `url(${img})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}>
+            
+        </div>
+
+      {/* <div className="absolute">
+       <Image alt="okay" src={img} width={200} height={80}/>
+      </div> */}
+    </div>
+  )
+}
+
+export default CTA
