@@ -1,16 +1,13 @@
-import HeroBanner from "@/components/shared/main/reusable-banner/HeroBanner";
+import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
 import img from "@/assets/home/banner.png";
 import PathToPeak from "./_components/PathToPeak/PathToPeak";
 import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
- 
+
 import CarbonEngines from "./_components/CarbonEngines/CarbonEngines";
 import InsideTheProtocol from "./_components/InsideTheProtocol/InsideTheProtocol";
 import EliteProtocalModule from "./_components/EliteProtocalModule/EliteProtocalModule";
 import TestimonialSectio from "../TestimonialSection/TestimonialSectio";
 import CtaSection from "./_components/CTASection/CtaSection";
- 
- 
- 
 
 const HomePage = () => {
   return (
@@ -24,9 +21,10 @@ const HomePage = () => {
       />
 
       <div className=" bg-[#151519] flex justify-center items-center">
-        <SectionHeader  title="Strength Isn’t a Trend. It’s a Foundation"
-      description="Carbon Engines is the architecture of high performance science-rooted, field-tested, no fluff"
-      />
+        <SectionHeader
+          title="Strength Isn’t a Trend. It’s a Foundation"
+          description="Carbon Engines is the architecture of high performance science-rooted, field-tested, no fluff"
+        />
       </div>
 
       {/* <OverlayCard 
@@ -35,30 +33,27 @@ const HomePage = () => {
       backgroundImage=""
       icon/> */}
       <div className="md:my-12">
-        <CarbonEngines/>
+        <CarbonEngines />
       </div>
       <div className="md:my-12">
         <PathToPeak />
       </div>
 
-     <div className="md:py-12">
-       <InsideTheProtocol/>
-     </div>
+      <div className="md:py-12">
+        <InsideTheProtocol />
+      </div>
 
-     <div className="md:py-12">
-        <TestimonialSectio/>
-     </div>
-    
+      <div className="md:py-12">
+        <TestimonialSectio />
+      </div>
 
-     <div className="md:py-12">
-      <EliteProtocalModule/>
-     </div>
+      <div className="md:py-12">
+        <EliteProtocalModule />
+      </div>
 
-     <div className="md:py-12">
-     <CtaSection/>
-     </div>
-
-
+      <div className="md:py-12">
+        <CtaSection />
+      </div>
     </div>
   );
 };
