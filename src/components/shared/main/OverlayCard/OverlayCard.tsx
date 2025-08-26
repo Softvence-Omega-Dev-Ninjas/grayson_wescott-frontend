@@ -23,7 +23,7 @@ export function OverlayCard({ title, description, icon, backgroundImage, classNa
       }}
     >
       {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 backdrop-grayscale-100 backdrop-brightness-50" />
+      <div className="absolute inset-0 backdrop-grayscale-100 backdrop-brightness-90" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center top-1/2 -translate-y-1/2 text-center space-y-4">

@@ -9,10 +9,16 @@ import {
 import Link from "next/link";
 import logo from '../../../../assets/header/logo.png'
 import Image from "next/image";
+import bg from '../../../../assets/footerbg.png'
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-10 relative">
+    <footer className=" text-white py-10 relative"
+    style={{
+        backgroundImage: `url(${bg.src})`,
+        backgroundSize: "cover",
+        
+      }}>
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Left Section */}
         <div className="space-y-4">
