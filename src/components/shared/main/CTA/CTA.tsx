@@ -1,8 +1,8 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
+ 
 import { usePathname } from "next/navigation"
-import img from '../../../../assets/footerimg.png'
+import image from '../../../../assets/text.png'
 
  
  interface CTATYPE {
@@ -21,7 +21,9 @@ function CTA({title,description,btn1,btn2,img}:CTATYPE) {
 
 
   return (
-    <div className="grid md:grid-cols-2 bg-[#1A1A1A] relative"
+    <>
+    <div className="relative">
+      <div className="grid md:grid-cols-2 bg-[#1A1A1A] "
     >
         <div className="container mx-auto flex flex-col  justify-center items-center gap-4 bg-[#1A1A1A] py-8">
             <h1 className="text-3xl md:text-4xl font-bold text-white text-center">{title}</h1>
@@ -40,7 +42,7 @@ function CTA({title,description,btn1,btn2,img}:CTATYPE) {
           
 
         </div>
-        <div className="relative w-full h-[60vh] flex items-center"
+        <div className="relative w-full h-[30vh] md:h-[60vh] flex items-center"
       style={{
         backgroundImage: `url(${img})`,
         backgroundSize: "cover",
@@ -49,10 +51,13 @@ function CTA({title,description,btn1,btn2,img}:CTATYPE) {
             
         </div>
 
-      {/* <div className="absolute">
-       <Image alt="okay" src={img} width={200} height={80}/>
-      </div> */}
+      
     </div>
+    <div className="">
+      <img src={image.src} className="w-full  " alt="" />
+      </div>
+    </div>
+      </>
   )
 }
 

@@ -8,6 +8,10 @@ import InsideTheProtocol from "./_components/InsideTheProtocol/InsideTheProtocol
 import EliteProtocalModule from "./_components/EliteProtocalModule/EliteProtocalModule";
 import TestimonialSectio from "../TestimonialSection/TestimonialSectio";
 import CtaSection from "./_components/CTASection/CtaSection";
+import TeamSection from "./_components/TeamSection/TeamSection";
+import PricingSection from "./_components/PricingSection/PricingSection";
+import AccordionSection from "./_components/Accordion/AccordionSection";
+import StartBuild from "./_components/StartBuild/StartBuild";
 
 const HomePage = () => {
   return (
@@ -54,6 +58,24 @@ const HomePage = () => {
       <div className="md:py-12">
         <CtaSection />
       </div>
+
+       <div className="md:py-12">
+       <TeamSection/>
+      </div>
+
+       <div className="md:py-12">
+      <PricingSection/>
+      </div>
+
+       <div className="md:py-12">
+      <AccordionSection/>
+      </div>
+
+      <div className="md:py-12">
+        <StartBuild/>
+      </div>
+      
+
     </div>
   );
 };
