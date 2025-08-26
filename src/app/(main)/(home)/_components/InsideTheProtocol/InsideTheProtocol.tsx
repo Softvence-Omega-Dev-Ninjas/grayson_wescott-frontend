@@ -1,5 +1,4 @@
 import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader"
-import PathToPeak from "../PathToPeak/PathToPeak"
 import BaseCard from "@/components/shared/main/BaseCard/BaseCard"
 import user from '../../../../../assets/home/insidethe_protocol/profile.png'
 import camera from '../../../../../assets/home/insidethe_protocol/camera.png'
