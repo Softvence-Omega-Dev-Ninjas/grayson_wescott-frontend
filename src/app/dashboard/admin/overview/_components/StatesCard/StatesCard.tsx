@@ -10,7 +10,6 @@ export interface IStatesCardProps {
 }
 
 export function StatesCard({ title, value, change, icon: Icon, className }: IStatesCardProps) {
-
   return (
     <div className={cn("bg-primary-200 border border-[#a5a7ac] ", className)}>
       <div className="p-6">
@@ -21,7 +20,7 @@ export function StatesCard({ title, value, change, icon: Icon, className }: ISta
             <p className={cn("text-sm text-white")}>{change}</p>
           </div>
           {Icon && (
-            <div className="h-8 w-8 text-white">
+            <div className="h-12 w-12 text-white bg-secondary p-2">
               <Icon className="h-full w-full" />
             </div>
           )}
