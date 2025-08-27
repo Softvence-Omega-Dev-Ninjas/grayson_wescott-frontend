@@ -7,6 +7,7 @@ import { Plus, Search } from "lucide-react";
 import { ClientCard } from "./_components/ClientCard/ClientCard";
 import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
 import usePagination from "@/hooks/usePagination";
+import Link from "next/link";
 
 // Sample client data
 const sampleClients = [
@@ -86,10 +87,12 @@ const AllClientPage = () => {
     <div className="space-y-6">
       {/* Add Client Button */}
       <div className="flex justify-end">
-        <Button onClick={handleAddClient} className="w-full sm:w-auto bg-secondary border border-primary-200 text-white">
-          <Plus className="h-4 w-4 mr-2" />
-          Add New Client
-        </Button>
+        <Link href={"/dashboard/admin/all-clients/add-client"}>
+          <Button onClick={handleAddClient} className="w-full sm:w-auto bg-secondary border border-primary-200 text-white cursor-pointer">
+            <Plus className="h-4 w-4 mr-2" />
+            Add New Client
+          </Button>
+        </Link>
       </div>
       {/* Header */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-primary-200 p-4">
@@ -101,7 +104,7 @@ const AllClientPage = () => {
               placeholder="Search clients..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 border border-secondary text-white placeholder:text-gray-400 w-full"
+              className="pl-10 border border-secondary text-white placeholder:text-gray-400 w-full rounded-none"
             />
           </div>
           {/* Filter by Status */}

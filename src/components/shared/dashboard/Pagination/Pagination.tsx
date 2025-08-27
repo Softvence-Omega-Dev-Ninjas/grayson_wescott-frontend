@@ -17,7 +17,7 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
     }
   };
 
-  const baseBtnClasses = "h-8 w-8 p-0 hover:bg-gray-800 border border-gray-700 cursor-pointer text-white";
+  const baseBtnClasses = "h-8 w-8 p-0 hover:bg-gray-800 hover:text-white border border-gray-700 cursor-pointer text-white rounded-none";
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -31,7 +31,7 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
             key={i}
             variant={i === activePage ? "default" : "ghost"}
             size="sm"
-            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white hover:bg-gray-200")}
+            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white hover:bg-gray-200 ")}
             onClick={() => handlePageChange(i)}
           >
             {i}

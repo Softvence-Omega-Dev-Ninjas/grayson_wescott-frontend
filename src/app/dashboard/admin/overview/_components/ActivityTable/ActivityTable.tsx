@@ -87,10 +87,7 @@ export function ActivityTable() {
       {/* Activity List */}
       <div className="divide-y divide-secondary">
         {sampleActivities.map((activity) => (
-          <div
-            key={activity.id}
-            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-4 hover:bg-muted/50 transition-colors"
-          >
+          <div key={activity.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-4 ">
             {/* User + Action */}
             <div className="flex items-start sm:items-center gap-3">
               <Avatar className="h-8 w-8 flex-shrink-0">
@@ -98,8 +95,8 @@ export function ActivityTable() {
                 <AvatarFallback className="text-xs">{activity.user.initials}</AvatarFallback>
               </Avatar>
               <div className="min-w-0">
-                <p className="text-sm text-foreground break-words">
-                  <span className="font-medium text-base sm:text-lg">{activity.user.name}</span> {activity.action}
+                <p className="text-sm text-white break-words">
+                  <span className="font-medium  text-base sm:text-lg">{activity.user.name}</span> {activity.action}
                 </p>
                 <p className="text-xs text-white/85">{activity.timestamp}</p>
               </div>
@@ -107,7 +104,7 @@ export function ActivityTable() {
 
             {/* Status */}
             <div className="sm:text-right">
-              <span className="text-sm font-medium">{activity.status.label}</span>
+              <span className="text-sm font-medium bg-secondary px-3 py-1">{activity.status.label}</span>
             </div>
           </div>
         ))}
@@ -115,7 +112,7 @@ export function ActivityTable() {
 
       {/* Footer */}
       <div className="p-4 border-t border-secondary flex items-center justify-end">
-        <Button variant="ghost" size="sm" className="justify-center text-muted-foreground hover:text-foreground">
+        <Button variant="ghost" size="sm" className="justify-center text-white hover:text-white hover:bg-secondary cursor-pointer">
           View all activity →
         </Button>
       </div>

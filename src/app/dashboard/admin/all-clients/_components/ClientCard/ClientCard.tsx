@@ -40,7 +40,7 @@ export function ClientCard({ name, avatar, status, program, progress, lastActive
   };
 
   return (
-    <div className="w-full bg-primary-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+    <div className="w-full bg-primary-200 shadow-sm hover:shadow-md transition-shadow">
       <div className="p-4">
         <div className="flex items-start justify-between flex-wrap mb-3">
           <div className="flex items-center gap-3">
@@ -78,19 +78,27 @@ export function ClientCard({ name, avatar, status, program, progress, lastActive
             <Button
               variant="outline"
               size="sm"
-              className="bg-secondary text-xs w-full flex-1 border-gray-800 text-white hover:bg-gray-800 hover:text-white cursor-pointer"
+              className="bg-secondary text-xs w-full flex-1 border-gray-800 text-white hover:bg-gray-800 hover:text-white cursor-pointer rounded-none"
             >
               <User className="h-3 w-3 mr-1" />
               View Profile
             </Button>
           </Link>
           <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 rounded-none"
+            >
               <MessageCircle className="h-4 w-4" />
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 rounded-none"
+                >
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
