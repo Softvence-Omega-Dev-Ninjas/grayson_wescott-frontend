@@ -1,3 +1,4 @@
+"use client";
 import pic1 from "@/assets/dashboard/excercise-library/back-squat-form.png";
 import pic2 from "@/assets/dashboard/excercise-library/barbell-back-squat-exercise.png";
 import pic3 from "@/assets/dashboard/excercise-library/barbell-back-squat-workout.png";
@@ -9,6 +10,8 @@ import pic8 from "@/assets/dashboard/excercise-library/squat-exercise-form.png";
 import pic9 from "@/assets/dashboard/excercise-library/strength-training-squat.png";
 import pic10 from "@/assets/dashboard/excercise-library/weightlifting-squat-form.png";
 import { WorkoutCard } from "./_components/WorkoutCard/WorkoutCard";
+import usePagination from "@/hooks/usePagination";
+import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
 
 const workoutData = [
   {
@@ -134,12 +137,16 @@ const workoutData = [
 ];
 
 const AllExercisePage = () => {
+  const { currentPage, handlePageChange } = usePagination();
   return (
     <div className="">
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {workoutData.map((workout) => (
           <WorkoutCard key={workout.id} {...workout} />
         ))}
+      </div>
+      <div className="flex justify-center my-16">
+        <Pagination activePage={currentPage} totalPages={7} onPageChange={handlePageChange} />
       </div>
     </div>
   );
