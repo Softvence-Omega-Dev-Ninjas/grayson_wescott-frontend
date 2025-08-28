@@ -51,7 +51,7 @@ function PricingSection( ) {
         description="Select the configuration that matches your performance requirements"/>
 
        
-        <div className="container mx-auto grid md:grid-cols-3 grid-cols-1 gap-12">
+        <div className="max-w-5xl mx-3 sm:mx-auto grid md:grid-cols-3 grid-cols-1 gap-12">
 
             {pricing.map((item)=>(
                 <PricingCard key={item.title} item={item}/>
