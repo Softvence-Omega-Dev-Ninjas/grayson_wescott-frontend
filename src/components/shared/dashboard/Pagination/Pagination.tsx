@@ -31,7 +31,7 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
             key={i}
             variant={i === activePage ? "default" : "ghost"}
             size="sm"
-            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white hover:bg-gray-200 ")}
+            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white ")}
             onClick={() => handlePageChange(i)}
           >
             {i}
@@ -72,7 +72,7 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
             key={i}
             variant={i === activePage ? "default" : "ghost"}
             size="sm"
-            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white hover:bg-gray-200")}
+            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white")}
             onClick={() => handlePageChange(i)}
           >
             {i}
