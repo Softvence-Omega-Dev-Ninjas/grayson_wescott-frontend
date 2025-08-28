@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
  
 import { usePathname } from "next/navigation"
 import image from '../../../../assets/text.png'
+import Image from "next/image"
 
  
  interface CTATYPE {
@@ -54,7 +55,8 @@ function CTA({title,description,btn1,btn2,img}:CTATYPE) {
       
     </div>
     <div className="">
-      <img src={image.src} className="w-full  " alt="" />
+      {/* <img src={image.src} className="w-full  " alt="" /> */}
+      <Image src={image.src} alt="asdasd" width={300} height={300} className="w-full"/>
       </div>
     </div>
       </>

@@ -1,5 +1,6 @@
 import React from 'react';
 import img from '../../../../assets/farrow.png'
+import Image from 'next/image';
 interface PricingProps {
     item: {
         title: string,
@@ -29,8 +30,9 @@ function PricingCard({ item }: PricingProps) {
                 </div>
                 <div>
                     {item.features.map((feature, index) => (
-                       <div className='flex items-center gap-2'>
-                         <img src={img.src} alt="" />
+                       <div key={feature} className='flex items-center gap-2'>
+                         {/* <img src={img.src} alt="" /> */}
+                         <Image src={img.src} alt='image' height={15} width={15}/>
                         <p key={index} className="font-normal">{feature}</p>
                        </div>
                     ))}

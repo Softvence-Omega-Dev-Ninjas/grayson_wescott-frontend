@@ -9,7 +9,11 @@ import p3 from '../../../assets/programs/p3.png'
  
 import { OverlayCard } from "@/components/shared/main/OverlayCard/OverlayCard";
 import ProgramsBuildYou from "./_components/ProgramsBuildYou/ProgramsBuildYou";
-import ProgramCard from "@/components/shared/main/ProgramCard/ProgramCard";
+ 
+import WhatYouWillDo from "./_components/ProgramsBuildYou/WhatYouWillDo";
+import HowItWorks from "./_components/ProgramsBuildYou/HowItWorks";
+import WhatsInclude from "./_components/ProgramsBuildYou/WhatsInclude";
+import AccordionSection from "./_components/ProgramsBuildYou/AccordionSection";
 const ProgramsPage = () => {
 
   const data = [
@@ -53,11 +57,25 @@ const ProgramsPage = () => {
 
 {/* what build you */}
 
-        <div className="md:py-12">
-          <ProgramsBuildYou/>
+       
+
+        <div className="md:py-12 container mx-auto">
+          <WhatYouWillDo/>
         </div>
 
-<ProgramCard icon={''} title={'hello'} subtitle={'subtitle'}/>
+        <div className="md:py-12 container mx-auto">
+         <HowItWorks/>
+        </div>
+
+        <div className="md:py-12 container mx-auto">
+        <WhatsInclude/>
+        </div>
+
+        <div className="md:py-12 container mx-auto">
+        <AccordionSection/>
+        </div>
+
+
       
     </div>
 

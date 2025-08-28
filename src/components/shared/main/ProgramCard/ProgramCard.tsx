@@ -1,11 +1,13 @@
+import Image from 'next/image';
 import React from 'react';
 
 const ProgramCard = ({ icon, title, subtitle }:{icon:string;title:string;subtitle:string}) => {
   return (
-    <div className="flex items-center space-x-3 p-5 bg-gray-900 text-white">
+    <div className="flex items-center space-x-3 p-5 bg-[#2A2D33] text-white">
       {/* Icon Box */}
-      <div className="bg-gray-300 p-3 rounded-md flex items-center justify-center w-8 h-8">
-        <span className="text-gray-900 text-lg">{icon}</span>
+      <div className="bg-gray-300 p-3 rounded-md flex items-center justify-center ">
+       {/* <img className='w-8 h-8' src={icon} alt="" /> */}
+       <Image src={icon} alt='icon' width={8} height={8}/>
       </div>
       
       {/* Text Content */}

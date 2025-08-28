@@ -1,6 +1,6 @@
 import BaseCard from "@/components/shared/main/BaseCard/BaseCard"
 import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader"
-import { Container } from "lucide-react"
+ 
 import down from '../../../../../assets/home/eliteprotocol/arrow.png'
 import up from '../../../../../assets/home/eliteprotocol/uparrow.png'
 import target from '../../../../../assets/home/eliteprotocol/target.png'
