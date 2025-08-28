@@ -4,6 +4,12 @@ import logo from "../../../assets/home/adonis.png";
 import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
 import FivePillars from "./_components/FivePillars/FivePillars";
 import WhatYouGet from "./_components/WhatYouWillGet/WhatYouGet";
+import ModulePreview from "./_components/ModulePreview/ModulePreview";
+import PricingSection from "../(home)/_components/PricingSection/PricingSection";
+import TeamSection from "../(home)/_components/TeamSection/TeamSection";
+import AccordionSection from "../(home)/_components/Accordion/AccordionSection";
+import AdonisCtaSection from "./_components/CtaSection/AdonisCtaSection";
+
 
 
 function AdonisProtocolPage() {
@@ -32,7 +38,23 @@ function AdonisProtocolPage() {
       </div>
 
       <div className="md:py-12">
-        
+        <ModulePreview/>
+      </div>
+
+      <div className="md:py-12">
+        <PricingSection/>
+      </div>
+      
+       <div className="md:py-12">
+       <TeamSection/>
+      </div>
+
+      <div className="md:py-12">
+       <AccordionSection/>
+      </div>
+
+       <div className="md:py-12">
+       <AdonisCtaSection/>
       </div>
 
 
