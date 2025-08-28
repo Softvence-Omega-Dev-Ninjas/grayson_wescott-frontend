@@ -15,11 +15,11 @@ interface RPETrendsChartProps {
 
 export function RPETrendsChart({ data }: RPETrendsChartProps) {
   return (
-    <Card className="bg-gray-900 border-gray-800 w-full">
+    <Card className="bg-primary-200 w-full rounded-none border border-secondary">
       <CardHeader>
         <CardTitle className="text-white text-sm">RPE Trends</CardTitle>
       </CardHeader>
-      <CardContent className="p-4">
+      <CardContent className="">
         <div className="w-full h-[200px] overflow-hidden">
           <ChartContainer
             config={{

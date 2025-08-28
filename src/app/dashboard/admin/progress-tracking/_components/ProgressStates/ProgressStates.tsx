@@ -2,17 +2,17 @@ interface MetricCardProps {
   title: string;
   value: string | number;
   change: string;
-  changeType: "positive" | "negative";
+  // changeType: "positive" | "negative";
 }
 
-function MetricCard({ title, value, change, changeType }: MetricCardProps) {
+function MetricCard({ title, value, change }: MetricCardProps) {
   return (
-    <div className="bg-gray-900 border-gray-800">
+    <div className="border border-secondary">
       <div className="p-6">
         <div className="space-y-2">
-          <p className="text-sm text-gray-400">{title}</p>
-          <p className="text-2xl font-bold text-white">{value}</p>
-          <p className={`text-sm ${changeType === "positive" ? "text-green-400" : "text-red-400"}`}>{change}</p>
+          <p className="text-sm text-white font-medium">{title}</p>
+          <p className="text-3xl font-bold text-white">{value}</p>
+          <p className={`text-sm text-[#B9BDC6]`}>{change}</p>
         </div>
       </div>
     </div>
@@ -55,9 +55,9 @@ export function ProgressStates() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 bg-primary-200 p-5">
       {metricsData.map((metric, index) => (
-        <MetricCard key={index} title={metric.title} value={metric.value} change={metric.change} changeType={metric.changeType} />
+        <MetricCard key={index} title={metric.title} value={metric.value} change={metric.change} />
       ))}
     </div>
   );

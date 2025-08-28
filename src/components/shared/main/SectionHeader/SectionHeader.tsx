@@ -3,7 +3,7 @@ interface ISectionHeaderProps {
   description?: string;
   onClick?: () => void;
 }
-const SectionHeader = ({ title, description, onClick }: ISectionHeaderProps) => {
+const SectionHeader = ({ title, description }: ISectionHeaderProps) => {
   return (
     <div className="py-8">
       <h1 className="text-center font-bold text-xl sm:text-3xl md:text-5xl uppercase text-white">{title}</h1>
