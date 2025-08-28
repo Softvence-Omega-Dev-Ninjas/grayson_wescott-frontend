@@ -1,5 +1,6 @@
 import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
 import logo from "../../../assets/home/coaching.png";
+import CoachingThatMovesTheNeedle from "./_components/coachingthatMoves/CoachingThatMovesTheNeedle";
 const CoachingPage = () => {
   return (
     <div>
@@ -9,6 +10,10 @@ const CoachingPage = () => {
         button1="START YOUR ENGINE"
         img={logo.src}
       />
+
+      <div className="md:py-12">
+        <CoachingThatMovesTheNeedle/>
+      </div>
     </div>
   );
 };

@@ -1,10 +1,6 @@
 import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
 import React from 'react';
-// SectionHeader কম্পোনেন্টটির পাথ নিশ্চিত না হওয়ায় এটি আপাতত বাদ দেওয়া হলো।
-// যদি এটি একটি কাস্টম কম্পোনেন্ট হয় এবং এর প্রয়োজন হয়, তাহলে সঠিক পাথ যোগ করতে হবে।
-// import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
 
-// bluearrow.png ইমেজ ফাইলটির পাথ সমস্যার কারণে, একটি ইনলাইন SVG টিক আইকন ব্যবহার করা হয়েছে।
 
 function ProgramsBuildYou() {
     const programs = [
@@ -82,7 +78,7 @@ function ProgramsBuildYou() {
         }
     ];
 
-    // SectionHeader কম্পোনেন্ট যদি উপলব্ধ না থাকে, তাহলে এটি একটি সাধারণ ডিভ দিয়ে প্রতিস্থাপন করা হয়েছে।
+    
   
 
     return (
@@ -92,7 +88,7 @@ function ProgramsBuildYou() {
                 description='No fluff. Just execution.'
             />
 
-            <div className='container mx-auto grid md:grid-cols-3 grid-cols-1 gap-8 mt-10'>
+            <div className='max-w-5xl mx-auto grid md:grid-cols-3 grid-cols-1 gap-8 mt-10'>
                 {programs.map((item, index) => (
                     <div
                         key={item.title || index}
@@ -109,7 +105,7 @@ function ProgramsBuildYou() {
                         <div className='space-y-2 flex-grow'>
                             {item.features.map((feature, idx) => (
                                 <div className='flex items-start gap-2' key={idx}>
-                                    {/* ইনলাইন SVG টিক আইকন */}
+                                    
                                     <svg className="w-5 h-5 text-blue-400 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                     </svg>

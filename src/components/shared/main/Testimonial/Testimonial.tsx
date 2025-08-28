@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import './testimonial.css'; 
+import Image from 'next/image';
 
 
 type TestimonialData = {
@@ -43,7 +44,8 @@ const Testimonial = ({ testimonials }: TestimonialProps) => {
                         <div className="testimonial-slide-content">
                             <div className='flex md:flex-row flex-col gap-5 items-center'>
                               <div className="testimonial-image-wrapper">
-                                <img src={testimonial.image.src} alt={testimonial.name} className="testimonial-image" />
+                                {/* <img src={testimonial.image.src} alt={testimonial.name} className="testimonial-image" /> */}
+                                <Image src={testimonial.image.src} alt='image' className='testimonial-image' width={300} height={300}/>
                             </div>
                             <div className="testimonial-text-content">
                                 <p className="testimonial-quote">{testimonial.quote}</p>

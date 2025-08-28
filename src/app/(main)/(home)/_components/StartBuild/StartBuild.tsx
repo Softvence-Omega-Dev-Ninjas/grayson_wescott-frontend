@@ -1,5 +1,6 @@
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import React from "react";
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader'
+ 
+import React from 'react'
 
 function StartBuild() {
   return (
