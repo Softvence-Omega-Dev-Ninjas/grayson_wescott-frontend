@@ -1,20 +1,25 @@
-"use client";
-import { Button } from "@/components/ui/button";
+"use client"
+import { Button } from "@/components/ui/button"
+ 
+import { usePathname } from "next/navigation"
+import image from '../../../../assets/text.png'
+import Image from "next/image"
 
-import { usePathname } from "next/navigation";
-import image from "../../../../assets/text.png";
+ 
+ interface CTATYPE {
+    title?:string,
+    description?:string,
+    img:string,
+    btn1:string,
+    btn2?:string,
+    onclick?:()=>void
 
-interface CTATYPE {
-  title?: string;
-  description?: string;
-  img: string;
-  btn1: string;
-  btn2?: string;
-  onclick?: () => void;
-}
-function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
-  const path = usePathname();
-  console.log(path);
+ }
+function CTA({title,description,btn1,btn2,img}:CTATYPE) {
+
+    const path = usePathname()
+    console.log(path)
+
 
   return (
     <>
@@ -34,20 +39,27 @@ function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
                 ""
               )}
             </div>
-          </div>
-          <div
-            className="relative w-full h-[30vh] md:h-[60vh] flex items-center"
-            style={{
-              backgroundImage: `url(${img})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          ></div>
+          
+
         </div>
-        <div className="">{/* <img src={image.src} className="w-full  " alt="img" /> */}</div>
+        <div className="relative w-full h-[30vh] md:h-[60vh] flex items-center"
+      style={{
+        backgroundImage: `url(${img})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}>
+            
+        </div>
+
+      
+    </div>
+    <div className="">
+      {/* <img src={image.src} className="w-full  " alt="" /> */}
+      <Image src={image.src} alt="asdasd" width={300} height={300} className="w-full"/>
       </div>
-    </>
-  );
+    </div>
+      </>
+  )
 }
 
 export default CTA;

@@ -1,12 +1,14 @@
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import down from "../../../../../assets/home/eliteprotocol/arrow.png";
-import up from "../../../../../assets/home/eliteprotocol/uparrow.png";
-import target from "../../../../../assets/home/eliteprotocol/target.png";
-import play from "../../../../../assets/home/eliteprotocol/play.png";
-import circle from "../../../../../assets/home/eliteprotocol/circle.png";
-import { Button } from "@/components/ui/button";
+import BaseCard from "@/components/shared/main/BaseCard/BaseCard"
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader"
+ 
+import down from '../../../../../assets/home/eliteprotocol/arrow.png'
+import up from '../../../../../assets/home/eliteprotocol/uparrow.png'
+import target from '../../../../../assets/home/eliteprotocol/target.png'
+import play from '../../../../../assets/home/eliteprotocol/play.png'
+import circle from '../../../../../assets/home/eliteprotocol/circle.png'
+import { Button } from "@/components/ui/button"
 
+ 
 function EliteProtocalModule() {
   const d = [
     {
