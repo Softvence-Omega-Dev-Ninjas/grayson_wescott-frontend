@@ -2,16 +2,16 @@ import React from 'react';
 import img from '../../../../assets/farrow.png'
 import Image from 'next/image';
 interface PricingProps {
-    item: {
-        title: string,
-        price: string,
-        batchText: string,
-        subtitle: string,
-        features: string[],
-        btn: string,
-        onClick?: () => void,
-        isEnable: boolean
-    }
+  item: {
+    title: string;
+    price: string;
+    batchText: string;
+    subtitle: string;
+    features: string[];
+    btn: string;
+    onClick?: () => void;
+    isEnable: boolean;
+  };
 }
 
 function PricingCard({ item }: PricingProps) {

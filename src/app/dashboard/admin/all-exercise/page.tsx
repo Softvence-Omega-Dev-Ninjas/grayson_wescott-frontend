@@ -1,7 +1,148 @@
-import React from "react";
+import pic1 from "@/assets/dashboard/excercise-library/back-squat-form.png";
+import pic2 from "@/assets/dashboard/excercise-library/barbell-back-squat-exercise.png";
+import pic3 from "@/assets/dashboard/excercise-library/barbell-back-squat-workout.png";
+import pic4 from "@/assets/dashboard/excercise-library/barbell-exercise-training.png";
+import pic5 from "@/assets/dashboard/excercise-library/barbell-squat-workout.png";
+import pic6 from "@/assets/dashboard/excercise-library/fitness-squat-training.png";
+import pic7 from "@/assets/dashboard/excercise-library/gym-squat-exercise.png";
+import pic8 from "@/assets/dashboard/excercise-library/squat-exercise-form.png";
+import pic9 from "@/assets/dashboard/excercise-library/strength-training-squat.png";
+import pic10 from "@/assets/dashboard/excercise-library/weightlifting-squat-form.png";
+import { WorkoutCard } from "./_components/WorkoutCard/WorkoutCard";
+
+const workoutData = [
+  {
+    id: "1",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic1.src,
+    views: "6.2k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "2",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic2.src,
+    views: "5.8k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "3",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:10",
+    difficulty: "Beginner",
+    thumbnail: pic3.src,
+    views: "7.1k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "4",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:35",
+    difficulty: "Beginner",
+    thumbnail: pic4.src,
+    views: "6.9k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "5",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic5.src,
+    views: "5.4k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "6",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic6.src,
+    views: "6.8k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "7",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic7.src,
+    views: "4.9k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "8",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic8.src,
+    views: "6.2k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "9",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic9.src,
+    views: "5.7k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "10",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic10.src,
+    views: "6.3k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "11",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic1.src,
+    views: "5.9k views",
+    tags: ["bodyweight"],
+  },
+  {
+    id: "12",
+    title: "Barbell Back Squat",
+    description: "Master strength and depth with proper form",
+    duration: "1:15",
+    difficulty: "Beginner",
+    thumbnail: pic2.src,
+    views: "6.5k views",
+    tags: ["bodyweight"],
+  },
+];
 
 const AllExercisePage = () => {
-  return <div>AllExercisePage</div>;
+  return (
+    <div className="">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {workoutData.map((workout) => (
+          <WorkoutCard key={workout.id} {...workout} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default AllExercisePage;

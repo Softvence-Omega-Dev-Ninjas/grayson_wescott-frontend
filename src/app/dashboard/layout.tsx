@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         <SidebarInset className="bg-light-secondary-bg dark:bg-dark-secondary-bg">
           <header
             className={`flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 sticky top-0 bg-primary-200 z-10 mx-0 md:mx-4 ${
-              scrolled && "shadow-[0_2px_4px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_2px_4px_-1px_rgba(0,0,0,0.5)]"
+              scrolled && "shadow-sm shadow-secondary"
             }`}
           >
             <div className="flex items-center justify-between gap-2 px-4 w-full">
@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             </div>
           </header>
           <div className="p-2 z-0">
-            <div className="sm:p-5  min-h-screen ">{children}</div>
+            <div className="sm:p-5  min-h-screen">{children}</div>
           </div>
           {/* <footer className="w-full px-4 py-3 text-sm text-gray-600 dark:text-gray-400 text-center">© 2025 Notefy. All rights reserved.</footer> */}
         </SidebarInset>

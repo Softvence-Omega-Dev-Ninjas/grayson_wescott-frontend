@@ -30,13 +30,7 @@ const AdminOverviewPage = () => {
       {/* States Cards  */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {statesData.map((metric, index) => (
-          <StatesCard
-            key={index}
-            title={metric.title}
-            value={metric.value}
-            change={metric.change}
-            icon={metric.icon}
-          />
+          <StatesCard key={index} title={metric.title} value={metric.value} change={metric.change} icon={metric.icon} />
         ))}
       </div>
 
