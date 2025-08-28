@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import logo from "@/assets/header/logo.png";
 import dashboardIcon from "@/assets/dashboard/sidebar/dashboardIcon.svg";
 import dumballIcon from "@/assets/dashboard/sidebar/dumbalIcon.svg";
 import clientIcon from "@/assets/dashboard/sidebar/clientIcon.svg";
@@ -11,6 +12,8 @@ import calendarIcon from "@/assets/dashboard/sidebar/calenderIcon.svg";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { NavMain } from "./NavMain";
 import { NavUser } from "./NavUser";
+import Link from "next/link";
+import Image from "next/image";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
@@ -70,7 +73,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <div className="mt-2">
-                <h1>Logo</h1>
+                <div className="text-2xl font-bold text-white">
+                  <Link href="/">
+                    <Image src={logo} alt="logo"></Image>
+                  </Link>
+                </div>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
