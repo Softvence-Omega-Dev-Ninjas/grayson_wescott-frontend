@@ -1,22 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { FileText, Download, Mail } from "lucide-react";
-import { ProgressStates } from "./_components/ProgressStates/page";
+import { ProgressStates } from "./_components/ProgressStates/ProgressStates";
 import { ClientPerformanceTable } from "./_components/ClientPerformanceTable/ClientPerformanceTable";
-import { ConsistencyChart } from "./_components/ConsistencyChart/page";
-import { RPETrendsChart } from "./_components/RPETrendsChart/page";
-import { LoadProgressionChart } from "./_components/LoadProgressionChart/page";
-
-// Sample data - in real app this would come from props or API
-// const metricsData = {
-//   activeClients: 52,
-//   clientsChange: "+4 this week",
-//   avgCompletion: 57,
-//   completionChange: "+5%",
-//   adherenceRate: 82,
-//   adherenceChange: "+2%",
-//   totalWorkouts: 1240,
-//   workoutsChange: "+107 today",
-// };
+import { ConsistencyChart } from "./_components/ConsistencyChart/ConsistencyChart";
+import { RPETrendsChart } from "./_components/RPETrendsChart/RPETrendsChart";
+import { LoadProgressionChart } from "./_components/LoadProgressionChart/LoadProgressionChart";
 
 const clientsData = [
   {
@@ -124,17 +112,9 @@ const consistencyData = [
 ];
 
 const ProgressTrackingPage = () => {
-  console.log("[v0] AnalyticsDashboard rendering");
-  // console.log("[v0] metricsData:", metricsData);
-  console.log("[v0] loadProgressionData:", loadProgressionData);
-  console.log("[v0] rpeTrendsData:", rpeTrendsData);
-  console.log("[v0] consistencyData:", consistencyData);
-
   return (
-    <div className="min-h-screen bg-gray-950 p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        {/* Metrics Cards */}
-        {/* <AnalyticsMetrics metrics={metricsData} /> */}
+    <div className="">
+      <div className="space-y-8">
         <ProgressStates />
 
         {/* Client Performance Table */}
@@ -148,18 +128,18 @@ const ProgressTrackingPage = () => {
         </div>
 
         {/* Reports & Export */}
-        <div className="bg-gray-900 border border-gray-800 rounded-lg p-6">
+        <div className=" flex items-center justify-between flex-wrap gap-4 mb-20">
           <h3 className="text-white text-lg font-semibold mb-4">Reports & Export</h3>
           <div className="flex flex-wrap gap-4">
-            <Button variant="secondary" className="bg-gray-800 hover:bg-gray-700 text-white border-gray-700">
+            <Button variant="secondary" className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700">
               <FileText className="w-4 h-4 mr-2" />
               Export PDF
             </Button>
-            <Button variant="secondary" className="bg-gray-800 hover:bg-gray-700 text-white border-gray-700">
+            <Button variant="secondary" className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700">
               <Download className="w-4 h-4 mr-2" />
               Export CSV
             </Button>
-            <Button variant="secondary" className="bg-gray-800 hover:bg-gray-700 text-white border-gray-700">
+            <Button variant="secondary" className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700">
               <Mail className="w-4 h-4 mr-2" />
               Weekly Summary
             </Button>
