@@ -13,7 +13,7 @@ import { WorkoutCard } from "./_components/WorkoutCard/WorkoutCard";
 import usePagination from "@/hooks/usePagination";
 import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
 
-const workoutData = [
+export const workoutData = [
   {
     id: "1",
     title: "Barbell Back Squat",
@@ -139,7 +139,7 @@ const workoutData = [
 const AllExercisePage = () => {
   const { currentPage, handlePageChange } = usePagination();
   return (
-    <div className="">
+    <div>
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {workoutData.map((workout) => (
           <WorkoutCard key={workout.id} {...workout} />
