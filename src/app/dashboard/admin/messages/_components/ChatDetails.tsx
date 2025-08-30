@@ -20,7 +20,7 @@ interface ChatDetailsProps {
 export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
   if (!chat) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[#151519] text-gray-400 rounded-lg">
+      <div className="flex items-center justify-center bg-[#151519] text-gray-400 rounded-lg">
         Select a chat to start messaging
       </div>
     );
