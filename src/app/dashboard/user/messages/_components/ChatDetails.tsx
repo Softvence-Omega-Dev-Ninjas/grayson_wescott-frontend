@@ -27,7 +27,7 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
   }
 
   return (
-    <div className="h-full flex flex-col bg-black text-white rounded-lg">
+    <div className="h-full flex flex-col bg-black text-white rounded-lg"> 
       {/* Header */}
       <div className="bg-[#151519]  flex items-center justify-between p-4 border-b border-gray-700 rounded-t-lg ">
         <div className="flex w-full items-center gap-2">

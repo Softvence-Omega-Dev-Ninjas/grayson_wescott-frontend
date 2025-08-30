@@ -238,7 +238,7 @@ export default function ChatLayout() {
   const chat = dummyChats.find((c) => c.id === selectedChat) || null;
 
   return (
- <div className="h-[calc(100vh-80px-60px)]  flex gap-5 w-full  bg-black text-white p-2">
+    <div className="h-[calc(100vh-80px-60px)]  flex gap-5 w-full  bg-black text-white p-2">
       {/* Chat List - Mobile: hidden when chat is selected, Desktop: always visible */}
       <div
         className={`${
