@@ -26,12 +26,12 @@ export function NavMain({ items }: { items: TSidebarItem }) {
   return (
     <SidebarGroup>
       <SidebarMenu className="space-y-2">
-        {items.map((item) => {
+        {items.map((item, idx) => {
           const isActive = pathName === item.url;
 
           return (
             item.show && (
-              <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
+              <Collapsible key={idx} asChild defaultOpen={item.isActive} className="group/collapsible">
                 <SidebarMenuItem className="hover:bg-transparent active:bg-transparent">
                   <CollapsibleTrigger className="hover:bg-transparent active:bg-transparent hover:text-white cursor-pointer" asChild>
                     {item.items ? (

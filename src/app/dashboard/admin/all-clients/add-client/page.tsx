@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { User, Shield, Dumbbell, Info } from "lucide-react";
 import { RxCross2 } from "react-icons/rx";
+import { useRouter } from "next/navigation";
 
 interface ClientFormData {
   fullName: string;
@@ -20,6 +21,7 @@ interface ClientFormData {
 }
 
 const ClientForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState<ClientFormData>({
     fullName: "",
     email: "",
@@ -36,6 +38,7 @@ const ClientForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    router.push("/dashboard/admin/all-clients/add-client/success");
   };
 
   const handleCancel = () => {
@@ -88,7 +91,6 @@ const ClientForm = () => {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
-                    required
                   />
                 </div>
 
