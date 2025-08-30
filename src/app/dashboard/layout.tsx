@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             </div>
           </header>
           <div className="p-2 z-0">
-            <div className="sm:p-5  min-h-screen">{children}</div>
+            <div className="sm:p-5  min-h-[calc(100vh-80px-60px)]">{children}</div>
           </div>
           {/* <footer className="w-full px-4 py-3 text-sm text-gray-600 dark:text-gray-400 text-center">© 2025 Notefy. All rights reserved.</footer> */}
         </SidebarInset>
