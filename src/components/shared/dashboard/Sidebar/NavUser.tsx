@@ -3,34 +3,11 @@
 import dp from "@/assets/home/banner.png";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-// import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-// import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-// import { logout, useCurrentUser } from "@/redux/features/auth/authSlice";
-// import { useNavigate } from "react-router-dom";
-// import { useLogoutMutation } from "@/redux/features/auth/authApi";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  // const navigate = useNavigate();
-  // const user = useAppSelector(useCurrentUser);
-  // const [logoutUser] = useLogoutMutation(undefined);
-  // const dispatch = useAppDispatch();
-  // const handleLogout = async () => {
-  //   dispatch(logout());
-  //   const res = await logoutUser(undefined).unwrap();
-  //   if (res?.success === true) {
-  //     navigate("/");
-  //   }
-  // };
 
   return (
     <SidebarMenu className="rounded-2xl">
@@ -50,7 +27,7 @@ export function NavUser() {
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 bg-primary-200 border-[3px] text-light-primary-text dark:text-dark-primary-txt dark:shadow-box-shadow-dark font-medium"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 bg-primary-200 border border-secondary font-medium"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -67,10 +44,10 @@ export function NavUser() {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator className="border-secondary" />
+            <DropdownMenuSeparator className="border border-secondary" />
             <button
               // onClick={() => handleLogout()}
-              className="cursor-pointer bg-secondary flex items-center gap-1 w-full  rounded-xl py-1 text-red-600 px-3 hover:text-red-500 hover:bg-secondary"
+              className="cursor-pointer bg-secondary flex items-center gap-1 w-full  py-1 text-red-600 px-3 hover:text-red-500 hover:bg-secondary"
             >
               <LogOut />
               Log out

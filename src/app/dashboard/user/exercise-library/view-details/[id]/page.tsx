@@ -8,10 +8,10 @@ import starIcon from "@/assets/dashboard/excercise-library/star.png";
 import warningIcon from "@/assets/dashboard/excercise-library/warning.png";
 import tickIcon from "@/assets/dashboard/excercise-library/tick.png";
 import crossIcon from "@/assets/dashboard/excercise-library/cross.png";
-import { ExerciseSteps } from "../../video/[id]/_components/ExcerciseSteps/ExcerciseSteps";
 import { Button } from "@/components/ui/button";
 import { FaPlay } from "react-icons/fa6";
 import Link from "next/link";
+import { ExerciseSteps } from "@/app/dashboard/admin/all-exercise/video/[id]/_components/ExcerciseSteps/ExcerciseSteps";
 
 const sampleWorkout = {
   title: "Barbell Back Squat",
