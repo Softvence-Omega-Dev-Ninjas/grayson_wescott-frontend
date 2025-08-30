@@ -5,13 +5,14 @@ import Stepper from "./_components/Stepper/Stepper";
 import Step1 from "./_components/Step1/Step1";
 import Step2 from "./_components/Step2/Step2";
 import Step3 from "./_components/Step3/Step3";
+import { useRouter } from "next/navigation";
 
 export interface IFormData {
   videoFile: File | null;
   videoLink: string;
   videoName: string;
   duration: string;
-  videoTitle: string;
+  videoDescription: string;
   primaryCategory: string;
   status: string;
   bodyPartTags: string[];
@@ -35,7 +36,7 @@ const addExerciseDefaultValue = {
   videoLink: "",
   videoName: "",
   duration: "",
-  videoTitle: "",
+  videoDescription: "",
   primaryCategory: "",
   status: "",
   bodyPartTags: [],
@@ -55,7 +56,8 @@ const addExerciseDefaultValue = {
 };
 
 const AddExercisePage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
+  const router = useRouter();
 
   //Handle form state.
   const {
@@ -96,7 +98,7 @@ const AddExercisePage = () => {
 
   //Final step handle form done.
   const handleDone = () => {
-    console.log("Form Process Completed");
+    router.push("/dashboard/admin/all-exercise");
   };
 
   const formData = getValues();

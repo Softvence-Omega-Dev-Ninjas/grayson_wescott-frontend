@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { Textarea } from "@/components/ui/textarea";
 
 const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
   return (
@@ -80,17 +81,17 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
         </div>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="videoTitle" className="text-lg font-medium">
-          Video Title *
+        <Label htmlFor="videoDescription" className="text-lg font-medium">
+          Video Description *
         </Label>
-        <Input
-          id="videoTitle"
+        <Textarea
+          id="videoDescription"
           type="text"
           placeholder="Complete guide to performing the perfect barbell back squat"
-          {...register("videoTitle", { required: "Video Title is required." })}
-          className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
+          {...register("videoDescription", { required: "Video Description is required." })}
+          className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] rounded-none"
         />
-        {errors.videoTitle && <p className="text-red-500 text-sm">{errors.videoTitle.message}</p>}
+        {errors.videoDescription && <p className="text-red-500 text-sm">{errors.videoDescription.message}</p>}
       </div>
 
       {/* Navigation Buttons */}

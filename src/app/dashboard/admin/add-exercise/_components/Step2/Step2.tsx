@@ -8,12 +8,16 @@ import equipmentIcon from "@/assets/dashboard/add-excercise/dumbellIcon.png";
 import starIcon from "@/assets/dashboard/add-excercise/starICon.png";
 import warningIcon from "@/assets/dashboard/add-excercise/warningIcon.png";
 import plusIcon from "@/assets/dashboard/add-excercise/plusIcon.png";
-import labelIcon from "@/assets/dashboard/add-excercise/labelIcon.png";
+import labelIcon from "@/assets/dashboard/add-excercise/plusIcon.png";
+import beginerIcon from "@/assets/dashboard/add-excercise/beginerIcon.png";
+import intermediateIcon from "@/assets/dashboard/add-excercise/IntermediateIcon.png";
+import advanceIcon from "@/assets/dashboard/add-excercise/advanceIcon.png";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 
 const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: any) => {
   const {
@@ -45,7 +49,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
 
   const bodyPartTags = ["Legs", "Chest", "Core", "Back", "Glutes", "Shoulders", "Arms"];
   const equipmentTags = ["Dumbbell", "Barbell", "Resistance Band", "Bodyweight", "Kettlebell", "Cable Machine"];
-  const difficultyLevels = ["Beginner", "Intermediate", "Advanced"];
+  const difficultyLevels = [
+    { label: "Beginner", icon: beginerIcon },
+    { label: "Intermediate", icon: intermediateIcon },
+    { label: "Advanced", icon: advanceIcon },
+  ];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -174,7 +182,7 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
                   />
                 )}
               />
-              <label htmlFor={`equipment-${tag}`} className="text-sm">
+              <label htmlFor={`equipment-${tag}`} className="text-sm cursor-pointer">
                 {tag}
               </label>
             </div>
@@ -376,23 +384,23 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
           render={({ field }) => (
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               {difficultyLevels.map((level) => (
-                <div key={level} className="flex-1">
+                <div key={level.label} className="flex-1">
                   <input
                     type="radio"
-                    id={`difficulty-${level}`}
-                    value={level}
-                    checked={field.value === level}
-                    onChange={() => field.onChange(level)}
+                    id={`difficulty-${level.label}`}
+                    value={level.label}
+                    checked={field.value === level.label}
+                    onChange={() => field.onChange(level.label)}
                     className="hidden peer"
                   />
                   <label
-                    htmlFor={`difficulty-${level}`}
-                    className="flex flex-col items-center justify-center p-4 transition-colors duration-200 cursor-pointer peer-checked:border-white peer-checked:bg-zinc-700 border border-secondary "
+                    htmlFor={`difficulty-${level.label}`}
+                    className="flex flex-col items-center justify-center p-4 transition-colors duration-200 cursor-pointer peer-checked:border-white peer-checked:bg-zinc-700 border border-secondary"
                   >
-                    <Image src={folderIcon} width={18} height={18} alt="Upload Icon" />
-                    <span className="text-lg font-semibold">{level}</span>
+                    {/* <Image src={level.icon} width={40} height={40} alt="Upload Icon" className="pb-5" /> */}
+                    <span className="text-lg font-semibold">{level.label}</span>
                     <span className="text-sm text-gray-400 mt-1">
-                      {level === "Beginner" ? "New to exercise" : level === "Intermediate" ? "Some experience" : "Highly experienced"}
+                      {level.label === "Beginner" ? "New to exercise" : level.label === "Intermediate" ? "Some experience" : "Highly experienced"}
                     </span>
                   </label>
                 </div>
@@ -405,30 +413,25 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
 
       {/* Navigation Buttons */}
       <div className="flex justify-between space-x-4 mt-8">
-        <button
-          onClick={onBack}
-          type="button"
-          className="font-medium py-2 px-4 rounded-md transition-colors duration-200 bg-zinc-700 text-white hover:bg-zinc-600 border-none"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 mr-2">
-            <path
-              fillRule="evenodd"
-              d="M17 10a.75.75 0 0 1-.75.75H5.811l3.97 3.97a.75.75 0 1 1-1.06 1.06l-5.25-5.25a.75.75 0 0 1 0-1.06l5.25-5.25a.75.75 0 1 1 1.06 1.06L5.811 9.25H16.25A.75.75 0 0 1 17 10Z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Back
-        </button>
-        <button type="submit" className="font-medium py-2 px-4 transition-colors duration-200 bg-white text-black hover:bg-gray-200 rounded-md">
-          Next
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 ml-2">
-            <path
-              fillRule="evenodd"
-              d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
+        <div className="flex justify-end space-x-4 mt-8">
+          <button
+            type="button"
+            onClick={onBack}
+            className="cursor-pointer font-medium py-2 px-4 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75"
+          >
+            <IoMdArrowBack />
+            Back
+          </button>
+        </div>
+        <div className="flex justify-end space-x-4 mt-8">
+          <button
+            type="submit"
+            className="cursor-pointer font-medium py-2 px-4 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75"
+          >
+            Next
+            <IoMdArrowForward />
+          </button>
+        </div>
       </div>
     </form>
   );

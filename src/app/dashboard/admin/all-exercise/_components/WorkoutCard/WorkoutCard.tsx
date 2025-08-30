@@ -49,14 +49,15 @@ export function WorkoutCard({ title, description, duration, difficulty, thumbnai
 
         {/* Action buttons */}
         <div className="flex gap-2 pt-2">
-          
-          <Button
-            variant={"outline"}
-            size="sm"
-            className="flex-1 cursor-pointer bg-transparent border-secondary rounded-none text-white hover:bg-gray-800 hover:text-white py-2"
-          >
-            View Details
-          </Button>
+          <Link href={"/dashboard/admin/all-exercise/view-details/1"} className="flex-1 w-full">
+            <Button
+              variant={"outline"}
+              size="sm"
+              className="flex-1 cursor-pointer bg-transparent border-secondary rounded-none text-white hover:bg-gray-800 hover:text-white py-2 w-full"
+            >
+              View Details
+            </Button>
+          </Link>
           <Link href={"/dashboard/admin/all-exercise/video/1"} className="flex-1 w-full">
             <Button
               size="sm"

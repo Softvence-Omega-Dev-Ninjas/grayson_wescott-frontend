@@ -14,57 +14,106 @@ import { NavMain } from "./NavMain";
 import { NavUser } from "./NavUser";
 import Link from "next/link";
 import Image from "next/image";
-
+import { usePathname } from "next/navigation";
+const isVisible = (path: string, pathname: string) => {
+  return pathname?.startsWith(path) ?? false;
+};
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const data = {
-    navMain: [
-      {
-        title: "Dashboard",
-        url: "/dashboard/admin/overview",
-        icon: dashboardIcon.src,
-        show: true,
-      },
-      {
-        title: "All Clients",
-        url: "/dashboard/admin/all-clients",
-        icon: clientIcon.src,
-        show: true,
-      },
-      {
-        title: "Clients Program Builder",
-        url: "/dashboard/admin/clients-programm-builders",
-        icon: calendarIcon.src,
-        show: true,
-      },
-      {
-        title: "Exercise Library",
-        icon: dumballIcon.src,
-        show: true,
-        items: [
-          { title: "All Exercise", url: "/dashboard/admin/all-exercise" },
-          { title: "Add Exercise", url: "/dashboard/admin/add-exercise" },
-        ],
-      },
-      {
-        title: "Progress Tracking",
-        url: "/dashboard/admin/progress-tracking",
-        icon: progressIcon.src,
-        show: true,
-      },
-      {
-        title: "Messages",
-        url: "/dashboard/admin/messages",
-        icon: messageIcon.src,
-        show: true,
-      },
-      {
-        title: "Settings",
-        url: "/dashboard/admin/settings",
-        icon: settingsIcon.src,
-        show: true,
-      },
-    ],
-  };
+  const pathname = usePathname();
+
+  const navMain = [
+    {
+      title: "Dashboard",
+      url: "/dashboard/admin/overview",
+      icon: dashboardIcon.src,
+      show: isVisible("/dashboard/admin", pathname),
+    },
+    {
+      title: "All Clients",
+      url: "/dashboard/admin/all-clients",
+      icon: clientIcon.src,
+      show: isVisible("/dashboard/admin", pathname),
+    },
+    {
+      title: "Clients Program Builder",
+      url: "/dashboard/admin/clients-programm-builders",
+      icon: calendarIcon.src,
+      show: isVisible("/dashboard/admin", pathname),
+    },
+    {
+      title: "Exercise Library",
+      icon: dumballIcon.src,
+      show: isVisible("/dashboard/admin", pathname), // parent visible if we’re inside /dashboard/admin/*
+      items: [
+        {
+          title: "All Exercise",
+          url: "/dashboard/admin/all-exercise",
+          show: isVisible("/dashboard/admin", pathname),
+        },
+        {
+          title: "Add Exercise",
+          url: "/dashboard/admin/add-exercise",
+          show: isVisible("/dashboard/admin", pathname),
+        },
+      ],
+    },
+    {
+      title: "Progress Tracking",
+      url: "/dashboard/admin/progress-tracking",
+      icon: progressIcon.src,
+      show: isVisible("/dashboard/admin", pathname),
+    },
+    {
+      title: "Messages",
+      url: "/dashboard/admin/messages",
+      icon: messageIcon.src,
+      show: isVisible("/dashboard/admin", pathname),
+    },
+    {
+      title: "Settings",
+      url: "/dashboard/admin/settings",
+      icon: settingsIcon.src,
+      show: isVisible("/dashboard/admin", pathname),
+    },
+
+    //User Sidebar
+    {
+      title: "Dashboard",
+      url: "/dashboard/user/overview",
+      icon: dashboardIcon.src,
+      show: isVisible("/dashboard/user", pathname),
+    },
+    {
+      title: "Assigned Programs",
+      url: "/dashboard/user/assigned-programs",
+      icon: calendarIcon.src,
+      show: isVisible("/dashboard/user", pathname),
+    },
+    {
+      title: "Exercise Library",
+      url: "/dashboard/user/exercise-library",
+      icon: dumballIcon.src,
+      show: isVisible("/dashboard/user", pathname),
+    },
+    {
+      title: "Progress Tracking",
+      url: "/dashboard/user/progress-tracking",
+      icon: progressIcon.src,
+      show: isVisible("/dashboard/user", pathname),
+    },
+    {
+      title: "Messages",
+      url: "/dashboard/user/messages",
+      icon: messageIcon.src,
+      show: isVisible("/dashboard/user", pathname),
+    },
+    {
+      title: "Settings",
+      url: "/dashboard/user/settings",
+      icon: settingsIcon.src,
+      show: isVisible("/dashboard/user", pathname),
+    },
+  ];
 
   return (
     <Sidebar collapsible="offcanvas" {...props} className="bg-black">
@@ -84,7 +133,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent className="mt-2">
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
