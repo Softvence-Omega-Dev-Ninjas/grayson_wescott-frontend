@@ -1,68 +1,76 @@
-import PricingCard from "@/components/shared/main/PricingCard/PricingCard"
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader"
- 
+import PricingCard from "@/components/shared/main/PricingCard/PricingCard";
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import { Zap } from "lucide-react";
 
-
-
-function PricingSection( ) {
-    const pricing = [
+export const pricing = [
   {
-    title: "Protocol Core",
-    price: "$1,250",
-    batchText: "one-time",
-    subtitle: "$450 × 3 months",
-    features: ["LIFETIME ACCESS TO CORE SYSTEM"],
-    btn: "Choose Plan",
-    isEnable: false
+    title: "Self-Guided Systems",
+    tier: "Tier 1",
+    description: "Complete training programs delivered through Trainerize",
+    price: "$299",
+    billing: "/month",
+    features: [
+      "Mobility, Strength & Conditioning Systems.",
+      "Full video library access.",
+      "Progress tracking.",
+      "Automated onboarding.",
+      "Monthly auto pay.",
+    ],
+    buttonText: "Start Training",
+    isEnable: false,
+    Icon: Zap,
   },
   {
-    title: "Protocol + Elite Coaching",
+    title: "Elite Coaching",
+    tier: "Tier 1",
+    description: "Direct coaching oversight with program adjustments",
+    price: "$1,500",
+    billing: "/month",
+    features: ["Weekly program adjustments", "In-app messaging", "Limited video feedback", "Everything in Self-Guided"],
+    buttonText: "Start Training",
+    isEnable: true,
+    Icon: Zap,
+  },
+  {
+    title: "Executive Coaching",
+    tier: "Tier 2",
+    description: "Enhanced coaching with direct access and lifestyle integration",
+    price: "$2,400",
+    billing: "/month",
+    features: ["Everything in Tier 1", "Bi-weekly calls with Grayson", "Nutrition + lifestyle integration", "Faster response priority"],
+    buttonText: "Start Training",
+    isEnable: false,
+    Icon: Zap,
+  },
+  {
+    title: "Private Adonis Concierge",
+    tier: "Tier 3",
+    description: "Invite-only full lifestyle management",
     price: "$3,500",
-    batchText: "one-time",
-    subtitle: "$1,250 × 3 months",
+    billing: "/month",
     features: [
-      "MONTHLY 1-ON-1 CALL",
-      "PRIVATE COMMUNITY",
-      "PERSONALIZED PLAN ADJUSTMENTS",
-      "PRIORITY SUPPORT"
+      "Full Lifestyle management",
+      "Training, Nutrition & accountability",
+      "Near-direct access to Grayson",
+      "Limited client slots available",
     ],
-    btn: "Choose Plan",
-    isEnable: true
+    buttonText: "Start Training",
+    isEnable: false,
+    Icon: Zap,
   },
-  {
-    title: "Private Track",
-    price: "$10,000",
-    batchText: "starts at",
-    subtitle: "",
-    features: [
-      "WEEKLY CALLS",
-      "FULLY CUSTOMIZED PROGRAM",
-      "DIRECT ACCESS TO HEAD COACH",
-      "ELITE NETWORKING OPPORTUNITIES"
-    ],
-    btn: "Choose Plan",
-    isEnable: false
-  }
-]
+];
+function PricingSection() {
   return (
     <div>
+      <SectionHeader title="Choose Your Track" description="Select the configuration that matches your performance requirements" />
 
-        <SectionHeader title="Choose Your Track"
-        description="Select the configuration that matches your performance requirements"/>
-
-       
-        <div className="max-w-5xl mx-3 sm:mx-auto grid md:grid-cols-3 grid-cols-1 gap-12">
-
-            {pricing.map((item)=>(
-                <PricingCard key={item.title} item={item}/>
-            ))}
-
-        </div>
-      
-
-
+      <div className="container px-3 mx-auto grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-6">
+        {pricing.map((item, idx) => (
+          <PricingCard key={idx} item={item} />
+        ))}
+      </div>
     </div>
-  )
+  );
 }
 
-export default PricingSection
+export default PricingSection;
