@@ -77,7 +77,10 @@ export default function Header() {
             <AvatarImage src="/profile.jpg" alt="profile" />
             <AvatarFallback>AD</AvatarFallback>
           </Avatar>
-          <Button style={{ backgroundColor: "var(--color-secondary)" }} className="text-white px-5 py-5 hidden sm:flex cursor-pointer">
+          <Button
+            style={{ backgroundColor: "var(--color-secondary)" }}
+            className="text-white px-5 py-5 hidden sm:flex cursor-pointer"
+          >
             Start your engine
           </Button>
 
@@ -95,7 +98,7 @@ export default function Header() {
                     <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="hover:text-sky-400">
                       {link.label}
                     </Link>
-                  ))}
+                  ))} 
                 </nav>
               </SheetContent>
             </Sheet>

@@ -14,18 +14,18 @@ import { RecentMessages } from "./_components/RecentMessages/RecentMessages";
 
 const statesData = [
   {
-    title: "Total Clients",
+    title: "All Video",
     value: "247",
     icon: FaRegCirclePlay,
   },
   {
-    title: "Active Clients",
+    title: "Total Training",
     value: "189",
     icon: MdOutlineCalendarMonth,
   },
   {
-    title: "Monthly Revenue",
-    value: "$18,240",
+    title: "Training Completed",
+    value: "55",
     icon: FaRegCalendarCheck,
   },
 ];
