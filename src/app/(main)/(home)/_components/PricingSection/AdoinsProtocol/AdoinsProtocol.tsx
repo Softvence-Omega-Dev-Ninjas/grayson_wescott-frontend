@@ -43,7 +43,7 @@ const AdonisProtocol = () => {
               </li>
             ))}
           </ul>
-          <Button className="w-full mt-8 lg:mt-6 bg-transparent text-gray-100 border border-[#F4F5F7] py-3 sm:py-4 transition-colors text-lg tracking-wider cursor-pointer">
+          <Button className="mt-8 lg:mt-6 bg-transparent text-gray-100 border border-[#F4F5F7] py-3 sm:py-4 transition-colors text-lg tracking-wider cursor-pointer">
             Apply for Invitation
           </Button>
         </div>
