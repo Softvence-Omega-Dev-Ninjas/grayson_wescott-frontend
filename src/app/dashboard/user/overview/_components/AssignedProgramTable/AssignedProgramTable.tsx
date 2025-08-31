@@ -51,7 +51,7 @@ const assignedPrograms = [
 
 export function AssignedProgramTable() {
   return (
-    <div className="mt-10 rounded-lg overflow-hidden bg-primary-200 text-white p-5">
+    <div className="mt-10 overflow-hidden bg-primary-200 text-white p-5">
       {/* Header */}
       <div className="flex justify-between items-center py-3">
         <h1 className="text-lg font-semibold">Assigned Programs</h1>
@@ -95,7 +95,10 @@ export function AssignedProgramTable() {
                 </div>
 
                 {/* View Details Button */}
-                <Button variant="outline" className="w-full md:w-auto text-white border-none bg-[#0B1A2A] cursor-pointer">
+                <Button
+                  variant="outline"
+                  className="w-full md:w-auto text-white border-none bg-[#0B1A2A] hover:bg-secondary hover:text-white cursor-pointer"
+                >
                   View Details
                 </Button>
               </div>

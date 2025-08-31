@@ -10,6 +10,7 @@ import pic2 from "@/assets/dashboard/excercise-library/barbell-back-squat-exerci
 import pic3 from "@/assets/dashboard/excercise-library/barbell-back-squat-workout.png";
 import pic4 from "@/assets/dashboard/excercise-library/barbell-exercise-training.png";
 import { AssignedProgramTable } from "./_components/AssignedProgramTable/AssignedProgramTable";
+import { RecentMessages } from "./_components/RecentMessages/RecentMessages";
 
 const statesData = [
   {
@@ -84,7 +85,7 @@ const UserOverview = () => {
       <div className="mt-10">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <h1 className="text-xl font-bold">Exercise Library</h1>
-          <Button className="bg-secondary border border-slate-400">View More</Button>
+          <Button className="bg-secondary border border-slate-400 cursor-pointer">View More</Button>
         </div>
         <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
           {workoutData.map((workout) => (
@@ -93,6 +94,7 @@ const UserOverview = () => {
         </div>
       </div>
       <AssignedProgramTable />
+      <RecentMessages />
     </div>
   );
 };

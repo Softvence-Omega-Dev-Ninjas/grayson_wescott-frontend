@@ -1,73 +1,73 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
-import Image from "next/image"
-import logo from '../../../../assets/header/logo.png'
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import Image from "next/image";
+import logo from "../../../../assets/header/logo.png";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const [open, setOpen] = useState(false)
-  const pathname = usePathname()
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/programs", label: "Programs" },
     { href: "/coaching", label: "Coaching" },
     { href: "/adonis-protocol", label: "Adonis Protocol" },
+    { href: "/pricing", label: "Pricing" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
-  ]
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        setIsScrolled(true)
+        setIsScrolled(true);
       } else {
-        setIsScrolled(false)
+        setIsScrolled(false);
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 py-1 transition-all duration-300 ${isScrolled ? 'bg-black/70 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 py-1 transition-all duration-300 ${
+        isScrolled ? "bg-black/70 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
+    >
       <div className="md:container mx-auto flex items-center justify-between px-6 py-3">
-        
         {/* Left: Logo */}
         <div className="text-2xl font-bold text-white">
           <Link href="/">
-          <Image src={logo} alt="logo"></Image>
+            <Image src={logo} alt="logo"></Image>
           </Link>
         </div>
 
         {/* Middle: Nav Links (desktop) */}
         <div className="hidden xl:flex space-x-12 text-white text-lg">
           {navLinks.map((link) => {
-            const isActive = pathname === link.href
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`pb-1 transition ${
-                  isActive
-                    ? "border-b-2 border-white"
-                    : "hover:border-b-2 hover:border-gray-400"
-                }`}
+                className={`pb-1 transition ${isActive ? "border-b-2 border-white" : "hover:border-b-2 hover:border-gray-400"}`}
               >
                 {link.label}
               </Link>
-            )
+            );
           })}
         </div>
 
@@ -92,12 +92,7 @@ export default function Header() {
               <SheetContent side="left" className="bg-black/95 text-white">
                 <nav className="flex flex-col space-y-6 mt-10 text-lg">
                   {navLinks.map((link) => (
-                    <Link 
-                      key={link.href} 
-                      href={link.href} 
-                      onClick={() => setOpen(false)}
-                      className="hover:text-sky-400"
-                    >
+                    <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="hover:text-sky-400">
                       {link.label}
                     </Link>
                   ))}
@@ -108,5 +103,5 @@ export default function Header() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
