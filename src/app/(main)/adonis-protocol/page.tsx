@@ -9,8 +9,8 @@ import PricingSection from "../(home)/_components/PricingSection/PricingSection"
 import TeamSection from "../(home)/_components/TeamSection/TeamSection";
 import AccordionSection from "../(home)/_components/Accordion/AccordionSection";
 import AdonisCtaSection from "./_components/CtaSection/AdonisCtaSection";
-
-
+import AdonisProtocol from "../(home)/_components/PricingSection/AdoinsProtocol/AdoinsProtocol";
+import AddonPrincingPack from "../(home)/_components/PricingSection/AddonPrincingPack/AddonPrincingPack";
 
 function AdonisProtocolPage() {
   return (
@@ -22,42 +22,38 @@ function AdonisProtocolPage() {
         button1="Apply for Adonis Protocol"
       />
 
-       <div className=" bg-[#151519] flex justify-center items-center">
-        <SectionHeader
-          title="The Five Pillars"
-          description="Master these foundations to become the man you were meant to be"
-        />
+      <div className=" bg-[#151519] flex justify-center items-center">
+        <SectionHeader title="The Five Pillars" description="Master these foundations to become the man you were meant to be" />
       </div>
 
       <div className="md:py-12">
-        <FivePillars/>
+        <FivePillars />
       </div>
 
       <div className="md:py-12">
-        <WhatYouGet/>
+        <WhatYouGet />
       </div>
 
       <div className="md:py-12">
-        <ModulePreview/>
+        <ModulePreview />
       </div>
 
       <div className="md:py-12">
-        <PricingSection/>
-      </div>
-      
-       <div className="md:py-12">
-       <TeamSection/>
+        <AdonisProtocol />
+        <AddonPrincingPack />
       </div>
 
       <div className="md:py-12">
-       <AccordionSection/>
+        <TeamSection />
       </div>
 
-       <div className="md:py-12">
-       <AdonisCtaSection/>
+      <div className="md:py-12">
+        <AccordionSection />
       </div>
 
-
+      <div className="md:py-12">
+        <AdonisCtaSection />
+      </div>
     </div>
   );
 }
