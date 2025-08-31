@@ -35,7 +35,9 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
           <div className="p-2 z-0">
             <div className="sm:p-5  min-h-[calc(100vh-80px-60px)]">{children}</div>
           </div>
-          {/* <footer className="w-full px-4 py-3 text-sm text-gray-600 dark:text-gray-400 text-center">© 2025 Notefy. All rights reserved.</footer> */}
+          <footer className="w-full px-4 py-6 bg-primary-200 text-sm text-white text-center">
+            Carbon Engines Admin — Precision in Every Rep, Control in Every Detail.
+          </footer>
         </SidebarInset>
       </SidebarProvider>
     </div>
