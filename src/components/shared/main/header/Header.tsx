@@ -1,14 +1,17 @@
+
+
 "use client"
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import Image from "next/image"
 import logo from '../../../../assets/header/logo.png'
 import { usePathname } from "next/navigation"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -26,28 +29,25 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
+      setIsScrolled(window.scrollY > 50)
     }
 
     window.addEventListener("scroll", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
+    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 py-1 transition-all duration-300 ${isScrolled ? 'bg-black/70 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 py-1 transition-all duration-300 ${
+        isScrolled ? "bg-black/70 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
+    >
       <div className="md:container mx-auto flex items-center justify-between px-6 py-3">
         
         {/* Left: Logo */}
         <div className="text-2xl font-bold text-white">
           <Link href="/">
-          <Image src={logo} alt="logo"></Image>
+            <Image src={logo} alt="logo" />
           </Link>
         </div>
 
@@ -77,7 +77,10 @@ export default function Header() {
             <AvatarImage src="/profile.jpg" alt="profile" />
             <AvatarFallback>AD</AvatarFallback>
           </Avatar>
-          <Button style={{ backgroundColor: "var(--color-secondary)" }} className="text-white px-5 py-5 hidden sm:flex cursor-pointer">
+          <Button
+            style={{ backgroundColor: "var(--color-secondary)" }}
+            className="text-white px-5 py-5 hidden sm:flex cursor-pointer"
+          >
             Start your engine
           </Button>
 
@@ -90,17 +93,24 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="bg-black/95 text-white">
-                <nav className="flex flex-col space-y-6 mt-10 text-lg">
+                {/* Hidden title for accessibility */}
+                <SheetHeader>
+                  <VisuallyHidden>
+                    <SheetTitle>Navigation Menu</SheetTitle>
+                  </VisuallyHidden>
+                </SheetHeader>
+
+                <nav className="flex flex-col ml-8 space-y-6 mt-10 text-lg">
                   {navLinks.map((link) => (
-                    <Link 
-                      key={link.href} 
-                      href={link.href} 
+                    <Link
+                      key={link.href}
+                      href={link.href}
                       onClick={() => setOpen(false)}
                       className="hover:text-sky-400"
                     >
                       {link.label}
                     </Link>
-                  ))}
+                  ))} 
                 </nav>
               </SheetContent>
             </Sheet>
