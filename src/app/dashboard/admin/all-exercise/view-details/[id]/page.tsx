@@ -97,7 +97,7 @@ const ViewExcerciseDetailsPage = () => {
           {/* Video Player */}
           <div className="relative">
             <Image src={pic} alt="Upload Icon" className="w-full h-[500px] object-fill" />
-            <Link href={"/dashboard/user/exercise-library/video/1"} className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-1/2">
+            <Link href={"/dashboard/admin/all-exercise/video/1"} className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-1/2">
               <Button className="flex items-center justify-center gap-1.5 bg-[#7DA6FF]  py-4  px-10 cursor-pointer">
                 <FaPlay />
                 <span>Play Full Video</span>

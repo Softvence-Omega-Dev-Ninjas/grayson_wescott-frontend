@@ -9,7 +9,7 @@ import CarbonApproach from "./_components/CarbonApproach/CarbonApproach";
 import CorePhilosophy from "./_components/CorePhilosophy/CorePhilosophy";
 import TestimonialSectio from "../TestimonialSection/TestimonialSectio";
 import CTA from "@/components/shared/main/CTA/CTA";
-import abotImage from "@/assets/about/aboutSideBg.jpg";
+import aboutImage from "@/assets/about/aboutSideBg.png";
 const workWithData = [
   { title: "Athletes chasing dominance in their sport" },
   { title: "High performers demanding strength that matches their ambition" },
@@ -57,16 +57,16 @@ const AboutPage = () => {
         </div>
       </div>
       <div className="mt-28 space-y-10">
+        <SectionHeader title="THE CARBON APPROACH" description="Scientific methodology meets engineered precision." />
+
+        <CarbonApproach />
+      </div>
+      <div className="mt-28 space-y-10">
         <SectionHeader title="Carbon Values" description="THE FOUNDATION OF EVERYTHING WE BUILD" />
 
         <CarbonValues />
       </div>
 
-      <div className="mt-28 space-y-10">
-        <SectionHeader title="THE CARBON APPROACH" description="Scientific methodology meets engineered precision." />
-
-        <CarbonApproach />
-      </div>
       <div className="mt-28 space-y-10">
         <CorePhilosophy />
       </div>
@@ -77,7 +77,7 @@ const AboutPage = () => {
         <CTA
           title="READY TO BE ENGINEERED?"
           description="Join the elite. Become unbreakable. Start your transformation."
-          img={abotImage.src}
+          img={aboutImage.src}
           btn1="START YOUR ENGINE"
         />
       </div>

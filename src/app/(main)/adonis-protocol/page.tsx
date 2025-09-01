@@ -5,7 +5,6 @@ import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader"
 import FivePillars from "./_components/FivePillars/FivePillars";
 import WhatYouGet from "./_components/WhatYouWillGet/WhatYouGet";
 import ModulePreview from "./_components/ModulePreview/ModulePreview";
-import PricingSection from "../(home)/_components/PricingSection/PricingSection";
 import TeamSection from "../(home)/_components/TeamSection/TeamSection";
 import AccordionSection from "../(home)/_components/Accordion/AccordionSection";
 import AdonisCtaSection from "./_components/CtaSection/AdonisCtaSection";
@@ -14,7 +13,7 @@ import AddonPrincingPack from "../(home)/_components/PricingSection/AddonPrincin
 
 function AdonisProtocolPage() {
   return (
-    <div>
+    <div className="pb-20">
       <HeroBanner
         title="A complete body and mind recalibration—built for those unwilling to settle for less than apex form."
         subtitle="Physique, grooming, social mastery, discipline. Built for men who refuse average."
