@@ -1,6 +1,6 @@
 import PricingCard from "@/components/shared/main/PricingCard/PricingCard";
 import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import { Zap } from "lucide-react";
+import { Crown, Star, User, Zap } from "lucide-react";
 
 export const pricing = [
   {
@@ -24,12 +24,12 @@ export const pricing = [
     title: "Elite Coaching",
     tier: "Tier 1",
     description: "Direct coaching oversight with program adjustments",
-    price: "$1,500",
+    price: "$1,600",
     billing: "/month",
     features: ["Weekly program adjustments", "In-app messaging", "Limited video feedback", "Everything in Self-Guided"],
     buttonText: "Start Training",
     isEnable: true,
-    Icon: Zap,
+    Icon: User,
   },
   {
     title: "Executive Coaching",
@@ -40,7 +40,7 @@ export const pricing = [
     features: ["Everything in Tier 1", "Bi-weekly calls with Grayson", "Nutrition + lifestyle integration", "Faster response priority"],
     buttonText: "Start Training",
     isEnable: false,
-    Icon: Zap,
+    Icon: Star,
   },
   {
     title: "Private Adonis Concierge",
@@ -56,7 +56,7 @@ export const pricing = [
     ],
     buttonText: "Start Training",
     isEnable: false,
-    Icon: Zap,
+    Icon: Crown,
   },
 ];
 function PricingSection() {

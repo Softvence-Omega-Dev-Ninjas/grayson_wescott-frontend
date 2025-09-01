@@ -1,14 +1,13 @@
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard"
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader"
- 
-import down from '../../../../../assets/home/eliteprotocol/arrow.png'
-import up from '../../../../../assets/home/eliteprotocol/uparrow.png'
-import target from '../../../../../assets/home/eliteprotocol/target.png'
-import play from '../../../../../assets/home/eliteprotocol/play.png'
-import circle from '../../../../../assets/home/eliteprotocol/circle.png'
-import { Button } from "@/components/ui/button"
+import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
 
- 
+import down from "../../../../../assets/home/eliteprotocol/arrow.png";
+import up from "../../../../../assets/home/eliteprotocol/uparrow.png";
+import target from "../../../../../assets/home/eliteprotocol/target.png";
+import play from "../../../../../assets/home/eliteprotocol/play.png";
+import circle from "../../../../../assets/home/eliteprotocol/circle.png";
+import { Button } from "@/components/ui/button";
+
 function EliteProtocalModule() {
   const d = [
     {
@@ -57,7 +56,7 @@ function EliteProtocalModule() {
             ))}
           </div>
           <div className="flex items-center justify-center mt-14">
-            <Button className="bg-[#B9BDC6] uppercase text-black px-6 py-4 rounded-none hover:bg-[#a5a8ae] cursor-pointer">
+            <Button className="bg-[#B9BDC6] uppercase text-black px-6 py-4 rounded-none text-lg font-medium hover:bg-[#a5a8ae] cursor-pointer">
               EXPLORE THE COLLECTION
             </Button>
           </div>

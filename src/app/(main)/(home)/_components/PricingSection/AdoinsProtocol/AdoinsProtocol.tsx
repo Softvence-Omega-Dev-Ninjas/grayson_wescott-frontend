@@ -23,7 +23,7 @@ const AdonisProtocol = () => {
               </span>
             </div>
             {/* Flagship Program Badge */}
-            <div className="bg-[#B9BDC6] text-gray-700 text-xs px-4 py-1 rounded-full uppercase tracking-wider font-semibold">Flagship Program</div>
+            <div className="bg-[#B9BDC6] text-gray-700 text-xs px-4 py-1 uppercase tracking-wider font-semibold">Flagship Program</div>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4">The Adonis Protocol</h1>
           <p className="text-sm sm:text-base text-gray-200 leading-relaxed">The pinnacle of performance optimization • Invitation only</p>

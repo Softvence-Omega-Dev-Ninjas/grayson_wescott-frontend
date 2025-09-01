@@ -1,6 +1,7 @@
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader'
- 
-import React from 'react'
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import { Button } from "@/components/ui/button";
+
+import React from "react";
 
 function StartBuild() {
   return (
@@ -11,9 +12,9 @@ function StartBuild() {
       />
 
       <div className="flex justify-center">
-        <button className="font-semibold bg-[#B9BDC6] py-3 px-5 w-fit mx-auto cursor-pointer text-black transition-all ease-in-out hover:bg-[#1A1A1A] hover:text-white">
+        <Button className=" bg-[#B9BDC6] hover:bg-[#B9BDC6]/80 py-3 px-6 text-xl font-medium w-fit mx-auto cursor-pointer text-black transition-all ease-in-out ">
           Start Your Build
-        </button>
+        </Button>
       </div>
     </div>
   );

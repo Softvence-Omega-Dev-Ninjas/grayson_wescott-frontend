@@ -9,6 +9,7 @@ import { Menu } from "lucide-react";
 import Image from "next/image";
 import logo from "../../../../assets/header/logo.png";
 import { usePathname } from "next/navigation";
+import profileIcon from "@/assets/home/profileIcon.png";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -73,14 +74,11 @@ export default function Header() {
 
         {/* Right: Profile + Button */}
         <div className="flex items-center space-x-4">
-          <Avatar className="w-10 h-10 border-2 border-white">
-            <AvatarImage src="/profile.jpg" alt="profile" />
+          <Avatar className="border-none size-8">
+            <AvatarImage src={profileIcon.src} alt="profile" />
             <AvatarFallback>AD</AvatarFallback>
           </Avatar>
-          <Button
-            style={{ backgroundColor: "var(--color-secondary)" }}
-            className="text-white px-5 py-5 hidden sm:flex cursor-pointer"
-          >
+          <Button style={{ backgroundColor: "var(--color-secondary)" }} className="text-white text-lg px-5 py-3 hidden sm:flex cursor-pointer">
             Start your engine
           </Button>
 
@@ -98,7 +96,7 @@ export default function Header() {
                     <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="hover:text-sky-400">
                       {link.label}
                     </Link>
-                  ))} 
+                  ))}
                 </nav>
               </SheetContent>
             </Sheet>

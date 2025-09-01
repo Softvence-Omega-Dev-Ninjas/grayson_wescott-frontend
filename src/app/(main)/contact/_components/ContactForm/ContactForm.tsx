@@ -5,6 +5,8 @@
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
+import CTA from "@/components/shared/main/CTA/CTA";
+import contactImg from "@/assets/about/contactSideBg.jpg";
 
 const MapComponent = dynamic(() => import("@/app/(main)/contact/_components/MapContact/MapContact"), { ssr: false });
 
@@ -172,7 +174,7 @@ const ContactForm = () => {
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    className="w-full bg-gray-700 hover:bg-gray-600 text-white py-3 px-6 rounded transition-colors duration-200 font-medium tracking-wide"
+                    className="w-full bg-[#B9BDC6] hover:bg-[#B9BDC6]/80 text-black py-3 px-6 font-semibold transition-colors duration-200 tracking-wide cursor-pointer"
                   >
                     SEND TO THE ENGINEER
                   </button>
@@ -193,6 +195,9 @@ const ContactForm = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="my-28 space-y-10">
+        <CTA title="READY TO BUILD THE UNBREAKABLE?" img={contactImg.src} btn1="START YOUR BUILD" />
       </div>
     </div>
   );
