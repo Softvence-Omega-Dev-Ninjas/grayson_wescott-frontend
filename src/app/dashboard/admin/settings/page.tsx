@@ -19,37 +19,37 @@ export default function SettingsPage() {
   <TabsList className="bg-[#151519] grid w-full grid-cols-3 md:grid-cols-6 p-1 h-auto">
     <TabsTrigger
       value="general"
-      className="text-xs md:text-sm py-2 text-white data-[state=active]:text-black"
+      className="text-xs md:text-sm py-2 text-white "
     >
       General
     </TabsTrigger>
     <TabsTrigger
       value="admin-profile"
-      className="text-xs md:text-sm py-2 text-white data-[state=active]:text-black"
+      className="text-xs md:text-sm py-2 text-white "
     >
       Admin Profile
     </TabsTrigger>
     <TabsTrigger
       value="clients-access"
-      className="text-xs md:text-sm py-2 text-white data-[state=active]:text-black"
+      className="text-xs md:text-sm py-2 text-white "
     >
       Clients Access
     </TabsTrigger>
     <TabsTrigger
       value="payments"
-      className="text-xs md:text-sm py-2 text-white data-[state=active]:text-black"
+      className="text-xs md:text-sm py-2 text-white "
     >
       Payments
     </TabsTrigger>
     <TabsTrigger
       value="notifications"
-      className="text-xs md:text-sm py-2 text-white data-[state=active]:text-black"
+      className="text-xs md:text-sm py-2 text-white "
     >
       Notifications
     </TabsTrigger>
     <TabsTrigger
       value="security"
-      className="text-xs md:text-sm py-2 text-white data-[state=active]:text-black"
+      className="text-xs md:text-sm py-2 text-white "
     >
       Security
     </TabsTrigger>

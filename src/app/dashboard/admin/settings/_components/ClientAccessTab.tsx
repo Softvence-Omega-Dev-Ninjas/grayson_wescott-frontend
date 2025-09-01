@@ -130,25 +130,24 @@ export function ClientsAccessTab() {
                         </div>
                         <div className="flex flex-col  ">
                           <p className="font-medium text-white">{tier.name}</p>
-                          <Badge variant="secondary" className="text-white/30">
+                          <Badge variant="secondary" className="text-white/80">
                             {tier.description}
                           </Badge>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
-                        
                         <p className="text-2xl font-bold text-white">
                           {tier.total.toLocaleString()}
                         </p>
                       </div>
                     </div>
                     <div className="flex flex-col text-sm text-muted-foreground mt-1">
-                      <div className="flex justify-between">
+                      <div className="flex justify-between text-white/70">
                         <p>Active Clients:</p>
                         <p>{tier.active.toLocaleString()}</p>
                       </div>
 
-                      <div className="flex justify-between">
+                      <div className="flex justify-between text-white/70">
                         <p>In-Active Clients:</p>
                         <p>{tier.active.toLocaleString()}</p>
                       </div>
@@ -162,63 +161,68 @@ export function ClientsAccessTab() {
       </div>
 
       {/* Default Role Permissions */}
-      <Card className="bg-black">
+      <Card className="bg-black border-gray-600">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-white">Default Role Permissions</CardTitle>
-            <Button variant="outline" size="sm">
+            <CardTitle className="text-white">
+              Default Role Permissions
+            </CardTitle>
+            <Button
+              variant="outline"
+              size="sm"
+              className=" bg-secondary text-white border-transparent cursor-pointer hover:bg-secondary hover:text-white rounded-none"
+            >
               <Settings className="h-4 w-4 mr-2" />
               Configure
             </Button>
           </div>
         </CardHeader>
-      <CardContent>
-  <div className="overflow-x-auto border">
-    <table className="w-full text-white bg-[#151519]">
-      <thead>
-        <tr className="border-b border-gray-900">
-          <th className="text-left py-3 px-4 font-medium">Feature</th>
-          <th className="text-center py-3 px-4 font-medium">Core</th>
-          <th className="text-center py-3 px-4 font-medium">Elite</th>
-          <th className="text-center py-3 px-4 font-medium">Private</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-border">
-        {permissionsData.map((row) => (
-          <tr key={row.id} className="hover:bg-muted/20">
-            <td className="py-3 px-4 font-medium">{row.feature}</td>
-            <td className="py-3 px-4 text-center">
-              {row.core ? (
-                <Check className="h-5 w-5 text-green-500 mx-auto" />
-              ) : (
-                <X className="h-5 w-5 text-red-500 mx-auto" />
-              )}
-            </td>
-            <td className="py-3 px-4 text-center">
-              {row.elite ? (
-                <Check className="h-5 w-5 text-green-500 mx-auto" />
-              ) : (
-                <X className="h-5 w-5 text-red-500 mx-auto" />
-              )}
-            </td>
-            <td className="py-3 px-4 text-center">
-              {row.private ? (
-                <Check className="h-5 w-5 text-green-500 mx-auto" />
-              ) : (
-                <X className="h-5 w-5 text-red-500 mx-auto" />
-              )}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</CardContent>
-
+        <CardContent>
+          <div className="overflow-x-auto border">
+            <table className="w-full text-white bg-black">
+              <thead className="bg-secondary">
+                <tr className=" border-secondary">
+                  <th className="text-left py-3 px-4 font-medium">Feature</th>
+                  <th className="text-center py-3 px-4 font-medium">Core</th>
+                  <th className="text-center py-3 px-4 font-medium">Elite</th>
+                  <th className="text-center py-3 px-4 font-medium">Private</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {permissionsData.map((row) => (
+                  <tr key={row.id} className="hover:bg-muted/20 border-b-gray-900">
+                    <td className="py-3 px-4 font-medium">{row.feature}</td>
+                    <td className="py-3 px-4 text-center">
+                      {row.core ? (
+                        <Check className="h-5 w-5 text-green-500 mx-auto" />
+                      ) : (
+                        <X className="h-5 w-5 text-red-500 mx-auto" />
+                      )}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {row.elite ? (
+                        <Check className="h-5 w-5 text-green-500 mx-auto" />
+                      ) : (
+                        <X className="h-5 w-5 text-red-500 mx-auto" />
+                      )}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      {row.private ? (
+                        <Check className="h-5 w-5 text-green-500 mx-auto" />
+                      ) : (
+                        <X className="h-5 w-5 text-red-500 mx-auto" />
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Account Status Rules */}
-      <Card className="bg-black border-gray-900">
+      <Card className="bg-black border-gray-600">
         <CardHeader>
           <CardTitle className="text-white">Account Status Rules</CardTitle>
           <p className="text-sm text-muted-foreground">

@@ -39,11 +39,11 @@ export function AdminProfileTab() {
     <div className="space-y-6 text-white">
       <div className="grid grid-cols-1  gap-6">
         {/* My Profile */}
-        <Card className="bg-black border-gray-900 border-2">
+        <Card className="bg-black border-secondary border-2">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white">My Profile</CardTitle>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="bg-secondary text-white border-transparent cursor-pointer hover:bg-secondary hover:text-white rounded-none">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
               </Button>
@@ -64,7 +64,7 @@ export function AdminProfileTab() {
               <Label htmlFor="password" className="text-white">Password</Label>
               <div className="flex gap-2">
                 <Input id="password" type="password" placeholder="••••••••" className="flex-1 text-white" />
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="bg-secondary text-white border-transparent cursor-pointer hover:bg-secondary hover:text-white rounded-none">
                   Reset Password
                 </Button>
               </div>
@@ -85,7 +85,7 @@ export function AdminProfileTab() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white">Manage Admins</CardTitle>
-              <Button size="sm">
+              <Button size="sm" className="bg-secondary">
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Admin
               </Button>
@@ -116,14 +116,14 @@ export function AdminProfileTab() {
                   <div className="flex items-center gap-2">
                     <Badge
                       variant={admin.role === "Admin" ? "default" : "secondary"}
-                      className="text-white px-3 py-2"
+                      className="text-white px-3 py-2 bg-secondary"
                     >
                       {admin.role}
                     </Badge>
-                    <Button variant="ghost" size="sm" className="text-white">
+                    <Button variant="ghost" size="sm" className="  bg-secondary text-white border-transparent cursor-pointer hover:bg-secondary hover:text-white rounded-none">
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-white">
+                    <Button variant="ghost" size="sm" className="  bg-secondary text-white border-transparent cursor-pointer hover:bg-secondary hover:text-white rounded-none">
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
