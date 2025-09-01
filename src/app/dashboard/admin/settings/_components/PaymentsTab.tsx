@@ -189,14 +189,14 @@ export function PaymentsTab() {
               {subscriptionsData.map((sub) => (
                 <div
                   key={sub.id}
-                  className="flex items-center justify-between p-3 bg-muted/20 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-secondary rounded-lg"
                 >
                   <div className="flex-1">
                     <p className="font-medium">{sub.name}</p>
                     <p className="text-sm text-gray-400">{sub.email}</p>
                   </div>
                   <div className="flex items-center gap-4 text-sm">
-                    <Badge variant="secondary" className="text-black">
+                    <Badge variant="secondary" className="text-white/70">
                       {sub.plan}
                     </Badge>
                     <span className="text-gray-400">{sub.billing}</span>

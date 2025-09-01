@@ -66,13 +66,13 @@ export function GeneralTab() {
             <div className="space-y-2">
               <Label className="text-white">Dashboard Logo</Label>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-muted/20 rounded-lg flex items-center justify-center">
-                  <Upload className="h-5 w-5 text-muted-foreground" />
+                <div className="w-12 h-12 bg-secondary cursor-pointer rounded-lg flex items-center justify-center">
+                  <Upload className="h-5 w-5 text-muted-foreground " />
                 </div>
                 <Button
                   variant="outline"
                   size="sm"
-                  className="bg-[#151519] text-white"
+                  className="bg-secondary text-white border-none cursor-pointer hover:bg-transparent hover:bg-secondary hover:text-white"
                 >
                   {platformSettings.logo.uploadText}
                 </Button>
