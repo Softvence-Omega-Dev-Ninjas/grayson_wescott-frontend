@@ -3,19 +3,20 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import logo from "../../../../assets/header/logo.png";
 import { usePathname } from "next/navigation";
-import profileIcon from "@/assets/home/profileIcon.png";
 import ProfileAvatar from "./_components/ProfileAvatar/ProfileAvatar";
+import useUser from "@/hooks/useUser";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { user, setIsLoading, setUser } = useUser();
+  console.log(user);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -65,7 +66,11 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`pb-1 transition ${isActive ? "border-b-2 border-white" : "hover:border-b-2 hover:border-gray-400"}`}
+                className={`pb-1 transition ${
+                  isActive
+                    ? "border-b-2 border-white"
+                    : "hover:border-b-2 hover:border-gray-400"
+                }`}
               >
                 {link.label}
               </Link>
@@ -79,10 +84,21 @@ export default function Header() {
             <AvatarImage src={profileIcon.src} alt="profile" />
             <AvatarFallback>AD</AvatarFallback>
           </Avatar> */}
-          <ProfileAvatar/>
-          <Button style={{ backgroundColor: "var(--color-secondary)" }} className="text-white text-lg px-5 py-3 hidden sm:flex cursor-pointer">
-            Start your engine
-          </Button>
+          <ProfileAvatar
+            user={user}
+            setIsLoading={setIsLoading}
+            setUser={setUser}
+          />
+          {!user && (
+            <Link href={"/login"}>
+              <Button
+                style={{ backgroundColor: "var(--color-secondary)" }}
+                className="text-white text-lg px-5 py-3 hidden sm:flex cursor-pointer"
+              >
+                Start your engine
+              </Button>
+            </Link>
+          )}
 
           {/* Mobile Menu (hamburger) */}
           <div className="xl:hidden">
@@ -95,7 +111,12 @@ export default function Header() {
               <SheetContent side="left" className="bg-black/95 text-white">
                 <nav className="flex flex-col space-y-6 mt-10 text-lg">
                   {navLinks.map((link) => (
-                    <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="hover:text-sky-400">
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="hover:text-sky-400"
+                    >
                       {link.label}
                     </Link>
                   ))}

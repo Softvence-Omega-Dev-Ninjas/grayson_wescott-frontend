@@ -17,8 +17,12 @@ import bg1 from "../../../assets/header/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { FaFacebookF, FaTwitter } from "react-icons/fa6";
-import { IoLogoGoogle } from "react-icons/io";
+import { FaFacebookF, FaSpinner, FaTwitter } from "react-icons/fa6";
+import { loginUser } from "@/services/auth";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import useUser from "@/hooks/useUser";
+import GoogleLogin from "./_components/GoogleLogin/GoogleLogin";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -28,6 +32,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const router = useRouter();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -36,10 +41,33 @@ export default function LoginPage() {
     },
   });
 
-  const [showPassword, setShowPassword] = useState(false);
+  const {
+    formState: { isSubmitting },
+  } = form;
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log(values);
+  const [showPassword, setShowPassword] = useState(false);
+  const { setUser, setIsLoading } = useUser();
+
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      const res = await loginUser(values);
+      if (res?.success) {
+        toast.success("Login successful!");
+        setUser(res?.data?.user);
+        setIsLoading(false);
+        if (res?.data?.user?.role === "USER") {
+          router.push(`/dashboard/user/overview`);
+        }
+        if (res?.data?.user?.role === "ADMIN") {
+          router.push(`/dashboard/admin/overview`);
+        }
+      } else {
+        toast.error(res?.message || "Login failed. Please try again later.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong. Please try again in a moment.");
+    }
   };
 
   return (
@@ -50,7 +78,7 @@ export default function LoginPage() {
         style={{
           backgroundImage: `url(${bg.src})`,
           backgroundSize: "cover",
-          backgroundPosition:"center"
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute left-12 top-1/2 -translate-y-1/2">
@@ -63,7 +91,9 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Log in</h1>
-            <p className="text-gray-200 text-xl font-semibold mb-1">Welcome back! 👋</p>
+            <p className="text-gray-200 text-xl font-semibold mb-1">
+              Welcome back! 👋
+            </p>
             <p className="text-gray-400 text-sm">
               Please sign in to your account and start the adventure
             </p>
@@ -139,7 +169,11 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3 cursor-pointer"
               >
-                Sign In
+                {isSubmitting ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  "Sign In"
+                )}
               </Button>
 
               {/* Register Link */}
@@ -154,20 +188,17 @@ export default function LoginPage() {
                   Create an account
                 </a>
               </div>
-
-              {/* Social Buttons */}
-              <div className="flex justify-center space-x-4 pt-4">
-                <button className="w-10 h-10 bg-white rounded flex items-center justify-center cursor-pointer">
-                  <FaFacebookF className="text-blue-500" />
-                </button>
-                <button className="w-10 h-10 bg-white rounded flex items-center justify-center cursor-pointer">
-                  <FaTwitter className="text-sky-400"/>
-                </button>
-                <button className="w-10 h-10 bg-white rounded flex items-center justify-center cursor-pointer">
-                  <IoLogoGoogle className="text-red-500" />
-                </button>
-              </div>
             </form>
+            {/* Social Buttons */}
+            <div className="flex justify-center space-x-4 pt-4">
+              <button className="w-9 h-9 bg-white rounded flex items-center justify-center cursor-pointer mt-0.5">
+                <FaFacebookF className="text-blue-500" />
+              </button>
+              <button className="w-9 h-9 bg-white rounded flex items-center justify-center cursor-pointer mt-0.5">
+                <FaTwitter className="text-sky-400" />
+              </button>
+              <GoogleLogin />
+            </div>
           </Form>
         </div>
       </div>

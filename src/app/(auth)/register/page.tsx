@@ -17,7 +17,7 @@ import bg1 from "../../../assets/header/logo.png";
 import Image from "next/image";
 import { RiUserLine } from "react-icons/ri";
 import { MdOutlineEmail } from "react-icons/md";
-import { FaFacebookF, FaTwitter } from "react-icons/fa6";
+import { FaFacebookF, FaSpinner, FaTwitter } from "react-icons/fa6";
 import { IoLogoGoogle } from "react-icons/io";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -46,6 +46,9 @@ export default function SignUpPage() {
       password: "",
     },
   });
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (values: SignUpFormValues) => {
     // The router has been removed for environment compatibility.
@@ -53,14 +56,20 @@ export default function SignUpPage() {
     console.log("[v0] Sign up form submitted:", values);
     try {
       const res = await registerUser(values);
-      console.log("res========>,", res);
+
       if (res?.success) {
-        toast.success(res?.message);
-        router.push("/login");
+        toast.success(
+          "Registration successful! We’ve sent a verification code to your email."
+        );
+        router.push(`/verify-otp?email=${values.email}`);
+      } else {
+        toast.error(
+          res?.message || "Registration failed. Please try again later."
+        );
       }
     } catch (error) {
-      console.log(error);
-      toast.success("Failed to register user. Try again later !!");
+      console.error(error);
+      toast.error("Something went wrong. Please try again in a moment.");
     }
   };
 
@@ -182,7 +191,11 @@ export default function SignUpPage() {
                 type="submit"
                 className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3 cursor-pointer"
               >
-                Sign Up
+                {isSubmitting ? (
+                  <FaSpinner className="animate-spin" />
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
 
               <div className="text-center">

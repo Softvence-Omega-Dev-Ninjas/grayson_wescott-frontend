@@ -8,16 +8,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {  LayoutDashboard, LogIn, LogOut, UserPlus } from "lucide-react";
+import { logout } from "@/services/auth";
+import { IUser } from "@/types/user.types";
+import { LayoutDashboard, LogIn, LogOut, UserPlus } from "lucide-react";
 import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 import { CgProfile } from "react-icons/cg";
-const ProfileAvatar = () => {
-  const user =  null;
-  const handleLogout = async () => {
-    // dispatch(logout());
-    // await logoutUser(undefined).unwrap();
-    // if (res?.success === true) {
-    //   navigate("/");
+
+export type TProfileAvatar = {
+  user: IUser | null;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  setUser: (user: IUser | null) => void;
+};
+
+const ProfileAvatar = ({ user, setIsLoading, setUser }: TProfileAvatar) => {
+  const handleLogOut = () => {
+    logout();
+    setIsLoading(true);
+    setUser(null);
+    // if (protectedRoutes.some((route) => pathname.match(route))) {
+    //   router.push("/");
     // }
   };
 
@@ -27,7 +37,10 @@ const ProfileAvatar = () => {
         <DropdownMenuTrigger asChild>
           {user ? (
             <Avatar className=" cursor-pointer flex items-center justify-center border-4 border-light-border dark:border-dark-muted-bg ml-4 lg:ml-0 w-12 h-12">
-              <AvatarImage src={user ? user?.avatarUrl : "https://github.com/shadcn.png"} alt="@shadcn" />
+              <AvatarImage
+                src={user ? user?.avatarUrl : "https://github.com/shadcn.png"}
+                alt="@shadcn"
+              />
               <AvatarFallback>DP</AvatarFallback>
             </Avatar>
           ) : (
@@ -48,15 +61,19 @@ const ProfileAvatar = () => {
                   <AvatarFallback className="rounded-lg">DP</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold text-light-primary-text dark:text-dark-primary-txt">{user?.name}</span>
-                  <span className="truncate text-xs font-medium text-light-secondary-text dark:text-dark-secondary-txt">{user?.email}</span>
+                  <span className="truncate font-semibold text-light-primary-text dark:text-dark-primary-txt">
+                    {user?.username ? user?.username : user?.name}
+                  </span>
+                  <span className="truncate text-xs font-medium text-light-secondary-text dark:text-dark-secondary-txt">
+                    {user?.email}
+                  </span>
                 </div>
               </div>
             ) : (
               "My Account"
             )}
           </DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-secondary"/>
+          <DropdownMenuSeparator className="bg-secondary" />
           <DropdownMenuGroup className="space-y-1.5">
             {!user && (
               <>
@@ -76,7 +93,13 @@ const ProfileAvatar = () => {
               </>
             )}
             {user && (
-              <Link href={user?.role === "admin" ? "/dashboard/admin/overview" : "/dashboard/user/overview"}>
+              <Link
+                href={
+                  user?.role === "ADMIN"
+                    ? "/dashboard/admin/overview"
+                    : "/dashboard/user/overview"
+                }
+              >
                 <DropdownMenuItem className="cursor-pointer flex items-center  hover:bg-secondary py-1 rounded-lg hover:text-white px-3">
                   <LayoutDashboard className="w-4 h-4 mr-2 text-white     " />
                   Dashboard
@@ -86,10 +109,10 @@ const ProfileAvatar = () => {
           </DropdownMenuGroup>
           {user && (
             <>
-              <DropdownMenuSeparator className="bg-secondary"/>
+              <DropdownMenuSeparator className="bg-secondary" />
               <DropdownMenuItem
                 className="cursor-pointer flex items-center hover:text-primary-bg hover:bg-secondary py-1 rounded-lg hover:text-red-500 px-3"
-                onClick={handleLogout}
+                onClick={handleLogOut}
               >
                 <LogOut className="w-4 h-4 mr-2 text-red-500" />
                 Log out
