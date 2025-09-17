@@ -10,6 +10,7 @@ import Image from "next/image";
 import logo from "../../../../assets/header/logo.png";
 import { usePathname } from "next/navigation";
 import profileIcon from "@/assets/home/profileIcon.png";
+import ProfileAvatar from "./_components/ProfileAvatar/ProfileAvatar";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -74,10 +75,11 @@ export default function Header() {
 
         {/* Right: Profile + Button */}
         <div className="flex items-center space-x-4">
-          <Avatar className="border-none size-8">
+          {/* <Avatar className="border-none size-8">
             <AvatarImage src={profileIcon.src} alt="profile" />
             <AvatarFallback>AD</AvatarFallback>
-          </Avatar>
+          </Avatar> */}
+          <ProfileAvatar/>
           <Button style={{ backgroundColor: "var(--color-secondary)" }} className="text-white text-lg px-5 py-3 hidden sm:flex cursor-pointer">
             Start your engine
           </Button>

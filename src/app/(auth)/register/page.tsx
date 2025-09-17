@@ -1,15 +1,29 @@
-"use client"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import Link from "next/link"
-import bg from '../../../assets/footerbg.png'
-import bg1 from '../../../assets/header/logo.png'
-import Image from "next/image"
+"use client";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import Link from "next/link";
+import bg from "../../../assets/footerbg.png";
+import bg1 from "../../../assets/header/logo.png";
+import Image from "next/image";
+import { RiUserLine } from "react-icons/ri";
+import { MdOutlineEmail } from "react-icons/md";
+import { FaFacebookF, FaTwitter } from "react-icons/fa6";
+import { IoLogoGoogle } from "react-icons/io";
+import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { registerUser } from "@/services/auth";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // Corrected the schema by removing the .default() method.
 // This resolves the type mismatch with the useForm's defaultValues.
@@ -17,48 +31,55 @@ const signUpSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  remember: z.boolean(),
-})
+});
 
-type SignUpFormValues = z.infer<typeof signUpSchema>
+type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function SignUpPage() {
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: "",
       email: "",
       password: "",
-      remember: false,
     },
-  })
+  });
 
-  const onSubmit = (values: SignUpFormValues) => {
+  const onSubmit = async (values: SignUpFormValues) => {
     // The router has been removed for environment compatibility.
     // The form now simply logs the submitted values.
-    console.log("[v0] Sign up form submitted:", values)
-  }
+    console.log("[v0] Sign up form submitted:", values);
+    try {
+      const res = await registerUser(values);
+      console.log("res========>,", res);
+      if (res?.success) {
+        toast.success(res?.message);
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.success("Failed to register user. Try again later !!");
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
       {/* Left Panel - Carbon Engines Branding */}
-      <div className="flex-1  relative overflow-hidden"
-         style={{
-            backgroundImage: `url(${bg.src})`,
-            backgroundSize: "cover",
-          }}>
+      <div
+        className="flex-1  relative overflow-hidden hidden md:block"
+        style={{
+          backgroundImage: `url(${bg.src})`,
+          backgroundSize: "cover",
+        }}
+      >
         {/* Textured background pattern */}
-        <div
-          className="absolute inset-0 opacity-20"
-             
-        />
+        <div className="absolute inset-0 opacity-20" />
 
         {/* Logo */}
         <div className="absolute left-12 top-1/2 -translate-y-1/2">
-          
-         
-          <Image src={bg1.src} alt="logo" width={600} height={600}/>
-        
+          <Image src={bg1.src} alt="logo" width={600} height={600} />
         </div>
       </div>
 
@@ -67,8 +88,12 @@ export default function SignUpPage() {
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">Sign Up</h1>
-            <p className="text-gray-300 mb-1">Welcome to Back! 👋</p>
-            <p className="text-gray-400 text-sm">Please sign up to your account and start the adventure</p>
+            <p className="text-gray-200 text-xl font-semibold mb-1">
+              Welcome back! 👋
+            </p>
+            <p className="text-gray-400 text-sm">
+              Please sign up to your account and start the adventure
+            </p>
           </div>
 
           <Form {...form}>
@@ -78,15 +103,19 @@ export default function SignUpPage() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300 text-sm">Username</FormLabel>
+                    <FormLabel className="text-gray-300 text-sm">
+                      Username
+                    </FormLabel>
                     <div className="relative mt-1">
                       <Input
                         type="text"
                         placeholder="johndoe"
-                        className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 pl-10"
+                        className="bg-primary-100 focus:border-gray-600 text-white placeholder:text-gray-200  pl-10"
                         {...field}
                       />
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">👤</div>
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 ">
+                        <RiUserLine className="text-gray-200" />
+                      </div>
                     </div>
                     <FormMessage className="text-red-400" />
                   </FormItem>
@@ -98,15 +127,19 @@ export default function SignUpPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300 text-sm">Email</FormLabel>
+                    <FormLabel className="text-gray-300 text-sm">
+                      Email
+                    </FormLabel>
                     <div className="relative mt-1">
                       <Input
                         type="email"
                         placeholder="test@gmail.com"
-                        className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 pl-10"
+                        className="bg-primary-100 focus:border-gray-600 text-white placeholder:text-gray-200 pl-10"
                         {...field}
                       />
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">✉</div>
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 ">
+                        <MdOutlineEmail className="text-gray-200" />
+                      </div>
                     </div>
                     <FormMessage className="text-red-400" />
                   </FormItem>
@@ -118,20 +151,26 @@ export default function SignUpPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300 text-sm">Password</FormLabel>
+                    <FormLabel className="text-gray-300 text-sm">
+                      Password
+                    </FormLabel>
                     <div className="relative mt-1">
                       <Input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="••••••••••••"
-                        className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 pl-10 pr-10"
+                        className="bg-primary-100 focus:border-gray-600 text-white placeholder:text-gray-200 pr-10"
                         {...field}
                       />
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔒</div>
                       <button
                         type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-300"
                       >
-                        👁
+                        {showPassword ? (
+                          <AiOutlineEyeInvisible size={20} />
+                        ) : (
+                          <AiOutlineEye size={20} />
+                        )}
                       </button>
                     </div>
                     <FormMessage className="text-red-400" />
@@ -139,43 +178,35 @@ export default function SignUpPage() {
                 )}
               />
 
-              <div className="flex items-center justify-between">
-                <FormField
-                  control={form.control}
-                  name="remember"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center space-x-2">
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="border-gray-600" />
-                      <FormLabel className="text-gray-400 text-sm">Remember Me</FormLabel>
-                    </FormItem>
-                  )}
-                />
-                <Link href="/forgetpassword" className="text-blue-400 hover:text-blue-300 text-sm">
-                  Forgot Password?
-                </Link>
-              </div>
-
-              <Button type="submit" className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3">
+              <Button
+                type="submit"
+                className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3 cursor-pointer"
+              >
                 Sign Up
               </Button>
 
               <div className="text-center">
-                <span className="text-gray-400 text-sm">New on our platform? </span>
-                <Link href="/login" className="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                <span className="text-gray-400 text-sm">
+                  Already have an account?{" "}
+                </span>
+                <Link
+                  href="/login"
+                  className="text-white text-base font-medium"
+                >
                   Back to Login
                 </Link>
               </div>
 
               {/* Social Media Icons */}
               <div className="flex justify-center space-x-4 pt-4">
-                <button className="w-10 h-10 bg-blue-600 rounded flex items-center justify-center hover:bg-blue-700">
-                  <span className="text-white text-sm font-bold">f</span>
+                <button className="w-10 h-10 bg-white rounded flex items-center justify-center cursor-pointer">
+                  <FaFacebookF className="text-blue-500" />
                 </button>
-                <button className="w-10 h-10 bg-blue-400 rounded flex items-center justify-center hover:bg-blue-500">
-                  <span className="text-white text-sm font-bold">t</span>
+                <button className="w-10 h-10 bg-white rounded flex items-center justify-center cursor-pointer">
+                  <FaTwitter className="text-sky-400" />
                 </button>
-                <button className="w-10 h-10 bg-red-500 rounded flex items-center justify-center hover:bg-red-600">
-                  <span className="text-white text-sm font-bold">G</span>
+                <button className="w-10 h-10 bg-white rounded flex items-center justify-center cursor-pointer">
+                  <IoLogoGoogle className="text-red-500" />
                 </button>
               </div>
             </form>
@@ -183,5 +214,5 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
