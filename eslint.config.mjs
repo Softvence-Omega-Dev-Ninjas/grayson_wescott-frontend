@@ -5,7 +5,11 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  globalIgnores(['node_modules/*', '.next/*', '.vercel/*',"out/**",
+  globalIgnores([
+      'node_modules/*', 
+      '.next/*', 
+      '.vercel/*',
+      "out/**",
       "build/**",
       "next-env.d.ts",]),
   {
