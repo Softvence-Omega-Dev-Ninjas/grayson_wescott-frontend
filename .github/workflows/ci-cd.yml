@@ -26,6 +26,9 @@ jobs:
       - name: Install sharp for Linux
         run: npm install --os=linux --cpu=x64 sharp
 
+      - name: Install LightningCSS for Linux
+        run: npm install --os=linux --cpu=x64 lightningcss
+
       - name: Run Lint
         run: npm run lint
 
