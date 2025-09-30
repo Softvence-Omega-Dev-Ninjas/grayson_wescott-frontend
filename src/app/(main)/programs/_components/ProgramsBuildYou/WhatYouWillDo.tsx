@@ -35,7 +35,12 @@ function WhatYouWillDo() {
 
       <div className="grid md:grid-cols-2 grid-cols-1 gap-5">
         {data.map((item) => (
-          <ProgramCard key={item.title} title={item.title} icon={item.icon.src} subtitle={item.subtitle} />
+          <ProgramCard
+            key={item.title}
+            title={item.title}
+            icon={item.icon.src}
+            subtitle={item.subtitle}
+          />
         ))}
       </div>
     </div>

@@ -9,7 +9,15 @@ import settingsIcon from "@/assets/dashboard/sidebar/settingIcon.svg";
 import progressIcon from "@/assets/dashboard/sidebar/progressIcon.svg";
 import calendarIcon from "@/assets/dashboard/sidebar/calenderIcon.svg";
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 import { NavMain } from "./NavMain";
 import { NavUser } from "./NavUser";
 import Link from "next/link";

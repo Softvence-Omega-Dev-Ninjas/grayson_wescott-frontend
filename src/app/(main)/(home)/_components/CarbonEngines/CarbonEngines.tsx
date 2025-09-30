@@ -9,7 +9,7 @@ export default function CarbonEngines() {
   return (
     <div className="   p-8">
       <div className="container mx-auto space-y-5">
-       <SectionHeader title="Why Carbon Engines"/>
+        <SectionHeader title="Why Carbon Engines" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <OverlayCard

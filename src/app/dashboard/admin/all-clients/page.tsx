@@ -2,7 +2,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Plus, Search } from "lucide-react";
 import { ClientCard } from "./_components/ClientCard/ClientCard";
 import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
@@ -88,7 +94,10 @@ const AllClientPage = () => {
       {/* Add Client Button */}
       <div className="flex justify-end">
         <Link href={"/dashboard/admin/all-clients/add-client"}>
-          <Button onClick={handleAddClient} className="w-full sm:w-auto bg-secondary border border-primary-200 text-white cursor-pointer">
+          <Button
+            onClick={handleAddClient}
+            className="w-full sm:w-auto bg-secondary border border-primary-200 text-white cursor-pointer"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add New Client
           </Button>
@@ -116,13 +125,22 @@ const AllClientPage = () => {
               <SelectItem value="all" className="text-white hover:bg-gray-800">
                 All Status
               </SelectItem>
-              <SelectItem value="active" className="text-white hover:bg-gray-800">
+              <SelectItem
+                value="active"
+                className="text-white hover:bg-gray-800"
+              >
                 Active
               </SelectItem>
-              <SelectItem value="inactive" className="text-white hover:bg-gray-800">
+              <SelectItem
+                value="inactive"
+                className="text-white hover:bg-gray-800"
+              >
                 Inactive
               </SelectItem>
-              <SelectItem value="on-hold" className="text-white hover:bg-gray-800">
+              <SelectItem
+                value="on-hold"
+                className="text-white hover:bg-gray-800"
+              >
                 On Hold
               </SelectItem>
             </SelectContent>
@@ -139,7 +157,11 @@ const AllClientPage = () => {
 
       {/* Pagination */}
       <div className="flex justify-center my-16">
-        <Pagination activePage={currentPage} totalPages={7} onPageChange={handlePageChange} />
+        <Pagination
+          activePage={currentPage}
+          totalPages={7}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

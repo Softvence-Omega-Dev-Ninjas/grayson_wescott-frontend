@@ -7,13 +7,16 @@ import { FieldValues } from "react-hook-form";
 //Regiter user
 export const registerUser = async (userData: Record<string, any>) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
       },
-      body: JSON.stringify(userData),
-    });
+    );
 
     if (!res.ok) {
       throw new Error(`Failed to register: ${res.statusText}`);
@@ -72,7 +75,6 @@ export const getCurrentUser = async () => {
   return null;
 };
 
-
 //Logout User
 export const logout = async () => {
   const cookieStore = await cookies();
@@ -85,13 +87,16 @@ export const logout = async () => {
 //Verify email
 export const verifyEmail = async (data: Record<string, any>) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/verify-otp`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/verify-otp`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
     return await res.json();
   } catch (error: any) {
     return { error: error.message };
@@ -100,13 +105,16 @@ export const verifyEmail = async (data: Record<string, any>) => {
 //Resend Verification mail
 export const resendVerificationEmail = async (data: Record<string, any>) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/resend-otp`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/resend-otp`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
     return await res.json();
   } catch (error: any) {
     return { error: error.message };
@@ -116,13 +124,16 @@ export const resendVerificationEmail = async (data: Record<string, any>) => {
 export const sendGoogleLogin = async (data: Record<string, any>) => {
   const cookieStore = await cookies();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/google-login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/google-login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
     const result = await res.json();
 
     if (result?.success) {
@@ -137,4 +148,3 @@ export const sendGoogleLogin = async (data: Record<string, any>) => {
     return { error: error.message };
   }
 };
-

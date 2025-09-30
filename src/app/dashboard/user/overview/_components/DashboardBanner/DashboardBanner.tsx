@@ -21,8 +21,12 @@ const DashboardBanner = () => {
       {/* Content Container */}
       <div className="relative z-10 flex h-full items-center justify-start px-5 md:px-10  text-white">
         <div className="max-w-4xl space-y-2">
-          <h1 className="text-xl sm:text-3xl font-bold ">Welcome Back, Alex Jhnson</h1>
-          <p className="text-sm sm:text-lg ">Your Build. Your Rules. Execute.</p>
+          <h1 className="text-xl sm:text-3xl font-bold ">
+            Welcome Back, Alex Jhnson
+          </h1>
+          <p className="text-sm sm:text-lg ">
+            Your Build. Your Rules. Execute.
+          </p>
           <Button size="sm" className="mt-4 px-3 py-2 text-start">
             Start Today&apos;s Workout
           </Button>

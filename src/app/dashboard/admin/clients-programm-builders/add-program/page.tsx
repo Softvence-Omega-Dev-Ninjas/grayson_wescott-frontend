@@ -42,7 +42,17 @@ export default function App() {
     defaultValues: {
       programName: "",
       categories: [],
-      exercises: [{ exerciseName: "", sets: "", reps: "", rpe: "", restMin: "", tempo: "", videoLink: "" }],
+      exercises: [
+        {
+          exerciseName: "",
+          sets: "",
+          reps: "",
+          rpe: "",
+          restMin: "",
+          tempo: "",
+          videoLink: "",
+        },
+      ],
     },
   });
 
@@ -52,7 +62,15 @@ export default function App() {
   });
 
   const handleAddExercise = () => {
-    append({ exerciseName: "", sets: "", reps: "", rpe: "", restMin: "", tempo: "", videoLink: "" });
+    append({
+      exerciseName: "",
+      sets: "",
+      reps: "",
+      rpe: "",
+      restMin: "",
+      tempo: "",
+      videoLink: "",
+    });
   };
 
   const handleRemoveExercise = (index: number) => {
@@ -97,10 +115,16 @@ export default function App() {
                 id="programName"
                 type="text"
                 placeholder="e.g., Elite Squat"
-                {...register("programName", { required: "Program name is required." })}
+                {...register("programName", {
+                  required: "Program name is required.",
+                })}
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
               />
-              {errors.programName && <p className="text-red-500 text-sm">{errors.programName.message}</p>}
+              {errors.programName && (
+                <p className="text-red-500 text-sm">
+                  {errors.programName.message}
+                </p>
+              )}
             </div>
 
             {/* Categories  */}
@@ -113,7 +137,9 @@ export default function App() {
                       id={`category-${category}`}
                       type="checkbox"
                       {...register("categories", {
-                        validate: (value) => value.length > 0 || "At least one category is required.",
+                        validate: (value) =>
+                          value.length > 0 ||
+                          "At least one category is required.",
                       })}
                       value={category}
                       className="form-checkbox h-4 w-4 text-black rounded-md border border-zinc-500 bg-zinc-800 cursor-pointer"
@@ -124,7 +150,11 @@ export default function App() {
                   </div>
                 ))}
               </div>
-              {errors.categories && <p className="text-red-500 text-sm">{errors.categories.message}</p>}
+              {errors.categories && (
+                <p className="text-red-500 text-sm">
+                  {errors.categories.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-4">
@@ -136,7 +166,11 @@ export default function App() {
                 <FaBookmark />
                 Save As Template
               </button>
-              <AssignToClientsModal clients={dummyClients} selectedClientIds={selectedClientIds} setSelectedClientIds={setSelectedClientIds} />
+              <AssignToClientsModal
+                clients={dummyClients}
+                selectedClientIds={selectedClientIds}
+                setSelectedClientIds={setSelectedClientIds}
+              />
             </div>
           </div>
 
@@ -155,7 +189,10 @@ export default function App() {
             </div>
 
             {fields.map((exercise, index) => (
-              <div key={exercise.id} className="p-6 border border-secondary shadow-inner space-y-4 relative">
+              <div
+                key={exercise.id}
+                className="p-6 border border-secondary shadow-inner space-y-4 relative"
+              >
                 {/* Delete Exercise  */}
                 {index > 0 && (
                   <div className="flex justify-end items-center">
@@ -166,99 +203,160 @@ export default function App() {
                   </div>
                 )}
                 <div className="space-y-1">
-                  <Label htmlFor={`tempo-${index}`} className="text-lg font-medium">
+                  <Label
+                    htmlFor={`tempo-${index}`}
+                    className="text-lg font-medium"
+                  >
                     Exercise title
                   </Label>
                   <Input
                     id={`name-${index}`}
                     type="text"
                     placeholder="e.g., Back Squat"
-                    {...register(`exercises.${index}.exerciseName`, { required: "Exercise title is required." })}
+                    {...register(`exercises.${index}.exerciseName`, {
+                      required: "Exercise title is required.",
+                    })}
                     className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                   />
                   {errors.exercises?.[index]?.exerciseName && (
-                    <p className="text-red-500 text-xs mt-1">{errors.exercises[index].exerciseName.message}</p>
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.exercises[index].exerciseName.message}
+                    </p>
                   )}
                 </div>
                 <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
                   <div className="space-y-1">
-                    <Label htmlFor={`sets-${index}`} className="text-lg font-medium">
+                    <Label
+                      htmlFor={`sets-${index}`}
+                      className="text-lg font-medium"
+                    >
                       Sets
                     </Label>
                     <Input
                       id={`sets-${index}`}
                       placeholder="e.g., 4"
                       type="text"
-                      {...register(`exercises.${index}.sets`, { required: "Sets are required." })}
+                      {...register(`exercises.${index}.sets`, {
+                        required: "Sets are required.",
+                      })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
-                    {errors.exercises?.[index]?.sets && <p className="text-red-500 text-xs mt-1">{errors.exercises[index].sets.message}</p>}
+                    {errors.exercises?.[index]?.sets && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.exercises[index].sets.message}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor={`reps-${index}`} className="text-lg font-medium">
+                    <Label
+                      htmlFor={`reps-${index}`}
+                      className="text-lg font-medium"
+                    >
                       Reps
                     </Label>
                     <Input
                       id={`reps-${index}`}
                       placeholder="e.g., 6-8"
                       type="text"
-                      {...register(`exercises.${index}.reps`, { required: "Reps are required." })}
+                      {...register(`exercises.${index}.reps`, {
+                        required: "Reps are required.",
+                      })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
-                    {errors.exercises?.[index]?.reps && <p className="text-red-500 text-xs mt-1">{errors.exercises[index].reps.message}</p>}
+                    {errors.exercises?.[index]?.reps && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.exercises[index].reps.message}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor={`rpe-${index}`} className="text-lg font-medium">
+                    <Label
+                      htmlFor={`rpe-${index}`}
+                      className="text-lg font-medium"
+                    >
                       RPE
                     </Label>
                     <Input
                       id={`rpe-${index}`}
                       placeholder="e.g., 8"
                       type="text"
-                      {...register(`exercises.${index}.rpe`, { required: "RPE is required." })}
+                      {...register(`exercises.${index}.rpe`, {
+                        required: "RPE is required.",
+                      })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
-                    {errors.exercises?.[index]?.rpe && <p className="text-red-500 text-xs mt-1">{errors.exercises[index].rpe.message}</p>}
+                    {errors.exercises?.[index]?.rpe && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.exercises[index].rpe.message}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor={`restMin-${index}`} className="text-lg font-medium">
+                    <Label
+                      htmlFor={`restMin-${index}`}
+                      className="text-lg font-medium"
+                    >
                       Rest (min)
                     </Label>
                     <Input
                       id={`restMin-${index}`}
                       type="text"
                       placeholder="e.g., 3"
-                      {...register(`exercises.${index}.restMin`, { required: "Rest time is required." })}
+                      {...register(`exercises.${index}.restMin`, {
+                        required: "Rest time is required.",
+                      })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
-                    {errors.exercises?.[index]?.restMin && <p className="text-red-500 text-xs mt-1">{errors.exercises[index].restMin.message}</p>}
+                    {errors.exercises?.[index]?.restMin && (
+                      <p className="text-red-500 text-xs mt-1">
+                        {errors.exercises[index].restMin.message}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor={`tempo-${index}`} className="text-lg font-medium">
+                  <Label
+                    htmlFor={`tempo-${index}`}
+                    className="text-lg font-medium"
+                  >
                     Tempo
                   </Label>
                   <Input
                     id={`tempo-${index}`}
                     placeholder="e.g., 3-1-3-0"
                     type="text"
-                    {...register(`exercises.${index}.tempo`, { required: "Tempo is required." })}
+                    {...register(`exercises.${index}.tempo`, {
+                      required: "Tempo is required.",
+                    })}
                     className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                   />
-                  {errors.exercises?.[index]?.tempo && <p className="text-red-500 text-xs mt-1">{errors.exercises[index].tempo.message}</p>}
+                  {errors.exercises?.[index]?.tempo && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.exercises[index].tempo.message}
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor={`videoLink-${index}`} className="text-lg font-medium">
+                  <Label
+                    htmlFor={`videoLink-${index}`}
+                    className="text-lg font-medium"
+                  >
                     Video Link
                   </Label>
                   <Input
                     id={`videoLink-${index}`}
                     type="text"
-                    {...register(`exercises.${index}.videoLink`, { required: "Video link is required." })}
+                    {...register(`exercises.${index}.videoLink`, {
+                      required: "Video link is required.",
+                    })}
                     placeholder="YouTube or Vimeo URL"
                     className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                   />
-                  {errors.exercises?.[index]?.videoLink && <p className="text-red-500 text-xs mt-1">{errors.exercises[index].videoLink.message}</p>}
+                  {errors.exercises?.[index]?.videoLink && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.exercises[index].videoLink.message}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}

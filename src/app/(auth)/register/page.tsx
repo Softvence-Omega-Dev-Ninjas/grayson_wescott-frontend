@@ -59,12 +59,12 @@ export default function SignUpPage() {
 
       if (res?.success) {
         toast.success(
-          "Registration successful! We’ve sent a verification code to your email."
+          "Registration successful! We’ve sent a verification code to your email.",
         );
         router.push(`/verify-otp?email=${values.email}`);
       } else {
         toast.error(
-          res?.message || "Registration failed. Please try again later."
+          res?.message || "Registration failed. Please try again later.",
         );
       }
     } catch (error) {

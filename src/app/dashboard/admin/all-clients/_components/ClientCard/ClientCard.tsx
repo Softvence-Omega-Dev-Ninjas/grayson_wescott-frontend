@@ -1,7 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Progress } from "@/components/ui/progress";
 import { MessageCircle, MoreHorizontal, User } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +22,14 @@ interface ClientCardProps {
   range?: string;
 }
 
-export function ClientCard({ name, avatar, status, program, progress, lastActive }: ClientCardProps) {
+export function ClientCard({
+  name,
+  avatar,
+  status,
+  program,
+  progress,
+  lastActive,
+}: ClientCardProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Active":
@@ -50,10 +62,16 @@ export function ClientCard({ name, avatar, status, program, progress, lastActive
             </Avatar>
             <div>
               <h3 className="font-medium text-lg text-white">{name}</h3>
-              <h3 className="text-sm text-white font-light">{"demo@gmail.com"}</h3>
+              <h3 className="text-sm text-white font-light">
+                {"demo@gmail.com"}
+              </h3>
             </div>
           </div>
-          <span className={`text-xs mt-1 px-2 py-1 font-medium ${getStatusColor(status)}`}>{status}</span>
+          <span
+            className={`text-xs mt-1 px-2 py-1 font-medium ${getStatusColor(status)}`}
+          >
+            {status}
+          </span>
         </div>
 
         <div className="space-y-2 mb-4 text-base font-medium">
@@ -102,10 +120,19 @@ export function ClientCard({ name, avatar, status, program, progress, lastActive
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-primary-200 border border-gray-800">
-                <DropdownMenuItem className="text-white hover:bg-gray-800">Edit Client</DropdownMenuItem>
-                <DropdownMenuItem className="text-white hover:bg-gray-800">View Details</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-400 hover:bg-gray-800">Delete Client</DropdownMenuItem>
+              <DropdownMenuContent
+                align="end"
+                className="bg-primary-200 border border-gray-800"
+              >
+                <DropdownMenuItem className="text-white hover:bg-gray-800">
+                  Edit Client
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-white hover:bg-gray-800">
+                  View Details
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-400 hover:bg-gray-800">
+                  Delete Client
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

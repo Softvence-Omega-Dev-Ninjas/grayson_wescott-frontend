@@ -26,7 +26,7 @@ const workoutHistoryData = [
     volume: "-",
     feedback: "Work emergency",
   },
-]
+];
 
 export function WorkoutHistory() {
   return (
@@ -38,12 +38,24 @@ export function WorkoutHistory() {
           <table className="w-full">
             <thead className="bg-[#2A2D33]">
               <tr>
-                <th className="text-left p-4 text-sm font-medium text-slate-300">Date</th>
-                <th className="text-left p-4 text-sm font-medium text-slate-300">Workout</th>
-                <th className="text-left p-4 text-sm font-medium text-slate-300">Status</th>
-                <th className="text-left p-4 text-sm font-medium text-slate-300">Duration</th>
-                <th className="text-left p-4 text-sm font-medium text-slate-300">Volume</th>
-                <th className="text-left p-4 text-sm font-medium text-slate-300">Feedback</th>
+                <th className="text-left p-4 text-sm font-medium text-slate-300">
+                  Date
+                </th>
+                <th className="text-left p-4 text-sm font-medium text-slate-300">
+                  Workout
+                </th>
+                <th className="text-left p-4 text-sm font-medium text-slate-300">
+                  Status
+                </th>
+                <th className="text-left p-4 text-sm font-medium text-slate-300">
+                  Duration
+                </th>
+                <th className="text-left p-4 text-sm font-medium text-slate-300">
+                  Volume
+                </th>
+                <th className="text-left p-4 text-sm font-medium text-slate-300">
+                  Feedback
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -52,22 +64,31 @@ export function WorkoutHistory() {
                   <td className="p-4 text-sm">{workout.date}</td>
                   <td className="p-4">
                     <div>
-                      <div className="font-medium text-sm">{workout.workout}</div>
-                      <div className="text-xs text-slate-400">{workout.details}</div>
+                      <div className="font-medium text-sm">
+                        {workout.workout}
+                      </div>
+                      <div className="text-xs text-slate-400">
+                        {workout.details}
+                      </div>
                     </div>
                   </td>
                   <td className="p-4">
                     <span
                       className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full ${
-                        workout.status === "Completed" ? "bg-green-900 text-green-300" : "bg-red-900 text-red-300"
+                        workout.status === "Completed"
+                          ? "bg-green-900 text-green-300"
+                          : "bg-red-900 text-red-300"
                       }`}
                     >
-                      {workout.status === "Completed" ? "✓" : "✗"} {workout.status}
+                      {workout.status === "Completed" ? "✓" : "✗"}{" "}
+                      {workout.status}
                     </span>
                   </td>
                   <td className="p-4 text-sm">{workout.duration}</td>
                   <td className="p-4 text-sm">{workout.volume}</td>
-                  <td className="p-4 text-sm text-slate-400">{workout.feedback}</td>
+                  <td className="p-4 text-sm text-slate-400">
+                    {workout.feedback}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -75,5 +96,5 @@ export function WorkoutHistory() {
         </div>
       </div>
     </div>
-  )
+  );
 }

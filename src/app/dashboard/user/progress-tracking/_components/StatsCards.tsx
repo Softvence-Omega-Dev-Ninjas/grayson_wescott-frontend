@@ -14,7 +14,7 @@ const statsData = [
     label: "Personal Records",
     icon: "🏆",
   },
-]
+];
 
 export function StatsCards() {
   return (
@@ -31,5 +31,5 @@ export function StatsCards() {
         </div>
       ))}
     </div>
-  )
+  );
 }

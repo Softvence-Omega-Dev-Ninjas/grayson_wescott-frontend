@@ -10,24 +10,25 @@ export default function useGoogleAuth() {
   const router = useRouter();
   const { setUser, setIsLoading } = useUser();
 
-  const handleSuccess = async(credentialResponse: any) => {
+  const handleSuccess = async (credentialResponse: any) => {
     if (credentialResponse?.credential) {
       try {
-        const res = await sendGoogleLogin({idToken: credentialResponse.credential});
+        const res = await sendGoogleLogin({
+          idToken: credentialResponse.credential,
+        });
         if (res?.success) {
-        toast.success("Login successful!");
-        setUser(res?.data?.user);
-        setIsLoading(false);
-        if (res?.data?.user?.role === "USER") {
-          router.push(`/dashboard/user/overview`);
+          toast.success("Login successful!");
+          setUser(res?.data?.user);
+          setIsLoading(false);
+          if (res?.data?.user?.role === "USER") {
+            router.push(`/dashboard/user/overview`);
+          }
+          if (res?.data?.user?.role === "ADMIN") {
+            router.push(`/dashboard/admin/overview`);
+          }
+        } else {
+          toast.error(res?.message || "Login failed. Please try again later.");
         }
-        if (res?.data?.user?.role === "ADMIN") {
-          router.push(`/dashboard/admin/overview`);
-        }
-      } else {
-        toast.error(res?.message || "Login failed. Please try again later.");
-      }
-
       } catch (error) {
         console.error("Google login decode error:", error);
         toast.error("Login failed. Invalid token.");

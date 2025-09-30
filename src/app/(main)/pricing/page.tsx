@@ -16,7 +16,10 @@ const PricingPage = () => {
 
       <div>
         <div className="my-16">
-          <SectionHeader title="Choose Your Track" description="Select the configuration that matches your performance requirements" />
+          <SectionHeader
+            title="Choose Your Track"
+            description="Select the configuration that matches your performance requirements"
+          />
         </div>
 
         <div className="container px-3 mx-auto grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-6">

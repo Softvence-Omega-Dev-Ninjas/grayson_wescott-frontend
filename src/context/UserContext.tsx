@@ -18,7 +18,7 @@ export interface IUserProviderValues {
 
 //Create Context
 export const UserContext = createContext<IUserProviderValues | undefined>(
-  undefined
+  undefined,
 );
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {

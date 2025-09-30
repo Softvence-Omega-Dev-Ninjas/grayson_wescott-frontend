@@ -22,11 +22,15 @@ function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
       <div className="relative">
         <div className="grid md:grid-cols-2 bg-[#1A1A1A] ">
           <div className="container mx-auto flex flex-col  justify-center items-center gap-4 bg-[#1A1A1A] py-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-white text-center">{title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white text-center">
+              {title}
+            </h1>
             <h2 className="text-xl   text-slate-200">{description}</h2>
 
             <div className="flex flex-col justify-center       md:flex-row  gap-4 mt-4">
-              <Button className="bg-[#B9BDC6]/80   text-black text-lg px-6 py-3 cursor-pointer hover:text-white  font-medium">{btn1}</Button>
+              <Button className="bg-[#B9BDC6]/80   text-black text-lg px-6 py-3 cursor-pointer hover:text-white  font-medium">
+                {btn1}
+              </Button>
               {path == "/programs" || path == "/adonis-protocol" ? (
                 <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-3 cursor-pointer hover:text-white font-medium ">
                   {btn2}
@@ -47,7 +51,13 @@ function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
         </div>
         <div className="absolute w-full bottom-0">
           {/* <img src={image.src} className="w-full  " alt="" /> */}
-          <Image src={image.src} alt="asdasd" width={300} height={300} className="w-full object-fill" />
+          <Image
+            src={image.src}
+            alt="asdasd"
+            width={300}
+            height={300}
+            className="w-full object-fill"
+          />
         </div>
       </div>
     </>

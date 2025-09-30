@@ -4,7 +4,10 @@ const AddonPrincingPack = () => {
   return (
     <div className="flex flex-col items-center justify-center pt-10 px-3">
       <div className="text-center mb-12">
-        <SectionHeader title="Enhance Your Experience" description="Optional add-ons to complement your chosen coaching tier" />
+        <SectionHeader
+          title="Enhance Your Experience"
+          description="Optional add-ons to complement your chosen coaching tier"
+        />
       </div>
 
       <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 w-full max-w-6xl">
@@ -22,7 +25,9 @@ const AddonPrincingPack = () => {
 
         {/* Card 2 */}
         <div className="flex-1 bg-primary-200 border border-secondary p-6 sm:p-8 flex flex-col items-start">
-          <h2 className="text-2xl  font-semibold">Mobility/Flexibility Bundle</h2>
+          <h2 className="text-2xl  font-semibold">
+            Mobility/Flexibility Bundle
+          </h2>
           <div className="my-4">
             <span className="text-4xl sm:text-5xl font-bold">$299</span>
             <span className="text-xl text-gray-400">/month</span>

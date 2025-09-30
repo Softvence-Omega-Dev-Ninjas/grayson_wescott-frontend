@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
+import * as React from "react";
+import * as TabsPrimitive from "@radix-ui/react-tabs";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Tabs({
   className,
@@ -15,7 +15,7 @@ function Tabs({
       className={cn("flex flex-col gap-2", className)}
       {...props}
     />
-  )
+  );
 }
 
 function TabsList({
@@ -27,11 +27,11 @@ function TabsList({
       data-slot="tabs-list"
       className={cn(
         "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-[3px]",
-        className
+        className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function TabsTrigger({
@@ -42,12 +42,12 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-"focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-white dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5  border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-b-white dark:data-[state=active]:border-white [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-  className
-)}
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-white dark:text-muted-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5  border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-blue-500 data-[state=active]:border-b-2 data-[state=active]:border-b-white dark:data-[state=active]:border-white [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className,
+      )}
       {...props}
     />
-  )
+  );
 }
 
 function TabsContent({
@@ -60,7 +60,7 @@ function TabsContent({
       className={cn("flex-1 outline-none", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+export { Tabs, TabsList, TabsTrigger, TabsContent };

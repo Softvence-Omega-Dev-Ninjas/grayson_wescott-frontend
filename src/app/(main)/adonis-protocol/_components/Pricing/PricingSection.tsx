@@ -1,19 +1,17 @@
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader'
-import React from 'react'
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import React from "react";
 
 function PricingSection() {
   return (
     <div>
+      <SectionHeader
+        title="Choose Your Track"
+        description="Select the configuration that matches your performance requirements"
+      />
 
-
-    <SectionHeader title='Choose Your Track'
-    description='Select the configuration that matches your performance requirements'/>
-
-    <div></div>
-
-
+      <div></div>
     </div>
-  )
+  );
 }
 
-export default PricingSection
+export default PricingSection;

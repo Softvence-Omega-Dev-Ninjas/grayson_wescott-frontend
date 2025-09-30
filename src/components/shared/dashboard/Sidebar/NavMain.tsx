@@ -1,8 +1,18 @@
 "use client";
 import { ChevronRight } from "lucide-react";
 import { VscDebugBreakpointLogUnverified } from "react-icons/vsc";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { SidebarGroup, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub } from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  SidebarGroup,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSub,
+} from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -31,9 +41,17 @@ export function NavMain({ items }: { items: TSidebarItem }) {
 
           return (
             item.show && (
-              <Collapsible key={idx} asChild defaultOpen={item.isActive} className="group/collapsible">
+              <Collapsible
+                key={idx}
+                asChild
+                defaultOpen={item.isActive}
+                className="group/collapsible"
+              >
                 <SidebarMenuItem className="hover:bg-transparent active:bg-transparent">
-                  <CollapsibleTrigger className="hover:bg-transparent active:bg-transparent hover:text-white cursor-pointer" asChild>
+                  <CollapsibleTrigger
+                    className="hover:bg-transparent active:bg-transparent hover:text-white cursor-pointer"
+                    asChild
+                  >
                     {item.items ? (
                       <SidebarMenuButton
                         tooltip={item.title}
@@ -41,20 +59,35 @@ export function NavMain({ items }: { items: TSidebarItem }) {
                           isActive ? "bg-secondary text-white rounded-none" : ""
                         }`}
                       >
-                        <Image src={item.icon} alt={item.title} width={20} height={20} />
+                        <Image
+                          src={item.icon}
+                          alt={item.title}
+                          width={20}
+                          height={20}
+                        />
                         <span>{item.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                       </SidebarMenuButton>
                     ) : (
-                      <SidebarMenuButton tooltip={item.title} className="h-12 hover:bg-transparent active:bg-transparent">
+                      <SidebarMenuButton
+                        tooltip={item.title}
+                        className="h-12 hover:bg-transparent active:bg-transparent"
+                      >
                         {item.url && (
                           <Link
                             href={item.url}
                             className={`flex items-center gap-2 w-full px-2 py-4 hover:bg-secondary/65 hover:text-white ${
-                              isActive ? "bg-secondary text-white rounded-none" : ""
+                              isActive
+                                ? "bg-secondary text-white rounded-none"
+                                : ""
                             }`}
                           >
-                            <Image src={item.icon} alt={item.title} width={20} height={20} />
+                            <Image
+                              src={item.icon}
+                              alt={item.title}
+                              width={20}
+                              height={20}
+                            />
                             <span>{item.title}</span>
                           </Link>
                         )}
@@ -69,7 +102,9 @@ export function NavMain({ items }: { items: TSidebarItem }) {
                           <Link key={idx} href={subItem.url}>
                             <div
                               className={`flex items-center justify-start gap-2 w-full px-4 py-4 h-10 hover:bg-secondary/65 hover:text-white ${
-                                pathName === subItem.url ? "bg-secondary text-white rounded-none" : ""
+                                pathName === subItem.url
+                                  ? "bg-secondary text-white rounded-none"
+                                  : ""
                               }`}
                             >
                               <VscDebugBreakpointLogUnverified />

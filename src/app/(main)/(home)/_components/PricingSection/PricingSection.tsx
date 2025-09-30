@@ -26,7 +26,12 @@ export const pricing = [
     description: "Direct coaching oversight with program adjustments",
     price: "$1,600",
     billing: "/month",
-    features: ["Weekly program adjustments", "In-app messaging", "Limited video feedback", "Everything in Self-Guided"],
+    features: [
+      "Weekly program adjustments",
+      "In-app messaging",
+      "Limited video feedback",
+      "Everything in Self-Guided",
+    ],
     buttonText: "Start Training",
     isEnable: true,
     Icon: User,
@@ -34,10 +39,16 @@ export const pricing = [
   {
     title: "Executive Coaching",
     tier: "Tier 2",
-    description: "Enhanced coaching with direct access and lifestyle integration",
+    description:
+      "Enhanced coaching with direct access and lifestyle integration",
     price: "$2,400",
     billing: "/month",
-    features: ["Everything in Tier 1", "Bi-weekly calls with Grayson", "Nutrition + lifestyle integration", "Faster response priority"],
+    features: [
+      "Everything in Tier 1",
+      "Bi-weekly calls with Grayson",
+      "Nutrition + lifestyle integration",
+      "Faster response priority",
+    ],
     buttonText: "Start Training",
     isEnable: false,
     Icon: Star,
@@ -62,7 +73,10 @@ export const pricing = [
 function PricingSection() {
   return (
     <div>
-      <SectionHeader title="Choose Your Track" description="Select the configuration that matches your performance requirements" />
+      <SectionHeader
+        title="Choose Your Track"
+        description="Select the configuration that matches your performance requirements"
+      />
 
       <div className="container px-3 mx-auto grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-6">
         {pricing.map((item, idx) => (

@@ -22,7 +22,10 @@ function AdonisProtocolPage() {
       />
 
       <div className=" bg-[#151519] flex justify-center items-center">
-        <SectionHeader title="The Five Pillars" description="Master these foundations to become the man you were meant to be" />
+        <SectionHeader
+          title="The Five Pillars"
+          description="Master these foundations to become the man you were meant to be"
+        />
       </div>
 
       <div className="md:py-12">

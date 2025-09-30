@@ -40,7 +40,9 @@ export function AutomationsAlerts() {
 
   return (
     <div className="bg-primary-200  p-5 border border-secondary">
-      <h1 className="text-white text-xl sm:text-2xl font-semibold mb-6">Automations & Alerts</h1>
+      <h1 className="text-white text-xl sm:text-2xl font-semibold mb-6">
+        Automations & Alerts
+      </h1>
       <div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Alert Settings */}
@@ -51,10 +53,15 @@ export function AutomationsAlerts() {
                 <Checkbox
                   id="daily-workout"
                   checked={alertSettings.dailyWorkoutReminders}
-                  onCheckedChange={() => handleCheckboxChange("dailyWorkoutReminders")}
+                  onCheckedChange={() =>
+                    handleCheckboxChange("dailyWorkoutReminders")
+                  }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
-                <label htmlFor="daily-workout" className="text-gray-300 text-sm">
+                <label
+                  htmlFor="daily-workout"
+                  className="text-gray-300 text-sm"
+                >
                   Daily workout reminders
                 </label>
               </div>
@@ -62,10 +69,15 @@ export function AutomationsAlerts() {
                 <Checkbox
                   id="missed-workout"
                   checked={alertSettings.missedWorkoutAlerts}
-                  onCheckedChange={() => handleCheckboxChange("missedWorkoutAlerts")}
+                  onCheckedChange={() =>
+                    handleCheckboxChange("missedWorkoutAlerts")
+                  }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
-                <label htmlFor="missed-workout" className="text-gray-300 text-sm">
+                <label
+                  htmlFor="missed-workout"
+                  className="text-gray-300 text-sm"
+                >
                   Missed workout alerts (24h)
                 </label>
               </div>
@@ -73,7 +85,9 @@ export function AutomationsAlerts() {
                 <Checkbox
                   id="new-pr"
                   checked={alertSettings.newPrNotifications}
-                  onCheckedChange={() => handleCheckboxChange("newPrNotifications")}
+                  onCheckedChange={() =>
+                    handleCheckboxChange("newPrNotifications")
+                  }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
                 <label htmlFor="new-pr" className="text-gray-300 text-sm">
@@ -84,10 +98,15 @@ export function AutomationsAlerts() {
                 <Checkbox
                   id="auto-progress"
                   checked={alertSettings.autoProgressWithClientDashboard}
-                  onCheckedChange={() => handleCheckboxChange("autoProgressWithClientDashboard")}
+                  onCheckedChange={() =>
+                    handleCheckboxChange("autoProgressWithClientDashboard")
+                  }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
-                <label htmlFor="auto-progress" className="text-gray-300 text-sm">
+                <label
+                  htmlFor="auto-progress"
+                  className="text-gray-300 text-sm"
+                >
                   Auto-progress with client dashboard
                 </label>
               </div>
@@ -98,15 +117,24 @@ export function AutomationsAlerts() {
           <div className="space-y-4">
             <h3 className="text-white font-medium">Manual Actions</h3>
             <div className="space-y-2">
-              <Button size="sm" className="w-full items-center justify-center rounded-none bg-secondary text-white hover:bg-gray-600 cursor-pointer">
+              <Button
+                size="sm"
+                className="w-full items-center justify-center rounded-none bg-secondary text-white hover:bg-gray-600 cursor-pointer"
+              >
                 <Save className="h-4 w-4 mr-2" />
                 Save As Template
               </Button>
-              <Button size="sm" className="w-full items-center justify-center rounded-none bg-secondary text-white hover:bg-gray-600 cursor-pointer">
+              <Button
+                size="sm"
+                className="w-full items-center justify-center rounded-none bg-secondary text-white hover:bg-gray-600 cursor-pointer"
+              >
                 <Save className="h-4 w-4 mr-2" />
                 Save As Template
               </Button>
-              <Button size="sm" className="w-full items-center justify-center rounded-none bg-secondary text-white hover:bg-gray-600 cursor-pointer">
+              <Button
+                size="sm"
+                className="w-full items-center justify-center rounded-none bg-secondary text-white hover:bg-gray-600 cursor-pointer"
+              >
                 <Save className="h-4 w-4 mr-2" />
                 Save As Template
               </Button>
@@ -122,7 +150,11 @@ export function AutomationsAlerts() {
                   <div className="flex items-start gap-2">
                     <alert.icon
                       className={`h-4 w-4 mt-0.5 ${
-                        alert.type === "success" ? "text-green-500" : alert.type === "warning" ? "text-yellow-500" : "text-blue-500"
+                        alert.type === "success"
+                          ? "text-green-500"
+                          : alert.type === "warning"
+                            ? "text-yellow-500"
+                            : "text-blue-500"
                       }`}
                     />
                     <div className="flex-1">

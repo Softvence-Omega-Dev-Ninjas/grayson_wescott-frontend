@@ -33,13 +33,17 @@ function EliteProtocalModule() {
     {
       img: circle.src,
       title: "DAILY FLEXIBILITY FLOW",
-      description: "Systems to erase limits, rebuild movement & install strength.",
+      description:
+        "Systems to erase limits, rebuild movement & install strength.",
     },
   ];
   return (
     <div className="bg-black py-8">
       <div className=" py-4 space-y-5">
-        <SectionHeader title="Elite Protocol Modules" description="Systems to erase limits, rebuild movement & install strength." />
+        <SectionHeader
+          title="Elite Protocol Modules"
+          description="Systems to erase limits, rebuild movement & install strength."
+        />
 
         <div className="container mx-auto space-y-4 sm:space-y-6 px-2">
           {/* First row  */}

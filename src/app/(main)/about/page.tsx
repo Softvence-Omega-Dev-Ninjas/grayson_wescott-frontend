@@ -48,7 +48,10 @@ const AboutPage = () => {
         </div>
       </div>
       <div className="mt-28 space-y-10">
-        <SectionHeader title="Choose Your Track" description="Select the configuration that matches your performance requirements" />
+        <SectionHeader
+          title="Choose Your Track"
+          description="Select the configuration that matches your performance requirements"
+        />
 
         <div className="container px-3 mx-auto grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-6">
           {pricing.map((item, idx) => (
@@ -57,12 +60,18 @@ const AboutPage = () => {
         </div>
       </div>
       <div className="mt-28 space-y-10">
-        <SectionHeader title="THE CARBON APPROACH" description="Scientific methodology meets engineered precision." />
+        <SectionHeader
+          title="THE CARBON APPROACH"
+          description="Scientific methodology meets engineered precision."
+        />
 
         <CarbonApproach />
       </div>
       <div className="mt-28 space-y-10">
-        <SectionHeader title="Carbon Values" description="THE FOUNDATION OF EVERYTHING WE BUILD" />
+        <SectionHeader
+          title="Carbon Values"
+          description="THE FOUNDATION OF EVERYTHING WE BUILD"
+        />
 
         <CarbonValues />
       </div>

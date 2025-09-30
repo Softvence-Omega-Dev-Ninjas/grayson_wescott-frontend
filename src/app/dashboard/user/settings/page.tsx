@@ -5,8 +5,6 @@ import { PaymentsSubscription } from "./_components/PaymentsSubscription";
 import { ProfileAccount } from "./_components/ProfileAccount";
 import { ProgressTracking } from "./_components/ProgressTracking";
 
-
-
 export default function UserSettingPage() {
   return (
     <div className="  p-6">
@@ -23,11 +21,10 @@ export default function UserSettingPage() {
           {/* Bottom Row */}
           <div className="grid gap-6">
             <MessagingPreferences />
-             
           </div>
           <PaymentsSubscription />
         </div>
       </div>
     </div>
-  )
+  );
 }

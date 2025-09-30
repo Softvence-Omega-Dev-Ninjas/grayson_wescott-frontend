@@ -57,7 +57,12 @@ export function ProgressStates() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 bg-primary-200 p-5">
       {metricsData.map((metric, index) => (
-        <MetricCard key={index} title={metric.title} value={metric.value} change={metric.change} />
+        <MetricCard
+          key={index}
+          title={metric.title}
+          value={metric.value}
+          change={metric.change}
+        />
       ))}
     </div>
   );

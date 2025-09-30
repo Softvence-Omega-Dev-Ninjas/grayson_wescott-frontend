@@ -10,11 +10,36 @@ import { Button } from "@/components/ui/button";
 
 const PathToPeak = () => {
   const data = [
-    { id: 1, title: "Sign Up", description: "Choose your system and get instant access", img: signupIcon.src },
-    { id: 2, title: "Assessment", description: "We measure your baseline to build your plan", img: assesmentIcon.src },
-    { id: 3, title: "Program Launch", description: "Begin your personalized, periodized training", img: gymIcon.src },
-    { id: 4, title: "Adaptive Oversight", description: "Your coach adjusts in real-time for maximum results", img: adaptiveIcon.src },
-    { id: 5, title: "Peak Performance", description: "Hit your goals with measurable, lasting outcomes", img: trophieIcon.src },
+    {
+      id: 1,
+      title: "Sign Up",
+      description: "Choose your system and get instant access",
+      img: signupIcon.src,
+    },
+    {
+      id: 2,
+      title: "Assessment",
+      description: "We measure your baseline to build your plan",
+      img: assesmentIcon.src,
+    },
+    {
+      id: 3,
+      title: "Program Launch",
+      description: "Begin your personalized, periodized training",
+      img: gymIcon.src,
+    },
+    {
+      id: 4,
+      title: "Adaptive Oversight",
+      description: "Your coach adjusts in real-time for maximum results",
+      img: adaptiveIcon.src,
+    },
+    {
+      id: 5,
+      title: "Peak Performance",
+      description: "Hit your goals with measurable, lasting outcomes",
+      img: trophieIcon.src,
+    },
   ];
 
   return (

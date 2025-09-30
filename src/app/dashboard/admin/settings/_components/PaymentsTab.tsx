@@ -322,7 +322,12 @@ export function PaymentsTab() {
                 {exportButtons.map((button) => {
                   const IconComponent = button.icon;
                   return (
-                    <Button key={button.id} variant="outline" size="sm" className="bg-[#2A2D33] text-white border cursor-pointer">
+                    <Button
+                      key={button.id}
+                      variant="outline"
+                      size="sm"
+                      className="bg-[#2A2D33] text-white border cursor-pointer"
+                    >
                       <IconComponent className="h-4 w-4 mr-2" />
                       {button.label}
                     </Button>

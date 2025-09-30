@@ -1,7 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-const ProgramCard = ({ icon, title, subtitle }: { icon: string; title: string; subtitle: string }) => {
+const ProgramCard = ({
+  icon,
+  title,
+  subtitle,
+}: {
+  icon: string;
+  title: string;
+  subtitle: string;
+}) => {
   return (
     <div className="flex items-center space-x-3 p-5 bg-[#2A2D33] text-white">
       {/* Icon Box */}

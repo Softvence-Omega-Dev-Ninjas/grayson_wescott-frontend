@@ -44,7 +44,11 @@ const ProgramsPage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 container mx-auto">
           {data.map((item) => (
-            <OverlayCard key={item.title} title={item.title} backgroundImage={item.img} />
+            <OverlayCard
+              key={item.title}
+              title={item.title}
+              backgroundImage={item.img}
+            />
           ))}
         </div>
 
@@ -74,7 +78,13 @@ const ProgramsPage = () => {
       </div>
 
       <div className="md:py-12">
-        <CTA title="Ready to Peak?" description="Join thousands who've transformed their strength" img={logo.src} btn1="Buy Now" btn2="Add to Cart" />
+        <CTA
+          title="Ready to Peak?"
+          description="Join thousands who've transformed their strength"
+          img={logo.src}
+          btn1="Buy Now"
+          btn2="Add to Cart"
+        />
       </div>
     </div>
   );

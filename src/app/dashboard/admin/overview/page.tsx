@@ -1,6 +1,9 @@
 import { DollarSign, FileText, Users } from "lucide-react";
 import React from "react";
-import { IStatesCardProps, StatesCard } from "./_components/StatesCard/StatesCard";
+import {
+  IStatesCardProps,
+  StatesCard,
+} from "./_components/StatesCard/StatesCard";
 import { ActivityTable } from "./_components/ActivityTable/ActivityTable";
 
 const statesData: IStatesCardProps[] = [
@@ -30,7 +33,13 @@ const AdminOverviewPage = () => {
       {/* States Cards  */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {statesData.map((metric, index) => (
-          <StatesCard key={index} title={metric.title} value={metric.value} change={metric.change} icon={metric.icon} />
+          <StatesCard
+            key={index}
+            title={metric.title}
+            value={metric.value}
+            change={metric.change}
+            icon={metric.icon}
+          />
         ))}
       </div>
 

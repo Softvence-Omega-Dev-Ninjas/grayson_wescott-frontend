@@ -106,12 +106,22 @@ const AddExercisePage = () => {
     <>
       <div className="">
         <h1 className="text-3xl font-bold mb-2">Add Exercise</h1>
-        <p className="text-[#F4F5F7] text-base font-medium">Upload a new exercise video and add basic information. Step 1 of 3.</p>
+        <p className="text-[#F4F5F7] text-base font-medium">
+          Upload a new exercise video and add basic information. Step 1 of 3.
+        </p>
       </div>
       <div className="py-20">
         <Stepper currentStep={currentStep} />
         <div className="mt-8">
-          {currentStep === 0 && <Step1 onNext={handleNext} register={register} control={control} errors={errors} handleSubmit={handleSubmit} />}
+          {currentStep === 0 && (
+            <Step1
+              onNext={handleNext}
+              register={register}
+              control={control}
+              errors={errors}
+              handleSubmit={handleSubmit}
+            />
+          )}
           {currentStep === 1 && (
             <Step2
               onNext={handleNext}
@@ -124,7 +134,13 @@ const AddExercisePage = () => {
               trigger={trigger}
             />
           )}
-          {currentStep === 2 && <Step3 formData={formData} onBack={handleBack} onDone={handleDone} />}
+          {currentStep === 2 && (
+            <Step3
+              formData={formData}
+              onBack={handleBack}
+              onDone={handleDone}
+            />
+          )}
         </div>
       </div>
     </>

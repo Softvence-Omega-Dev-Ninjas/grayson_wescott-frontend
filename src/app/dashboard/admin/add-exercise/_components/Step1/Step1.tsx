@@ -17,16 +17,32 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
         <h2 className="text-xl font-semibold mb-3">Upload Video or Add Link</h2>
         <span className="font-medium text-sm mt-1">Upload from Device</span>
         <div className="border border-dashed border-[#F4F5F7] p-6 text-center w-full mt-3">
-          <Image src={uploadIcon} width={50} height={50} alt="Upload Icon" className="mx-auto" />
-          <label htmlFor="videoFile" className="block text-xl font-medium cursor-pointer text-[#B9BDC6] mt-8">
+          <Image
+            src={uploadIcon}
+            width={50}
+            height={50}
+            alt="Upload Icon"
+            className="mx-auto"
+          />
+          <label
+            htmlFor="videoFile"
+            className="block text-xl font-medium cursor-pointer text-[#B9BDC6] mt-8"
+          >
             Choose Video File
           </label>
-          <p className="text-sm text-[#F4F5F7] font-normal mt-1">Click to browse or drop and drag your video file here</p>
+          <p className="text-sm text-[#F4F5F7] font-normal mt-1">
+            Click to browse or drop and drag your video file here
+          </p>
           <Controller
             name="videoFile"
             control={control}
             render={({ field: { onChange } }) => (
-              <input id="videoFile" type="file" className="hidden" onChange={(e) => onChange(e.target.files?.[0] || null)} />
+              <input
+                id="videoFile"
+                type="file"
+                className="hidden"
+                onChange={(e) => onChange(e.target.files?.[0] || null)}
+              />
             )}
           />
         </div>
@@ -44,11 +60,16 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
             {...register("videoLink")}
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
           />
-          <Button type="button" className="cursor-pointer font-medium py-2 px-4 transition-colors duration-200 bg-secondary text-white  border-none ">
+          <Button
+            type="button"
+            className="cursor-pointer font-medium py-2 px-4 transition-colors duration-200 bg-secondary text-white  border-none "
+          >
             Validate
           </Button>
         </div>
-        <span className="text-xs">Supports Vimeo Pro and YouTube Unlisted videos</span>
+        <span className="text-xs">
+          Supports Vimeo Pro and YouTube Unlisted videos
+        </span>
       </div>
 
       {/* Basic Information Section */}
@@ -65,7 +86,9 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
             {...register("videoName", { required: "Video Name is required." })}
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
           />
-          {errors.videoName && <p className="text-red-500 text-sm">{errors.videoName.message}</p>}
+          {errors.videoName && (
+            <p className="text-red-500 text-sm">{errors.videoName.message}</p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="duration" className="text-lg font-medium">
@@ -88,15 +111,24 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
           id="videoDescription"
           type="text"
           placeholder="Complete guide to performing the perfect barbell back squat"
-          {...register("videoDescription", { required: "Video Description is required." })}
+          {...register("videoDescription", {
+            required: "Video Description is required.",
+          })}
           className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] rounded-none"
         />
-        {errors.videoDescription && <p className="text-red-500 text-sm">{errors.videoDescription.message}</p>}
+        {errors.videoDescription && (
+          <p className="text-red-500 text-sm">
+            {errors.videoDescription.message}
+          </p>
+        )}
       </div>
 
       {/* Navigation Buttons */}
       <div className="flex justify-end space-x-4 mt-8">
-        <button type="submit" className="cursor-pointer font-medium py-2 px-4 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75">
+        <button
+          type="submit"
+          className="cursor-pointer font-medium py-2 px-4 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75"
+        >
           Next
           <FaArrowRightLong />
         </button>

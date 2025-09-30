@@ -13,13 +13,26 @@ import beginerIcon from "@/assets/dashboard/add-excercise/beginerIcon.png";
 import intermediateIcon from "@/assets/dashboard/add-excercise/IntermediateIcon.png";
 import advanceIcon from "@/assets/dashboard/add-excercise/advanceIcon.png";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
 
-const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: any) => {
+const Step2 = ({
+  onBack,
+  register,
+  control,
+  errors,
+  handleSubmit,
+  onSubmit,
+}: any) => {
   const {
     fields: stepFields,
     append: appendStep,
@@ -47,8 +60,23 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
     name: "commonMistakes",
   });
 
-  const bodyPartTags = ["Legs", "Chest", "Core", "Back", "Glutes", "Shoulders", "Arms"];
-  const equipmentTags = ["Dumbbell", "Barbell", "Resistance Band", "Bodyweight", "Kettlebell", "Cable Machine"];
+  const bodyPartTags = [
+    "Legs",
+    "Chest",
+    "Core",
+    "Back",
+    "Glutes",
+    "Shoulders",
+    "Arms",
+  ];
+  const equipmentTags = [
+    "Dumbbell",
+    "Barbell",
+    "Resistance Band",
+    "Bodyweight",
+    "Kettlebell",
+    "Cable Machine",
+  ];
   const difficultyLevels = [
     { label: "Beginner", icon: beginerIcon },
     { label: "Intermediate", icon: intermediateIcon },
@@ -85,7 +113,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
               </Select>
             )}
           />
-          {errors.primaryCategory && <p className="text-red-500 text-sm">{errors.primaryCategory.message}</p>}
+          {errors.primaryCategory && (
+            <p className="text-red-500 text-sm">
+              {errors.primaryCategory.message}
+            </p>
+          )}
         </div>
         {/* Status  */}
         <div className="space-y-2">
@@ -109,7 +141,9 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
               </Select>
             )}
           />
-          {errors.status && <p className="text-red-500 text-sm">{errors.status.message}</p>}
+          {errors.status && (
+            <p className="text-red-500 text-sm">{errors.status.message}</p>
+          )}
         </div>
       </div>
 
@@ -119,14 +153,23 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
         <span className="text-2xl">Body Part Tags</span>
       </div>
       <div className="space-y-4">
-        <Label className="text-lg font-medium">Select all body parts targeted in this exercise *</Label>
+        <Label className="text-lg font-medium">
+          Select all body parts targeted in this exercise *
+        </Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {bodyPartTags.map((tag) => (
-            <div key={tag} className="flex items-center space-x-2 border border-secondary px-4 py-6">
+            <div
+              key={tag}
+              className="flex items-center space-x-2 border border-secondary px-4 py-6"
+            >
               <Controller
                 name="bodyPartTags"
                 control={control}
-                rules={{ validate: (value) => value.length > 0 || "At least one body part tag is required." }}
+                rules={{
+                  validate: (value) =>
+                    value.length > 0 ||
+                    "At least one body part tag is required.",
+                }}
                 render={({ field }) => (
                   <Input
                     id={`body-part-${tag}`}
@@ -136,20 +179,29 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
                       if (e.target.checked) {
                         field.onChange([...(field.value || []), tag]);
                       } else {
-                        field.onChange(field.value?.filter((v: any) => v !== tag) || []);
+                        field.onChange(
+                          field.value?.filter((v: any) => v !== tag) || [],
+                        );
                       }
                     }}
                     className="form-checkbox bg-transparent h-4 w-4 text-black rounded-md border border-zinc-500 cursor-pointer before:bg-transparent"
                   />
                 )}
               />
-              <label htmlFor={`body-part-${tag}`} className="text-sm cursor-pointer text-[#F4F5F7]">
+              <label
+                htmlFor={`body-part-${tag}`}
+                className="text-sm cursor-pointer text-[#F4F5F7]"
+              >
                 {tag}
               </label>
             </div>
           ))}
         </div>
-        {errors.bodyPartTags && <p className="text-red-500 text-sm mt-2">{errors.bodyPartTags.message}</p>}
+        {errors.bodyPartTags && (
+          <p className="text-red-500 text-sm mt-2">
+            {errors.bodyPartTags.message}
+          </p>
+        )}
       </div>
 
       {/* Equipment Tags */}
@@ -158,14 +210,23 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
         <span className="text-2xl">Equipment Tags</span>
       </div>
       <div className="space-y-4">
-        <Label className="text-lg font-medium">Select equipment required for this exercise *</Label>
+        <Label className="text-lg font-medium">
+          Select equipment required for this exercise *
+        </Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {equipmentTags.map((tag) => (
-            <div key={tag} className="flex items-center space-x-2 border border-secondary px-4 py-6">
+            <div
+              key={tag}
+              className="flex items-center space-x-2 border border-secondary px-4 py-6"
+            >
               <Controller
                 name="equipmentTags"
                 control={control}
-                rules={{ validate: (value) => value.length > 0 || "At least one equipment tag is required." }}
+                rules={{
+                  validate: (value) =>
+                    value.length > 0 ||
+                    "At least one equipment tag is required.",
+                }}
                 render={({ field }) => (
                   <input
                     id={`equipment-${tag}`}
@@ -175,20 +236,29 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
                       if (e.target.checked) {
                         field.onChange([...(field.value || []), tag]);
                       } else {
-                        field.onChange(field.value?.filter((v: any) => v !== tag) || []);
+                        field.onChange(
+                          field.value?.filter((v: any) => v !== tag) || [],
+                        );
                       }
                     }}
                     className="form-checkbox h-4 w-4 text-black rounded-md border border-zinc-500 bg-zinc-800 cursor-pointer"
                   />
                 )}
               />
-              <label htmlFor={`equipment-${tag}`} className="text-sm cursor-pointer">
+              <label
+                htmlFor={`equipment-${tag}`}
+                className="text-sm cursor-pointer"
+              >
                 {tag}
               </label>
             </div>
           ))}
         </div>
-        {errors.equipmentTags && <p className="text-red-500 text-sm mt-2">{errors.equipmentTags.message}</p>}
+        {errors.equipmentTags && (
+          <p className="text-red-500 text-sm mt-2">
+            {errors.equipmentTags.message}
+          </p>
+        )}
       </div>
 
       {/* Step-by-Step Guide */}
@@ -198,7 +268,9 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
           <div key={item.id} className="flex items-center space-x-2">
             <Input
               type="text"
-              {...register(`stepByStepGuide.${index}.value`, { required: "This field is required." })}
+              {...register(`stepByStepGuide.${index}.value`, {
+                required: "This field is required.",
+              })}
               placeholder="Enter you Step by Step Guide name..."
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
             />
@@ -214,7 +286,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             )}
           </div>
         ))}
-        {errors.stepByStepGuide?.[0]?.value && <p className="text-red-500 text-sm mt-2">{errors.stepByStepGuide?.[0]?.value.message}</p>}
+        {errors.stepByStepGuide?.[0]?.value && (
+          <p className="text-red-500 text-sm mt-2">
+            {errors.stepByStepGuide?.[0]?.value.message}
+          </p>
+        )}
         <div className="flex items-center justify-end">
           <Button
             type="button"
@@ -238,7 +314,9 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             <div key={item.id} className="flex items-center space-x-2">
               <Input
                 type="text"
-                {...register(`keyBenefits.${index}.value`, { required: "This field is required." })}
+                {...register(`keyBenefits.${index}.value`, {
+                  required: "This field is required.",
+                })}
                 placeholder="Enter Client's Key Benefits..."
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
               />
@@ -253,7 +331,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
               )}
             </div>
           ))}
-          {errors.keyBenefits?.[0]?.value && <p className="text-red-500 text-sm mt-2">{errors.keyBenefits?.[0]?.value.message}</p>}
+          {errors.keyBenefits?.[0]?.value && (
+            <p className="text-red-500 text-sm mt-2">
+              {errors.keyBenefits?.[0]?.value.message}
+            </p>
+          )}
           <div className="flex justify-end">
             <Button
               type="button"
@@ -274,7 +356,9 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             <div key={item.id} className="flex items-center space-x-2">
               <Input
                 type="text"
-                {...register(`commonMistakes.${index}.value`, { required: "This field is required." })}
+                {...register(`commonMistakes.${index}.value`, {
+                  required: "This field is required.",
+                })}
                 placeholder="Enter Client's Common Mistakes..."
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
               />
@@ -289,7 +373,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
               )}
             </div>
           ))}
-          {errors.commonMistakes?.[0]?.value && <p className="text-red-500 text-sm mt-2">{errors.commonMistakes?.[0]?.value.message}</p>}
+          {errors.commonMistakes?.[0]?.value && (
+            <p className="text-red-500 text-sm mt-2">
+              {errors.commonMistakes?.[0]?.value.message}
+            </p>
+          )}
           <div className="flex justify-end">
             <Button
               type="button"
@@ -313,11 +401,17 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.equipment", { required: "Equipment is required." })}
+              {...register("exerciseDetails.equipment", {
+                required: "Equipment is required.",
+              })}
               placeholder="Barbell, Rack"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
             />
-            {errors.exerciseDetails?.equipment && <p className="text-red-500 text-sm">{errors.exerciseDetails.equipment.message}</p>}
+            {errors.exerciseDetails?.equipment && (
+              <p className="text-red-500 text-sm">
+                {errors.exerciseDetails.equipment.message}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="type" className="text-lg font-medium">
@@ -325,11 +419,17 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.type", { required: "Type is required." })}
+              {...register("exerciseDetails.type", {
+                required: "Type is required.",
+              })}
               placeholder="Compound"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
             />
-            {errors.exerciseDetails?.type && <p className="text-red-500 text-sm">{errors.exerciseDetails.type.message}</p>}
+            {errors.exerciseDetails?.type && (
+              <p className="text-red-500 text-sm">
+                {errors.exerciseDetails.type.message}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="primaryMuscles" className="text-lg font-medium">
@@ -337,11 +437,17 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.primaryMuscles", { required: "Primary Muscles is required." })}
+              {...register("exerciseDetails.primaryMuscles", {
+                required: "Primary Muscles is required.",
+              })}
               placeholder="Quads, Glutes, Hamstrings"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
             />
-            {errors.exerciseDetails?.primaryMuscles && <p className="text-red-500 text-sm">{errors.exerciseDetails.primaryMuscles.message}</p>}
+            {errors.exerciseDetails?.primaryMuscles && (
+              <p className="text-red-500 text-sm">
+                {errors.exerciseDetails.primaryMuscles.message}
+              </p>
+            )}
           </div>
           <div className="space-y-2">
             <Label htmlFor="secondaryMuscles" className="text-lg font-medium">
@@ -349,11 +455,17 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.secondaryMuscles", { required: "Secondary Muscles is required." })}
+              {...register("exerciseDetails.secondaryMuscles", {
+                required: "Secondary Muscles is required.",
+              })}
               placeholder="Core, Lower Back"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
             />
-            {errors.exerciseDetails?.secondaryMuscles && <p className="text-red-500 text-sm">{errors.exerciseDetails.secondaryMuscles.message}</p>}
+            {errors.exerciseDetails?.secondaryMuscles && (
+              <p className="text-red-500 text-sm">
+                {errors.exerciseDetails.secondaryMuscles.message}
+              </p>
+            )}
           </div>
         </div>
         <div className="space-y-2 mt-5">
@@ -362,11 +474,17 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
           </Label>
           <Input
             type="text"
-            {...register("exerciseDetails.caloriesBurn", { required: "calories Burn is required." })}
+            {...register("exerciseDetails.caloriesBurn", {
+              required: "calories Burn is required.",
+            })}
             placeholder="200 kcal"
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
           />
-          {errors.exerciseDetails?.caloriesBurn && <p className="text-red-500 text-sm">{errors.exerciseDetails.caloriesBurn.message}</p>}
+          {errors.exerciseDetails?.caloriesBurn && (
+            <p className="text-red-500 text-sm">
+              {errors.exerciseDetails.caloriesBurn.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -376,7 +494,9 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
         <span className="text-2xl">Difficulty Level</span>
       </div>
       <div className="space-y-4">
-        <Label className="text-lg font-medium">Select the appropriate difficulty level for this exercise *</Label>
+        <Label className="text-lg font-medium">
+          Select the appropriate difficulty level for this exercise *
+        </Label>
         <Controller
           name="difficultyLevel"
           control={control}
@@ -400,7 +520,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
                     {/* <Image src={level.icon} width={40} height={40} alt="Upload Icon" className="pb-5" /> */}
                     <span className="text-lg font-semibold">{level.label}</span>
                     <span className="text-sm text-gray-400 mt-1">
-                      {level.label === "Beginner" ? "New to exercise" : level.label === "Intermediate" ? "Some experience" : "Highly experienced"}
+                      {level.label === "Beginner"
+                        ? "New to exercise"
+                        : level.label === "Intermediate"
+                          ? "Some experience"
+                          : "Highly experienced"}
                     </span>
                   </label>
                 </div>
@@ -408,7 +532,11 @@ const Step2 = ({ onBack, register, control, errors, handleSubmit, onSubmit }: an
             </div>
           )}
         />
-        {errors.difficultyLevel && <p className="text-red-500 text-sm mt-2">{errors.difficultyLevel.message}</p>}
+        {errors.difficultyLevel && (
+          <p className="text-red-500 text-sm mt-2">
+            {errors.difficultyLevel.message}
+          </p>
+        )}
       </div>
 
       {/* Navigation Buttons */}

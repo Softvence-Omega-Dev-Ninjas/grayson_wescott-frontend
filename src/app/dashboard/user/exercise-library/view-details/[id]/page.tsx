@@ -25,7 +25,8 @@ const exerciseSteps = [
   {
     step: 1,
     title: "Setup under the barbell rack",
-    description: "Position yourself under the bar with feet shoulder-width apart",
+    description:
+      "Position yourself under the bar with feet shoulder-width apart",
   },
   {
     step: 2,
@@ -74,20 +75,52 @@ const ViewExcerciseDetailsPage = () => {
 
         <div className="flex items-center justify-start flex-wrap gap-x-6 gap-y-2">
           <div className="flex items-center gap-1">
-            <Image src={tagIcon} alt="Tags" width={12} height={12} className="shrink-0" />
-            <span className="font-medium text-sm text-white">{"Legs, Strength, Compound"}</span>
+            <Image
+              src={tagIcon}
+              alt="Tags"
+              width={12}
+              height={12}
+              className="shrink-0"
+            />
+            <span className="font-medium text-sm text-white">
+              {"Legs, Strength, Compound"}
+            </span>
           </div>
           <div className="flex items-center gap-1">
-            <Image src={levelIcon} alt="Tags" width={12} height={12} className="shrink-0" />
-            <span className="font-medium text-sm text-white mt-0.5">{"Beginner"}</span>
+            <Image
+              src={levelIcon}
+              alt="Tags"
+              width={12}
+              height={12}
+              className="shrink-0"
+            />
+            <span className="font-medium text-sm text-white mt-0.5">
+              {"Beginner"}
+            </span>
           </div>
           <div className="flex items-center gap-1">
-            <Image src={clockIcon} alt="Tags" width={12} height={12} className="shrink-0" />
-            <span className="font-medium text-sm text-white mt-0.5">{"1:15"}</span>
+            <Image
+              src={clockIcon}
+              alt="Tags"
+              width={12}
+              height={12}
+              className="shrink-0"
+            />
+            <span className="font-medium text-sm text-white mt-0.5">
+              {"1:15"}
+            </span>
           </div>
           <div className="flex items-center gap-1">
-            <Image src={dumbellIcon} alt="Tags" width={12} height={12} className="shrink-0" />
-            <span className="font-medium text-sm text-white mt-0.5">{"Barbell, Rack"}</span>
+            <Image
+              src={dumbellIcon}
+              alt="Tags"
+              width={12}
+              height={12}
+              className="shrink-0"
+            />
+            <span className="font-medium text-sm text-white mt-0.5">
+              {"Barbell, Rack"}
+            </span>
           </div>
         </div>
       </div>
@@ -96,8 +129,15 @@ const ViewExcerciseDetailsPage = () => {
         <div className="lg:col-span-2">
           {/* Video Player */}
           <div className="relative">
-            <Image src={pic} alt="Upload Icon" className="w-full h-[500px] object-fill" />
-            <Link href={"/dashboard/user/exercise-library/video/1"} className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-1/2">
+            <Image
+              src={pic}
+              alt="Upload Icon"
+              className="w-full h-[500px] object-fill"
+            />
+            <Link
+              href={"/dashboard/user/exercise-library/video/1"}
+              className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-1/2"
+            >
               <Button className="flex items-center justify-center gap-1.5 bg-[#7DA6FF]  py-4  px-10 cursor-pointer">
                 <FaPlay />
                 <span>Play Full Video</span>
@@ -108,31 +148,49 @@ const ViewExcerciseDetailsPage = () => {
           {/* Description */}
           <div className="bg-primary-200 border border-secondary p-4">
             <h3 className="text-lg font-semibold mb-3">Description</h3>
-            <p className="text-gray-300 leading-relaxed">{sampleWorkout.description}</p>
+            <p className="text-gray-300 leading-relaxed">
+              {sampleWorkout.description}
+            </p>
 
             <div className="mt-4 space-y-2 flex items-start justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <Image src={starIcon} alt="Upload Icon" className="w-5 h-4 shrink-0" />
+                  <Image
+                    src={starIcon}
+                    alt="Upload Icon"
+                    className="w-5 h-4 shrink-0"
+                  />
                   <h1 className="font-semibold text-xl"> Key Benifits</h1>
                 </div>
 
                 {benefits.map((item) => (
                   <div key={item.id} className="flex items-center gap-1.5 mt-1">
-                    <Image src={tickIcon} alt="Upload Icon" className="w-3 h-4 shrink-0" />
+                    <Image
+                      src={tickIcon}
+                      alt="Upload Icon"
+                      className="w-3 h-4 shrink-0"
+                    />
                     <span className="font-medium text-sm">{item.text}</span>
                   </div>
                 ))}
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <Image src={warningIcon} alt="Upload Icon" className="w-5 h-4 shrink-0" />
+                  <Image
+                    src={warningIcon}
+                    alt="Upload Icon"
+                    className="w-5 h-4 shrink-0"
+                  />
                   <h1 className="font-semibold text-xl">Common Mistakes</h1>
                 </div>
 
                 {mistakes.map((item) => (
                   <div key={item.id} className="flex items-center gap-1.5 mt-1">
-                    <Image src={crossIcon} alt="Upload Icon" className="w-3 h-4 shrink-0" />
+                    <Image
+                      src={crossIcon}
+                      alt="Upload Icon"
+                      className="w-3 h-4 shrink-0"
+                    />
                     <span className="font-medium text-sm">{item.text}</span>
                   </div>
                 ))}
@@ -149,7 +207,10 @@ const ViewExcerciseDetailsPage = () => {
           <h1 className="text-xl font-bold">Excercise Details</h1>
           <div className="space-y-2 mt-6">
             {exerciseDetails.map((item, idx) => (
-              <div key={idx} className="flex justify-between gap-3 flex-wrap pb-1">
+              <div
+                key={idx}
+                className="flex justify-between gap-3 flex-wrap pb-1"
+              >
                 <span className="text-gray-400">{item.label}</span>
                 <span className="text-white font-medium">{item.value}</span>
               </div>

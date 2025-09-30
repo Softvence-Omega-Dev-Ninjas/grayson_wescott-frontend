@@ -9,7 +9,13 @@ export interface IStatesCardProps {
   className?: string;
 }
 
-export function StatesCard({ title, value, change, icon: Icon, className }: IStatesCardProps) {
+export function StatesCard({
+  title,
+  value,
+  change,
+  icon: Icon,
+  className,
+}: IStatesCardProps) {
   return (
     <div className={cn("bg-primary-200 border border-[#a5a7ac] ", className)}>
       <div className="p-6">

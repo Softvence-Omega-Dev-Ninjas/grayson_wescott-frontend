@@ -129,17 +129,28 @@ const ProgressTrackingPage = () => {
 
         {/* Reports & Export */}
         <div className=" flex items-center justify-between flex-wrap gap-4 mb-20">
-          <h3 className="text-white text-lg font-semibold mb-4">Reports & Export</h3>
+          <h3 className="text-white text-lg font-semibold mb-4">
+            Reports & Export
+          </h3>
           <div className="flex flex-wrap gap-4">
-            <Button variant="secondary" className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700">
+            <Button
+              variant="secondary"
+              className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700"
+            >
               <FileText className="w-4 h-4 mr-2" />
               Export PDF
             </Button>
-            <Button variant="secondary" className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700">
+            <Button
+              variant="secondary"
+              className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700"
+            >
               <Download className="w-4 h-4 mr-2" />
               Export CSV
             </Button>
-            <Button variant="secondary" className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700">
+            <Button
+              variant="secondary"
+              className="bg-secondary hover:bg-secondary/75 cursor-pointer text-white border-gray-700"
+            >
               <Mail className="w-4 h-4 mr-2" />
               Weekly Summary
             </Button>

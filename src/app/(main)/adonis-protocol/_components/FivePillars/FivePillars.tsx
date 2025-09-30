@@ -12,7 +12,8 @@ function FivePillars() {
     {
       img: f1.src,
       title: "Aesthetic Performance",
-      description: "Build the physique that commands respect and turns heads wherever you go.",
+      description:
+        "Build the physique that commands respect and turns heads wherever you go.",
     },
     {
       img: f2.src,
@@ -22,17 +23,20 @@ function FivePillars() {
     {
       img: f3.src,
       title: "Social Mastery",
-      description: "Develop magnetic charisma and social intelligence that opens every door.",
+      description:
+        "Develop magnetic charisma and social intelligence that opens every door.",
     },
     {
       img: f4.src,
       title: "Mindset & Discipline",
-      description: "Forge unbreakable mental strength and unwavering self-discipline.",
+      description:
+        "Forge unbreakable mental strength and unwavering self-discipline.",
     },
     {
       img: f5.src,
       title: "Empire Systems",
-      description: "Build wealth, influence, and legacy that lasts generations.",
+      description:
+        "Build wealth, influence, and legacy that lasts generations.",
     },
   ];
 

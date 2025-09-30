@@ -42,11 +42,15 @@ const CarbonValues = () => {
           <div
             key={index}
             className={`flex flex-col bs:ml-20 md:flex-row items-center gap-8 ${
-              section.layout === "image-left" ? "md:flex-row-reverse justify-center" : "justify-start "
+              section.layout === "image-left"
+                ? "md:flex-row-reverse justify-center"
+                : "justify-start "
             }`}
           >
             {/* Image container */}
-            <div className={` flex item-center ${section.layout === "image-left" ? "justify-start" : "justify-end"} `}>
+            <div
+              className={` flex item-center ${section.layout === "image-left" ? "justify-start" : "justify-end"} `}
+            >
               <Image
                 src={section.image}
                 alt={section.title}
@@ -58,8 +62,12 @@ const CarbonValues = () => {
 
             {/* Text container */}
             <div className="w-full md:w-1/2 px-2 md:px-0  text-center md:text-left">
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-widest mb-4">{section.title}</h2>
-              <p className="text-sm md:text-base text-gray-400 leading-relaxed">{section.description}</p>
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-widest mb-4">
+                {section.title}
+              </h2>
+              <p className="text-sm md:text-base text-gray-400 leading-relaxed">
+                {section.description}
+              </p>
             </div>
           </div>
         ))}

@@ -129,7 +129,9 @@ export function ActivityTable() {
               <th className="text-left py-3 px-5 font-semibold">Client Name</th>
               <th className="text-left py-3 px-5 font-semibold">Program</th>
               <th className="text-left py-3 px-5 font-semibold">Status</th>
-              <th className="text-left py-3 px-5 font-semibold">Admission Date</th>
+              <th className="text-left py-3 px-5 font-semibold">
+                Admission Date
+              </th>
               <th className="text-left py-3 px-5 font-semibold">Last Active</th>
             </tr>
           </thead>
@@ -139,9 +141,15 @@ export function ActivityTable() {
                 <td className="py-4 px-5 text-white">{client.name}</td>
                 <td className="py-4 px-5 text-gray-300">{client.program}</td>
                 <td className="py-4 px-5">
-                  <span className={`px-2 py-1 rounded text-sm ${getStatusClasses(client.status)}`}>{client.status}</span>
+                  <span
+                    className={`px-2 py-1 rounded text-sm ${getStatusClasses(client.status)}`}
+                  >
+                    {client.status}
+                  </span>
                 </td>
-                <td className="py-4 px-5 text-gray-300">{client.admissionDate}</td>
+                <td className="py-4 px-5 text-gray-300">
+                  {client.admissionDate}
+                </td>
                 <td className="py-4 px-5 text-gray-400">{client.lastActive}</td>
               </tr>
             ))}

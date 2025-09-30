@@ -3,8 +3,19 @@
 import dp from "@/assets/home/banner.png";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -13,15 +24,25 @@ export function NavUser() {
     <SidebarMenu className="rounded-2xl">
       <SidebarMenuItem className="bg-[#0B1A2A] py-1 focus:ring-0">
         <DropdownMenu>
-          <DropdownMenuTrigger className="rounded-2xl focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0" asChild>
-            <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+          <DropdownMenuTrigger
+            className="rounded-2xl focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+            asChild
+          >
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={dp.src} alt={"DP"} />
                 <AvatarFallback className="rounded-lg">DP</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold text-light-primary-text dark:text-dark-primary-txt">{"Lionel Messi"}</span>
-                <span className="truncate text-xs font-medium text-light-secondary-text dark:text-dark-secondary-txt">{"messi@gmail.com"}</span>
+                <span className="truncate font-semibold text-light-primary-text dark:text-dark-primary-txt">
+                  {"Lionel Messi"}
+                </span>
+                <span className="truncate text-xs font-medium text-light-secondary-text dark:text-dark-secondary-txt">
+                  {"messi@gmail.com"}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4 text-light-primary-text dark:text-dark-primary-txt" />
             </SidebarMenuButton>
@@ -39,8 +60,12 @@ export function NavUser() {
                   <AvatarFallback className="rounded-lg">DP</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold text-white">{"Lionel Messi"}</span>
-                  <span className="truncate text-xs font-medium text-white">{"messi@gmail.com"}</span>
+                  <span className="truncate font-semibold text-white">
+                    {"Lionel Messi"}
+                  </span>
+                  <span className="truncate text-xs font-medium text-white">
+                    {"messi@gmail.com"}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>

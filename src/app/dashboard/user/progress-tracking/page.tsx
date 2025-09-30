@@ -4,7 +4,6 @@ import { ProgramHeader } from "./_components/ProgramHeader";
 import { StatsCards } from "./_components/StatsCards";
 import { WorkoutHistory } from "./_components/WorkoutHistory";
 
-
 export default function UserProgress() {
   return (
     <div className=" bg-black text-white p-6">
@@ -35,5 +34,5 @@ export default function UserProgress() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -71,10 +71,17 @@ export function AssignedProgramTable() {
               <div className="flex items-center gap-4 w-full md:w-auto">
                 {/* Placeholder for the icon */}
                 <div className="w-10 h-10 flex items-center justify-center bg-secondary">
-                  <Image src={dumbellIcon} alt="dumbell Icon" width={20} height={20} />
+                  <Image
+                    src={dumbellIcon}
+                    alt="dumbell Icon"
+                    width={20}
+                    height={20}
+                  />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold">{program.name}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold">
+                    {program.name}
+                  </h3>
                   <p className="text-sm text-gray-400">
                     {program.duration} • {program.level}
                   </p>

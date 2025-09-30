@@ -34,12 +34,16 @@ function PricingCard({ item }: IPricingPlan) {
           <span className="text-base font-semibold">Tiar 1</span>
           <p className="font-normal text-base">{item.description}</p>
           <h1 className="text-4xl font-bold my-4">
-            {item.price} <span className="text-lg font-medium">{item.billing}</span>
+            {item.price}{" "}
+            <span className="text-lg font-medium">{item.billing}</span>
           </h1>
         </div>
         <div>
           {item.features.map((feature, index) => (
-            <div key={feature} className="flex items-center justify-center md:justify-start  gap-2 mt-2">
+            <div
+              key={feature}
+              className="flex items-center justify-center md:justify-start  gap-2 mt-2"
+            >
               {/* <img src={img.src} alt="" /> */}
               <Image src={img.src} alt="image" height={15} width={15} />
               <p key={index} className="font-normal">

@@ -190,7 +190,10 @@ export function ClientsAccessTab() {
               </thead>
               <tbody className="divide-y divide-border">
                 {permissionsData.map((row) => (
-                  <tr key={row.id} className="hover:bg-muted/20 border-b-gray-900">
+                  <tr
+                    key={row.id}
+                    className="hover:bg-muted/20 border-b-gray-900"
+                  >
                     <td className="py-3 px-4 font-medium">{row.feature}</td>
                     <td className="py-3 px-4 text-center">
                       {row.core ? (
