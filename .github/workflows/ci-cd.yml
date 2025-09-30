@@ -67,33 +67,70 @@ jobs:
 
     steps:
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
 
-      - name: Test SSH Connection
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH Connected Successfully!'"
+          # Write private key
+          echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          # Add server host key
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+          # Clean SSH config
+          cat > ~/.ssh/config <<EOF
+          Host deploy-server
+            HostName ${{ secrets.VPS_HOST }}
+            User ${{ secrets.VPS_USER }}
+            IdentityFile ~/.ssh/deploy_key
+            StrictHostKeyChecking no
+          EOF
+
+          chmod 600 ~/.ssh/config
+
+      - name: Test SSH Connection 
+        run: ssh deploy-server "echo '🎉 SSH Connected Successfully!'"
 
       - name: Copy Compose & Scripts
         run: |
-          cd $GITHUB_WORKSPACE
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p ~/${{ secrets.PACKAGE_NAME }}/scripts"
-          scp compose.yaml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/${{ secrets.PACKAGE_NAME }}/compose.yaml
-          scp -r scripts ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/${{ secrets.PACKAGE_NAME }}/scripts
+          echo "Creating directories..."
+          ssh deploy-server "mkdir -p ~/${{ secrets.PACKAGE_NAME}}/scripts"
+          echo "Copying compose.yaml..."
+          scp compose.yaml deploy-server:~/${{ secrets.PACKAGE_NAME}}/compose.yaml
+          echo "Copying scripts folder..."
+          scp -r scripts deploy-server:~/${{ secrets.PACKAGE_NAME}}/
+          echo "✅ Files copied successfully"
+
+      - name: Fix permissions on server
+        run: ssh deploy-server "chmod -R +x ~/${PACKAGE_NAME}/scripts/*.sh || true"
 
 
       - name: Deploy Application
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} bash << 'EOF'
-            set -euo pipefail
-            export PACKAGE_NAME="${{ secrets.PACKAGE_NAME }}"
-            export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
-            export DOCKER_PASSWORD="${{ secrets.DOCKER_PASSWORD }}"
+          ssh deploy-server bash << 'DEPLOY_EOF'
+          set -euo pipefail
+          
+          # Set environment variables
+          export PACKAGE_NAME="${{ secrets.PACKAGE_NAME }}"
+          export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+          export DOCKER_PASSWORD="${{ secrets.DOCKER_PASSWORD }}"
 
-            cd ~/$PACKAGE_NAME
+          cd ~/$PACKAGE_NAME
 
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          # Login to Docker Hub
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-            docker compose -f compose.yaml pull
-            docker compose -f compose.yaml up -d --remove-orphans
-          EOF
+          # Pull and run Docker Compose
+          docker compose -f compose.yaml pull
+          docker compose -f compose.yaml up -d --remove-orphans
+
+          # Clean up
+          docker logout
+          docker image prune -f
+          DEPLOY_EOF
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf ~/.ssh/deploy_key* ~/.ssh/config
