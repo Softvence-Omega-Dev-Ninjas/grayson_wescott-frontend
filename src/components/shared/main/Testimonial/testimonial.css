@@ -1,0 +1,108 @@
+.testimonial-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  /* This ensures children can be positioned absolutely */
+}
+
+.testimonial-slide-content {
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.testimonial-image-wrapper {
+  flex-shrink: 0;
+  /* margin-right: 40px; */
+}
+
+.testimonial-image {
+  width: 250px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.testimonial-text-content {
+  flex-grow: 1;
+}
+
+.testimonial-quote {
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.testimonial-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.testimonial-title {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.testimonial-details {
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+/* Custom Swiper navigation buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Corrected size for visibility */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.swiper-button-prev {
+  left: 0;
+  /* This rule is needed to override Swiper's default styles */
+  right: auto;
+}
+
+.swiper-button-next {
+  right: 0;
+  /* This rule is needed to override Swiper's default styles */
+  left: auto;
+}
+
+/* Swiper's default icons */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px;
+}
+
+/* Pagination styles */
+.mySwiper .swiper-pagination-bullet {
+  background-color: #ffffff;
+  opacity: 0.5;
+}
+
+.mySwiper .swiper-pagination-bullet-active {
+  background-color: #ffffff;
+  opacity: 1;
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 20px;
+  text-align: center;
+  width: 100%;
+  z-index: 10;
+}
