@@ -76,9 +76,11 @@ jobs:
 
       - name: Copy Compose & Scripts
         run: |
+          cd $GITHUB_WORKSPACE
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p ~/${{ secrets.PACKAGE_NAME }}/scripts"
-          scp -o StrictHostKeyChecking=no compose.yaml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/${{ secrets.PACKAGE_NAME }}/compose.yaml
-          scp -o StrictHostKeyChecking=no -r scripts ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/${{ secrets.PACKAGE_NAME }}/scripts
+          scp compose.yaml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/${{ secrets.PACKAGE_NAME }}/compose.yaml
+          scp -r scripts ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/${{ secrets.PACKAGE_NAME }}/scripts
+
 
       - name: Deploy Application
         run: |
