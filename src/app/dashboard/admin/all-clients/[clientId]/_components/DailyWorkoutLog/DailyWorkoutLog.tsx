@@ -1,0 +1,122 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus, Upload } from "lucide-react";
+import { BsChatFill } from "react-icons/bs";
+import Image from "next/image";
+import tickIcon from "@/assets/dashboard/all-clients/tickICon.svg";
+import { MdDelete } from "react-icons/md";
+
+interface Exercise {
+  name: string;
+  sets: number;
+  reps: number;
+  weight: number;
+  rpe: number;
+}
+
+export function DailyWorkoutLog() {
+  const [selectedDate, setSelectedDate] = useState("");
+  const [exercises] = useState<Exercise[]>([
+    { name: "Bench Press", sets: 3, reps: 3, weight: 185, rpe: 8 },
+    { name: "Squats", sets: 3, reps: 3, weight: 185, rpe: 8 },
+  ]);
+
+  return (
+    <div className="bg-primary-200  p-5 border border-secondary">
+      <div className="flex flex-row items-center justify-between mb-6">
+        <h1 className="text-white text-xl sm:text-2xl font-semibold">
+          Daily Workout Log
+        </h1>
+        <Input
+          type="text"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+          className="w-32 bg-transparent border border-secondary text-white placeholder:text-slate-400"
+          placeholder="mm/dd/yyyy"
+        />
+      </div>
+      <div className="space-y-4">
+        {/* Exercise List */}
+        <div className="space-y-3">
+          {exercises.map((exercise, index) => (
+            <div
+              key={index}
+              className="space-y-2 border border-secondary py-4 px-2.5  mt-2"
+            >
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <span className="text-white font-medium">{exercise.name}</span>
+                <Image src={tickIcon} width={16} height={16} alt="tick icon" />
+              </div>
+              <div className="grid grid-cols-4 gap-4 text-sm ">
+                <div>
+                  <span className="text-sm text-white">Sets</span>
+                  <p className="text-white bg-secondary p-2 mt-1.5">
+                    {exercise.sets}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-sm text-white">Reps</span>
+                  <p className="text-white bg-secondary p-2 mt-1.5">
+                    {exercise.reps}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-sm text-white">Weight</span>
+                  <p className="text-white bg-secondary p-2 mt-1.5">
+                    {exercise.weight}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-sm text-white">RPE</span>
+                  <p className="text-white bg-secondary p-2 mt-1.5">
+                    {exercise.rpe}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between gap-5 flex-wrap mt-5">
+                <span className="text-sm text-white">Rest: 90s</span>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 cursor-pointer">
+                    <BsChatFill size={14} />
+                    <span className="text-sm text-white font-medium">
+                      Notes
+                    </span>
+                  </div>
+                  <MdDelete className="text-red-700 cursor-pointer text-lg" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-wrap gap-2 pt-4">
+          <Button
+            size="sm"
+            className="bg-secondary cursor-pointer text-white hover:bg-gray-700"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Exercise
+          </Button>
+          <Button
+            size="sm"
+            className="bg-transparent cursor-pointer border border-secondary text-white hover:bg-gray-700"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Exercise
+          </Button>
+          <Button
+            size="sm"
+            className="bg-transparent cursor-pointer border border-secondary text-white hover:bg-gray-700"
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            Upload Video
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}

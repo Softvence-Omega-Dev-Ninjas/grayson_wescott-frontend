@@ -1,11 +1,15 @@
-import React, { ReactNode } from "react";
+import Footer from "@/components/shared/main/footer/Footer";
+import Header from "@/components/shared/main/header/Header";
+import { ReactNode } from "react";
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <Header />
+      <div className="min-h-screen">{children}</div>
+      <Footer />
+    </div>
+  );
 };
 
 export default MainLayout;
-
-
-//comment 
-// sadsadsad
