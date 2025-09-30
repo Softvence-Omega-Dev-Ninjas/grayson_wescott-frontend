@@ -1,41 +1,53 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Progress } from "@/components/ui/progress";
-import { MessageCircle, MoreHorizontal, User } from "lucide-react";
-import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Progress } from '@/components/ui/progress';
+import { MessageCircle, MoreHorizontal, User } from 'lucide-react';
+import Link from 'next/link';
 
 interface ClientCardProps {
   id: string;
   name: string;
   avatar?: string;
-  status: "Active" | "Inactive" | "On Hold";
+  status: 'Active' | 'Inactive' | 'On Hold';
   program: string;
   progress: number;
   lastActive: string;
   range?: string;
 }
 
-export function ClientCard({ name, avatar, status, program, progress, lastActive }: ClientCardProps) {
+export function ClientCard({
+  name,
+  avatar,
+  status,
+  program,
+  progress,
+  lastActive,
+}: ClientCardProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Active":
-        return "bg-green-600 text-white hover:bg-green-700";
-      case "Inactive":
-        return "bg-gray-600 text-gray-200 hover:bg-gray-700";
-      case "On Hold":
-        return "bg-orange-600 text-white hover:bg-orange-700";
+      case 'Active':
+        return 'bg-green-600 text-white hover:bg-green-700';
+      case 'Inactive':
+        return 'bg-gray-600 text-gray-200 hover:bg-gray-700';
+      case 'On Hold':
+        return 'bg-orange-600 text-white hover:bg-orange-700';
       default:
-        return "bg-green-600 text-white hover:bg-green-700";
+        return 'bg-green-600 text-white hover:bg-green-700';
     }
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(" ")
+      .split(' ')
       .map((n) => n[0])
-      .join("")
+      .join('')
       .toUpperCase();
   };
 
@@ -45,15 +57,21 @@ export function ClientCard({ name, avatar, status, program, progress, lastActive
         <div className="flex items-start justify-between flex-wrap mb-3">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10 border border-gray-700">
-              <AvatarImage src={avatar || "/placeholder.svg"} alt={name} />
+              <AvatarImage src={avatar || '/placeholder.svg'} alt={name} />
               <AvatarFallback>{getInitials(name)}</AvatarFallback>
             </Avatar>
             <div>
               <h3 className="font-medium text-lg text-white">{name}</h3>
-              <h3 className="text-sm text-white font-light">{"demo@gmail.com"}</h3>
+              <h3 className="text-sm text-white font-light">
+                {'demo@gmail.com'}
+              </h3>
             </div>
           </div>
-          <span className={`text-xs mt-1 px-2 py-1 font-medium ${getStatusColor(status)}`}>{status}</span>
+          <span
+            className={`text-xs mt-1 px-2 py-1 font-medium ${getStatusColor(status)}`}
+          >
+            {status}
+          </span>
         </div>
 
         <div className="space-y-2 mb-4 text-base font-medium">
@@ -102,10 +120,19 @@ export function ClientCard({ name, avatar, status, program, progress, lastActive
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-primary-200 border border-gray-800">
-                <DropdownMenuItem className="text-white hover:bg-gray-800">Edit Client</DropdownMenuItem>
-                <DropdownMenuItem className="text-white hover:bg-gray-800">View Details</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-400 hover:bg-gray-800">Delete Client</DropdownMenuItem>
+              <DropdownMenuContent
+                align="end"
+                className="bg-primary-200 border border-gray-800"
+              >
+                <DropdownMenuItem className="text-white hover:bg-gray-800">
+                  Edit Client
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-white hover:bg-gray-800">
+                  View Details
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-red-400 hover:bg-gray-800">
+                  Delete Client
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

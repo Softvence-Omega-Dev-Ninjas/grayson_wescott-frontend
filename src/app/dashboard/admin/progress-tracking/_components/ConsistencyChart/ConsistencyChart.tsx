@@ -1,8 +1,19 @@
-"use client";
+'use client';
 
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import {
+  Bar,
+  BarChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart';
 
 interface ConsistencyData {
   week: string;
@@ -24,14 +35,17 @@ export function ConsistencyChart({ data }: ConsistencyChartProps) {
           <ChartContainer
             config={{
               workouts: {
-                label: "Workouts",
-                color: "#8B5CF6",
+                label: 'Workouts',
+                color: '#8B5CF6',
               },
             }}
             className="w-full h-full"
           >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+              <BarChart
+                data={data}
+                margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis dataKey="week" stroke="#9CA3AF" fontSize={12} />
                 <YAxis stroke="#9CA3AF" fontSize={12} />

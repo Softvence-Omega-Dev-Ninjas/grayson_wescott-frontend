@@ -1,10 +1,10 @@
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import a1 from "../../../../../assets/coaching/audit1.png";
-import a2 from "../../../../../assets/coaching/aduit2.png";
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import a1 from '../../../../../assets/coaching/audit1.png';
+import a2 from '../../../../../assets/coaching/aduit2.png';
 
-import tik from "../../../../../assets/coaching/whitetik.png";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import tik from '../../../../../assets/coaching/whitetik.png';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 interface coaching {
   img: string;
@@ -21,21 +21,25 @@ function CoachingThatMovesTheNeedle() {
   const data: coaching[] = [
     {
       img: a1.src,
-      title: "Performance Audit",
-      subtitle: "One-Time",
-      features: ["60-minute video audit", "Form breakdown analysis", "2-week tune-up plan"],
-      price: "500",
-      session: "One-time payment",
-      btn: "Book Audit",
+      title: 'Performance Audit',
+      subtitle: 'One-Time',
+      features: [
+        '60-minute video audit',
+        'Form breakdown analysis',
+        '2-week tune-up plan',
+      ],
+      price: '500',
+      session: 'One-time payment',
+      btn: 'Book Audit',
     },
     {
       img: a2.src,
-      title: "Nutrition Coaching",
-      subtitle: "",
-      features: ["Fully custom plan", "Weekly check-ins", "Video feedback"],
-      price: "500",
-      session: "Recurring",
-      btn: "Apply",
+      title: 'Nutrition Coaching',
+      subtitle: '',
+      features: ['Fully custom plan', 'Weekly check-ins', 'Video feedback'],
+      price: '500',
+      session: 'Recurring',
+      btn: 'Apply',
     },
   ];
 
@@ -48,7 +52,10 @@ function CoachingThatMovesTheNeedle() {
 
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 grid-cols-1 gap-8 mt-10">
         {data.map((item) => (
-          <div key={item.title} className="flex flex-col justify-between gap-6 bg-primary-200 p-6 min-h-[400px]">
+          <div
+            key={item.title}
+            className="flex flex-col justify-between gap-6 bg-primary-200 p-6 min-h-[400px]"
+          >
             <div className="flex gap-2">
               <div className="bg-gray-300 p-3 flex items-center justify-center ">
                 {/* <img className='w-8 h-8' src={item.img} alt="" /> */}
@@ -56,7 +63,9 @@ function CoachingThatMovesTheNeedle() {
               </div>
               <div className="">
                 <h1 className="font-semibold text-2xl">{item.title}</h1>
-                <p className="font-normal text-sm text-gray-400">{item.subtitle}</p>
+                <p className="font-normal text-sm text-gray-400">
+                  {item.subtitle}
+                </p>
               </div>
             </div>
 
@@ -75,7 +84,9 @@ function CoachingThatMovesTheNeedle() {
               <p className="text-gray-400 ">{item.session}</p>
             </div>
 
-            <Button className="bg-[#B9BDC6] px-4 py-2 text-black cursor-pointer font-medium text-lg hover:bg-[#B9BDC6]/70">{item.btn}</Button>
+            <Button className="bg-[#B9BDC6] px-4 py-2 text-black cursor-pointer font-medium text-lg hover:bg-[#B9BDC6]/70">
+              {item.btn}
+            </Button>
           </div>
         ))}
       </div>

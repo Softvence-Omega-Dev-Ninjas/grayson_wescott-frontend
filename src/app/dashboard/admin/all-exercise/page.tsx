@@ -1,138 +1,138 @@
-"use client";
-import pic1 from "@/assets/dashboard/excercise-library/back-squat-form.png";
-import pic2 from "@/assets/dashboard/excercise-library/barbell-back-squat-exercise.png";
-import pic3 from "@/assets/dashboard/excercise-library/barbell-back-squat-workout.png";
-import pic4 from "@/assets/dashboard/excercise-library/barbell-exercise-training.png";
-import pic5 from "@/assets/dashboard/excercise-library/barbell-squat-workout.png";
-import pic6 from "@/assets/dashboard/excercise-library/fitness-squat-training.png";
-import pic7 from "@/assets/dashboard/excercise-library/gym-squat-exercise.png";
-import pic8 from "@/assets/dashboard/excercise-library/squat-exercise-form.png";
-import pic9 from "@/assets/dashboard/excercise-library/strength-training-squat.png";
-import pic10 from "@/assets/dashboard/excercise-library/weightlifting-squat-form.png";
-import { WorkoutCard } from "./_components/WorkoutCard/WorkoutCard";
-import usePagination from "@/hooks/usePagination";
-import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
+'use client';
+import pic1 from '@/assets/dashboard/excercise-library/back-squat-form.png';
+import pic2 from '@/assets/dashboard/excercise-library/barbell-back-squat-exercise.png';
+import pic3 from '@/assets/dashboard/excercise-library/barbell-back-squat-workout.png';
+import pic4 from '@/assets/dashboard/excercise-library/barbell-exercise-training.png';
+import pic5 from '@/assets/dashboard/excercise-library/barbell-squat-workout.png';
+import pic6 from '@/assets/dashboard/excercise-library/fitness-squat-training.png';
+import pic7 from '@/assets/dashboard/excercise-library/gym-squat-exercise.png';
+import pic8 from '@/assets/dashboard/excercise-library/squat-exercise-form.png';
+import pic9 from '@/assets/dashboard/excercise-library/strength-training-squat.png';
+import pic10 from '@/assets/dashboard/excercise-library/weightlifting-squat-form.png';
+import { WorkoutCard } from './_components/WorkoutCard/WorkoutCard';
+import usePagination from '@/hooks/usePagination';
+import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
 
 export const workoutData = [
   {
-    id: "1",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '1',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic1.src,
-    views: "6.2k views",
-    tags: ["bodyweight"],
+    views: '6.2k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "2",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '2',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic2.src,
-    views: "5.8k views",
-    tags: ["bodyweight"],
+    views: '5.8k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "3",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:10",
-    difficulty: "Beginner",
+    id: '3',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:10',
+    difficulty: 'Beginner',
     thumbnail: pic3.src,
-    views: "7.1k views",
-    tags: ["bodyweight"],
+    views: '7.1k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "4",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:35",
-    difficulty: "Beginner",
+    id: '4',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:35',
+    difficulty: 'Beginner',
     thumbnail: pic4.src,
-    views: "6.9k views",
-    tags: ["bodyweight"],
+    views: '6.9k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "5",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '5',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic5.src,
-    views: "5.4k views",
-    tags: ["bodyweight"],
+    views: '5.4k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "6",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '6',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic6.src,
-    views: "6.8k views",
-    tags: ["bodyweight"],
+    views: '6.8k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "7",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '7',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic7.src,
-    views: "4.9k views",
-    tags: ["bodyweight"],
+    views: '4.9k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "8",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '8',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic8.src,
-    views: "6.2k views",
-    tags: ["bodyweight"],
+    views: '6.2k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "9",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '9',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic9.src,
-    views: "5.7k views",
-    tags: ["bodyweight"],
+    views: '5.7k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "10",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '10',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic10.src,
-    views: "6.3k views",
-    tags: ["bodyweight"],
+    views: '6.3k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "11",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '11',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic1.src,
-    views: "5.9k views",
-    tags: ["bodyweight"],
+    views: '5.9k views',
+    tags: ['bodyweight'],
   },
   {
-    id: "12",
-    title: "Barbell Back Squat",
-    description: "Master strength and depth with proper form",
-    duration: "1:15",
-    difficulty: "Beginner",
+    id: '12',
+    title: 'Barbell Back Squat',
+    description: 'Master strength and depth with proper form',
+    duration: '1:15',
+    difficulty: 'Beginner',
     thumbnail: pic2.src,
-    views: "6.5k views",
-    tags: ["bodyweight"],
+    views: '6.5k views',
+    tags: ['bodyweight'],
   },
 ];
 
@@ -146,7 +146,11 @@ const AllExercisePage = () => {
         ))}
       </div>
       <div className="flex justify-center my-16">
-        <Pagination activePage={currentPage} totalPages={7} onPageChange={handlePageChange} />
+        <Pagination
+          activePage={currentPage}
+          totalPages={7}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

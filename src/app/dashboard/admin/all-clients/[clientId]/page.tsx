@@ -1,7 +1,7 @@
-import { AutomationsAlerts } from "./_components/AutomationsAlerts/AutomationsAlerts";
-import { DailyWorkoutLog } from "./_components/DailyWorkoutLog/DailyWorkoutLog";
-import { ProgramOverview } from "./_components/ProgramOverview/ProgramOverview";
-import { WeeklySummary } from "./_components/WeeklySummary/WeeklySummary";
+import { AutomationsAlerts } from './_components/AutomationsAlerts/AutomationsAlerts';
+import { DailyWorkoutLog } from './_components/DailyWorkoutLog/DailyWorkoutLog';
+import { ProgramOverview } from './_components/ProgramOverview/ProgramOverview';
+import { WeeklySummary } from './_components/WeeklySummary/WeeklySummary';
 
 const ClientProfilePage = () => {
   return (

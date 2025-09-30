@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
-import Image from "next/image";
-import logo from "../../../../assets/header/logo.png";
-import { usePathname } from "next/navigation";
-import ProfileAvatar from "./_components/ProfileAvatar/ProfileAvatar";
-import useUser from "@/hooks/useUser";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
+import Image from 'next/image';
+import logo from '../../../../assets/header/logo.png';
+import { usePathname } from 'next/navigation';
+import ProfileAvatar from './_components/ProfileAvatar/ProfileAvatar';
+import useUser from '@/hooks/useUser';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -19,13 +19,13 @@ export default function Header() {
   console.log(user);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/programs", label: "Programs" },
-    { href: "/coaching", label: "Coaching" },
-    { href: "/adonis-protocol", label: "Adonis Protocol" },
-    { href: "/pricing", label: "Pricing" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+    { href: '/', label: 'Home' },
+    { href: '/programs', label: 'Programs' },
+    { href: '/coaching', label: 'Coaching' },
+    { href: '/adonis-protocol', label: 'Adonis Protocol' },
+    { href: '/pricing', label: 'Pricing' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
   ];
 
   useEffect(() => {
@@ -37,17 +37,17 @@ export default function Header() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 py-1 transition-all duration-300 ${
-        isScrolled ? "bg-black/70 backdrop-blur-md shadow-lg" : "bg-transparent"
+        isScrolled ? 'bg-black/70 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
     >
       <div className="md:container mx-auto flex items-center justify-between px-6 py-3">
@@ -68,8 +68,8 @@ export default function Header() {
                 href={link.href}
                 className={`pb-1 transition ${
                   isActive
-                    ? "border-b-2 border-white"
-                    : "hover:border-b-2 hover:border-gray-400"
+                    ? 'border-b-2 border-white'
+                    : 'hover:border-b-2 hover:border-gray-400'
                 }`}
               >
                 {link.label}
@@ -90,9 +90,9 @@ export default function Header() {
             setUser={setUser}
           />
           {!user && (
-            <Link href={"/login"}>
+            <Link href={'/login'}>
               <Button
-                style={{ backgroundColor: "var(--color-secondary)" }}
+                style={{ backgroundColor: 'var(--color-secondary)' }}
                 className="text-white text-lg px-5 py-3 hidden sm:flex cursor-pointer"
               >
                 Start your engine

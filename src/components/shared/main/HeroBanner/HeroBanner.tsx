@@ -1,8 +1,8 @@
-"use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { StaticImageData } from "next/image";
-import { usePathname } from "next/navigation";
+'use client';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { StaticImageData } from 'next/image';
+import { usePathname } from 'next/navigation';
 
 interface BannerProps {
   title: string;
@@ -13,15 +13,22 @@ interface BannerProps {
   users?: { id: number; user: StaticImageData }[];
 }
 
-function HeroBanner({ title, subtitle, img, button1, button2, users }: BannerProps) {
+function HeroBanner({
+  title,
+  subtitle,
+  img,
+  button1,
+  button2,
+  users,
+}: BannerProps) {
   const path = usePathname();
   return (
     <section
       className="relative w-full h-[700px] sm:h-screen flex items-center"
       style={{
         backgroundImage: `url(${img})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
       }}
     >
       {/* Overlay (optional) */}
@@ -51,7 +58,9 @@ function HeroBanner({ title, subtitle, img, button1, button2, users }: BannerPro
         <h1 className="text-2xl md:w-2/3 md:text-4xl xl:text-6xl font-bold uppercase leading-tight md:text-start text-center mx-auto md:mx-0">
           {title}
         </h1>
-        <p className="w-2/3 xl:w-1/3 text-base md:text-xl max-w-4xl md:text-start text-center mx-auto md:mx-0">{subtitle}</p>
+        <p className="w-2/3 xl:w-1/3 text-base md:text-xl max-w-4xl md:text-start text-center mx-auto md:mx-0">
+          {subtitle}
+        </p>
 
         <div className="flex flex-col items-center md:justify-start  w-full  md:flex-row  gap-4 mt-4">
           {button1 && (
@@ -59,12 +68,12 @@ function HeroBanner({ title, subtitle, img, button1, button2, users }: BannerPro
               {button1}
             </Button>
           )}
-          {path === "/" ? (
+          {path === '/' ? (
             <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-4 font-medium cursor-pointer hover:text-white">
               {button2}
             </Button>
           ) : (
-            ""
+            ''
           )}
         </div>
       </div>

@@ -6,12 +6,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --ignore-path .gitignore --check \"**/*.+(js|ts|json)\"",
-    "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "format": "prettier --ignore-path .gitignore --check \"**/*.+(js|ts|json|jsx|tsx|mjs)\"",
+    "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json|jsx|tsx|mjs)\"",
     "ci:check": "pnpm format && pnpm lint && pnpm db:validate && pnpm build && pnpm start",
     "ci:fix": "pnpm format:fix && pnpm lint:fix",
     "prepare": "husky"

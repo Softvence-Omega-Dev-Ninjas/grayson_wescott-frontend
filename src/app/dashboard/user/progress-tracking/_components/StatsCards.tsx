@@ -1,20 +1,20 @@
 const statsData = [
   {
-    value: "24,580 lbs",
-    label: "Training Completed",
-    icon: "🏋️",
+    value: '24,580 lbs',
+    label: 'Training Completed',
+    icon: '🏋️',
   },
   {
-    value: "89%",
-    label: "Adherence Rate",
-    icon: "📊",
+    value: '89%',
+    label: 'Adherence Rate',
+    icon: '📊',
   },
   {
-    value: "89%",
-    label: "Personal Records",
-    icon: "🏆",
+    value: '89%',
+    label: 'Personal Records',
+    icon: '🏆',
   },
-]
+];
 
 export function StatsCards() {
   return (
@@ -31,5 +31,5 @@ export function StatsCards() {
         </div>
       ))}
     </div>
-  )
+  );
 }

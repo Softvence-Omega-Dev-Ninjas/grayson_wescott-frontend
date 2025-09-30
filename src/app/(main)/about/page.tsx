@@ -1,20 +1,20 @@
-import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
-import img from "../../../assets/home/aboutbanner.png";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-import { pricing } from "../(home)/_components/PricingSection/PricingSection";
-import PricingCard from "@/components/shared/main/PricingCard/PricingCard";
-import CarbonValues from "./_components/CarbonValues/CarbonValues";
-import CarbonApproach from "./_components/CarbonApproach/CarbonApproach";
-import CorePhilosophy from "./_components/CorePhilosophy/CorePhilosophy";
-import TestimonialSectio from "../TestimonialSection/TestimonialSectio";
-import CTA from "@/components/shared/main/CTA/CTA";
-import aboutImage from "@/assets/about/aboutSideBg.png";
+import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
+import img from '../../../assets/home/aboutbanner.png';
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import BaseCard from '@/components/shared/main/BaseCard/BaseCard';
+import { pricing } from '../(home)/_components/PricingSection/PricingSection';
+import PricingCard from '@/components/shared/main/PricingCard/PricingCard';
+import CarbonValues from './_components/CarbonValues/CarbonValues';
+import CarbonApproach from './_components/CarbonApproach/CarbonApproach';
+import CorePhilosophy from './_components/CorePhilosophy/CorePhilosophy';
+import TestimonialSectio from '../TestimonialSection/TestimonialSectio';
+import CTA from '@/components/shared/main/CTA/CTA';
+import aboutImage from '@/assets/about/aboutSideBg.png';
 const workWithData = [
-  { title: "Athletes chasing dominance in their sport" },
-  { title: "High performers demanding strength that matches their ambition" },
-  { title: "Fighters who live for precision under fatigue" },
-  { title: "Those who expect elite, not average" },
+  { title: 'Athletes chasing dominance in their sport' },
+  { title: 'High performers demanding strength that matches their ambition' },
+  { title: 'Fighters who live for precision under fatigue' },
+  { title: 'Those who expect elite, not average' },
 ];
 
 const AboutPage = () => {
@@ -48,7 +48,10 @@ const AboutPage = () => {
         </div>
       </div>
       <div className="mt-28 space-y-10">
-        <SectionHeader title="Choose Your Track" description="Select the configuration that matches your performance requirements" />
+        <SectionHeader
+          title="Choose Your Track"
+          description="Select the configuration that matches your performance requirements"
+        />
 
         <div className="container px-3 mx-auto grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-6">
           {pricing.map((item, idx) => (
@@ -57,12 +60,18 @@ const AboutPage = () => {
         </div>
       </div>
       <div className="mt-28 space-y-10">
-        <SectionHeader title="THE CARBON APPROACH" description="Scientific methodology meets engineered precision." />
+        <SectionHeader
+          title="THE CARBON APPROACH"
+          description="Scientific methodology meets engineered precision."
+        />
 
         <CarbonApproach />
       </div>
       <div className="mt-28 space-y-10">
-        <SectionHeader title="Carbon Values" description="THE FOUNDATION OF EVERYTHING WE BUILD" />
+        <SectionHeader
+          title="Carbon Values"
+          description="THE FOUNDATION OF EVERYTHING WE BUILD"
+        />
 
         <CarbonValues />
       </div>

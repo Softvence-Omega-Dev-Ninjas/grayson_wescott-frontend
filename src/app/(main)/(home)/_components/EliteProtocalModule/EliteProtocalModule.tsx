@@ -1,45 +1,49 @@
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import BaseCard from '@/components/shared/main/BaseCard/BaseCard';
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
 
-import down from "../../../../../assets/home/eliteprotocol/arrow.png";
-import up from "../../../../../assets/home/eliteprotocol/uparrow.png";
-import target from "../../../../../assets/home/eliteprotocol/target.png";
-import play from "../../../../../assets/home/eliteprotocol/play.png";
-import circle from "../../../../../assets/home/eliteprotocol/circle.png";
-import { Button } from "@/components/ui/button";
+import down from '../../../../../assets/home/eliteprotocol/arrow.png';
+import up from '../../../../../assets/home/eliteprotocol/uparrow.png';
+import target from '../../../../../assets/home/eliteprotocol/target.png';
+import play from '../../../../../assets/home/eliteprotocol/play.png';
+import circle from '../../../../../assets/home/eliteprotocol/circle.png';
+import { Button } from '@/components/ui/button';
 
 function EliteProtocalModule() {
   const d = [
     {
       img: down.src,
-      title: "Elite Squat Builder",
-      description: "Every rep engineered for precision.",
+      title: 'Elite Squat Builder',
+      description: 'Every rep engineered for precision.',
     },
     {
       img: up.src,
-      title: "Elite Deadlift Builder",
-      description: "Unlock hidden strength potential.",
+      title: 'Elite Deadlift Builder',
+      description: 'Unlock hidden strength potential.',
     },
     {
       img: target.src,
-      title: "Elite Core Builder",
-      description: "Stability weaponized.",
+      title: 'Elite Core Builder',
+      description: 'Stability weaponized.',
     },
     {
       img: play.src,
-      title: "Daily Mobility Flow",
-      description: "Keep joints free & ready.",
+      title: 'Daily Mobility Flow',
+      description: 'Keep joints free & ready.',
     },
     {
       img: circle.src,
-      title: "DAILY FLEXIBILITY FLOW",
-      description: "Systems to erase limits, rebuild movement & install strength.",
+      title: 'DAILY FLEXIBILITY FLOW',
+      description:
+        'Systems to erase limits, rebuild movement & install strength.',
     },
   ];
   return (
     <div className="bg-black py-8">
       <div className=" py-4 space-y-5">
-        <SectionHeader title="Elite Protocol Modules" description="Systems to erase limits, rebuild movement & install strength." />
+        <SectionHeader
+          title="Elite Protocol Modules"
+          description="Systems to erase limits, rebuild movement & install strength."
+        />
 
         <div className="container mx-auto space-y-4 sm:space-y-6 px-2">
           {/* First row  */}

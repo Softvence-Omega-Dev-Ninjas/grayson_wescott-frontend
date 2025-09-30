@@ -1,5 +1,5 @@
-import { getCurrentUser } from "@/services/auth";
-import { IUser } from "@/types/user.types";
+import { getCurrentUser } from '@/services/auth';
+import { IUser } from '@/types/user.types';
 
 import {
   createContext,
@@ -7,7 +7,7 @@ import {
   SetStateAction,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
 export interface IUserProviderValues {
   user: IUser | null;
@@ -18,7 +18,7 @@ export interface IUserProviderValues {
 
 //Create Context
 export const UserContext = createContext<IUserProviderValues | undefined>(
-  undefined
+  undefined,
 );
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {

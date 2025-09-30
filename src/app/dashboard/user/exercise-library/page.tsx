@@ -1,36 +1,38 @@
-"use client";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
-import React, { useState } from "react";
-import squatIcon from "@/assets/dashboard/excercise-library/squatIcon.png";
-import pushIcon from "@/assets/dashboard/excercise-library/pushIcon.png";
-import pullIcon from "@/assets/dashboard/excercise-library/pullIcon.png";
-import hingeIcon from "@/assets/dashboard/excercise-library/hingeIcon.png";
-import coreIcon from "@/assets/dashboard/excercise-library/coreIcon.png";
-import mobilityIcon from "@/assets/dashboard/excercise-library/mobilityIcon.png";
-import Image from "next/image";
-import usePagination from "@/hooks/usePagination";
-import { workoutData } from "../../admin/all-exercise/page";
-import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
-import { UserWorkoutCard } from "./_components/UserWorkoutCard/page";
+'use client';
+import { Input } from '@/components/ui/input';
+import { Search } from 'lucide-react';
+import React, { useState } from 'react';
+import squatIcon from '@/assets/dashboard/excercise-library/squatIcon.png';
+import pushIcon from '@/assets/dashboard/excercise-library/pushIcon.png';
+import pullIcon from '@/assets/dashboard/excercise-library/pullIcon.png';
+import hingeIcon from '@/assets/dashboard/excercise-library/hingeIcon.png';
+import coreIcon from '@/assets/dashboard/excercise-library/coreIcon.png';
+import mobilityIcon from '@/assets/dashboard/excercise-library/mobilityIcon.png';
+import Image from 'next/image';
+import usePagination from '@/hooks/usePagination';
+import { workoutData } from '../../admin/all-exercise/page';
+import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
+import { UserWorkoutCard } from './_components/UserWorkoutCard/page';
 
 const categories = [
-  { name: "Squat", icon: squatIcon.src },
-  { name: "Push", icon: pushIcon.src },
-  { name: "Pull", icon: pullIcon.src },
-  { name: "Hinge", icon: hingeIcon.src },
-  { name: "Core", icon: coreIcon.src },
-  { name: "Mobility", icon: mobilityIcon.src },
+  { name: 'Squat', icon: squatIcon.src },
+  { name: 'Push', icon: pushIcon.src },
+  { name: 'Pull', icon: pullIcon.src },
+  { name: 'Hinge', icon: hingeIcon.src },
+  { name: 'Core', icon: coreIcon.src },
+  { name: 'Mobility', icon: mobilityIcon.src },
 ];
 
 const ExcerciseLibraryPage = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("Pull");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeCategory, setActiveCategory] = useState('Pull');
   const { currentPage, handlePageChange } = usePagination();
   return (
     <div>
       <h1 className="text-2xl md:text-3xl font-bold">Exercise Library</h1>
-      <p className="text-base font-medium mt-1">Explore our comprehensive collection of exercise videos</p>
+      <p className="text-base font-medium mt-1">
+        Explore our comprehensive collection of exercise videos
+      </p>
       {/* Header */}
       <div className=" bg-primary-200 p-4 mt-3">
         {/* Search  */}
@@ -54,12 +56,20 @@ const ExcerciseLibraryPage = () => {
               <div
                 key={category.name}
                 className={`flex flex-col items-center justify-center p-4 border border-secondary  cursor-pointer transition-colors duration-200 ${
-                  isActive ? "bg-secondary" : "border-2 border-secondary"
+                  isActive ? 'bg-secondary' : 'border-2 border-secondary'
                 }`}
                 onClick={() => setActiveCategory(category.name)}
               >
-                <Image src={category.icon} alt="category icon" width={40} height={40} className="w-5 h-5" />
-                <span className={`text-sm font-medium mt-3`}>{category.name}</span>
+                <Image
+                  src={category.icon}
+                  alt="category icon"
+                  width={40}
+                  height={40}
+                  className="w-5 h-5"
+                />
+                <span className={`text-sm font-medium mt-3`}>
+                  {category.name}
+                </span>
               </div>
             );
           })}
@@ -72,7 +82,11 @@ const ExcerciseLibraryPage = () => {
           ))}
         </div>
         <div className="flex justify-center my-16">
-          <Pagination activePage={currentPage} totalPages={7} onPageChange={handlePageChange} />
+          <Pagination
+            activePage={currentPage}
+            totalPages={7}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
-import useGoogleAuth from "@/hooks/useGoogleAuth";
-import React from "react";
-import { GoogleLogin as GoogleLoginButton } from "@react-oauth/google";
+import useGoogleAuth from '@/hooks/useGoogleAuth';
+import React from 'react';
+import { GoogleLogin as GoogleLoginButton } from '@react-oauth/google';
 
 const GoogleLogin = () => {
   const { handleSuccess, handleError } = useGoogleAuth();

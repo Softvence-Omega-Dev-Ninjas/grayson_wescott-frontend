@@ -1,21 +1,36 @@
-"use client";
-import Image from "next/image";
-import { IFormData } from "../../page";
-import successIcon from "@/assets/dashboard/add-excercise/tick.png";
-import folderIcon from "@/assets/dashboard/add-excercise/folderIcon.png";
-import plusIcon from "@/assets/dashboard/add-excercise/plusIcon.png";
-import { IoIosArrowForward, IoMdArrowBack } from "react-icons/io";
+'use client';
+import Image from 'next/image';
+import { IFormData } from '../../page';
+import successIcon from '@/assets/dashboard/add-excercise/tick.png';
+import folderIcon from '@/assets/dashboard/add-excercise/folderIcon.png';
+import plusIcon from '@/assets/dashboard/add-excercise/plusIcon.png';
+import { IoIosArrowForward, IoMdArrowBack } from 'react-icons/io';
 
-const Step3 = ({ onBack, onDone }: { formData: IFormData; onBack: () => void; onDone: () => void }) => {
+const Step3 = ({
+  onBack,
+  onDone,
+}: {
+  formData: IFormData;
+  onBack: () => void;
+  onDone: () => void;
+}) => {
   // console.log("FormData================>", formData);
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4 my-20">
         <div className="flex items-center justify-center">
-          <Image src={successIcon} width={26} height={26} alt="Upload Icon" className="bg-secondary rounded-full w-20 h-20 p-7" />
+          <Image
+            src={successIcon}
+            width={26}
+            height={26}
+            alt="Upload Icon"
+            className="bg-secondary rounded-full w-20 h-20 p-7"
+          />
         </div>
         <h2 className="text-3xl font-bold">Video Saved Successfully!</h2>
-        <p className="text-gray-300 text-base font-medium">Your exercise video has been added to the library and is ready to use.</p>
+        <p className="text-gray-300 text-base font-medium">
+          Your exercise video has been added to the library and is ready to use.
+        </p>
       </div>
 
       {/* Preview Card */}
@@ -44,33 +59,61 @@ const Step3 = ({ onBack, onDone }: { formData: IFormData; onBack: () => void; on
       {/* What to do next section */}
 
       <div className="space-y-4 max-w-7xl mx-auto">
-        <h3 className="text-xl font-semibold mt-8">What would you like to do next?</h3>
+        <h3 className="text-xl font-semibold mt-8">
+          What would you like to do next?
+        </h3>
         <button className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
           <div className="flex gap-2 items-center space-x-4">
-            <Image src={folderIcon} width={24} height={24} alt="Upload Icon" className="bg-secondary w-12 h-12 rounded-lg p-4" />
+            <Image
+              src={folderIcon}
+              width={24}
+              height={24}
+              alt="Upload Icon"
+              className="bg-secondary w-12 h-12 rounded-lg p-4"
+            />
             <div className="text-left">
               <p className="font-semibold text-lg">View in Library</p>
-              <p className="text-base text-gray-400">Browse all of your exercise videos in your library</p>
+              <p className="text-base text-gray-400">
+                Browse all of your exercise videos in your library
+              </p>
             </div>
           </div>
           <IoIosArrowForward />
         </button>
         <button className="w-full flex items-center justify-between  gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
           <div className="flex gap-2 items-center space-x-4">
-            <Image src={plusIcon} width={24} height={24} alt="Upload Icon" className="bg-secondary w-12 h-12 rounded-lg p-4" />
+            <Image
+              src={plusIcon}
+              width={24}
+              height={24}
+              alt="Upload Icon"
+              className="bg-secondary w-12 h-12 rounded-lg p-4"
+            />
             <div className="text-left">
               <p className="font-semibold text-lg">Add to Program</p>
-              <p className="text-base text-gray-400">Include this video in a workout program</p>
+              <p className="text-base text-gray-400">
+                Include this video in a workout program
+              </p>
             </div>
           </div>
           <IoIosArrowForward />
         </button>
         <button className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
           <div className="flex gap-2 items-center space-x-4">
-            <Image src={folderIcon} width={24} height={24} alt="Upload Icon" className="bg-secondary w-12 h-12 rounded-lg p-4" />
+            <Image
+              src={folderIcon}
+              width={24}
+              height={24}
+              alt="Upload Icon"
+              className="bg-secondary w-12 h-12 rounded-lg p-4"
+            />
             <div className="text-left">
-              <p className="font-semibold text-lg">Send/Suggest to Specific Client</p>
-              <p className="text-base text-gray-400">Share this exercise with a client directly</p>
+              <p className="font-semibold text-lg">
+                Send/Suggest to Specific Client
+              </p>
+              <p className="text-base text-gray-400">
+                Share this exercise with a client directly
+              </p>
             </div>
           </div>
           <IoIosArrowForward />

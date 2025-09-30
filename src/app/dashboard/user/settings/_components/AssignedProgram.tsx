@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Calendar } from 'lucide-react';
 
 export function AssignedProgram() {
   return (
@@ -14,7 +14,9 @@ export function AssignedProgram() {
       <CardContent className="space-y-4 flex flex-col justify-between">
         <div>
           <h3 className="text-white font-medium">Elite Strength Builder</h3>
-          <p className="text-gray-400 text-sm">A most progressive strength training program</p>
+          <p className="text-gray-400 text-sm">
+            A most progressive strength training program
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 text-sm">
@@ -30,11 +32,15 @@ export function AssignedProgram() {
 
         <div>
           <span className="text-gray-400 text-sm">Coach Notes</span>
-          <p className="text-white text-sm">Focus on compound movements. Progressive overload each week.</p>
+          <p className="text-white text-sm">
+            Focus on compound movements. Progressive overload each week.
+          </p>
         </div>
 
-        <Button className="w-full bg-[#2A2D33] hover:bg-gray-600 text-white cursor-pointer">View Full Program</Button>
+        <Button className="w-full bg-[#2A2D33] hover:bg-gray-600 text-white cursor-pointer">
+          View Full Program
+        </Button>
       </CardContent>
     </Card>
-  )
+  );
 }

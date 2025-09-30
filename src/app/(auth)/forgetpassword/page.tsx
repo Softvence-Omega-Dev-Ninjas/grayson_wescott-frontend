@@ -1,33 +1,39 @@
-"use client"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+'use client';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-})
+  email: z.string().email('Please enter a valid email address'),
+});
 
-type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>
+type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPasswordPage() {
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
-  })
+  });
 
   const onSubmit = (values: ForgotPasswordFormValues) => {
-    console.log("[v0] Forgot password form submitted:", values)
-    router.push("/reset-password")
-  }
+    console.log('[v0] Forgot password form submitted:', values);
+    router.push('/reset-password');
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -53,7 +59,9 @@ export default function ForgotPasswordPage() {
                 <div className="text-4xl font-bold tracking-wider">ENGINES</div>
               </div>
             </div>
-            <div className="text-sm tracking-widest text-gray-300 ml-20">ENGINEERED FOR STRENGTH</div>
+            <div className="text-sm tracking-widest text-gray-300 ml-20">
+              ENGINEERED FOR STRENGTH
+            </div>
           </div>
         </div>
       </div>
@@ -62,7 +70,9 @@ export default function ForgotPasswordPage() {
       <div className="flex-1 bg-[#252525] flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-6">Forgot Password?</h1>
+            <h1 className="text-3xl font-bold text-white mb-6">
+              Forgot Password?
+            </h1>
             <p className="text-gray-400 text-sm leading-relaxed mb-8">
               Lost your password? Please enter your email address. You
               <br />
@@ -77,7 +87,9 @@ export default function ForgotPasswordPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-300 text-sm">Email</FormLabel>
+                    <FormLabel className="text-gray-300 text-sm">
+                      Email
+                    </FormLabel>
                     <div className="relative mt-1">
                       <Input
                         type="email"
@@ -85,14 +97,19 @@ export default function ForgotPasswordPage() {
                         className="bg-[#1D1D1D] border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 pl-10"
                         {...field}
                       />
-                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">✉</div>
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                        ✉
+                      </div>
                     </div>
                     <FormMessage className="text-red-400" />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3">
+              <Button
+                type="submit"
+                className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3"
+              >
                 <Link href={'/resetpassword'}>Send Reset Link</Link>
               </Button>
 
@@ -123,5 +140,5 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

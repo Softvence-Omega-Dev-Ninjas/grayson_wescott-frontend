@@ -1,6 +1,4 @@
-import ChatLayout from "./_components/ChatLayout"
-
- 
+import ChatLayout from './_components/ChatLayout';
 
 const MessagesPage = () => {
   return (
@@ -9,7 +7,7 @@ const MessagesPage = () => {
         <ChatLayout />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MessagesPage
+export default MessagesPage;

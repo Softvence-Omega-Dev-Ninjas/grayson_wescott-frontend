@@ -1,28 +1,31 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export function EliteStrengthProgram() {
   // Example workout data
   const workouts = [
     {
-      day: "Day 1: Upper Body Power",
-      week: "Week 3",
+      day: 'Day 1: Upper Body Power',
+      week: 'Week 3',
       details: [
-        { label: "Sets", value: "4" },
-        { label: "Reps", value: "6-8" },
-        { label: "Tempo", value: "2-1-2" },
-        { label: "RPE", value: "8" },
+        { label: 'Sets', value: '4' },
+        { label: 'Reps', value: '6-8' },
+        { label: 'Tempo', value: '2-1-2' },
+        { label: 'RPE', value: '8' },
       ],
-      rest: "90-120 seconds",
-      video: "Watch Video",
-    } 
-    
-  ]
+      rest: '90-120 seconds',
+      video: 'Watch Video',
+    },
+  ];
 
   return (
     <Card className="bg-[#151519] border-gray-700">
       <CardHeader className="pb-3">
-        <CardTitle className="text-white font-medium">Elite Strength Program</CardTitle>
-        <p className="text-gray-400 text-sm">A most progressive strength training</p>
+        <CardTitle className="text-white font-medium">
+          Elite Strength Program
+        </CardTitle>
+        <p className="text-gray-400 text-sm">
+          A most progressive strength training
+        </p>
       </CardHeader>
       <CardContent>
         {workouts.map((workout, i) => (
@@ -43,11 +46,13 @@ export function EliteStrengthProgram() {
 
             <div className="flex items-center justify-between mt-3 text-sm">
               <span className="text-gray-400">Rest Time: {workout.rest}</span>
-              <span className="text-blue-400 cursor-pointer">{workout.video}</span>
+              <span className="text-blue-400 cursor-pointer">
+                {workout.video}
+              </span>
             </div>
           </div>
         ))}
       </CardContent>
     </Card>
-  )
+  );
 }

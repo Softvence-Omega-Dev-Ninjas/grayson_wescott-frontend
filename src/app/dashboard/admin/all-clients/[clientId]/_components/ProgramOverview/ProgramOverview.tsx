@@ -1,22 +1,29 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Edit, Users, FileText } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Edit, Users, FileText } from 'lucide-react';
 
 export function ProgramOverview() {
   return (
     <div className="bg-primary-200 border border-secondary p-5">
       <div>
-        <h1 className="text-white font-semibold text-xl sm:text-2xl mb-8">Program Overview</h1>
+        <h1 className="text-white font-semibold text-xl sm:text-2xl mb-8">
+          Program Overview
+        </h1>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-6">
         {/* User Info */}
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
-            <AvatarImage src="/placeholder.svg?height=48&width=48" alt="Sarah Johnson" />
-            <AvatarFallback className="bg-gray-700 text-white">SJ</AvatarFallback>
+            <AvatarImage
+              src="/placeholder.svg?height=48&width=48"
+              alt="Sarah Johnson"
+            />
+            <AvatarFallback className="bg-gray-700 text-white">
+              SJ
+            </AvatarFallback>
           </Avatar>
           <div>
             <h3 className="text-white font-semibold">Sarah Johnson</h3>
@@ -61,15 +68,24 @@ export function ProgramOverview() {
       </div>
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-2">
-        <Button size="sm" className="bg-secondary cursor-pointer text-white hover:bg-gray-700">
+        <Button
+          size="sm"
+          className="bg-secondary cursor-pointer text-white hover:bg-gray-700"
+        >
           <Edit className="h-4 w-4 mr-2" />
           Edit Program
         </Button>
-        <Button size="sm" className="bg-transparent cursor-pointer text-white hover:bg-gray-700 border border-secondary">
+        <Button
+          size="sm"
+          className="bg-transparent cursor-pointer text-white hover:bg-gray-700 border border-secondary"
+        >
           <Users className="h-4 w-4 mr-2" />
           Reassign
         </Button>
-        <Button size="sm" className="bg-transparent cursor-pointer text-white hover:bg-gray-700 border border-secondary">
+        <Button
+          size="sm"
+          className="bg-transparent cursor-pointer text-white hover:bg-gray-700 border border-secondary"
+        >
           <FileText className="h-4 w-4 mr-2" />
           Export PDF
         </Button>

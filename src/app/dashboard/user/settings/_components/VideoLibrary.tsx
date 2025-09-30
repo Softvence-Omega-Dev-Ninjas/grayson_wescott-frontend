@@ -1,20 +1,26 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Play } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Play } from 'lucide-react';
 
 export function VideoLibrary() {
   const sortOptions = [
-    { value: "notes", label: "Notes" },
-    { value: "date", label: "Date" },
-    { value: "name", label: "Name" },
-  ]
+    { value: 'notes', label: 'Notes' },
+    { value: 'date', label: 'Date' },
+    { value: 'name', label: 'Name' },
+  ];
 
   const qualityOptions = [
-    { value: "auto", label: "Auto" },
-    { value: "1080p", label: "1080p" },
-    { value: "720p", label: "720p" },
-  ]
+    { value: 'auto', label: 'Auto' },
+    { value: '1080p', label: '1080p' },
+    { value: '720p', label: '720p' },
+  ];
 
   return (
     <Card className="bg-gray-800 border-gray-700">
@@ -33,7 +39,11 @@ export function VideoLibrary() {
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value} className="text-white">
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className="text-white"
+                >
                   {option.label}
                 </SelectItem>
               ))}
@@ -44,7 +54,9 @@ export function VideoLibrary() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-white text-sm">Autoplay</p>
-            <p className="text-gray-400 text-xs">Automatically play next video</p>
+            <p className="text-gray-400 text-xs">
+              Automatically play next video
+            </p>
           </div>
           <Switch defaultChecked />
         </div>
@@ -57,7 +69,11 @@ export function VideoLibrary() {
             </SelectTrigger>
             <SelectContent className="bg-gray-700 border-gray-600">
               {qualityOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value} className="text-white">
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className="text-white"
+                >
                   {option.label}
                 </SelectItem>
               ))}
@@ -66,5 +82,5 @@ export function VideoLibrary() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

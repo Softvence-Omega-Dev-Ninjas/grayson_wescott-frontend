@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PaginationProps {
   activePage: number;
@@ -10,14 +10,19 @@ interface PaginationProps {
   onPageChange?: (page: number) => void;
 }
 
-export function Pagination({ activePage, totalPages = 20, onPageChange }: PaginationProps) {
+export function Pagination({
+  activePage,
+  totalPages = 20,
+  onPageChange,
+}: PaginationProps) {
   const handlePageChange = (page: number) => {
     if (onPageChange && page >= 1 && page <= totalPages) {
       onPageChange(page);
     }
   };
 
-  const baseBtnClasses = "h-8 w-8 p-0 hover:bg-gray-800 hover:text-white border border-gray-700 cursor-pointer text-white rounded-none";
+  const baseBtnClasses =
+    'h-8 w-8 p-0 hover:bg-gray-800 hover:text-white border border-gray-700 cursor-pointer text-white rounded-none';
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -29,13 +34,16 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
         pages.push(
           <Button
             key={i}
-            variant={i === activePage ? "default" : "ghost"}
+            variant={i === activePage ? 'default' : 'ghost'}
             size="sm"
-            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white ")}
+            className={cn(
+              baseBtnClasses,
+              i === activePage && 'bg-secondary text-white ',
+            )}
             onClick={() => handlePageChange(i)}
           >
             {i}
-          </Button>
+          </Button>,
         );
       }
     } else {
@@ -51,16 +59,25 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
       // Show ellipsis at the beginning if needed
       if (startPage > 1) {
         pages.push(
-          <Button key={1} variant="ghost" size="sm" className={cn(baseBtnClasses)} onClick={() => handlePageChange(1)}>
+          <Button
+            key={1}
+            variant="ghost"
+            size="sm"
+            className={cn(baseBtnClasses)}
+            onClick={() => handlePageChange(1)}
+          >
             1
-          </Button>
+          </Button>,
         );
 
         if (startPage > 2) {
           pages.push(
-            <span key="start-ellipsis" className="flex h-8 w-8 items-center justify-center text-sm text-gray-400">
+            <span
+              key="start-ellipsis"
+              className="flex h-8 w-8 items-center justify-center text-sm text-gray-400"
+            >
               ...
-            </span>
+            </span>,
           );
         }
       }
@@ -70,13 +87,16 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
         pages.push(
           <Button
             key={i}
-            variant={i === activePage ? "default" : "ghost"}
+            variant={i === activePage ? 'default' : 'ghost'}
             size="sm"
-            className={cn(baseBtnClasses, i === activePage && "bg-secondary text-white")}
+            className={cn(
+              baseBtnClasses,
+              i === activePage && 'bg-secondary text-white',
+            )}
             onClick={() => handlePageChange(i)}
           >
             {i}
-          </Button>
+          </Button>,
         );
       }
 
@@ -84,16 +104,25 @@ export function Pagination({ activePage, totalPages = 20, onPageChange }: Pagina
       if (endPage < totalPages) {
         if (endPage < totalPages - 1) {
           pages.push(
-            <span key="end-ellipsis" className="flex h-8 w-8 items-center justify-center text-sm text-gray-400">
+            <span
+              key="end-ellipsis"
+              className="flex h-8 w-8 items-center justify-center text-sm text-gray-400"
+            >
               ...
-            </span>
+            </span>,
           );
         }
 
         pages.push(
-          <Button key={totalPages} variant="ghost" size="sm" className={cn(baseBtnClasses)} onClick={() => handlePageChange(totalPages)}>
+          <Button
+            key={totalPages}
+            variant="ghost"
+            size="sm"
+            className={cn(baseBtnClasses)}
+            onClick={() => handlePageChange(totalPages)}
+          >
             {totalPages}
-          </Button>
+          </Button>,
         );
       }
     }

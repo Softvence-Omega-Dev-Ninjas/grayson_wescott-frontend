@@ -1,49 +1,49 @@
 // components/AssignedPrograms.tsx
-"use client";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import dumbellIcon from "@/assets/dashboard/excercise-library/dumbellIcon.png";
-import Image from "next/image";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
+import Image from 'next/image';
 
 // This is the new data structure for the programs
 const assignedPrograms = [
   {
-    id: "1",
-    name: "Squat",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '1',
+    name: 'Squat',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 3,
     totalWeeks: 12,
   },
   {
-    id: "2",
-    name: "Hinge",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '2',
+    name: 'Hinge',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 3,
     totalWeeks: 12,
   },
   {
-    id: "3",
-    name: "Push",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '3',
+    name: 'Push',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 10,
     totalWeeks: 12,
   },
   {
-    id: "4",
-    name: "Pull",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '4',
+    name: 'Pull',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 8,
     totalWeeks: 12,
   },
   {
-    id: "5",
-    name: "Core",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '5',
+    name: 'Core',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 3,
     totalWeeks: 12,
   },
@@ -71,10 +71,17 @@ export function AssignedProgramTable() {
               <div className="flex items-center gap-4 w-full md:w-auto">
                 {/* Placeholder for the icon */}
                 <div className="w-10 h-10 flex items-center justify-center bg-secondary">
-                  <Image src={dumbellIcon} alt="dumbell Icon" width={20} height={20} />
+                  <Image
+                    src={dumbellIcon}
+                    alt="dumbell Icon"
+                    width={20}
+                    height={20}
+                  />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold">{program.name}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold">
+                    {program.name}
+                  </h3>
                   <p className="text-sm text-gray-400">
                     {program.duration} • {program.level}
                   </p>

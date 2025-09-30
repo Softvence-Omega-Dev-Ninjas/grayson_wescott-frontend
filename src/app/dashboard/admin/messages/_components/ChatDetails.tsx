@@ -1,10 +1,10 @@
-"use client";
-import Image from "next/image";
-import React from "react";
-import audio from "../../../../../assets/dashboard/messages/audio.png";
-import video from "../../../../../assets/dashboard/messages/video.png";
-import a1 from '../../../../../assets/dashboard/messages/Avatar2.png'
-import { ArrowLeft, Plus, Mic } from "lucide-react";
+'use client';
+import Image from 'next/image';
+import React from 'react';
+import audio from '../../../../../assets/dashboard/messages/audio.png';
+import video from '../../../../../assets/dashboard/messages/video.png';
+import a1 from '../../../../../assets/dashboard/messages/Avatar2.png';
+import { ArrowLeft, Plus, Mic } from 'lucide-react';
 
 interface ChatDetailsProps {
   chat: {
@@ -15,7 +15,7 @@ interface ChatDetailsProps {
     messages: { id: string; sender: string; text: string; time: string }[];
   } | null;
   onBack: () => void;
-} 
+}
 
 export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
   if (!chat) {
@@ -80,21 +80,27 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
             <div
               key={msg.id}
               className={`flex ${
-                msg.sender === "Me" ? "justify-end" : "justify-start"
+                msg.sender === 'Me' ? 'justify-end' : 'justify-start'
               }`}
             >
               <div className="flex gap-1 items-center ">
-                {
-                    msg.sender !== "Me" ? (
-                        <Image src={a1.src} alt="image" className="rounded-full object-cover" height={30} width={30}/>
-                    ):("")
-                }
+                {msg.sender !== 'Me' ? (
+                  <Image
+                    src={a1.src}
+                    alt="image"
+                    className="rounded-full object-cover"
+                    height={30}
+                    width={30}
+                  />
+                ) : (
+                  ''
+                )}
                 <div className="flex flex-col">
                   <div
                     className={`max-w-xs px-4 py-2 rounded-2xl text-sm ${
-                      msg.sender === "Me"
-                        ? "bg-[#2A2D33] text-white rounded-br-none"
-                        : "bg-[#2A2D33] text-gray-200 rounded-bl-none"
+                      msg.sender === 'Me'
+                        ? 'bg-[#2A2D33] text-white rounded-br-none'
+                        : 'bg-[#2A2D33] text-gray-200 rounded-bl-none'
                     }`}
                   >
                     <p>{msg.text}</p>

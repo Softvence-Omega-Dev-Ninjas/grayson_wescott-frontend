@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { rajdhani } from "@/assets/fonts";
-import Providers from "@/providers/Providers";
+import type { Metadata } from 'next';
+import './globals.css';
+import { rajdhani } from '@/assets/fonts';
+import Providers from '@/providers/Providers';
 
 export const metadata: Metadata = {
-  title: "Curbon Engines",
-  description: "Curbon Engines - Fitness Coaching & Programs",
+  title: 'Curbon Engines',
+  description: 'Curbon Engines - Fitness Coaching & Programs',
   icons: {
-    icon: "/favicon.svg",
+    icon: '/favicon.svg',
   },
 };
 

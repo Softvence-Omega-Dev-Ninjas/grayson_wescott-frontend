@@ -14,7 +14,10 @@ export function ExerciseSteps({ steps }: ExerciseStepsProps) {
       <h3 className="text-lg font-semibold text-white">Exercise Steps</h3>
       <div className="space-y-3">
         {steps.map((step) => (
-          <div key={step.step} className="bg-primary-200 border border-secondary  p-4">
+          <div
+            key={step.step}
+            className="bg-primary-200 border border-secondary  p-4"
+          >
             <div className="flex items-center gap-4">
               <div className="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-semibold text-sm">
                 {step.step}

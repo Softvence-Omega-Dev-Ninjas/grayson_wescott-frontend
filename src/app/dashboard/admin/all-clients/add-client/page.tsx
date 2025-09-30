@@ -1,15 +1,21 @@
-"use client";
+'use client';
 
-import type React from "react";
+import type React from 'react';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { User, Shield, Dumbbell, Info } from "lucide-react";
-import { RxCross2 } from "react-icons/rx";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { User, Shield, Dumbbell, Info } from 'lucide-react';
+import { RxCross2 } from 'react-icons/rx';
+import { useRouter } from 'next/navigation';
 
 interface ClientFormData {
   fullName: string;
@@ -23,12 +29,12 @@ interface ClientFormData {
 const ClientForm = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<ClientFormData>({
-    fullName: "",
-    email: "",
-    phone: "",
-    membershipTier: "",
-    status: "active",
-    programTemplate: "",
+    fullName: '',
+    email: '',
+    phone: '',
+    membershipTier: '',
+    status: 'active',
+    programTemplate: '',
   });
 
   const handleInputChange = (field: keyof ClientFormData, value: string) => {
@@ -37,18 +43,18 @@ const ClientForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    router.push("/dashboard/admin/all-clients/add-client/success");
+    console.log('Form submitted:', formData);
+    router.push('/dashboard/admin/all-clients/add-client/success');
   };
 
   const handleCancel = () => {
     setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      membershipTier: "",
-      status: "active",
-      programTemplate: "",
+      fullName: '',
+      email: '',
+      phone: '',
+      membershipTier: '',
+      status: 'active',
+      programTemplate: '',
     });
   };
 
@@ -60,13 +66,20 @@ const ClientForm = () => {
           <div className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <User className="h-5 w-5 text-white" />
-              <h2 className="text-lg font-semibold text-white">Basic Information</h2>
+              <h2 className="text-lg font-semibold text-white">
+                Basic Information
+              </h2>
             </div>
-            <p className="text-gray-400 text-sm mb-6">Enter the clients personal details</p>
+            <p className="text-gray-400 text-sm mb-6">
+              Enter the clients personal details
+            </p>
 
             <div className="space-y-4">
               <div>
-                <Label htmlFor="fullName" className="text-white text-sm font-medium">
+                <Label
+                  htmlFor="fullName"
+                  className="text-white text-sm font-medium"
+                >
                   Full Name
                 </Label>
                 <Input
@@ -74,14 +87,19 @@ const ClientForm = () => {
                   type="text"
                   placeholder="Enter full name"
                   value={formData.fullName}
-                  onChange={(e) => handleInputChange("fullName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange('fullName', e.target.value)
+                  }
                   className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="email" className="text-white text-sm font-medium">
+                  <Label
+                    htmlFor="email"
+                    className="text-white text-sm font-medium"
+                  >
                     Email Address*
                   </Label>
                   <Input
@@ -89,13 +107,16 @@ const ClientForm = () => {
                     type="email"
                     placeholder="user@example.com"
                     value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="phone" className="text-white text-sm font-medium">
+                  <Label
+                    htmlFor="phone"
+                    className="text-white text-sm font-medium"
+                  >
                     Phone Number ( Optional)
                   </Label>
                   <Input
@@ -103,7 +124,7 @@ const ClientForm = () => {
                     type="tel"
                     placeholder="+1 (555) 123-4567"
                     value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
                     className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
                   />
                 </div>
@@ -117,27 +138,48 @@ const ClientForm = () => {
           <div className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <Shield className="h-5 w-5 text-white" />
-              <h2 className="text-lg font-semibold text-white">Access Details</h2>
+              <h2 className="text-lg font-semibold text-white">
+                Access Details
+              </h2>
             </div>
-            <p className="text-gray-400 text-sm mb-6">Configure clients permissions and membership</p>
+            <p className="text-gray-400 text-sm mb-6">
+              Configure clients permissions and membership
+            </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="membershipTier" className="text-white text-sm font-medium">
+                <Label
+                  htmlFor="membershipTier"
+                  className="text-white text-sm font-medium"
+                >
                   Assign Membership Tier
                 </Label>
-                <Select value={formData.membershipTier} onValueChange={(value) => handleInputChange("membershipTier", value)}>
+                <Select
+                  value={formData.membershipTier}
+                  onValueChange={(value) =>
+                    handleInputChange('membershipTier', value)
+                  }
+                >
                   <SelectTrigger className="mt-2 bg-secondary text-white placeholder:text-gray-400 w-full">
                     <SelectValue placeholder="Select membership tier" />
                   </SelectTrigger>
                   <SelectContent className=" border-gray-700">
-                    <SelectItem value="basic" className="text-white hover:bg-gray-700">
+                    <SelectItem
+                      value="basic"
+                      className="text-white hover:bg-gray-700"
+                    >
                       Basic
                     </SelectItem>
-                    <SelectItem value="premium" className="text-white hover:bg-gray-700">
+                    <SelectItem
+                      value="premium"
+                      className="text-white hover:bg-gray-700"
+                    >
                       Premium
                     </SelectItem>
-                    <SelectItem value="elite" className="text-white hover:bg-gray-700">
+                    <SelectItem
+                      value="elite"
+                      className="text-white hover:bg-gray-700"
+                    >
                       Elite
                     </SelectItem>
                   </SelectContent>
@@ -145,21 +187,36 @@ const ClientForm = () => {
               </div>
 
               <div>
-                <Label htmlFor="status" className="text-white text-sm font-medium">
+                <Label
+                  htmlFor="status"
+                  className="text-white text-sm font-medium"
+                >
                   Status
                 </Label>
-                <Select value={formData.status} onValueChange={(value) => handleInputChange("status", value)}>
+                <Select
+                  value={formData.status}
+                  onValueChange={(value) => handleInputChange('status', value)}
+                >
                   <SelectTrigger className="mt-2 bg-secondary text-white placeholder:text-gray-400  w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className=" border-gray-700">
-                    <SelectItem value="active" className="text-white hover:bg-gray-700">
+                    <SelectItem
+                      value="active"
+                      className="text-white hover:bg-gray-700"
+                    >
                       Active
                     </SelectItem>
-                    <SelectItem value="inactive" className="text-white hover:bg-gray-700">
+                    <SelectItem
+                      value="inactive"
+                      className="text-white hover:bg-gray-700"
+                    >
                       Inactive
                     </SelectItem>
-                    <SelectItem value="pending" className="text-white hover:bg-gray-700">
+                    <SelectItem
+                      value="pending"
+                      className="text-white hover:bg-gray-700"
+                    >
                       Pending
                     </SelectItem>
                   </SelectContent>
@@ -174,29 +231,53 @@ const ClientForm = () => {
           <div className="p-6">
             <div className="flex items-center gap-2 mb-4">
               <Dumbbell className="h-5 w-5 text-white" />
-              <h2 className="text-lg font-semibold text-white">Program Assignment</h2>
+              <h2 className="text-lg font-semibold text-white">
+                Program Assignment
+              </h2>
             </div>
-            <p className="text-gray-400 text-sm mb-6">Optional: Assign a program template or leave empty to assign later</p>
+            <p className="text-gray-400 text-sm mb-6">
+              Optional: Assign a program template or leave empty to assign later
+            </p>
 
             <div>
-              <Label htmlFor="programTemplate" className="text-white text-sm font-medium">
+              <Label
+                htmlFor="programTemplate"
+                className="text-white text-sm font-medium"
+              >
                 Select Program Template
               </Label>
-              <Select value={formData.programTemplate} onValueChange={(value) => handleInputChange("programTemplate", value)}>
+              <Select
+                value={formData.programTemplate}
+                onValueChange={(value) =>
+                  handleInputChange('programTemplate', value)
+                }
+              >
                 <SelectTrigger className="mt-2 bg-secondary text-white placeholder:text-gray-400 w-full">
                   <SelectValue placeholder="Leave empty (assign later)" />
                 </SelectTrigger>
                 <SelectContent className=" border-gray-700">
-                  <SelectItem value="frame-1597884974" className="text-white hover:bg-gray-700">
+                  <SelectItem
+                    value="frame-1597884974"
+                    className="text-white hover:bg-gray-700"
+                  >
                     Frame 1597884974
                   </SelectItem>
-                  <SelectItem value="weight-loss-basic" className="text-white hover:bg-gray-700">
+                  <SelectItem
+                    value="weight-loss-basic"
+                    className="text-white hover:bg-gray-700"
+                  >
                     Weight Loss Basic
                   </SelectItem>
-                  <SelectItem value="strength-training" className="text-white hover:bg-gray-700">
+                  <SelectItem
+                    value="strength-training"
+                    className="text-white hover:bg-gray-700"
+                  >
                     Strength Training
                   </SelectItem>
-                  <SelectItem value="cardio-intensive" className="text-white hover:bg-gray-700">
+                  <SelectItem
+                    value="cardio-intensive"
+                    className="text-white hover:bg-gray-700"
+                  >
                     Cardio Intensive
                   </SelectItem>
                 </SelectContent>
@@ -208,9 +289,12 @@ const ClientForm = () => {
               <div className="flex items-center gap-3">
                 <Info className="h-5 w-5 text-white mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="text-white font-medium text-base">Program Assignment</h4>
+                  <h4 className="text-white font-medium text-base">
+                    Program Assignment
+                  </h4>
                   <p className="text-white text-sm mt-1">
-                    You can assign a program template now or leave it empty to assign later from the Clients management dashboard.
+                    You can assign a program template now or leave it empty to
+                    assign later from the Clients management dashboard.
                   </p>
                 </div>
               </div>

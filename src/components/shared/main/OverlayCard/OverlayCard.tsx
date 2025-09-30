@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
+import type { ReactNode } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ReusableCardProps {
   title?: string;
@@ -10,16 +10,28 @@ interface ReusableCardProps {
   onClick?: () => void;
 }
 
-export function OverlayCard({ title, description, icon, backgroundImage, className, onClick }: ReusableCardProps) {
+export function OverlayCard({
+  title,
+  description,
+  icon,
+  backgroundImage,
+  className,
+  onClick,
+}: ReusableCardProps) {
   return (
     <div
-      className={cn("relative overflow-hidden h-70  p-6 text-white cursor-pointer transition-transform hover:scale-105", className)}
+      className={cn(
+        'relative overflow-hidden h-70  p-6 text-white cursor-pointer transition-transform hover:scale-105',
+        className,
+      )}
       onClick={onClick}
       style={{
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
-        backgroundSize: "cover",
-        backgroundPosition: "center ",
-       backgroundRepeat: "no-repeat",
+        backgroundImage: backgroundImage
+          ? `url(${backgroundImage})`
+          : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center ',
+        backgroundRepeat: 'no-repeat',
       }}
     >
       {/* Dark overlay for better text readability */}
@@ -31,7 +43,9 @@ export function OverlayCard({ title, description, icon, backgroundImage, classNa
 
         {title && <h3 className="text-xl font-semibold">{title}</h3>}
 
-        {description && <p className="text-sm text-gray-200 leading-relaxed">{description}</p>}
+        {description && (
+          <p className="text-sm text-gray-200 leading-relaxed">{description}</p>
+        )}
       </div>
     </div>
   );

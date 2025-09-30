@@ -1,24 +1,26 @@
 // components/RecentMessages.tsx
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 // Sample data for the messages
 const recentMessages = [
   {
-    id: "1",
-    sender: "Sarah Martinez",
-    type: "user",
-    avatar: "/placeholder-avatar.png", // Replace with an actual image path
-    timestamp: "2 hours ago",
-    content: "Great job on yesterday's session! Let's increase the weight on squats next week.",
+    id: '1',
+    sender: 'Sarah Martinez',
+    type: 'user',
+    avatar: '/placeholder-avatar.png', // Replace with an actual image path
+    timestamp: '2 hours ago',
+    content:
+      "Great job on yesterday's session! Let's increase the weight on squats next week.",
   },
   {
-    id: "2",
-    sender: "System Notification",
-    type: "system",
-    avatar: "", // No avatar for system, will use an icon
-    timestamp: "1 day ago",
-    content: "New exercise videos have been added to your library. Check them out!",
+    id: '2',
+    sender: 'System Notification',
+    type: 'system',
+    avatar: '', // No avatar for system, will use an icon
+    timestamp: '1 day ago',
+    content:
+      'New exercise videos have been added to your library. Check them out!',
   },
 ];
 
@@ -28,7 +30,10 @@ export function RecentMessages() {
       {/* Header */}
       <div className="flex justify-between items-center p-4 border-b border-gray-800">
         <h2 className="text-xl font-semibold">Recent Messages</h2>
-        <a href="#" className="text-sm text-gray-400 hover:text-gray-300 transition-colors">
+        <a
+          href="#"
+          className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+        >
           View All
         </a>
       </div>
@@ -37,10 +42,12 @@ export function RecentMessages() {
       <div className="divide-y divide-gray-800">
         {recentMessages.map((message) => (
           <div key={message.id} className="p-4 flex gap-4">
-            {message.type === "user" ? (
+            {message.type === 'user' ? (
               <Avatar className="w-10 h-10 flex-shrink-0">
                 <AvatarImage src={message.avatar} alt={message.sender} />
-                <AvatarFallback>{message.sender.substring(0, 2)}</AvatarFallback>
+                <AvatarFallback>
+                  {message.sender.substring(0, 2)}
+                </AvatarFallback>
               </Avatar>
             ) : (
               <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-gray-800 rounded-full">
@@ -70,7 +77,9 @@ export function RecentMessages() {
                 <p className="font-medium text-white">{message.sender}</p>
                 <p className="text-sm text-gray-400">{message.timestamp}</p>
               </div>
-              <p className="text-sm text-gray-300 mt-1 break-words">{message.content}</p>
+              <p className="text-sm text-gray-300 mt-1 break-words">
+                {message.content}
+              </p>
             </div>
           </div>
         ))}

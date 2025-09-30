@@ -1,38 +1,42 @@
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-import React from "react";
-import f1 from "../../../../../assets/adonisProtocol/gym.png";
-import f2 from "../../../../../assets/adonisProtocol/Frame.png";
-import f3 from "../../../../../assets/adonisProtocol/people.png";
-import f4 from "../../../../../assets/adonisProtocol/brainstorming.png";
-import f5 from "../../../../../assets/adonisProtocol/crown.png";
-import { Button } from "@/components/ui/button";
+import BaseCard from '@/components/shared/main/BaseCard/BaseCard';
+import React from 'react';
+import f1 from '../../../../../assets/adonisProtocol/gym.png';
+import f2 from '../../../../../assets/adonisProtocol/Frame.png';
+import f3 from '../../../../../assets/adonisProtocol/people.png';
+import f4 from '../../../../../assets/adonisProtocol/brainstorming.png';
+import f5 from '../../../../../assets/adonisProtocol/crown.png';
+import { Button } from '@/components/ui/button';
 
 function FivePillars() {
   const data = [
     {
       img: f1.src,
-      title: "Aesthetic Performance",
-      description: "Build the physique that commands respect and turns heads wherever you go.",
+      title: 'Aesthetic Performance',
+      description:
+        'Build the physique that commands respect and turns heads wherever you go.',
     },
     {
       img: f2.src,
-      title: "Bio-Engineering & Grooming",
-      description: "Optimize your appearance, grooming, and biohacks.",
+      title: 'Bio-Engineering & Grooming',
+      description: 'Optimize your appearance, grooming, and biohacks.',
     },
     {
       img: f3.src,
-      title: "Social Mastery",
-      description: "Develop magnetic charisma and social intelligence that opens every door.",
+      title: 'Social Mastery',
+      description:
+        'Develop magnetic charisma and social intelligence that opens every door.',
     },
     {
       img: f4.src,
-      title: "Mindset & Discipline",
-      description: "Forge unbreakable mental strength and unwavering self-discipline.",
+      title: 'Mindset & Discipline',
+      description:
+        'Forge unbreakable mental strength and unwavering self-discipline.',
     },
     {
       img: f5.src,
-      title: "Empire Systems",
-      description: "Build wealth, influence, and legacy that lasts generations.",
+      title: 'Empire Systems',
+      description:
+        'Build wealth, influence, and legacy that lasts generations.',
     },
   ];
 

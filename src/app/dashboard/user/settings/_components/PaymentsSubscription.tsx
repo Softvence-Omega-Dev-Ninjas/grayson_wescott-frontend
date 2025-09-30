@@ -1,14 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CreditCard } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CreditCard } from 'lucide-react';
 
 export function PaymentsSubscription() {
   // Example transactions data
   const transactions = [
-    { date: "Feb 15, 2024", amount: "$29.99" },
-    { date: "Jan 15, 2024", amount: "$29.99" },
-    { date: "Dec 15, 2023", amount: "$29.99" },
-  ]
+    { date: 'Feb 15, 2024', amount: '$29.99' },
+    { date: 'Jan 15, 2024', amount: '$29.99' },
+    { date: 'Dec 15, 2023', amount: '$29.99' },
+  ];
 
   return (
     <Card className="bg-[#151519] border-gray-700">
@@ -36,7 +36,9 @@ export function PaymentsSubscription() {
               <span className="text-white text-xs font-bold">••••</span>
             </div>
             <span className="text-white text-sm">•••• 4242</span>
-            <span className="text-gray-400 text-sm cursor-pointer hover:underline">Update</span>
+            <span className="text-gray-400 text-sm cursor-pointer hover:underline">
+              Update
+            </span>
           </div>
         </div>
 
@@ -51,9 +53,11 @@ export function PaymentsSubscription() {
               </div>
             ))}
           </div>
-          <p className="text-blue-400 text-sm mt-2 cursor-pointer hover:underline">View All</p>
+          <p className="text-blue-400 text-sm mt-2 cursor-pointer hover:underline">
+            View All
+          </p>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

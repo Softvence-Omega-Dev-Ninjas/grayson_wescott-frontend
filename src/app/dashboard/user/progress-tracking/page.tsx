@@ -1,9 +1,8 @@
-import { ExerciseProgress } from "./_components/ExerciseProgress";
-import { MessagesPanel } from "./_components/MessagesPanel";
-import { ProgramHeader } from "./_components/ProgramHeader";
-import { StatsCards } from "./_components/StatsCards";
-import { WorkoutHistory } from "./_components/WorkoutHistory";
-
+import { ExerciseProgress } from './_components/ExerciseProgress';
+import { MessagesPanel } from './_components/MessagesPanel';
+import { ProgramHeader } from './_components/ProgramHeader';
+import { StatsCards } from './_components/StatsCards';
+import { WorkoutHistory } from './_components/WorkoutHistory';
 
 export default function UserProgress() {
   return (
@@ -35,5 +34,5 @@ export default function UserProgress() {
         </div>
       </div>
     </div>
-  )
+  );
 }
