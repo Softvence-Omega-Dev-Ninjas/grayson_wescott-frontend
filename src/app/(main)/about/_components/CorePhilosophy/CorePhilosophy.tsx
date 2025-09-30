@@ -1,26 +1,26 @@
-import icon1 from "@/assets/about/icon1.svg";
-import icon2 from "@/assets/about/icon2.svg";
-import icon3 from "@/assets/about/icon3.svg";
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import icon1 from '@/assets/about/icon1.svg';
+import icon2 from '@/assets/about/icon2.svg';
+import icon3 from '@/assets/about/icon3.svg';
+import BaseCard from '@/components/shared/main/BaseCard/BaseCard';
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
 const data = [
   {
     img: icon1,
-    title: "PRECISION",
+    title: 'PRECISION',
     description:
-      "Every movement is calculated. Every rep is measured. Every result is engineered. No guesswork, only science.",
+      'Every movement is calculated. Every rep is measured. Every result is engineered. No guesswork, only science.',
   },
   {
     img: icon2,
-    title: "DURABILITY",
+    title: 'DURABILITY',
     description:
-      "Built to last. Designed to endure. Strength that compounds over decades, not months.",
+      'Built to last. Designed to endure. Strength that compounds over decades, not months.',
   },
   {
     img: icon3,
-    title: "EVOLUTION",
+    title: 'EVOLUTION',
     description:
-      "Constant refinement. Continuous optimization. Always pushing the boundaries of human potential.",
+      'Constant refinement. Continuous optimization. Always pushing the boundaries of human potential.',
   },
 ];
 const CorePhilosophy = () => {

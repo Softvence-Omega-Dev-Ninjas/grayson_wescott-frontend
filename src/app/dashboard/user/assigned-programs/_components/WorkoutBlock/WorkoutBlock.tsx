@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Check, Play, RefreshCcw } from "lucide-react";
-import { TWorkout } from "../../page";
-import { IoPlayForward } from "react-icons/io5";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Check, Play, RefreshCcw } from 'lucide-react';
+import { TWorkout } from '../../page';
+import { IoPlayForward } from 'react-icons/io5';
 const WorkoutBlock = ({ workout }: { workout: TWorkout }) => (
   <div className="mb-4 bg-primary-200 p-5">
     <h1 className="text-lg font-semibold mb-4">Back Squat</h1>

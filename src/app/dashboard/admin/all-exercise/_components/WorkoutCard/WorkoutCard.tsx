@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Play } from "lucide-react";
-import Image from "next/image";
-import bodyWeightIcon from "@/assets/dashboard/excercise-library/bodybuilderIcon.png";
-import watchIcon from "@/assets/dashboard/excercise-library/watchIcon.png";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import { Play } from 'lucide-react';
+import Image from 'next/image';
+import bodyWeightIcon from '@/assets/dashboard/excercise-library/bodybuilderIcon.png';
+import watchIcon from '@/assets/dashboard/excercise-library/watchIcon.png';
+import Link from 'next/link';
 
 interface WorkoutCardProps {
   id: string;
@@ -81,11 +81,11 @@ export function WorkoutCard({
         {/* Action buttons */}
         <div className="flex gap-2 pt-2">
           <Link
-            href={"/dashboard/admin/all-exercise/view-details/1"}
+            href={'/dashboard/admin/all-exercise/view-details/1'}
             className="flex-1 w-full"
           >
             <Button
-              variant={"outline"}
+              variant={'outline'}
               size="sm"
               className="flex-1 cursor-pointer bg-transparent border-secondary rounded-none text-white hover:bg-gray-800 hover:text-white py-2 w-full"
             >
@@ -93,7 +93,7 @@ export function WorkoutCard({
             </Button>
           </Link>
           <Link
-            href={"/dashboard/admin/all-exercise/video/1"}
+            href={'/dashboard/admin/all-exercise/video/1'}
             className="flex-1 w-full"
           >
             <Button

@@ -1,20 +1,20 @@
-import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
-import img from "../../../assets/home/aboutbanner.png";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
-import { pricing } from "../(home)/_components/PricingSection/PricingSection";
-import PricingCard from "@/components/shared/main/PricingCard/PricingCard";
-import CarbonValues from "./_components/CarbonValues/CarbonValues";
-import CarbonApproach from "./_components/CarbonApproach/CarbonApproach";
-import CorePhilosophy from "./_components/CorePhilosophy/CorePhilosophy";
-import TestimonialSectio from "../TestimonialSection/TestimonialSectio";
-import CTA from "@/components/shared/main/CTA/CTA";
-import aboutImage from "@/assets/about/aboutSideBg.png";
+import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
+import img from '../../../assets/home/aboutbanner.png';
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import BaseCard from '@/components/shared/main/BaseCard/BaseCard';
+import { pricing } from '../(home)/_components/PricingSection/PricingSection';
+import PricingCard from '@/components/shared/main/PricingCard/PricingCard';
+import CarbonValues from './_components/CarbonValues/CarbonValues';
+import CarbonApproach from './_components/CarbonApproach/CarbonApproach';
+import CorePhilosophy from './_components/CorePhilosophy/CorePhilosophy';
+import TestimonialSectio from '../TestimonialSection/TestimonialSectio';
+import CTA from '@/components/shared/main/CTA/CTA';
+import aboutImage from '@/assets/about/aboutSideBg.png';
 const workWithData = [
-  { title: "Athletes chasing dominance in their sport" },
-  { title: "High performers demanding strength that matches their ambition" },
-  { title: "Fighters who live for precision under fatigue" },
-  { title: "Those who expect elite, not average" },
+  { title: 'Athletes chasing dominance in their sport' },
+  { title: 'High performers demanding strength that matches their ambition' },
+  { title: 'Fighters who live for precision under fatigue' },
+  { title: 'Those who expect elite, not average' },
 ];
 
 const AboutPage = () => {

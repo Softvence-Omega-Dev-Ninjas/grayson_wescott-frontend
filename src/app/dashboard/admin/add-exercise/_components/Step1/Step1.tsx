@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import Image from "next/image";
-import { Controller } from "react-hook-form";
-import uploadIcon from "@/assets/dashboard/add-excercise/div.png";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { Textarea } from "@/components/ui/textarea";
+'use client';
+import Image from 'next/image';
+import { Controller } from 'react-hook-form';
+import uploadIcon from '@/assets/dashboard/add-excercise/div.png';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { FaArrowRightLong } from 'react-icons/fa6';
+import { Textarea } from '@/components/ui/textarea';
 
 const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
   return (
@@ -57,7 +57,7 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
           <Input
             id="videoLink"
             placeholder="https://vimeo.com/... or https://youtube.com/..."
-            {...register("videoLink")}
+            {...register('videoLink')}
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
           />
           <Button
@@ -83,7 +83,7 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
             id="videoName"
             type="text"
             placeholder="e.g., Barbell Back Squat"
-            {...register("videoName", { required: "Video Name is required." })}
+            {...register('videoName', { required: 'Video Name is required.' })}
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
           />
           {errors.videoName && (
@@ -98,7 +98,7 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
             id="duration"
             type="text"
             placeholder="e.g., 5:00"
-            {...register("duration")}
+            {...register('duration')}
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
           />
         </div>
@@ -111,8 +111,8 @@ const Step1 = ({ onNext, register, control, errors, handleSubmit }: any) => {
           id="videoDescription"
           type="text"
           placeholder="Complete guide to performing the perfect barbell back squat"
-          {...register("videoDescription", {
-            required: "Video Description is required.",
+          {...register('videoDescription', {
+            required: 'Video Description is required.',
           })}
           className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] rounded-none"
         />

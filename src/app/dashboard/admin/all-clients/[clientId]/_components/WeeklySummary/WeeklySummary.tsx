@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Mail } from "lucide-react";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Mail } from 'lucide-react';
 
 export function WeeklySummary() {
-  const [coachNotes, setCoachNotes] = useState("");
+  const [coachNotes, setCoachNotes] = useState('');
 
   const stats = [
-    { label: "Total Sets", value: "147" },
-    { label: "lbs Moved", value: "12,450" },
-    { label: "New PR (Squat)", value: "225" },
-    { label: "Missed Reps", value: "7" },
+    { label: 'Total Sets', value: '147' },
+    { label: 'lbs Moved', value: '12,450' },
+    { label: 'New PR (Squat)', value: '225' },
+    { label: 'Missed Reps', value: '7' },
   ];
 
   return (

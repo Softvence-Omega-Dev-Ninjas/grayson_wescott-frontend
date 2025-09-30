@@ -1,4 +1,4 @@
-import ChatLayout from "./_components/ChatLayout";
+import ChatLayout from './_components/ChatLayout';
 
 const MessagesPage = () => {
   return (

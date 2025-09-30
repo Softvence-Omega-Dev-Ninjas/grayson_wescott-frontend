@@ -1,42 +1,42 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Upload, Settings, Palette } from "lucide-react";
+} from '@/components/ui/select';
+import { Upload, Settings, Palette } from 'lucide-react';
 
 const platformSettings = {
-  platformName: "Carbon Engines",
+  platformName: 'Carbon Engines',
   logo: {
     current: null,
-    uploadText: "Upload New",
+    uploadText: 'Upload New',
   },
 };
 
 const themeOptions = [
-  { id: "dark", label: "Dark", value: "dark" },
-  { id: "light", label: "Light", value: "light" },
+  { id: 'dark', label: 'Dark', value: 'dark' },
+  { id: 'light', label: 'Light', value: 'light' },
 ];
 
 const timezoneOptions = [
-  { value: "utc", label: "UTC" },
-  { value: "est", label: "EST" },
-  { value: "pst", label: "PST" },
-  { value: "cst", label: "CST" },
+  { value: 'utc', label: 'UTC' },
+  { value: 'est', label: 'EST' },
+  { value: 'pst', label: 'PST' },
+  { value: 'cst', label: 'CST' },
 ];
 
 const themeSettings = {
-  defaultTheme: "dark",
-  defaultTimezone: "utc",
+  defaultTheme: 'dark',
+  defaultTimezone: 'utc',
 };
 
 export function GeneralTab() {

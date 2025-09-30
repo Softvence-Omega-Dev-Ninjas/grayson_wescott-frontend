@@ -1,36 +1,36 @@
-"use client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import Link from "next/link";
-import bg from "../../../assets/footerbg.png";
-import bg1 from "../../../assets/header/logo.png";
-import Image from "next/image";
-import { RiUserLine } from "react-icons/ri";
-import { MdOutlineEmail } from "react-icons/md";
-import { FaFacebookF, FaSpinner, FaTwitter } from "react-icons/fa6";
-import { IoLogoGoogle } from "react-icons/io";
-import { useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { registerUser } from "@/services/auth";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/form';
+import Link from 'next/link';
+import bg from '../../../assets/footerbg.png';
+import bg1 from '../../../assets/header/logo.png';
+import Image from 'next/image';
+import { RiUserLine } from 'react-icons/ri';
+import { MdOutlineEmail } from 'react-icons/md';
+import { FaFacebookF, FaSpinner, FaTwitter } from 'react-icons/fa6';
+import { IoLogoGoogle } from 'react-icons/io';
+import { useState } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { registerUser } from '@/services/auth';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 // Corrected the schema by removing the .default() method.
 // This resolves the type mismatch with the useForm's defaultValues.
 const signUpSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  username: z.string().min(3, 'Username must be at least 3 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
@@ -41,9 +41,9 @@ export default function SignUpPage() {
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
+      username: '',
+      email: '',
+      password: '',
     },
   });
   const {
@@ -53,23 +53,23 @@ export default function SignUpPage() {
   const onSubmit = async (values: SignUpFormValues) => {
     // The router has been removed for environment compatibility.
     // The form now simply logs the submitted values.
-    console.log("[v0] Sign up form submitted:", values);
+    console.log('[v0] Sign up form submitted:', values);
     try {
       const res = await registerUser(values);
 
       if (res?.success) {
         toast.success(
-          "Registration successful! We’ve sent a verification code to your email.",
+          'Registration successful! We’ve sent a verification code to your email.',
         );
         router.push(`/verify-otp?email=${values.email}`);
       } else {
         toast.error(
-          res?.message || "Registration failed. Please try again later.",
+          res?.message || 'Registration failed. Please try again later.',
         );
       }
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Please try again in a moment.");
+      toast.error('Something went wrong. Please try again in a moment.');
     }
   };
 
@@ -80,7 +80,7 @@ export default function SignUpPage() {
         className="flex-1  relative overflow-hidden hidden md:block"
         style={{
           backgroundImage: `url(${bg.src})`,
-          backgroundSize: "cover",
+          backgroundSize: 'cover',
         }}
       >
         {/* Textured background pattern */}
@@ -165,7 +165,7 @@ export default function SignUpPage() {
                     </FormLabel>
                     <div className="relative mt-1">
                       <Input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••••••"
                         className="bg-primary-100 focus:border-gray-600 text-white placeholder:text-gray-200 pr-10"
                         {...field}
@@ -194,13 +194,13 @@ export default function SignUpPage() {
                 {isSubmitting ? (
                   <FaSpinner className="animate-spin" />
                 ) : (
-                  "Sign Up"
+                  'Sign Up'
                 )}
               </Button>
 
               <div className="text-center">
                 <span className="text-gray-400 text-sm">
-                  Already have an account?{" "}
+                  Already have an account?{' '}
                 </span>
                 <Link
                   href="/login"

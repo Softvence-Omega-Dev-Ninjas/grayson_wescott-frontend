@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const useScrollTrigger = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -10,10 +10,10 @@ const useScrollTrigger = () => {
     }
   };
   useEffect(() => {
-    window.addEventListener("scroll", handleScrollCange);
+    window.addEventListener('scroll', handleScrollCange);
 
     return () => {
-      window.removeEventListener("scroll", handleScrollCange);
+      window.removeEventListener('scroll', handleScrollCange);
     };
   }, []);
   return { scrolled };

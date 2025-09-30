@@ -1,21 +1,21 @@
-"use client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email('Please enter a valid email address'),
 });
 
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
@@ -26,13 +26,13 @@ export default function ForgotPasswordPage() {
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
   const onSubmit = (values: ForgotPasswordFormValues) => {
-    console.log("[v0] Forgot password form submitted:", values);
-    router.push("/reset-password");
+    console.log('[v0] Forgot password form submitted:', values);
+    router.push('/reset-password');
   };
 
   return (
@@ -110,7 +110,7 @@ export default function ForgotPasswordPage() {
                 type="submit"
                 className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3"
               >
-                <Link href={"/resetpassword"}>Send Reset Link</Link>
+                <Link href={'/resetpassword'}>Send Reset Link</Link>
               </Button>
 
               <div className="text-center">

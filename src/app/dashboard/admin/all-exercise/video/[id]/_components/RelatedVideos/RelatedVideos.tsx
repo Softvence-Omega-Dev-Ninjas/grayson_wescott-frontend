@@ -1,5 +1,5 @@
-import { Eye } from "lucide-react";
-import Image from "next/image";
+import { Eye } from 'lucide-react';
+import Image from 'next/image';
 
 interface RelatedVideo {
   id: string;

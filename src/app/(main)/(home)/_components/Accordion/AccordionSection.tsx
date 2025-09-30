@@ -1,30 +1,30 @@
-import React from "react";
+import React from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+} from '@/components/ui/accordion';
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
 
 const faqData = [
   {
-    id: "item-1",
-    question: "How quickly will I see results?",
+    id: 'item-1',
+    question: 'How quickly will I see results?',
     answer:
-      "Most clients see noticeable changes in physique and confidence within the first 2–3 weeks of following the protocol.",
+      'Most clients see noticeable changes in physique and confidence within the first 2–3 weeks of following the protocol.',
   },
   {
-    id: "item-2",
-    question: "Do I need a gym or special equipment?",
+    id: 'item-2',
+    question: 'Do I need a gym or special equipment?',
     answer:
-      "The system is designed for both home and gym environments. We provide equipment alternatives for every exercise.",
+      'The system is designed for both home and gym environments. We provide equipment alternatives for every exercise.',
   },
   {
-    id: "item-3",
-    question: "Is this beginner-friendly?",
+    id: 'item-3',
+    question: 'Is this beginner-friendly?',
     answer:
-      "Absolutely. The protocol scales from beginner to advanced with progressive difficulty levels and modifications.",
+      'Absolutely. The protocol scales from beginner to advanced with progressive difficulty levels and modifications.',
   },
 ];
 

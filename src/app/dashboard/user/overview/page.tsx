@@ -1,27 +1,27 @@
-import { Button } from "@/components/ui/button";
-import { workoutData } from "@/constant/workoutData";
-import { FaRegCalendarCheck, FaRegCirclePlay } from "react-icons/fa6";
-import { MdOutlineCalendarMonth } from "react-icons/md";
-import { StatesCard } from "../../admin/overview/_components/StatesCard/StatesCard";
-import { UserWorkoutCard } from "../exercise-library/_components/userDashboardcard";
-import { AssignedProgramTable } from "./_components/AssignedProgramTable/AssignedProgramTable";
-import DashboardBanner from "./_components/DashboardBanner/DashboardBanner";
-import { RecentMessages } from "./_components/RecentMessages/RecentMessages";
+import { Button } from '@/components/ui/button';
+import { workoutData } from '@/constant/workoutData';
+import { FaRegCalendarCheck, FaRegCirclePlay } from 'react-icons/fa6';
+import { MdOutlineCalendarMonth } from 'react-icons/md';
+import { StatesCard } from '../../admin/overview/_components/StatesCard/StatesCard';
+import { UserWorkoutCard } from '../exercise-library/_components/userDashboardcard';
+import { AssignedProgramTable } from './_components/AssignedProgramTable/AssignedProgramTable';
+import DashboardBanner from './_components/DashboardBanner/DashboardBanner';
+import { RecentMessages } from './_components/RecentMessages/RecentMessages';
 
 const statesData = [
   {
-    title: "All Video",
-    value: "247",
+    title: 'All Video',
+    value: '247',
     icon: FaRegCirclePlay,
   },
   {
-    title: "Total Training",
-    value: "189",
+    title: 'Total Training',
+    value: '189',
     icon: MdOutlineCalendarMonth,
   },
   {
-    title: "Training Completed",
-    value: "55",
+    title: 'Training Completed',
+    value: '55',
     icon: FaRegCalendarCheck,
   },
 ];

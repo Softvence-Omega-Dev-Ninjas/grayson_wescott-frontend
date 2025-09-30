@@ -1,69 +1,69 @@
-import pic from "@/assets/dashboard/excercise-library/barbell-exercise-training.png";
-import Image from "next/image";
-import tagIcon from "@/assets/dashboard/excercise-library/tagIcon.png";
-import levelIcon from "@/assets/dashboard/excercise-library/levelIcon.png";
-import clockIcon from "@/assets/dashboard/excercise-library/clockIcon.png";
-import dumbellIcon from "@/assets/dashboard/excercise-library/dumbellIcon.png";
-import starIcon from "@/assets/dashboard/excercise-library/star.png";
-import warningIcon from "@/assets/dashboard/excercise-library/warning.png";
-import tickIcon from "@/assets/dashboard/excercise-library/tick.png";
-import crossIcon from "@/assets/dashboard/excercise-library/cross.png";
-import { ExerciseSteps } from "../../video/[id]/_components/ExcerciseSteps/ExcerciseSteps";
-import { Button } from "@/components/ui/button";
-import { FaPlay } from "react-icons/fa6";
-import Link from "next/link";
+import pic from '@/assets/dashboard/excercise-library/barbell-exercise-training.png';
+import Image from 'next/image';
+import tagIcon from '@/assets/dashboard/excercise-library/tagIcon.png';
+import levelIcon from '@/assets/dashboard/excercise-library/levelIcon.png';
+import clockIcon from '@/assets/dashboard/excercise-library/clockIcon.png';
+import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
+import starIcon from '@/assets/dashboard/excercise-library/star.png';
+import warningIcon from '@/assets/dashboard/excercise-library/warning.png';
+import tickIcon from '@/assets/dashboard/excercise-library/tick.png';
+import crossIcon from '@/assets/dashboard/excercise-library/cross.png';
+import { ExerciseSteps } from '../../video/[id]/_components/ExcerciseSteps/ExcerciseSteps';
+import { Button } from '@/components/ui/button';
+import { FaPlay } from 'react-icons/fa6';
+import Link from 'next/link';
 
 const sampleWorkout = {
-  title: "Barbell Back Squat",
+  title: 'Barbell Back Squat',
   description:
-    "Master strength and depth with proper form in this comprehensive barbell back squat tutorial. This foundational compound movement targets multiple muscle groups for maximum effectiveness. This exercise involves placing a loaded barbell across your upper back and squatting down until your thighs are parallel to the floor, then driving back up to the starting position.",
-  videoSrc: "/video.mp4",
+    'Master strength and depth with proper form in this comprehensive barbell back squat tutorial. This foundational compound movement targets multiple muscle groups for maximum effectiveness. This exercise involves placing a loaded barbell across your upper back and squatting down until your thighs are parallel to the floor, then driving back up to the starting position.',
+  videoSrc: '/video.mp4',
   poster: pic.src,
 };
 
 const exerciseSteps = [
   {
     step: 1,
-    title: "Setup under the barbell rack",
+    title: 'Setup under the barbell rack',
     description:
-      "Position yourself under the bar with feet shoulder-width apart",
+      'Position yourself under the bar with feet shoulder-width apart',
   },
   {
     step: 2,
-    title: "Engage core, step back",
-    description: "Brace your core and take a step back from the rack",
+    title: 'Engage core, step back',
+    description: 'Brace your core and take a step back from the rack',
   },
   {
     step: 3,
-    title: "Squat until thighs are parallel",
-    description: "Lower down slowly maintaining proper knee tracking",
+    title: 'Squat until thighs are parallel',
+    description: 'Lower down slowly maintaining proper knee tracking',
   },
   {
     step: 4,
-    title: "Drive up keeping chest up",
-    description: "Push through heels to return to starting position",
+    title: 'Drive up keeping chest up',
+    description: 'Push through heels to return to starting position',
   },
 ];
 
 const benefits = [
-  { id: 1, text: "Builds lower body strength" },
-  { id: 2, text: "Glute, hamstring, and calf muscle development" },
-  { id: 3, text: "Improves posture" },
-  { id: 4, text: "Supports daily activities and athletic performance" },
+  { id: 1, text: 'Builds lower body strength' },
+  { id: 2, text: 'Glute, hamstring, and calf muscle development' },
+  { id: 3, text: 'Improves posture' },
+  { id: 4, text: 'Supports daily activities and athletic performance' },
 ];
 
 const mistakes = [
-  { id: 1, text: "Knee valgus (knees caving in)" },
-  { id: 2, text: "Insufficient depth" },
-  { id: 3, text: "Improper bar positioning" },
-  { id: 4, text: "Not maintaining a neutral spine" },
+  { id: 1, text: 'Knee valgus (knees caving in)' },
+  { id: 2, text: 'Insufficient depth' },
+  { id: 3, text: 'Improper bar positioning' },
+  { id: 4, text: 'Not maintaining a neutral spine' },
 ];
 const exerciseDetails = [
-  { label: "Equipment", value: "Barbell, Rack" },
-  { label: "Type", value: "Compound" },
-  { label: "Primary Muscles", value: "Quads, Glutes, Hamstrings" },
-  { label: "Secondary Muscles", value: "Core, Lower Back" },
-  { label: "Calories Burn", value: "~120 / 10 min" },
+  { label: 'Equipment', value: 'Barbell, Rack' },
+  { label: 'Type', value: 'Compound' },
+  { label: 'Primary Muscles', value: 'Quads, Glutes, Hamstrings' },
+  { label: 'Secondary Muscles', value: 'Core, Lower Back' },
+  { label: 'Calories Burn', value: '~120 / 10 min' },
 ];
 
 const ViewExcerciseDetailsPage = () => {
@@ -83,7 +83,7 @@ const ViewExcerciseDetailsPage = () => {
               className="shrink-0"
             />
             <span className="font-medium text-sm text-white">
-              {"Legs, Strength, Compound"}
+              {'Legs, Strength, Compound'}
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -95,7 +95,7 @@ const ViewExcerciseDetailsPage = () => {
               className="shrink-0"
             />
             <span className="font-medium text-sm text-white mt-0.5">
-              {"Beginner"}
+              {'Beginner'}
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -107,7 +107,7 @@ const ViewExcerciseDetailsPage = () => {
               className="shrink-0"
             />
             <span className="font-medium text-sm text-white mt-0.5">
-              {"1:15"}
+              {'1:15'}
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -119,7 +119,7 @@ const ViewExcerciseDetailsPage = () => {
               className="shrink-0"
             />
             <span className="font-medium text-sm text-white mt-0.5">
-              {"Barbell, Rack"}
+              {'Barbell, Rack'}
             </span>
           </div>
         </div>
@@ -135,7 +135,7 @@ const ViewExcerciseDetailsPage = () => {
               className="w-full h-[500px] object-fill"
             />
             <Link
-              href={"/dashboard/admin/all-exercise/video/1"}
+              href={'/dashboard/admin/all-exercise/video/1'}
               className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-1/2"
             >
               <Button className="flex items-center justify-center gap-1.5 bg-[#7DA6FF]  py-4  px-10 cursor-pointer">

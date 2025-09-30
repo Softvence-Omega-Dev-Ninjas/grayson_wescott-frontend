@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User } from "lucide-react";
-import a1 from "../../../../../assets/dashboard/messages/Avatar.png";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { User } from 'lucide-react';
+import a1 from '../../../../../assets/dashboard/messages/Avatar.png';
 
 export function ProfileAccount() {
   return (

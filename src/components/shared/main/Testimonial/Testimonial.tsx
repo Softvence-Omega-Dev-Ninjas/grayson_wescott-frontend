@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css/pagination';
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "./testimonial.css";
-import Image from "next/image";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import './testimonial.css';
+import Image from 'next/image';
 
 type TestimonialData = {
   image: { src: string };

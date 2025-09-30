@@ -1,16 +1,16 @@
-import { Plus } from "lucide-react";
-import Link from "next/link";
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
 const demoProgramm = [
-  { prgrammName: "Back Squat", category: "Lower Body" },
-  { prgrammName: "Front Squat", category: "Lower Body" },
-  { prgrammName: "Split Squat", category: "Lower Body" },
+  { prgrammName: 'Back Squat', category: 'Lower Body' },
+  { prgrammName: 'Front Squat', category: 'Lower Body' },
+  { prgrammName: 'Split Squat', category: 'Lower Body' },
 ];
 const ClientsProgrammBuildersPage = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-5 flex-wrap">
         <h1 className="text-xl font-bold">Excercise Library</h1>
-        <Link href={"/dashboard/admin/clients-programm-builders/add-program"}>
+        <Link href={'/dashboard/admin/clients-programm-builders/add-program'}>
           <button
             type="button"
             className="cursor-pointer font-medium py-2.5 px-6 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75"

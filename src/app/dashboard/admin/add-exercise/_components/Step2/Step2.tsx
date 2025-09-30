@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-import Image from "next/image";
-import { Controller, useFieldArray } from "react-hook-form";
-import folderIcon from "@/assets/dashboard/add-excercise/folderIcon.png";
-import bodyIcon from "@/assets/dashboard/add-excercise/avatarIcon.png";
-import equipmentIcon from "@/assets/dashboard/add-excercise/dumbellIcon.png";
-import starIcon from "@/assets/dashboard/add-excercise/starICon.png";
-import warningIcon from "@/assets/dashboard/add-excercise/warningIcon.png";
-import plusIcon from "@/assets/dashboard/add-excercise/plusIcon.png";
-import labelIcon from "@/assets/dashboard/add-excercise/plusIcon.png";
-import beginerIcon from "@/assets/dashboard/add-excercise/beginerIcon.png";
-import intermediateIcon from "@/assets/dashboard/add-excercise/IntermediateIcon.png";
-import advanceIcon from "@/assets/dashboard/add-excercise/advanceIcon.png";
-import { Label } from "@/components/ui/label";
+'use client';
+import Image from 'next/image';
+import { Controller, useFieldArray } from 'react-hook-form';
+import folderIcon from '@/assets/dashboard/add-excercise/folderIcon.png';
+import bodyIcon from '@/assets/dashboard/add-excercise/avatarIcon.png';
+import equipmentIcon from '@/assets/dashboard/add-excercise/dumbellIcon.png';
+import starIcon from '@/assets/dashboard/add-excercise/starICon.png';
+import warningIcon from '@/assets/dashboard/add-excercise/warningIcon.png';
+import plusIcon from '@/assets/dashboard/add-excercise/plusIcon.png';
+import labelIcon from '@/assets/dashboard/add-excercise/plusIcon.png';
+import beginerIcon from '@/assets/dashboard/add-excercise/beginerIcon.png';
+import intermediateIcon from '@/assets/dashboard/add-excercise/IntermediateIcon.png';
+import advanceIcon from '@/assets/dashboard/add-excercise/advanceIcon.png';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import { IoMdArrowBack, IoMdArrowForward } from "react-icons/io";
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
+import { IoMdArrowBack, IoMdArrowForward } from 'react-icons/io';
 
 const Step2 = ({
   onBack,
@@ -39,7 +39,7 @@ const Step2 = ({
     remove: removeStep,
   } = useFieldArray({
     control,
-    name: "stepByStepGuide",
+    name: 'stepByStepGuide',
   });
 
   const {
@@ -48,7 +48,7 @@ const Step2 = ({
     remove: removeBenefit,
   } = useFieldArray({
     control,
-    name: "keyBenefits",
+    name: 'keyBenefits',
   });
 
   const {
@@ -57,30 +57,30 @@ const Step2 = ({
     remove: removeMistake,
   } = useFieldArray({
     control,
-    name: "commonMistakes",
+    name: 'commonMistakes',
   });
 
   const bodyPartTags = [
-    "Legs",
-    "Chest",
-    "Core",
-    "Back",
-    "Glutes",
-    "Shoulders",
-    "Arms",
+    'Legs',
+    'Chest',
+    'Core',
+    'Back',
+    'Glutes',
+    'Shoulders',
+    'Arms',
   ];
   const equipmentTags = [
-    "Dumbbell",
-    "Barbell",
-    "Resistance Band",
-    "Bodyweight",
-    "Kettlebell",
-    "Cable Machine",
+    'Dumbbell',
+    'Barbell',
+    'Resistance Band',
+    'Bodyweight',
+    'Kettlebell',
+    'Cable Machine',
   ];
   const difficultyLevels = [
-    { label: "Beginner", icon: beginerIcon },
-    { label: "Intermediate", icon: intermediateIcon },
-    { label: "Advanced", icon: advanceIcon },
+    { label: 'Beginner', icon: beginerIcon },
+    { label: 'Intermediate', icon: intermediateIcon },
+    { label: 'Advanced', icon: advanceIcon },
   ];
 
   return (
@@ -99,7 +99,7 @@ const Step2 = ({
           <Controller
             name="primaryCategory"
             control={control}
-            rules={{ required: "Primary Category is required." }}
+            rules={{ required: 'Primary Category is required.' }}
             render={({ field }) => (
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <SelectTrigger className="bg-secondary w-full border-none text-white p-2.5 flex-1 placeholder:text-[#F4F5F7]">
@@ -127,7 +127,7 @@ const Step2 = ({
           <Controller
             name="status"
             control={control}
-            rules={{ required: "Status is required." }}
+            rules={{ required: 'Status is required.' }}
             render={({ field }) => (
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <SelectTrigger className="bg-secondary w-full border-none text-white p-2.5 flex-1 placeholder:text-[#F4F5F7]">
@@ -168,7 +168,7 @@ const Step2 = ({
                 rules={{
                   validate: (value) =>
                     value.length > 0 ||
-                    "At least one body part tag is required.",
+                    'At least one body part tag is required.',
                 }}
                 render={({ field }) => (
                   <Input
@@ -225,7 +225,7 @@ const Step2 = ({
                 rules={{
                   validate: (value) =>
                     value.length > 0 ||
-                    "At least one equipment tag is required.",
+                    'At least one equipment tag is required.',
                 }}
                 render={({ field }) => (
                   <input
@@ -269,7 +269,7 @@ const Step2 = ({
             <Input
               type="text"
               {...register(`stepByStepGuide.${index}.value`, {
-                required: "This field is required.",
+                required: 'This field is required.',
               })}
               placeholder="Enter you Step by Step Guide name..."
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
@@ -294,7 +294,7 @@ const Step2 = ({
         <div className="flex items-center justify-end">
           <Button
             type="button"
-            onClick={() => appendStep({ value: "" })}
+            onClick={() => appendStep({ value: '' })}
             className="font-medium py-2 px-4 flex items-center gap-1.5 transition-colors bg-secondary duration-200 text-white hover:bg-secondary/80 cursor-pointer"
           >
             <Image src={plusIcon} width={12} height={12} alt="Upload Icon" />
@@ -315,7 +315,7 @@ const Step2 = ({
               <Input
                 type="text"
                 {...register(`keyBenefits.${index}.value`, {
-                  required: "This field is required.",
+                  required: 'This field is required.',
                 })}
                 placeholder="Enter Client's Key Benefits..."
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
@@ -339,7 +339,7 @@ const Step2 = ({
           <div className="flex justify-end">
             <Button
               type="button"
-              onClick={() => appendBenefit({ value: "" })}
+              onClick={() => appendBenefit({ value: '' })}
               className="font-medium py-2 px-4 flex items-center gap-1.5 transition-colors bg-secondary duration-200 text-white hover:bg-secondary/80 cursor-pointer"
             >
               <Image src={plusIcon} width={12} height={12} alt="Upload Icon" />
@@ -357,7 +357,7 @@ const Step2 = ({
               <Input
                 type="text"
                 {...register(`commonMistakes.${index}.value`, {
-                  required: "This field is required.",
+                  required: 'This field is required.',
                 })}
                 placeholder="Enter Client's Common Mistakes..."
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
@@ -381,7 +381,7 @@ const Step2 = ({
           <div className="flex justify-end">
             <Button
               type="button"
-              onClick={() => appendMistake({ value: "" })}
+              onClick={() => appendMistake({ value: '' })}
               className="font-medium py-2 px-4 flex items-center gap-1.5 transition-colors bg-secondary duration-200 text-white hover:bg-secondary/80 cursor-pointer"
             >
               <Image src={plusIcon} width={12} height={12} alt="Upload Icon" />
@@ -401,8 +401,8 @@ const Step2 = ({
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.equipment", {
-                required: "Equipment is required.",
+              {...register('exerciseDetails.equipment', {
+                required: 'Equipment is required.',
               })}
               placeholder="Barbell, Rack"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
@@ -419,8 +419,8 @@ const Step2 = ({
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.type", {
-                required: "Type is required.",
+              {...register('exerciseDetails.type', {
+                required: 'Type is required.',
               })}
               placeholder="Compound"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
@@ -437,8 +437,8 @@ const Step2 = ({
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.primaryMuscles", {
-                required: "Primary Muscles is required.",
+              {...register('exerciseDetails.primaryMuscles', {
+                required: 'Primary Muscles is required.',
               })}
               placeholder="Quads, Glutes, Hamstrings"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
@@ -455,8 +455,8 @@ const Step2 = ({
             </Label>
             <Input
               type="text"
-              {...register("exerciseDetails.secondaryMuscles", {
-                required: "Secondary Muscles is required.",
+              {...register('exerciseDetails.secondaryMuscles', {
+                required: 'Secondary Muscles is required.',
               })}
               placeholder="Core, Lower Back"
               className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
@@ -474,8 +474,8 @@ const Step2 = ({
           </Label>
           <Input
             type="text"
-            {...register("exerciseDetails.caloriesBurn", {
-              required: "calories Burn is required.",
+            {...register('exerciseDetails.caloriesBurn', {
+              required: 'calories Burn is required.',
             })}
             placeholder="200 kcal"
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] w-full"
@@ -500,7 +500,7 @@ const Step2 = ({
         <Controller
           name="difficultyLevel"
           control={control}
-          rules={{ required: "Difficulty level is required." }}
+          rules={{ required: 'Difficulty level is required.' }}
           render={({ field }) => (
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               {difficultyLevels.map((level) => (
@@ -520,11 +520,11 @@ const Step2 = ({
                     {/* <Image src={level.icon} width={40} height={40} alt="Upload Icon" className="pb-5" /> */}
                     <span className="text-lg font-semibold">{level.label}</span>
                     <span className="text-sm text-gray-400 mt-1">
-                      {level.label === "Beginner"
-                        ? "New to exercise"
-                        : level.label === "Intermediate"
-                          ? "Some experience"
-                          : "Highly experienced"}
+                      {level.label === 'Beginner'
+                        ? 'New to exercise'
+                        : level.label === 'Intermediate'
+                          ? 'Some experience'
+                          : 'Highly experienced'}
                     </span>
                   </label>
                 </div>

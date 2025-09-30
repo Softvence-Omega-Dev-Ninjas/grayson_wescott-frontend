@@ -1,7 +1,7 @@
-import React from "react";
-import img from "../../../../assets/farrow.png";
-import Image from "next/image";
-import { LucideIcon } from "lucide-react";
+import React from 'react';
+import img from '../../../../assets/farrow.png';
+import Image from 'next/image';
+import { LucideIcon } from 'lucide-react';
 export interface IPricingPlan {
   item: {
     title: string;
@@ -20,7 +20,7 @@ function PricingCard({ item }: IPricingPlan) {
   const { Icon } = item;
   return (
     <div
-      className={`border h-auto ${item.isEnable ? "bg-[#2A2D33]" : ""} transition-all duration-500 ease-in-out 
+      className={`border h-auto ${item.isEnable ? 'bg-[#2A2D33]' : ''} transition-all duration-500 ease-in-out 
                 hover:scale-105  hover:shadow-xl border-[#B9BDC6] px-8 py-5 space-y-4 min-h-[400px] flex flex-col justify-between text-white`}
     >
       <div className="space-y-4">
@@ -34,7 +34,7 @@ function PricingCard({ item }: IPricingPlan) {
           <span className="text-base font-semibold">Tiar 1</span>
           <p className="font-normal text-base">{item.description}</p>
           <h1 className="text-4xl font-bold my-4">
-            {item.price}{" "}
+            {item.price}{' '}
             <span className="text-lg font-medium">{item.billing}</span>
           </h1>
         </div>

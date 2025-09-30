@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface PaginationProps {
   activePage: number;
@@ -22,7 +22,7 @@ export function Pagination({
   };
 
   const baseBtnClasses =
-    "h-8 w-8 p-0 hover:bg-gray-800 hover:text-white border border-gray-700 cursor-pointer text-white rounded-none";
+    'h-8 w-8 p-0 hover:bg-gray-800 hover:text-white border border-gray-700 cursor-pointer text-white rounded-none';
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -34,11 +34,11 @@ export function Pagination({
         pages.push(
           <Button
             key={i}
-            variant={i === activePage ? "default" : "ghost"}
+            variant={i === activePage ? 'default' : 'ghost'}
             size="sm"
             className={cn(
               baseBtnClasses,
-              i === activePage && "bg-secondary text-white ",
+              i === activePage && 'bg-secondary text-white ',
             )}
             onClick={() => handlePageChange(i)}
           >
@@ -87,11 +87,11 @@ export function Pagination({
         pages.push(
           <Button
             key={i}
-            variant={i === activePage ? "default" : "ghost"}
+            variant={i === activePage ? 'default' : 'ghost'}
             size="sm"
             className={cn(
               baseBtnClasses,
-              i === activePage && "bg-secondary text-white",
+              i === activePage && 'bg-secondary text-white',
             )}
             onClick={() => handlePageChange(i)}
           >
