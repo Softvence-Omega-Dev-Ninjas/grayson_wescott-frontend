@@ -1,27 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
-import "leaflet/dist/leaflet.css";
-import CTA from "@/components/shared/main/CTA/CTA";
-import contactImg from "@/assets/about/contactSideBg.jpg";
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import 'leaflet/dist/leaflet.css';
+import CTA from '@/components/shared/main/CTA/CTA';
+import contactImg from '@/assets/about/contactSideBg.jpg';
 
 const MapComponent = dynamic(
-  () => import("@/app/(main)/contact/_components/MapContact/MapContact"),
+  () => import('@/app/(main)/contact/_components/MapContact/MapContact'),
   { ssr: false },
 );
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
-    contactName: "",
-    street: "",
-    city: "",
-    postcode: "",
-    contactPhone: "",
-    email: "",
-    message: "",
+    contactName: '',
+    street: '',
+    city: '',
+    postcode: '',
+    contactPhone: '',
+    email: '',
+    message: '',
     protectData: false,
   });
 
@@ -29,12 +29,12 @@ const ContactForm = () => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   const handleSubmit = () => {
-    console.log("Form Data:", formData);
+    console.log('Form Data:', formData);
   };
 
   return (

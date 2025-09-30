@@ -1,25 +1,25 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Play } from "lucide-react";
+} from '@/components/ui/select';
+import { Play } from 'lucide-react';
 
 export function VideoLibrary() {
   const sortOptions = [
-    { value: "notes", label: "Notes" },
-    { value: "date", label: "Date" },
-    { value: "name", label: "Name" },
+    { value: 'notes', label: 'Notes' },
+    { value: 'date', label: 'Date' },
+    { value: 'name', label: 'Name' },
   ];
 
   const qualityOptions = [
-    { value: "auto", label: "Auto" },
-    { value: "1080p", label: "1080p" },
-    { value: "720p", label: "720p" },
+    { value: 'auto', label: 'Auto' },
+    { value: '1080p', label: '1080p' },
+    { value: '720p', label: '720p' },
   ];
 
   return (

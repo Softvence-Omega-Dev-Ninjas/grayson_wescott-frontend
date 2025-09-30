@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
-import icon from "../../../../../assets/userDashboard/progress/dumbell.png";
-import Image from "next/image";
+import { Badge } from '@/components/ui/badge';
+import icon from '../../../../../assets/userDashboard/progress/dumbell.png';
+import Image from 'next/image';
 export function ProgramHeader() {
   return (
     <div className="bg-[#2A2D33] rounded-lg p-6 flex items-center justify-between">

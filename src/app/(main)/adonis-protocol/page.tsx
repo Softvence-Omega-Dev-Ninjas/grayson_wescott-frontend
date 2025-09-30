@@ -1,15 +1,15 @@
-import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
-import React from "react";
-import logo from "../../../assets/home/adonis.png";
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import FivePillars from "./_components/FivePillars/FivePillars";
-import WhatYouGet from "./_components/WhatYouWillGet/WhatYouGet";
-import ModulePreview from "./_components/ModulePreview/ModulePreview";
-import TeamSection from "../(home)/_components/TeamSection/TeamSection";
-import AccordionSection from "../(home)/_components/Accordion/AccordionSection";
-import AdonisCtaSection from "./_components/CtaSection/AdonisCtaSection";
-import AdonisProtocol from "../(home)/_components/PricingSection/AdoinsProtocol/AdoinsProtocol";
-import AddonPrincingPack from "../(home)/_components/PricingSection/AddonPrincingPack/AddonPrincingPack";
+import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
+import React from 'react';
+import logo from '../../../assets/home/adonis.png';
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import FivePillars from './_components/FivePillars/FivePillars';
+import WhatYouGet from './_components/WhatYouWillGet/WhatYouGet';
+import ModulePreview from './_components/ModulePreview/ModulePreview';
+import TeamSection from '../(home)/_components/TeamSection/TeamSection';
+import AccordionSection from '../(home)/_components/Accordion/AccordionSection';
+import AdonisCtaSection from './_components/CtaSection/AdonisCtaSection';
+import AdonisProtocol from '../(home)/_components/PricingSection/AdoinsProtocol/AdoinsProtocol';
+import AddonPrincingPack from '../(home)/_components/PricingSection/AddonPrincingPack/AddonPrincingPack';
 
 function AdonisProtocolPage() {
   return (

@@ -1,49 +1,49 @@
 // components/AssignedPrograms.tsx
-"use client";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import dumbellIcon from "@/assets/dashboard/excercise-library/dumbellIcon.png";
-import Image from "next/image";
+'use client';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
+import Image from 'next/image';
 
 // This is the new data structure for the programs
 const assignedPrograms = [
   {
-    id: "1",
-    name: "Squat",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '1',
+    name: 'Squat',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 3,
     totalWeeks: 12,
   },
   {
-    id: "2",
-    name: "Hinge",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '2',
+    name: 'Hinge',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 3,
     totalWeeks: 12,
   },
   {
-    id: "3",
-    name: "Push",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '3',
+    name: 'Push',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 10,
     totalWeeks: 12,
   },
   {
-    id: "4",
-    name: "Pull",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '4',
+    name: 'Pull',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 8,
     totalWeeks: 12,
   },
   {
-    id: "5",
-    name: "Core",
-    level: "Advanced Level",
-    duration: "12 weeks",
+    id: '5',
+    name: 'Core',
+    level: 'Advanced Level',
+    duration: '12 weeks',
     progress: 3,
     totalWeeks: 12,
   },

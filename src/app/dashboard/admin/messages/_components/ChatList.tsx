@@ -1,7 +1,7 @@
-"use client";
-import Image from "next/image";
-import React from "react";
-import { EllipsisVertical } from "lucide-react";
+'use client';
+import Image from 'next/image';
+import React from 'react';
+import { EllipsisVertical } from 'lucide-react';
 
 interface ChatListProps {
   chats: {
@@ -25,7 +25,7 @@ export default function ChatList({
       {chats.map((chat) => (
         <div
           key={chat.id}
-          className={`flex justify-between items-center ${selectedChat === chat.id ? "bg-gray-800" : ""} hover:bg-gray-800 p-4 cursor-pointer`}
+          className={`flex justify-between items-center ${selectedChat === chat.id ? 'bg-gray-800' : ''} hover:bg-gray-800 p-4 cursor-pointer`}
         >
           <div
             onClick={() => onSelect(chat.id)}

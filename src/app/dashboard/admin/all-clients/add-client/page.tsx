@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import type React from "react";
+import type React from 'react';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { User, Shield, Dumbbell, Info } from "lucide-react";
-import { RxCross2 } from "react-icons/rx";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/select';
+import { User, Shield, Dumbbell, Info } from 'lucide-react';
+import { RxCross2 } from 'react-icons/rx';
+import { useRouter } from 'next/navigation';
 
 interface ClientFormData {
   fullName: string;
@@ -29,12 +29,12 @@ interface ClientFormData {
 const ClientForm = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<ClientFormData>({
-    fullName: "",
-    email: "",
-    phone: "",
-    membershipTier: "",
-    status: "active",
-    programTemplate: "",
+    fullName: '',
+    email: '',
+    phone: '',
+    membershipTier: '',
+    status: 'active',
+    programTemplate: '',
   });
 
   const handleInputChange = (field: keyof ClientFormData, value: string) => {
@@ -43,18 +43,18 @@ const ClientForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    router.push("/dashboard/admin/all-clients/add-client/success");
+    console.log('Form submitted:', formData);
+    router.push('/dashboard/admin/all-clients/add-client/success');
   };
 
   const handleCancel = () => {
     setFormData({
-      fullName: "",
-      email: "",
-      phone: "",
-      membershipTier: "",
-      status: "active",
-      programTemplate: "",
+      fullName: '',
+      email: '',
+      phone: '',
+      membershipTier: '',
+      status: 'active',
+      programTemplate: '',
     });
   };
 
@@ -88,7 +88,7 @@ const ClientForm = () => {
                   placeholder="Enter full name"
                   value={formData.fullName}
                   onChange={(e) =>
-                    handleInputChange("fullName", e.target.value)
+                    handleInputChange('fullName', e.target.value)
                   }
                   className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
                 />
@@ -107,7 +107,7 @@ const ClientForm = () => {
                     type="email"
                     placeholder="user@example.com"
                     value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
                   />
                 </div>
@@ -124,7 +124,7 @@ const ClientForm = () => {
                     type="tel"
                     placeholder="+1 (555) 123-4567"
                     value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
                     className="mt-2 bg-secondary text-white placeholder:text-gray-400 "
                   />
                 </div>
@@ -157,7 +157,7 @@ const ClientForm = () => {
                 <Select
                   value={formData.membershipTier}
                   onValueChange={(value) =>
-                    handleInputChange("membershipTier", value)
+                    handleInputChange('membershipTier', value)
                   }
                 >
                   <SelectTrigger className="mt-2 bg-secondary text-white placeholder:text-gray-400 w-full">
@@ -195,7 +195,7 @@ const ClientForm = () => {
                 </Label>
                 <Select
                   value={formData.status}
-                  onValueChange={(value) => handleInputChange("status", value)}
+                  onValueChange={(value) => handleInputChange('status', value)}
                 >
                   <SelectTrigger className="mt-2 bg-secondary text-white placeholder:text-gray-400  w-full">
                     <SelectValue />
@@ -249,7 +249,7 @@ const ClientForm = () => {
               <Select
                 value={formData.programTemplate}
                 onValueChange={(value) =>
-                  handleInputChange("programTemplate", value)
+                  handleInputChange('programTemplate', value)
                 }
               >
                 <SelectTrigger className="mt-2 bg-secondary text-white placeholder:text-gray-400 w-full">

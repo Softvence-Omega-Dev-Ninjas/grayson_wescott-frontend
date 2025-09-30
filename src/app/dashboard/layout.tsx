@@ -1,15 +1,15 @@
-"use client";
-import { AppSidebar } from "@/components/shared/dashboard/Sidebar/AppSidebar";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+'use client';
+import { AppSidebar } from '@/components/shared/dashboard/Sidebar/AppSidebar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
-import useScrollTrigger from "@/hooks/useScrollTrigger";
-import { ReactNode } from "react";
-import avatar from "@/assets/dashboard/add-excercise/avatar.png";
-import { MdOutlineNotificationsNone } from "react-icons/md";
+} from '@/components/ui/sidebar';
+import useScrollTrigger from '@/hooks/useScrollTrigger';
+import { ReactNode } from 'react';
+import avatar from '@/assets/dashboard/add-excercise/avatar.png';
+import { MdOutlineNotificationsNone } from 'react-icons/md';
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   const { scrolled } = useScrollTrigger();
@@ -20,7 +20,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         <SidebarInset className="bg-light-secondary-bg dark:bg-dark-secondary-bg">
           <header
             className={`flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 sticky top-0 bg-primary-200 z-10 mx-0 md:mx-4 ${
-              scrolled && "shadow-sm shadow-secondary"
+              scrolled && 'shadow-sm shadow-secondary'
             }`}
           >
             <div className="flex items-center justify-between gap-2 px-4 w-full">

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Bar,
@@ -7,13 +7,13 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-} from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+} from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from '@/components/ui/chart';
 
 interface ConsistencyData {
   week: string;
@@ -35,8 +35,8 @@ export function ConsistencyChart({ data }: ConsistencyChartProps) {
           <ChartContainer
             config={{
               workouts: {
-                label: "Workouts",
-                color: "#8B5CF6",
+                label: 'Workouts',
+                color: '#8B5CF6',
               },
             }}
             className="w-full h-full"

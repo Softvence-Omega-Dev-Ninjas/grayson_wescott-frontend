@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Plus, Upload } from "lucide-react";
-import { BsChatFill } from "react-icons/bs";
-import Image from "next/image";
-import tickIcon from "@/assets/dashboard/all-clients/tickICon.svg";
-import { MdDelete } from "react-icons/md";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Plus, Upload } from 'lucide-react';
+import { BsChatFill } from 'react-icons/bs';
+import Image from 'next/image';
+import tickIcon from '@/assets/dashboard/all-clients/tickICon.svg';
+import { MdDelete } from 'react-icons/md';
 
 interface Exercise {
   name: string;
@@ -18,10 +18,10 @@ interface Exercise {
 }
 
 export function DailyWorkoutLog() {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
   const [exercises] = useState<Exercise[]>([
-    { name: "Bench Press", sets: 3, reps: 3, weight: 185, rpe: 8 },
-    { name: "Squats", sets: 3, reps: 3, weight: 185, rpe: 8 },
+    { name: 'Bench Press', sets: 3, reps: 3, weight: 185, rpe: 8 },
+    { name: 'Squats', sets: 3, reps: 3, weight: 185, rpe: 8 },
   ]);
 
   return (

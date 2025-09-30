@@ -1,21 +1,21 @@
 const exerciseData = [
   {
-    name: "Bench Press",
+    name: 'Bench Press',
     current: 205,
     target: 225,
-    unit: "lbs",
+    unit: 'lbs',
   },
   {
-    name: "Squat",
+    name: 'Squat',
     current: 185,
     target: 205,
-    unit: "lbs",
+    unit: 'lbs',
   },
   {
-    name: "Deadlift",
+    name: 'Deadlift',
     current: 185,
     target: 225,
-    unit: "lbs",
+    unit: 'lbs',
   },
 ];
 
@@ -50,7 +50,7 @@ export function ExerciseProgress() {
           </div>
 
           <div className="text-xs text-slate-400">
-            {exercise.current} {exercise.unit} — {exercise.target}{" "}
+            {exercise.current} {exercise.unit} — {exercise.target}{' '}
             {exercise.unit}
           </div>
         </div>

@@ -1,4 +1,4 @@
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
 
 const AddonPrincingPack = () => {
   return (

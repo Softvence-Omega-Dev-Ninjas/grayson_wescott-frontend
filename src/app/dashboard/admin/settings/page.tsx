@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AdminProfileTab } from "./_components/AdminProfileTab";
-import { ClientsAccessTab } from "./_components/ClientAccessTab";
-import { GeneralTab } from "./_components/GeneralTab";
-import { NotificationsTab } from "./_components/NotificationsTab";
-import { SecurityTab } from "./_components/SecurityTab";
-import { PaymentsTab } from "./_components/PaymentsTab";
+import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AdminProfileTab } from './_components/AdminProfileTab';
+import { ClientsAccessTab } from './_components/ClientAccessTab';
+import { GeneralTab } from './_components/GeneralTab';
+import { NotificationsTab } from './_components/NotificationsTab';
+import { SecurityTab } from './_components/SecurityTab';
+import { PaymentsTab } from './_components/PaymentsTab';
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("general");
+  const [activeTab, setActiveTab] = useState('general');
 
   return (
     <div className="min-h-screen bg-black p-4 md:p-6 lg:p-8">

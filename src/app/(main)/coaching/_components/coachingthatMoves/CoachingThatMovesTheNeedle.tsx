@@ -1,10 +1,10 @@
-import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
-import a1 from "../../../../../assets/coaching/audit1.png";
-import a2 from "../../../../../assets/coaching/aduit2.png";
+import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import a1 from '../../../../../assets/coaching/audit1.png';
+import a2 from '../../../../../assets/coaching/aduit2.png';
 
-import tik from "../../../../../assets/coaching/whitetik.png";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import tik from '../../../../../assets/coaching/whitetik.png';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 interface coaching {
   img: string;
@@ -21,25 +21,25 @@ function CoachingThatMovesTheNeedle() {
   const data: coaching[] = [
     {
       img: a1.src,
-      title: "Performance Audit",
-      subtitle: "One-Time",
+      title: 'Performance Audit',
+      subtitle: 'One-Time',
       features: [
-        "60-minute video audit",
-        "Form breakdown analysis",
-        "2-week tune-up plan",
+        '60-minute video audit',
+        'Form breakdown analysis',
+        '2-week tune-up plan',
       ],
-      price: "500",
-      session: "One-time payment",
-      btn: "Book Audit",
+      price: '500',
+      session: 'One-time payment',
+      btn: 'Book Audit',
     },
     {
       img: a2.src,
-      title: "Nutrition Coaching",
-      subtitle: "",
-      features: ["Fully custom plan", "Weekly check-ins", "Video feedback"],
-      price: "500",
-      session: "Recurring",
-      btn: "Apply",
+      title: 'Nutrition Coaching',
+      subtitle: '',
+      features: ['Fully custom plan', 'Weekly check-ins', 'Video feedback'],
+      price: '500',
+      session: 'Recurring',
+      btn: 'Apply',
     },
   ];
 

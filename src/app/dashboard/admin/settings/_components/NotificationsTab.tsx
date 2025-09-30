@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Bell, Mail, CreditCard, Shield } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Bell, Mail, CreditCard, Shield } from 'lucide-react';
 
 const adminAlertSettings = [
   {
-    id: "new-purchase",
-    label: "New Purchase",
+    id: 'new-purchase',
+    label: 'New Purchase',
     defaultChecked: true,
   },
   {
-    id: "refund-issued",
-    label: "Refund Issued",
+    id: 'refund-issued',
+    label: 'Refund Issued',
     defaultChecked: true,
   },
   {
-    id: "new-client",
-    label: "New Client Joined",
+    id: 'new-client',
+    label: 'New Client Joined',
     defaultChecked: true,
   },
 ];
@@ -29,35 +29,35 @@ const recentNotifications = [
   {
     id: 1,
     icon: Mail,
-    title: "Welcome Email",
-    description: "Sent to john.doe@example.com",
-    time: "2 hours ago",
-    status: "delivered",
-    color: "text-blue-500",
+    title: 'Welcome Email',
+    description: 'Sent to john.doe@example.com',
+    time: '2 hours ago',
+    status: 'delivered',
+    color: 'text-blue-500',
   },
   {
     id: 2,
     icon: CreditCard,
-    title: "Payment Success",
-    description: "Sent to john.doe@example.com",
-    time: "4 hours ago",
-    status: "delivered",
-    color: "text-green-500",
+    title: 'Payment Success',
+    description: 'Sent to john.doe@example.com',
+    time: '4 hours ago',
+    status: 'delivered',
+    color: 'text-green-500',
   },
   {
     id: 3,
     icon: Shield,
-    title: "Module Unlock",
-    description: "Sent to john.doe@example.com",
-    time: "6 hours ago",
-    status: "delivered",
-    color: "text-purple-500",
+    title: 'Module Unlock',
+    description: 'Sent to john.doe@example.com',
+    time: '6 hours ago',
+    status: 'delivered',
+    color: 'text-purple-500',
   },
 ];
 
 const autoRenewalSetting = {
-  title: "Enable Auto Renewal",
-  description: "Automatically renew subscriptions when they expire",
+  title: 'Enable Auto Renewal',
+  description: 'Automatically renew subscriptions when they expire',
   defaultChecked: true,
 };
 

@@ -1,11 +1,11 @@
-"use client";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import Stepper from "./_components/Stepper/Stepper";
-import Step1 from "./_components/Step1/Step1";
-import Step2 from "./_components/Step2/Step2";
-import Step3 from "./_components/Step3/Step3";
-import { useRouter } from "next/navigation";
+'use client';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Stepper from './_components/Stepper/Stepper';
+import Step1 from './_components/Step1/Step1';
+import Step2 from './_components/Step2/Step2';
+import Step3 from './_components/Step3/Step3';
+import { useRouter } from 'next/navigation';
 
 export interface IFormData {
   videoFile: File | null;
@@ -33,25 +33,25 @@ export interface IFormData {
 
 const addExerciseDefaultValue = {
   videoFile: null,
-  videoLink: "",
-  videoName: "",
-  duration: "",
-  videoDescription: "",
-  primaryCategory: "",
-  status: "",
+  videoLink: '',
+  videoName: '',
+  duration: '',
+  videoDescription: '',
+  primaryCategory: '',
+  status: '',
   bodyPartTags: [],
   equipmentTags: [],
-  difficultyLevel: "",
-  stepByStepGuide: [{ value: "" }],
-  keyBenefits: [{ value: "" }],
-  commonMistakes: [{ value: "" }],
+  difficultyLevel: '',
+  stepByStepGuide: [{ value: '' }],
+  keyBenefits: [{ value: '' }],
+  commonMistakes: [{ value: '' }],
   exerciseDetails: {
-    equipment: "",
-    type: "",
-    primaryMuscles: "",
-    secondaryMuscles: "",
-    caloriesBurn: "",
-    restTime: "",
+    equipment: '',
+    type: '',
+    primaryMuscles: '',
+    secondaryMuscles: '',
+    caloriesBurn: '',
+    restTime: '',
   },
 };
 
@@ -83,7 +83,7 @@ const AddExercisePage = () => {
 
   //Handle Form Submission
   const onSubmit = (data: FormData) => {
-    console.log("Full Form Data:", data);
+    console.log('Full Form Data:', data);
     // Here you would send all the data to your database
     // For example:
     // try {
@@ -98,7 +98,7 @@ const AddExercisePage = () => {
 
   //Final step handle form done.
   const handleDone = () => {
-    router.push("/dashboard/admin/all-exercise");
+    router.push('/dashboard/admin/all-exercise');
   };
 
   const formData = getValues();

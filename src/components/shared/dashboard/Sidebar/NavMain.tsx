@@ -1,21 +1,21 @@
-"use client";
-import { ChevronRight } from "lucide-react";
-import { VscDebugBreakpointLogUnverified } from "react-icons/vsc";
+'use client';
+import { ChevronRight } from 'lucide-react';
+import { VscDebugBreakpointLogUnverified } from 'react-icons/vsc';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from '@/components/ui/collapsible';
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
-} from "@/components/ui/sidebar";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
+} from '@/components/ui/sidebar';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 // Sidebar Item type (icon is now only string for Image)
 export type TSidebarItem = {
@@ -56,7 +56,7 @@ export function NavMain({ items }: { items: TSidebarItem }) {
                       <SidebarMenuButton
                         tooltip={item.title}
                         className={`flex items-center gap-2 w-full px-4 py-4 h-10 hover:bg-secondary/65 hover:text-white ${
-                          isActive ? "bg-secondary text-white rounded-none" : ""
+                          isActive ? 'bg-secondary text-white rounded-none' : ''
                         }`}
                       >
                         <Image
@@ -78,8 +78,8 @@ export function NavMain({ items }: { items: TSidebarItem }) {
                             href={item.url}
                             className={`flex items-center gap-2 w-full px-2 py-4 hover:bg-secondary/65 hover:text-white ${
                               isActive
-                                ? "bg-secondary text-white rounded-none"
-                                : ""
+                                ? 'bg-secondary text-white rounded-none'
+                                : ''
                             }`}
                           >
                             <Image
@@ -103,8 +103,8 @@ export function NavMain({ items }: { items: TSidebarItem }) {
                             <div
                               className={`flex items-center justify-start gap-2 w-full px-4 py-4 h-10 hover:bg-secondary/65 hover:text-white ${
                                 pathName === subItem.url
-                                  ? "bg-secondary text-white rounded-none"
-                                  : ""
+                                  ? 'bg-secondary text-white rounded-none'
+                                  : ''
                               }`}
                             >
                               <VscDebugBreakpointLogUnverified />

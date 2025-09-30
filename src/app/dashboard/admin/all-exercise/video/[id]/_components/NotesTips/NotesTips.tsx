@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface NoteTip {
   id: string;
@@ -25,7 +25,7 @@ export function NotesTips({ notes }: NotesTipsProps) {
             <div className="flex gap-3">
               <Avatar className="w-8 h-8">
                 <AvatarImage
-                  src={note.avatar || "/placeholder.svg"}
+                  src={note.avatar || '/placeholder.svg'}
                   alt={note.author}
                 />
                 <AvatarFallback>{note.author.charAt(0)}</AvatarFallback>

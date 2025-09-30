@@ -1,32 +1,32 @@
-"use client";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+'use client';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import bg from "../../../assets/footerbg.png";
-import bg1 from "../../../assets/header/logo.png";
-import Image from "next/image";
-import Link from "next/link";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { FaFacebookF, FaSpinner, FaTwitter } from "react-icons/fa6";
-import { loginUser } from "@/services/auth";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import useUser from "@/hooks/useUser";
-import GoogleLogin from "./_components/GoogleLogin/GoogleLogin";
+} from '@/components/ui/form';
+import bg from '../../../assets/footerbg.png';
+import bg1 from '../../../assets/header/logo.png';
+import Image from 'next/image';
+import Link from 'next/link';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { FaFacebookF, FaSpinner, FaTwitter } from 'react-icons/fa6';
+import { loginUser } from '@/services/auth';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import useUser from '@/hooks/useUser';
+import GoogleLogin from './_components/GoogleLogin/GoogleLogin';
 
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  email: z.string().email('Please enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -36,8 +36,8 @@ export default function LoginPage() {
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -52,21 +52,21 @@ export default function LoginPage() {
     try {
       const res = await loginUser(values);
       if (res?.success) {
-        toast.success("Login successful!");
+        toast.success('Login successful!');
         setUser(res?.data?.user);
         setIsLoading(false);
-        if (res?.data?.user?.role === "USER") {
+        if (res?.data?.user?.role === 'USER') {
           router.push(`/dashboard/user/overview`);
         }
-        if (res?.data?.user?.role === "ADMIN") {
+        if (res?.data?.user?.role === 'ADMIN') {
           router.push(`/dashboard/admin/overview`);
         }
       } else {
-        toast.error(res?.message || "Login failed. Please try again later.");
+        toast.error(res?.message || 'Login failed. Please try again later.');
       }
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Please try again in a moment.");
+      toast.error('Something went wrong. Please try again in a moment.');
     }
   };
 
@@ -77,8 +77,8 @@ export default function LoginPage() {
         className="flex-1 relative overflow-hidden hidden md:block"
         style={{
           backgroundImage: `url(${bg.src})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
         <div className="absolute left-12 top-1/2 -translate-y-1/2">
@@ -132,7 +132,7 @@ export default function LoginPage() {
                     </FormLabel>
                     <div className="relative mt-1">
                       <Input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••••••"
                         className="bg-primary-100 focus:border-gray-600 text-white placeholder:text-gray-200 pr-10"
                         {...field}
@@ -172,14 +172,14 @@ export default function LoginPage() {
                 {isSubmitting ? (
                   <FaSpinner className="animate-spin" />
                 ) : (
-                  "Sign In"
+                  'Sign In'
                 )}
               </Button>
 
               {/* Register Link */}
               <div className="text-center">
                 <span className="text-gray-400 text-sm">
-                  New on our platform?{" "}
+                  New on our platform?{' '}
                 </span>
                 <a
                   href="/register"

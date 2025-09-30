@@ -1,30 +1,30 @@
 const workoutHistoryData = [
   {
-    date: "Jan 15, 2024",
-    workout: "Upper Body Push",
-    details: "Chest, Shoulders, Triceps",
-    status: "Completed",
-    duration: "68 min",
-    volume: "8,420 lbs",
-    feedback: "Great session, felt strong",
+    date: 'Jan 15, 2024',
+    workout: 'Upper Body Push',
+    details: 'Chest, Shoulders, Triceps',
+    status: 'Completed',
+    duration: '68 min',
+    volume: '8,420 lbs',
+    feedback: 'Great session, felt strong',
   },
   {
-    date: "Jan 13, 2024",
-    workout: "Lower Body",
-    details: "Squats, Deadlifts, Legs",
-    status: "Completed",
-    duration: "72 min",
-    volume: "12,180 lbs",
-    feedback: "Challenging but good",
+    date: 'Jan 13, 2024',
+    workout: 'Lower Body',
+    details: 'Squats, Deadlifts, Legs',
+    status: 'Completed',
+    duration: '72 min',
+    volume: '12,180 lbs',
+    feedback: 'Challenging but good',
   },
   {
-    date: "Jan 11, 2024",
-    workout: "Upper Body Pull",
-    details: "Back, Biceps",
-    status: "Skipped",
-    duration: "-",
-    volume: "-",
-    feedback: "Work emergency",
+    date: 'Jan 11, 2024',
+    workout: 'Upper Body Pull',
+    details: 'Back, Biceps',
+    status: 'Skipped',
+    duration: '-',
+    volume: '-',
+    feedback: 'Work emergency',
   },
 ];
 
@@ -75,12 +75,12 @@ export function WorkoutHistory() {
                   <td className="p-4">
                     <span
                       className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full ${
-                        workout.status === "Completed"
-                          ? "bg-green-900 text-green-300"
-                          : "bg-red-900 text-red-300"
+                        workout.status === 'Completed'
+                          ? 'bg-green-900 text-green-300'
+                          : 'bg-red-900 text-red-300'
                       }`}
                     >
-                      {workout.status === "Completed" ? "✓" : "✗"}{" "}
+                      {workout.status === 'Completed' ? '✓' : '✗'}{' '}
                       {workout.status}
                     </span>
                   </td>

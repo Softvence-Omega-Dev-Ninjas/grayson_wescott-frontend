@@ -1,43 +1,43 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Smartphone } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
+import { Smartphone } from 'lucide-react';
 
 const notificationSettings = [
   {
     id: 1,
-    title: "Direct messages",
-    description: "Messages from people you follow",
+    title: 'Direct messages',
+    description: 'Messages from people you follow',
     defaultChecked: true,
   },
   {
     id: 2,
-    title: "Show desktop notifications",
-    description: "Create desktop alerts when you work on default setting",
+    title: 'Show desktop notifications',
+    description: 'Create desktop alerts when you work on default setting',
     defaultChecked: true,
   },
   {
     id: 3,
-    title: "Show email notifications",
-    description: "Daily Settings, these Notifications",
+    title: 'Show email notifications',
+    description: 'Daily Settings, these Notifications',
     defaultChecked: false,
   },
   {
     id: 4,
-    title: "Show chat notifications",
-    description: "To prevent duplicate mobile notifications",
+    title: 'Show chat notifications',
+    description: 'To prevent duplicate mobile notifications',
     defaultChecked: false,
   },
 ];
 
 const twoFactorData = {
   enabled: true,
-  title: "Two-Factor Authentication",
-  description: "Add an extra layer of security to your account",
+  title: 'Two-Factor Authentication',
+  description: 'Add an extra layer of security to your account',
   authenticatorApp: {
-    name: "Authenticator App",
-    description: "Use an app like Google Authenticator or Authy",
+    name: 'Authenticator App',
+    description: 'Use an app like Google Authenticator or Authy',
     icon: Smartphone,
   },
 };

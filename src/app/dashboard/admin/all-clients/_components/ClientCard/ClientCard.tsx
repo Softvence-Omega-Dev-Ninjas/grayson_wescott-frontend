@@ -1,21 +1,21 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Progress } from "@/components/ui/progress";
-import { MessageCircle, MoreHorizontal, User } from "lucide-react";
-import Link from "next/link";
+} from '@/components/ui/dropdown-menu';
+import { Progress } from '@/components/ui/progress';
+import { MessageCircle, MoreHorizontal, User } from 'lucide-react';
+import Link from 'next/link';
 
 interface ClientCardProps {
   id: string;
   name: string;
   avatar?: string;
-  status: "Active" | "Inactive" | "On Hold";
+  status: 'Active' | 'Inactive' | 'On Hold';
   program: string;
   progress: number;
   lastActive: string;
@@ -32,22 +32,22 @@ export function ClientCard({
 }: ClientCardProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "Active":
-        return "bg-green-600 text-white hover:bg-green-700";
-      case "Inactive":
-        return "bg-gray-600 text-gray-200 hover:bg-gray-700";
-      case "On Hold":
-        return "bg-orange-600 text-white hover:bg-orange-700";
+      case 'Active':
+        return 'bg-green-600 text-white hover:bg-green-700';
+      case 'Inactive':
+        return 'bg-gray-600 text-gray-200 hover:bg-gray-700';
+      case 'On Hold':
+        return 'bg-orange-600 text-white hover:bg-orange-700';
       default:
-        return "bg-green-600 text-white hover:bg-green-700";
+        return 'bg-green-600 text-white hover:bg-green-700';
     }
   };
 
   const getInitials = (name: string) => {
     return name
-      .split(" ")
+      .split(' ')
       .map((n) => n[0])
-      .join("")
+      .join('')
       .toUpperCase();
   };
 
@@ -57,13 +57,13 @@ export function ClientCard({
         <div className="flex items-start justify-between flex-wrap mb-3">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10 border border-gray-700">
-              <AvatarImage src={avatar || "/placeholder.svg"} alt={name} />
+              <AvatarImage src={avatar || '/placeholder.svg'} alt={name} />
               <AvatarFallback>{getInitials(name)}</AvatarFallback>
             </Avatar>
             <div>
               <h3 className="font-medium text-lg text-white">{name}</h3>
               <h3 className="text-sm text-white font-light">
-                {"demo@gmail.com"}
+                {'demo@gmail.com'}
               </h3>
             </div>
           </div>

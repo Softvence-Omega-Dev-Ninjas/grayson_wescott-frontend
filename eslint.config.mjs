@@ -1,20 +1,20 @@
-import js from "@eslint/js";
-import pluginReact from "eslint-plugin-react";
-import { defineConfig, globalIgnores } from "eslint/config";
-import globals from "globals";
-import tseslint from "typescript-eslint";
+import js from '@eslint/js';
+import pluginReact from 'eslint-plugin-react';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   globalIgnores([
-    "node_modules/*",
-    ".next/*",
-    ".vercel/*",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
+    'node_modules/*',
+    '.next/*',
+    '.vercel/*',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
   ]),
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -35,12 +35,12 @@ export default defineConfig([
     ...pluginReact.configs.flat.recommended,
     settings: {
       react: {
-        version: "detect",
+        version: 'detect',
       },
     },
     rules: {
-      "react/react-in-jsx-scope": "off",
-      "@typescript-eslint/no-require-imports": "off",
+      'react/react-in-jsx-scope': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
 ]);

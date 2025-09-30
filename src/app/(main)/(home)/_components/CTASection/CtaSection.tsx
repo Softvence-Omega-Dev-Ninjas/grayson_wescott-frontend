@@ -1,5 +1,5 @@
-import CTA from "@/components/shared/main/CTA/CTA";
-import img from "../../../../../assets/home/commonfooter/homeF.png";
+import CTA from '@/components/shared/main/CTA/CTA';
+import img from '../../../../../assets/home/commonfooter/homeF.png';
 
 function CtaSection() {
   return (
