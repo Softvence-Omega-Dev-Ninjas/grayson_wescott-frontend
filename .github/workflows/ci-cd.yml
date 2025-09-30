@@ -66,6 +66,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
@@ -90,7 +93,7 @@ jobs:
 
           chmod 600 ~/.ssh/config
 
-      - name: Test SSH Connection 
+      - name: Test SSH Connection
         run: ssh deploy-server "echo '🎉 SSH Connected Successfully!'"
 
       - name: Copy Compose & Scripts
@@ -106,12 +109,11 @@ jobs:
       - name: Fix permissions on server
         run: ssh deploy-server "chmod -R +x ~/${PACKAGE_NAME}/scripts/*.sh || true"
 
-
       - name: Deploy Application
         run: |
           ssh deploy-server bash << 'DEPLOY_EOF'
           set -euo pipefail
-          
+
           # Set environment variables
           export PACKAGE_NAME="${{ secrets.PACKAGE_NAME }}"
           export DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
