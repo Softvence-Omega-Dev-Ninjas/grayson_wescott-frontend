@@ -1,4 +1,5 @@
 node_modules
+.next
 dist
 data
 logs
@@ -12,6 +13,5 @@ logs
 .env.production.local
 .pnpm-store
 Dockerfile
-docker-compose.yaml
-generated
-.next
+compose.yaml
+*.log

@@ -3,31 +3,40 @@
 # ---------------------------------------
 COMPOSE_FILE := compose.yaml
 SERVICE := frontend
+IMAGE := sajibsv/grayson_frontend:latest
 
-.PHONY: all build push up down restart deploy
+.PHONY: all build rebuild push up down restart deploy logs
 
-# Build Docker image
+# Build Docker image locally (multi-stage)
 build:
-	docker build -t sajibsv/grayson_frontend:latest .
+	docker build -t $(IMAGE) .
+
+# Rebuild without cache
+rebuild:
+	docker build --no-cache -t $(IMAGE) .
 
 # Push Docker image to Docker Hub
 push:
-	docker push sajibsv/grayson_frontend:latest
+	docker push $(IMAGE)
 
 # Run using docker-compose
 up:
-	docker-compose -f $(COMPOSE_FILE) up
+	docker compose -f $(COMPOSE_FILE) up
 
 # Stop services
 down:
-	docker-compose -f $(COMPOSE_FILE) down
+	docker compose -f $(COMPOSE_FILE) down
 
 # Restart services
 restart:
 	$(MAKE) down
 	$(MAKE) up
 
-# Deploy (pull latest image and restart)
+# Show logs
+logs:
+	docker compose -f $(COMPOSE_FILE) logs -f $(SERVICE)
+
+# Deploy: pull latest image and restart container
 deploy:
-	docker-compose -f $(COMPOSE_FILE) pull $(SERVICE)
+	docker compose -f $(COMPOSE_FILE) pull $(SERVICE)
 	$(MAKE) restart

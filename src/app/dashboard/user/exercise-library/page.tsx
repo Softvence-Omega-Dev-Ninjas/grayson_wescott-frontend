@@ -1,18 +1,18 @@
 'use client';
-import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
-import React, { useState } from 'react';
-import squatIcon from '@/assets/dashboard/excercise-library/squatIcon.png';
-import pushIcon from '@/assets/dashboard/excercise-library/pushIcon.png';
-import pullIcon from '@/assets/dashboard/excercise-library/pullIcon.png';
-import hingeIcon from '@/assets/dashboard/excercise-library/hingeIcon.png';
 import coreIcon from '@/assets/dashboard/excercise-library/coreIcon.png';
+import hingeIcon from '@/assets/dashboard/excercise-library/hingeIcon.png';
 import mobilityIcon from '@/assets/dashboard/excercise-library/mobilityIcon.png';
-import Image from 'next/image';
-import usePagination from '@/hooks/usePagination';
-import { workoutData } from '../../admin/all-exercise/page';
+import pullIcon from '@/assets/dashboard/excercise-library/pullIcon.png';
+import pushIcon from '@/assets/dashboard/excercise-library/pushIcon.png';
+import squatIcon from '@/assets/dashboard/excercise-library/squatIcon.png';
 import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
-import { UserWorkoutCard } from './_components/UserWorkoutCard/page';
+import { Input } from '@/components/ui/input';
+import { workoutData } from '@/constant/workoutData';
+import usePagination from '@/hooks/usePagination';
+import { Search } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { UserWorkoutCard } from './_components/userDashboardcard';
 
 const categories = [
   { name: 'Squat', icon: squatIcon.src },

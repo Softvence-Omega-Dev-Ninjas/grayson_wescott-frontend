@@ -1,15 +1,11 @@
-import React from 'react';
-import DashboardBanner from './_components/DashboardBanner/DashboardBanner';
+import { Button } from '@/components/ui/button';
+import { workoutData } from '@/constant/workoutData';
 import { FaRegCalendarCheck, FaRegCirclePlay } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { StatesCard } from '../../admin/overview/_components/StatesCard/StatesCard';
-import { Button } from '@/components/ui/button';
-import { UserWorkoutCard } from '../exercise-library/_components/UserWorkoutCard/page';
-import pic1 from '@/assets/dashboard/excercise-library/back-squat-form.png';
-import pic2 from '@/assets/dashboard/excercise-library/barbell-back-squat-exercise.png';
-import pic3 from '@/assets/dashboard/excercise-library/barbell-back-squat-workout.png';
-import pic4 from '@/assets/dashboard/excercise-library/barbell-exercise-training.png';
+import { UserWorkoutCard } from '../exercise-library/_components/userDashboardcard';
 import { AssignedProgramTable } from './_components/AssignedProgramTable/AssignedProgramTable';
+import DashboardBanner from './_components/DashboardBanner/DashboardBanner';
 import { RecentMessages } from './_components/RecentMessages/RecentMessages';
 
 const statesData = [
@@ -29,48 +25,7 @@ const statesData = [
     icon: FaRegCalendarCheck,
   },
 ];
-export const workoutData = [
-  {
-    id: '1',
-    title: 'Barbell Back Squat',
-    description: 'Master strength and depth with proper form',
-    duration: '1:15',
-    difficulty: 'Beginner',
-    thumbnail: pic1.src,
-    views: '6.2k views',
-    tags: ['bodyweight'],
-  },
-  {
-    id: '2',
-    title: 'Barbell Back Squat',
-    description: 'Master strength and depth with proper form',
-    duration: '1:15',
-    difficulty: 'Beginner',
-    thumbnail: pic2.src,
-    views: '5.8k views',
-    tags: ['bodyweight'],
-  },
-  {
-    id: '3',
-    title: 'Barbell Back Squat',
-    description: 'Master strength and depth with proper form',
-    duration: '1:10',
-    difficulty: 'Beginner',
-    thumbnail: pic3.src,
-    views: '7.1k views',
-    tags: ['bodyweight'],
-  },
-  {
-    id: '4',
-    title: 'Barbell Back Squat',
-    description: 'Master strength and depth with proper form',
-    duration: '1:35',
-    difficulty: 'Beginner',
-    thumbnail: pic4.src,
-    views: '6.9k views',
-    tags: ['bodyweight'],
-  },
-];
+
 const UserOverview = () => {
   return (
     <div>
