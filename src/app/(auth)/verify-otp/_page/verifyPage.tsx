@@ -1,25 +1,25 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { resendVerificationEmail, verifyEmail } from '@/services/auth';
-import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
-import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { FaSpinner } from 'react-icons/fa6';
-import { toast } from 'sonner';
-import bg from '../../../../assets/footerbg.png';
-import bg1 from '../../../../assets/header/logo.png';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { resendVerificationEmail, verifyEmail } from "@/services/auth";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+import { FaSpinner } from "react-icons/fa6";
+import { toast } from "sonner";
+import bg from "../../../../assets/footerbg.png";
+import bg1 from "../../../../assets/header/logo.png";
 
 export default function TwoStepVerificationPage() {
-  const [codes, setCodes] = useState(['', '', '', '', '', '']);
-  const [error, setError] = useState('');
+  const [codes, setCodes] = useState(["", "", "", "", "", ""]);
+  const [error, setError] = useState("");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [email, setEmail] = useState<string | null>(null);
   const searchParams = useSearchParams();
   useEffect(() => {
-    setEmail(searchParams.get('email'));
+    setEmail(searchParams.get("email"));
   }, [searchParams]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSendingOtp, setIsSendingOtp] = useState(false);
@@ -32,7 +32,7 @@ export default function TwoStepVerificationPage() {
       setCodes(newCodes);
 
       // Clear error when typing
-      if (error) setError('');
+      if (error) setError("");
 
       if (value && index < 5) {
         inputRefs.current[index + 1]?.focus();
@@ -41,14 +41,14 @@ export default function TwoStepVerificationPage() {
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !codes[index] && index > 0) {
+    if (e.key === "Backspace" && !codes[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const otp = codes.join('');
+    const otp = codes.join("");
 
     const verificationData = {
       otp: otp,
@@ -56,28 +56,28 @@ export default function TwoStepVerificationPage() {
     };
 
     if (otp.length !== 6) {
-      setError('Please enter all 6 digits of the verification code.');
+      setError("Please enter all 6 digits of the verification code.");
       return;
     }
     setIsSubmitting(true);
     try {
       const res = await verifyEmail(verificationData);
-      console.log('=============>', res);
+      console.log("=============>", res);
       if (res?.success) {
         toast.success(
-          'Your email has been verified successfully! You can now log in.',
+          "Your email has been verified successfully! You can now log in.",
         );
         router.push(`/login`);
       } else {
         toast.error(
           res?.message ||
-            'Verification failed. Please double-check your code and try again.',
+            "Verification failed. Please double-check your code and try again.",
         );
       }
     } catch (error) {
       console.error(error);
       toast.error(
-        'Oops! Something went wrong on our end. Please try again shortly.',
+        "Oops! Something went wrong on our end. Please try again shortly.",
       );
     } finally {
       setIsSubmitting(false);
@@ -92,13 +92,13 @@ export default function TwoStepVerificationPage() {
         toast.success(res?.message);
       } else {
         toast.error(
-          res?.message || 'Failed Send request! Please try again later.',
+          res?.message || "Failed Send request! Please try again later.",
         );
       }
     } catch (error) {
       console.error(error);
       toast.error(
-        'Oops! Something went wrong on our end. Please try again shortly.',
+        "Oops! Something went wrong on our end. Please try again shortly.",
       );
     } finally {
       setIsSendingOtp(false);
@@ -112,7 +112,7 @@ export default function TwoStepVerificationPage() {
         className="flex-1 relative overflow-hidden hidden md:block"
         style={{
           backgroundImage: `url(${bg.src})`,
-          backgroundSize: 'cover',
+          backgroundSize: "cover",
         }}
       >
         <div className="absolute inset-0 opacity-20" />
@@ -170,13 +170,13 @@ export default function TwoStepVerificationPage() {
               {isSubmitting ? (
                 <FaSpinner className="animate-spin" />
               ) : (
-                'Verify Now'
+                "Verify Now"
               )}
             </Button>
 
             <div className="text-center">
               <div className="text-gray-400 text-xs sm:text-sm">
-                Didn’t get the mail?{' '}
+                Didn’t get the mail?{" "}
                 <button
                   type="button"
                   onClick={resendEmail}
@@ -185,7 +185,7 @@ export default function TwoStepVerificationPage() {
                   {isSendingOtp ? (
                     <FaSpinner className="animate-spin" />
                   ) : (
-                    'Resend'
+                    "Resend"
                   )}
                 </button>
               </div>

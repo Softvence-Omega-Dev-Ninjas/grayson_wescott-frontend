@@ -1,8 +1,8 @@
-import { Linkedin, Facebook, Instagram, LocateFixed } from 'lucide-react';
-import Link from 'next/link';
-import logo from '../../../../assets/header/logo.png';
-import Image from 'next/image';
-import bg from '../../../../assets/footerbg.png';
+import { Linkedin, Facebook, Instagram, LocateFixed } from "lucide-react";
+import Link from "next/link";
+import logo from "../../../../assets/header/logo.png";
+import Image from "next/image";
+import bg from "../../../../assets/footerbg.png";
 
 const Footer = () => {
   return (
@@ -10,7 +10,7 @@ const Footer = () => {
       className=" text-white py-10 relative"
       style={{
         backgroundImage: `url(${bg.src})`,
-        backgroundSize: 'cover',
+        backgroundSize: "cover",
       }}
     >
       <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">

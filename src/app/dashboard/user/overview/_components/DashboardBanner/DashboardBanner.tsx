@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import dashboardBanner from '@/assets/dashboard/excercise-library/dashboardBanner.jpg';
-import { Button } from '@/components/ui/button';
+import Image from "next/image";
+import dashboardBanner from "@/assets/dashboard/excercise-library/dashboardBanner.jpg";
+import { Button } from "@/components/ui/button";
 const DashboardBanner = () => {
   return (
     <section className="relative w-full h-[200px] md:h-[300px] overflow-hidden rounded-2xl">

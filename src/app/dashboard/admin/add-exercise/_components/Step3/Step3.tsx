@@ -1,10 +1,10 @@
-'use client';
-import Image from 'next/image';
-import { IFormData } from '../../page';
-import successIcon from '@/assets/dashboard/add-excercise/tick.png';
-import folderIcon from '@/assets/dashboard/add-excercise/folderIcon.png';
-import plusIcon from '@/assets/dashboard/add-excercise/plusIcon.png';
-import { IoIosArrowForward, IoMdArrowBack } from 'react-icons/io';
+"use client";
+import Image from "next/image";
+import { IFormData } from "../../page";
+import successIcon from "@/assets/dashboard/add-excercise/tick.png";
+import folderIcon from "@/assets/dashboard/add-excercise/folderIcon.png";
+import plusIcon from "@/assets/dashboard/add-excercise/plusIcon.png";
+import { IoIosArrowForward, IoMdArrowBack } from "react-icons/io";
 
 const Step3 = ({
   onBack,

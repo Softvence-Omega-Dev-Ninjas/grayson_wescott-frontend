@@ -1,5 +1,5 @@
-import React from 'react';
-import ChatLayout from './_components/ChatLayout';
+import React from "react";
+import ChatLayout from "./_components/ChatLayout";
 
 const UserMessagesPage = () => {
   return (

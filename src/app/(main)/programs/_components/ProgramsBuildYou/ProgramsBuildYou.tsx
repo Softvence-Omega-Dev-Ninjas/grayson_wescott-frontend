@@ -1,90 +1,90 @@
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
-import { Button } from '@/components/ui/button';
-import React from 'react';
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import { Button } from "@/components/ui/button";
+import React from "react";
 
 function ProgramsBuildYou() {
   const programs = [
     {
-      title: 'Elite Squat Builder',
+      title: "Elite Squat Builder",
       subtitle:
-        'Add 40–80 lbs to your squat in 12 weeks–without wrecking your knees.',
+        "Add 40–80 lbs to your squat in 12 weeks–without wrecking your knees.",
       description: "What's Inside",
       features: [
-        'Warm-up & bracing protocols',
-        '% waves + deload logic',
-        'Mobility pairings (hips/ankles)',
+        "Warm-up & bracing protocols",
+        "% waves + deload logic",
+        "Mobility pairings (hips/ankles)",
       ],
       footer:
-        'Who It’s For: Intermediate lifters fixing depth, bounce, or knee cave',
-      btn: 'View Program',
+        "Who It’s For: Intermediate lifters fixing depth, bounce, or knee cave",
+      btn: "View Program",
     },
     {
-      title: 'Elite Deadlift Builder',
+      title: "Elite Deadlift Builder",
       subtitle:
-        'Master posterior-chain density, hinge patterning, and spine-safe set-ups.',
+        "Master posterior-chain density, hinge patterning, and spine-safe set-ups.",
       description: "What's Inside",
       features: [
-        'Posterior-chain density work',
-        'Hinge patterning drills',
-        'Spine-safe set-ups',
+        "Posterior-chain density work",
+        "Hinge patterning drills",
+        "Spine-safe set-ups",
       ],
       footer:
-        'Who It’s For: Lifters wanting bulletproof deadlift technique and strength',
-      btn: 'View Program',
+        "Who It’s For: Lifters wanting bulletproof deadlift technique and strength",
+      btn: "View Program",
     },
     {
-      title: 'Elite Overhead Press Builder',
+      title: "Elite Overhead Press Builder",
       subtitle:
-        'Perfect scapular rhythm, ribcage control, and lockout authority.',
+        "Perfect scapular rhythm, ribcage control, and lockout authority.",
       description: "What's Inside",
       features: [
-        'Scapular rhythm training',
-        'Ribcage control techniques',
-        'Lockout authority drills',
+        "Scapular rhythm training",
+        "Ribcage control techniques",
+        "Lockout authority drills",
       ],
       footer:
-        'Who It’s For: Athletes struggling with overhead stability and press strength',
-      btn: 'View Program',
+        "Who It’s For: Athletes struggling with overhead stability and press strength",
+      btn: "View Program",
     },
     {
-      title: 'Elite Core System',
-      subtitle: 'Master IAP, anti-rotation, and loaded carry progressions.',
+      title: "Elite Core System",
+      subtitle: "Master IAP, anti-rotation, and loaded carry progressions.",
       description: "What's Inside",
       features: [
-        'IAP training protocols',
-        'Anti-rotation sequences',
-        'Loaded carry carry progressions',
+        "IAP training protocols",
+        "Anti-rotation sequences",
+        "Loaded carry carry progressions",
       ],
       footer:
-        'Who It’s For: Anyone wanting bulletproof core strength and stability',
-      btn: 'View Program',
+        "Who It’s For: Anyone wanting bulletproof core strength and stability",
+      btn: "View Program",
     },
     {
-      title: 'Daily Mobility Flow',
+      title: "Daily Mobility Flow",
       subtitle:
-        '12-minute resets with sticky joint sequences that actually work.',
+        "12-minute resets with sticky joint sequences that actually work.",
       description: "What's Inside",
       features: [
-        '12-minute daily resets',
-        'Sticky joint sequences',
-        'Movement quality drills',
+        "12-minute daily resets",
+        "Sticky joint sequences",
+        "Movement quality drills",
       ],
       footer:
-        'Who It’s For: Desk workers and athletes needing daily movement resets',
-      btn: 'View Program',
+        "Who It’s For: Desk workers and athletes needing daily movement resets",
+      btn: "View Program",
     },
     {
-      title: 'Daily Flexibility Flow',
-      subtitle: 'Active end-range training with splits progression system.',
+      title: "Daily Flexibility Flow",
+      subtitle: "Active end-range training with splits progression system.",
       description: "What's Inside",
       features: [
-        'Active end-range protocols',
-        'Splits progression system',
-        'Lockout authority drills Range-of-motion assessments',
+        "Active end-range protocols",
+        "Splits progression system",
+        "Lockout authority drills Range-of-motion assessments",
       ],
       footer:
-        'Who It’s For: Athletes wanting extreme range of motion (optional add-on)',
-      btn: 'View Program',
+        "Who It’s For: Athletes wanting extreme range of motion (optional add-on)",
+      btn: "View Program",
     },
   ];
 

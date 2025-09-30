@@ -23,34 +23,34 @@ interface MetricData {
   title: string;
   value: string | number;
   change: string;
-  changeType: 'positive' | 'negative';
+  changeType: "positive" | "negative";
 }
 
 export function ProgressStates() {
   const metricsData: MetricData[] = [
     {
-      title: 'Active Clients',
+      title: "Active Clients",
       value: 52,
-      change: '+4 this week',
-      changeType: 'positive',
+      change: "+4 this week",
+      changeType: "positive",
     },
     {
-      title: 'Avg Program Completion',
-      value: '57%',
-      change: '+5%',
-      changeType: 'positive',
+      title: "Avg Program Completion",
+      value: "57%",
+      change: "+5%",
+      changeType: "positive",
     },
     {
-      title: 'Adherence Rate',
-      value: '82%',
-      change: '+2%',
-      changeType: 'positive',
+      title: "Adherence Rate",
+      value: "82%",
+      change: "+2%",
+      changeType: "positive",
     },
     {
-      title: 'Total Workouts Completed',
-      value: '1,240',
-      change: '+107 today',
-      changeType: 'positive',
+      title: "Total Workouts Completed",
+      value: "1,240",
+      change: "+107 today",
+      changeType: "positive",
     },
   ];
 

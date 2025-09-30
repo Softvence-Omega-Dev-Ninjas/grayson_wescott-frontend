@@ -1,99 +1,99 @@
-'use client';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Plus, Search } from 'lucide-react';
-import { ClientCard } from './_components/ClientCard/ClientCard';
-import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
-import usePagination from '@/hooks/usePagination';
-import Link from 'next/link';
+} from "@/components/ui/select";
+import { Plus, Search } from "lucide-react";
+import { ClientCard } from "./_components/ClientCard/ClientCard";
+import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
+import usePagination from "@/hooks/usePagination";
+import Link from "next/link";
 
 // Sample client data
 const sampleClients = [
   {
-    id: '1',
-    name: 'Alex Johnson',
-    avatar: '/placeholder.svg?height=40&width=40',
-    status: 'Active' as const,
-    program: 'Weight Loss Pro',
+    id: "1",
+    name: "Alex Johnson",
+    avatar: "/placeholder.svg?height=40&width=40",
+    status: "Active" as const,
+    program: "Weight Loss Pro",
     progress: 85,
-    lastActive: '2 hours ago',
-    range: 'Morning',
+    lastActive: "2 hours ago",
+    range: "Morning",
   },
   {
-    id: '2',
-    name: 'Sarah Johnson',
-    avatar: '/placeholder.svg?height=40&width=40',
-    status: 'Inactive' as const,
-    program: 'Weight Loss Pro',
+    id: "2",
+    name: "Sarah Johnson",
+    avatar: "/placeholder.svg?height=40&width=40",
+    status: "Inactive" as const,
+    program: "Weight Loss Pro",
     progress: 65,
-    lastActive: '2 hours ago',
-    range: 'Evening',
+    lastActive: "2 hours ago",
+    range: "Evening",
   },
   {
-    id: '3',
-    name: 'Sarah Johnson',
-    avatar: '/placeholder.svg?height=40&width=40',
-    status: 'On Hold' as const,
-    program: 'Weight Loss Pro',
+    id: "3",
+    name: "Sarah Johnson",
+    avatar: "/placeholder.svg?height=40&width=40",
+    status: "On Hold" as const,
+    program: "Weight Loss Pro",
     progress: 45,
-    lastActive: '2 hours ago',
-    range: 'Afternoon',
+    lastActive: "2 hours ago",
+    range: "Afternoon",
   },
   {
-    id: '4',
-    name: 'Sarah Johnson',
-    avatar: '/placeholder.svg?height=40&width=40',
-    status: 'Inactive' as const,
-    program: 'Weight Loss Pro',
+    id: "4",
+    name: "Sarah Johnson",
+    avatar: "/placeholder.svg?height=40&width=40",
+    status: "Inactive" as const,
+    program: "Weight Loss Pro",
     progress: 75,
-    lastActive: '2 hours ago',
-    range: 'Morning',
+    lastActive: "2 hours ago",
+    range: "Morning",
   },
   {
-    id: '5',
-    name: 'Sarah Johnson',
-    avatar: '/placeholder.svg?height=40&width=40',
-    status: 'Active' as const,
-    program: 'Weight Loss Pro',
+    id: "5",
+    name: "Sarah Johnson",
+    avatar: "/placeholder.svg?height=40&width=40",
+    status: "Active" as const,
+    program: "Weight Loss Pro",
     progress: 90,
-    lastActive: '2 hours ago',
-    range: 'Evening',
+    lastActive: "2 hours ago",
+    range: "Evening",
   },
   {
-    id: '6',
-    name: 'Sarah Johnson',
-    avatar: '/placeholder.svg?height=40&width=40',
-    status: 'On Hold' as const,
-    program: 'Weight Loss Pro',
+    id: "6",
+    name: "Sarah Johnson",
+    avatar: "/placeholder.svg?height=40&width=40",
+    status: "On Hold" as const,
+    program: "Weight Loss Pro",
     progress: 55,
-    lastActive: '2 hours ago',
-    range: 'Afternoon',
+    lastActive: "2 hours ago",
+    range: "Afternoon",
   },
 ];
 
 const AllClientPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const { currentPage, handlePageChange } = usePagination();
 
   const handleAddClient = () => {
-    console.log('Add new client clicked');
+    console.log("Add new client clicked");
   };
 
   return (
     <div className="space-y-6">
       {/* Add Client Button */}
       <div className="flex justify-end">
-        <Link href={'/dashboard/admin/all-clients/add-client'}>
+        <Link href={"/dashboard/admin/all-clients/add-client"}>
           <Button
             onClick={handleAddClient}
             className="w-full sm:w-auto bg-secondary border border-primary-200 text-white cursor-pointer"

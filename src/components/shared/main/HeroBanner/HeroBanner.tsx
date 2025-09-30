@@ -1,8 +1,8 @@
-'use client';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { StaticImageData } from 'next/image';
-import { usePathname } from 'next/navigation';
+"use client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { StaticImageData } from "next/image";
+import { usePathname } from "next/navigation";
 
 interface BannerProps {
   title: string;
@@ -27,8 +27,8 @@ function HeroBanner({
       className="relative w-full h-[700px] sm:h-screen flex items-center"
       style={{
         backgroundImage: `url(${img})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       {/* Overlay (optional) */}
@@ -68,12 +68,12 @@ function HeroBanner({
               {button1}
             </Button>
           )}
-          {path === '/' ? (
+          {path === "/" ? (
             <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-4 font-medium cursor-pointer hover:text-white">
               {button2}
             </Button>
           ) : (
-            ''
+            ""
           )}
         </div>
       </div>

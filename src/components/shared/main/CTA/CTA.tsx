@@ -1,9 +1,9 @@
-'use client';
-import { Button } from '@/components/ui/button';
+"use client";
+import { Button } from "@/components/ui/button";
 
-import { usePathname } from 'next/navigation';
-import image from '../../../../assets/text.png';
-import Image from 'next/image';
+import { usePathname } from "next/navigation";
+import image from "../../../../assets/text.png";
+import Image from "next/image";
 
 interface CTATYPE {
   title?: string;
@@ -31,12 +31,12 @@ function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
               <Button className="bg-[#B9BDC6]/80   text-black text-lg px-6 py-3 cursor-pointer hover:text-white  font-medium">
                 {btn1}
               </Button>
-              {path == '/programs' || path == '/adonis-protocol' ? (
+              {path == "/programs" || path == "/adonis-protocol" ? (
                 <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-3 cursor-pointer hover:text-white font-medium ">
                   {btn2}
                 </Button>
               ) : (
-                ''
+                ""
               )}
             </div>
           </div>
@@ -44,8 +44,8 @@ function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
             className="relative w-full h-[30vh] md:h-[60vh] flex items-center"
             style={{
               backgroundImage: `url(${img})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           ></div>
         </div>

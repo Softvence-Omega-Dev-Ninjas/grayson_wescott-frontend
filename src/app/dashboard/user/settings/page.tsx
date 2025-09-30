@@ -1,9 +1,9 @@
-import { AssignedProgram } from './_components/AssignedProgram';
-import { EliteStrengthProgram } from './_components/EliteStrengthProgram';
-import { MessagingPreferences } from './_components/MessagingPreferences';
-import { PaymentsSubscription } from './_components/PaymentsSubscription';
-import { ProfileAccount } from './_components/ProfileAccount';
-import { ProgressTracking } from './_components/ProgressTracking';
+import { AssignedProgram } from "./_components/AssignedProgram";
+import { EliteStrengthProgram } from "./_components/EliteStrengthProgram";
+import { MessagingPreferences } from "./_components/MessagingPreferences";
+import { PaymentsSubscription } from "./_components/PaymentsSubscription";
+import { ProfileAccount } from "./_components/ProfileAccount";
+import { ProgressTracking } from "./_components/ProgressTracking";
 
 export default function UserSettingPage() {
   return (

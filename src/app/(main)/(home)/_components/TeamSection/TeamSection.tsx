@@ -1,10 +1,10 @@
-import TeamCard from '@/components/shared/main/TeamCard/TeamCard';
-import pic1 from '../../../../../assets/TeamMember/pic1.png';
-import pic2 from '../../../../../assets/TeamMember/pic2.png';
-import pic3 from '../../../../../assets/TeamMember/pic3.png';
-import pic4 from '../../../../../assets/TeamMember/pic4.png';
-import pic5 from '../../../../../assets/TeamMember/pic5.png';
-import pic6 from '../../../../../assets/TeamMember/pic6.png';
+import TeamCard from "@/components/shared/main/TeamCard/TeamCard";
+import pic1 from "../../../../../assets/TeamMember/pic1.png";
+import pic2 from "../../../../../assets/TeamMember/pic2.png";
+import pic3 from "../../../../../assets/TeamMember/pic3.png";
+import pic4 from "../../../../../assets/TeamMember/pic4.png";
+import pic5 from "../../../../../assets/TeamMember/pic5.png";
+import pic6 from "../../../../../assets/TeamMember/pic6.png";
 
 function TeamSection() {
   const team = [
@@ -12,43 +12,43 @@ function TeamSection() {
       img: pic1.src,
       title:
         "Carbon Engines didn't just change my physique--it rebuilt my life.",
-      name: 'Marcus Chen',
-      designation: 'Tech Executive',
+      name: "Marcus Chen",
+      designation: "Tech Executive",
     },
     {
       img: pic2.src,
       title:
         "Carbon Engines didn't just change my physique--it rebuilt my life.",
-      name: 'Marcus Chen',
-      designation: 'Tech Executive',
+      name: "Marcus Chen",
+      designation: "Tech Executive",
     },
     {
       img: pic3.src,
       title:
         "Carbon Engines didn't just change my physique--it rebuilt my life.",
-      name: 'Marcus Chen',
-      designation: 'Tech Executive',
+      name: "Marcus Chen",
+      designation: "Tech Executive",
     },
     {
       img: pic4.src,
       title:
         "Carbon Engines didn't just change my physique--it rebuilt my life.",
-      name: 'Marcus Chen',
-      designation: 'Tech Executive',
+      name: "Marcus Chen",
+      designation: "Tech Executive",
     },
     {
       img: pic5.src,
       title:
         "Carbon Engines didn't just change my physique--it rebuilt my life.",
-      name: 'Marcus Chen',
-      designation: 'Tech Executive',
+      name: "Marcus Chen",
+      designation: "Tech Executive",
     },
     {
       img: pic6.src,
       title:
         "Carbon Engines didn't just change my physique--it rebuilt my life.",
-      name: 'Marcus Chen',
-      designation: 'Tech Executive',
+      name: "Marcus Chen",
+      designation: "Tech Executive",
     },
   ];
   return (

@@ -1,19 +1,19 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function EliteStrengthProgram() {
   // Example workout data
   const workouts = [
     {
-      day: 'Day 1: Upper Body Power',
-      week: 'Week 3',
+      day: "Day 1: Upper Body Power",
+      week: "Week 3",
       details: [
-        { label: 'Sets', value: '4' },
-        { label: 'Reps', value: '6-8' },
-        { label: 'Tempo', value: '2-1-2' },
-        { label: 'RPE', value: '8' },
+        { label: "Sets", value: "4" },
+        { label: "Reps", value: "6-8" },
+        { label: "Tempo", value: "2-1-2" },
+        { label: "RPE", value: "8" },
       ],
-      rest: '90-120 seconds',
-      video: 'Watch Video',
+      rest: "90-120 seconds",
+      video: "Watch Video",
     },
   ];
 

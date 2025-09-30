@@ -1,13 +1,13 @@
-import React from 'react';
-import { Check, Crown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { Check, Crown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AdonisProtocol = () => {
   const features = [
-    'Volt AI performance assessments',
-    'Custom program architecture',
-    'Exclusive Adonis group access',
-    'Executive-level direct access',
+    "Volt AI performance assessments",
+    "Custom program architecture",
+    "Exclusive Adonis group access",
+    "Executive-level direct access",
   ];
 
   return (

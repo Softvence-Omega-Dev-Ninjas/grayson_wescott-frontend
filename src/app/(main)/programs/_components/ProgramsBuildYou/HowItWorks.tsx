@@ -1,36 +1,36 @@
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
-import b1 from '../../../../../assets/whatyouwilldo/1.png';
-import b2 from '../../../../../assets/whatyouwilldo/2.png';
-import b3 from '../../../../../assets/whatyouwilldo/3.png';
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import b1 from "../../../../../assets/whatyouwilldo/1.png";
+import b2 from "../../../../../assets/whatyouwilldo/2.png";
+import b3 from "../../../../../assets/whatyouwilldo/3.png";
 
 function HowItWorks() {
   const data = [
     {
       id: 1,
       icon: b1,
-      title: 'Weeks 1-4: Foundation & Patterning',
+      title: "Weeks 1-4: Foundation & Patterning",
       subtitle:
-        'Build movement quality and establish training rhythm with moderate intensity',
+        "Build movement quality and establish training rhythm with moderate intensity",
     },
     {
       id: 2,
       icon: b2,
-      title: 'Weeks 5-8: Overload & Density',
+      title: "Weeks 5-8: Overload & Density",
       subtitle:
-        'Increase training load and volume to drive strength adaptations',
+        "Increase training load and volume to drive strength adaptations",
     },
     {
       id: 3,
       icon: b3,
-      title: 'Weeks 9-12: Peaking & Test',
+      title: "Weeks 9-12: Peaking & Test",
       subtitle:
-        'Taper volume while maintaining intensity for competition readiness',
+        "Taper volume while maintaining intensity for competition readiness",
     },
     {
       icon: b3,
-      title: 'Deload Logic',
+      title: "Deload Logic",
       subtitle:
-        'Programmed deloads every 4th week at 60-70% intensity to prevent overreaching',
+        "Programmed deloads every 4th week at 60-70% intensity to prevent overreaching",
     },
   ];
 

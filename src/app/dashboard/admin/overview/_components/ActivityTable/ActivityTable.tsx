@@ -1,115 +1,115 @@
-import React from 'react';
+import React from "react";
 
 interface ClientData {
   name: string;
   program: string;
-  status: 'Successful' | 'Pending' | 'Processing' | 'Rejected' | 'On Hold';
+  status: "Successful" | "Pending" | "Processing" | "Rejected" | "On Hold";
   admissionDate: string;
   lastActive: string;
 }
 
 const clients: ClientData[] = [
   {
-    name: 'Alex Johnson',
-    program: 'Strength Building',
-    status: 'Successful',
-    admissionDate: '12/12/2025',
-    lastActive: 'View Profile',
+    name: "Alex Johnson",
+    program: "Strength Building",
+    status: "Successful",
+    admissionDate: "12/12/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Nico Chamali',
-    program: 'Strength Building',
-    status: 'Pending',
-    admissionDate: '15/12/2025',
-    lastActive: 'View Profile',
+    name: "Nico Chamali",
+    program: "Strength Building",
+    status: "Pending",
+    admissionDate: "15/12/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Processing',
-    admissionDate: '10/11/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Processing",
+    admissionDate: "10/11/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Rejected',
-    admissionDate: '01/12/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Rejected",
+    admissionDate: "01/12/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Successful',
-    admissionDate: '01/02/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Successful",
+    admissionDate: "01/02/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'On Hold',
-    admissionDate: '05/08/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "On Hold",
+    admissionDate: "05/08/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Successful',
-    admissionDate: '12/04/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Successful",
+    admissionDate: "12/04/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Pending',
-    admissionDate: '06/09/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Pending",
+    admissionDate: "06/09/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Successful',
-    admissionDate: '07/01/2024',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Successful",
+    admissionDate: "07/01/2024",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Pending',
-    admissionDate: '06/02/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Pending",
+    admissionDate: "06/02/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Successful',
-    admissionDate: '03/03/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Successful",
+    admissionDate: "03/03/2025",
+    lastActive: "View Profile",
   },
   {
-    name: 'Sarah Johnson',
-    program: 'Strength Building',
-    status: 'Pending',
-    admissionDate: '01/01/2025',
-    lastActive: 'View Profile',
+    name: "Sarah Johnson",
+    program: "Strength Building",
+    status: "Pending",
+    admissionDate: "01/01/2025",
+    lastActive: "View Profile",
   },
 ];
 
 export function ActivityTable() {
-  const getStatusClasses = (status: ClientData['status']) => {
+  const getStatusClasses = (status: ClientData["status"]) => {
     switch (status) {
-      case 'Successful':
-        return 'bg-green-900/30 text-green-400 border border-green-800';
-      case 'Pending':
-        return 'bg-yellow-900/30 text-yellow-400 border border-yellow-800';
-      case 'Processing':
-        return 'bg-blue-900/30 text-blue-400 border border-blue-800';
-      case 'Rejected':
-        return 'bg-red-900/30 text-red-400 border border-red-800';
-      case 'On Hold':
-        return 'bg-gray-900/30 text-gray-400 border border-gray-800';
+      case "Successful":
+        return "bg-green-900/30 text-green-400 border border-green-800";
+      case "Pending":
+        return "bg-yellow-900/30 text-yellow-400 border border-yellow-800";
+      case "Processing":
+        return "bg-blue-900/30 text-blue-400 border border-blue-800";
+      case "Rejected":
+        return "bg-red-900/30 text-red-400 border border-red-800";
+      case "On Hold":
+        return "bg-gray-900/30 text-gray-400 border border-gray-800";
       default:
-        return '';
+        return "";
     }
   };
 

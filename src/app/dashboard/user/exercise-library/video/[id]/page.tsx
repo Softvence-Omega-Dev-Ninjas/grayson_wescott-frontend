@@ -1,99 +1,99 @@
-import { Button } from '@/components/ui/button';
-import { Download, FileText } from 'lucide-react';
-import pic from '@/assets/dashboard/excercise-library/barbell-exercise-training.png';
-import Image from 'next/image';
-import tagIcon from '@/assets/dashboard/excercise-library/tagIcon.png';
-import levelIcon from '@/assets/dashboard/excercise-library/levelIcon.png';
-import clockIcon from '@/assets/dashboard/excercise-library/clockIcon.png';
-import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
-import watchIcon from '@/assets/dashboard/excercise-library/watchIcon.png';
-import { VideoPlayer } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/VideoPlayer/VideoPlayer';
-import { ExerciseSteps } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/ExcerciseSteps/ExcerciseSteps';
-import { NotesTips } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/NotesTips/NotesTips';
-import { RelatedVideos } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/RelatedVideos/RelatedVideos';
+import { Button } from "@/components/ui/button";
+import { Download, FileText } from "lucide-react";
+import pic from "@/assets/dashboard/excercise-library/barbell-exercise-training.png";
+import Image from "next/image";
+import tagIcon from "@/assets/dashboard/excercise-library/tagIcon.png";
+import levelIcon from "@/assets/dashboard/excercise-library/levelIcon.png";
+import clockIcon from "@/assets/dashboard/excercise-library/clockIcon.png";
+import dumbellIcon from "@/assets/dashboard/excercise-library/dumbellIcon.png";
+import watchIcon from "@/assets/dashboard/excercise-library/watchIcon.png";
+import { VideoPlayer } from "@/app/dashboard/admin/all-exercise/video/[id]/_components/VideoPlayer/VideoPlayer";
+import { ExerciseSteps } from "@/app/dashboard/admin/all-exercise/video/[id]/_components/ExcerciseSteps/ExcerciseSteps";
+import { NotesTips } from "@/app/dashboard/admin/all-exercise/video/[id]/_components/NotesTips/NotesTips";
+import { RelatedVideos } from "@/app/dashboard/admin/all-exercise/video/[id]/_components/RelatedVideos/RelatedVideos";
 
 const sampleWorkout = {
-  title: 'Barbell Back Squat',
+  title: "Barbell Back Squat",
   description:
-    'Master strength and depth with proper form in this comprehensive barbell back squat tutorial. The fundamental compound movement targets multiple muscle groups for maximum effectiveness.',
-  videoSrc: '/video.mp4',
+    "Master strength and depth with proper form in this comprehensive barbell back squat tutorial. The fundamental compound movement targets multiple muscle groups for maximum effectiveness.",
+  videoSrc: "/video.mp4",
   poster: pic.src,
 };
 
 const relatedVideos = [
   {
-    id: '1',
-    title: 'How Squat Tutorial',
+    id: "1",
+    title: "How Squat Tutorial",
     thumbnail: pic.src,
-    duration: '6:30',
-    views: '2.1k',
-    level: 'Beginner',
+    duration: "6:30",
+    views: "2.1k",
+    level: "Beginner",
   },
   {
-    id: '2',
-    title: 'Barbell Back Squats',
+    id: "2",
+    title: "Barbell Back Squats",
     thumbnail: pic.src,
-    duration: '4:15',
-    views: '1.8k',
-    level: 'Beginner',
+    duration: "4:15",
+    views: "1.8k",
+    level: "Beginner",
   },
   {
-    id: '3',
-    title: 'Deadlift Squat',
+    id: "3",
+    title: "Deadlift Squat",
     thumbnail: pic.src,
-    duration: '7:22',
-    views: '3.2k',
-    level: 'Intermediate',
+    duration: "7:22",
+    views: "3.2k",
+    level: "Intermediate",
   },
   {
-    id: '4',
-    title: 'How Squat Tutorial',
+    id: "4",
+    title: "How Squat Tutorial",
     thumbnail: pic.src,
-    duration: '5:45',
-    views: '1.5k',
-    level: 'Beginner',
+    duration: "5:45",
+    views: "1.5k",
+    level: "Beginner",
   },
 ];
 
 const exerciseSteps = [
   {
     step: 1,
-    title: 'Setup under the barbell rack',
+    title: "Setup under the barbell rack",
     description:
-      'Position yourself under the bar with feet shoulder-width apart',
+      "Position yourself under the bar with feet shoulder-width apart",
   },
   {
     step: 2,
-    title: 'Engage core, step back',
-    description: 'Brace your core and take a step back from the rack',
+    title: "Engage core, step back",
+    description: "Brace your core and take a step back from the rack",
   },
   {
     step: 3,
-    title: 'Squat until thighs are parallel',
-    description: 'Lower down slowly maintaining proper knee tracking',
+    title: "Squat until thighs are parallel",
+    description: "Lower down slowly maintaining proper knee tracking",
   },
   {
     step: 4,
-    title: 'Drive up keeping chest up',
-    description: 'Push through heels to return to starting position',
+    title: "Drive up keeping chest up",
+    description: "Push through heels to return to starting position",
   },
 ];
 
 const notesTips = [
   {
-    id: '1',
-    author: 'Coach Mike',
-    avatar: '/placeholder.svg?height=32&width=32',
-    role: 'Trainer',
+    id: "1",
+    author: "Coach Mike",
+    avatar: "/placeholder.svg?height=32&width=32",
+    role: "Trainer",
     content:
-      'Remember to keep your knees tracking over your toes throughout the movement. This prevents knee valgus and reduces injury risk.',
+      "Remember to keep your knees tracking over your toes throughout the movement. This prevents knee valgus and reduces injury risk.",
   },
   {
-    id: '2',
-    author: 'Sarah J',
-    avatar: '/placeholder.svg?height=32&width=32',
+    id: "2",
+    author: "Sarah J",
+    avatar: "/placeholder.svg?height=32&width=32",
     content:
-      'I found that the step-by-step breakdown really helped me understand the proper form. My squats have improved significantly.',
+      "I found that the step-by-step breakdown really helped me understand the proper form. My squats have improved significantly.",
   },
 ];
 
@@ -123,7 +123,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white">
-                  {'Legs, Strength, Compound'}
+                  {"Legs, Strength, Compound"}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -135,7 +135,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'Beginner'}
+                  {"Beginner"}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -147,7 +147,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'1:15'}
+                  {"1:15"}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -159,7 +159,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'Barbell, Rack'}
+                  {"Barbell, Rack"}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -171,7 +171,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'6.3k Views'}
+                  {"6.3k Views"}
                 </span>
               </div>
             </div>

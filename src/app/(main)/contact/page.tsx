@@ -1,6 +1,6 @@
-import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
-import logo from '../../../assets/home/contact.png';
-import ContactForm from './_components/ContactForm/ContactForm';
+import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
+import logo from "../../../assets/home/contact.png";
+import ContactForm from "./_components/ContactForm/ContactForm";
 
 const ContactPage = () => {
   return (

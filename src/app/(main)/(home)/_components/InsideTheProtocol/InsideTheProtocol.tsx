@@ -1,37 +1,37 @@
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
-import BaseCard from '@/components/shared/main/BaseCard/BaseCard';
-import user from '../../../../../assets/home/insidethe_protocol/profile.png';
-import camera from '../../../../../assets/home/insidethe_protocol/camera.png';
-import community from '../../../../../assets/home/insidethe_protocol/community.png';
-import download from '../../../../../assets/home/insidethe_protocol/donwload.png';
-import progress from '../../../../../assets/home/insidethe_protocol/progress.png';
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import BaseCard from "@/components/shared/main/BaseCard/BaseCard";
+import user from "../../../../../assets/home/insidethe_protocol/profile.png";
+import camera from "../../../../../assets/home/insidethe_protocol/camera.png";
+import community from "../../../../../assets/home/insidethe_protocol/community.png";
+import download from "../../../../../assets/home/insidethe_protocol/donwload.png";
+import progress from "../../../../../assets/home/insidethe_protocol/progress.png";
 
 function InsideTheProtocol() {
   const data = [
     {
       img: camera.src,
-      title: 'Weekly video lessons',
-      description: '& actionable checklists',
+      title: "Weekly video lessons",
+      description: "& actionable checklists",
     },
     {
       img: progress.src,
-      title: '12-week progression',
-      description: 'Structured plan',
+      title: "12-week progression",
+      description: "Structured plan",
     },
     {
       img: download.src,
-      title: 'Downloadable planners',
-      description: 'trackers, and grooming guides',
+      title: "Downloadable planners",
+      description: "trackers, and grooming guides",
     },
     {
       img: community.src,
-      title: 'Elite community',
-      description: 'Private community & Q&A',
+      title: "Elite community",
+      description: "Private community & Q&A",
     },
     {
       img: user.src,
-      title: '1 coaching access',
-      description: 'Elite & Private tiers',
+      title: "1 coaching access",
+      description: "Elite & Private tiers",
     },
   ];
   return (

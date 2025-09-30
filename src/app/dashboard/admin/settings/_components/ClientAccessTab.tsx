@@ -1,72 +1,72 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Check, X, Settings, Star, Crown, Shield } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Check, X, Settings, Star, Crown, Shield } from "lucide-react";
 
 const tierStatsData = [
   {
     id: 1,
-    name: 'Core Tier',
-    description: 'Basic Access',
+    name: "Core Tier",
+    description: "Basic Access",
     total: 1247,
     active: 1190,
     inactive: 57,
     icon: Shield,
-    iconColor: 'text-blue-500',
-    bgColor: 'bg-blue-500/20',
+    iconColor: "text-blue-500",
+    bgColor: "bg-blue-500/20",
   },
   {
     id: 2,
-    name: 'Elite Tier',
-    description: 'Premium Access',
+    name: "Elite Tier",
+    description: "Premium Access",
     total: 89,
     active: 78,
     inactive: 11,
     icon: Star,
-    iconColor: 'text-yellow-500',
-    bgColor: 'bg-yellow-500/20',
+    iconColor: "text-yellow-500",
+    bgColor: "bg-yellow-500/20",
   },
   {
     id: 3,
-    name: 'Private Tier',
-    description: 'Full Access',
+    name: "Private Tier",
+    description: "Full Access",
     total: 89,
     active: 87,
     inactive: 2,
     icon: Crown,
-    iconColor: 'text-purple-500',
-    bgColor: 'bg-purple-500/20',
+    iconColor: "text-purple-500",
+    bgColor: "bg-purple-500/20",
   },
 ];
 
 const permissionsData = [
-  { id: 1, feature: 'Basic Modules', core: false, elite: true, private: true },
+  { id: 1, feature: "Basic Modules", core: false, elite: true, private: true },
   {
     id: 2,
-    feature: 'Community Access',
+    feature: "Community Access",
     core: true,
     elite: true,
     private: true,
   },
   {
     id: 3,
-    feature: '1-on-1 Coaching',
+    feature: "1-on-1 Coaching",
     core: false,
     elite: true,
     private: true,
   },
   {
     id: 4,
-    feature: 'Advanced Analytics',
+    feature: "Advanced Analytics",
     core: true,
     elite: false,
     private: true,
   },
   {
     id: 5,
-    feature: 'Priority Support',
+    feature: "Priority Support",
     core: true,
     elite: true,
     private: false,
@@ -76,36 +76,36 @@ const permissionsData = [
 const accountStatusData = [
   {
     id: 1,
-    status: 'Active',
-    description: 'Full access granted',
+    status: "Active",
+    description: "Full access granted",
     count: 1658,
-    color: 'green',
-    bgColor: 'bg-green-500/10',
-    borderColor: 'border-green-500/20',
-    dotColor: 'bg-green-500',
-    textColor: 'text-green-500',
+    color: "green",
+    bgColor: "bg-green-500/10",
+    borderColor: "border-green-500/20",
+    dotColor: "bg-green-500",
+    textColor: "text-green-500",
   },
   {
     id: 2,
-    status: 'Inactive',
-    description: 'Limited Access',
+    status: "Inactive",
+    description: "Limited Access",
     count: 70,
-    color: 'yellow',
-    bgColor: 'bg-yellow-500/10',
-    borderColor: 'border-yellow-500/20',
-    dotColor: 'bg-yellow-500',
-    textColor: 'text-yellow-500',
+    color: "yellow",
+    bgColor: "bg-yellow-500/10",
+    borderColor: "border-yellow-500/20",
+    dotColor: "bg-yellow-500",
+    textColor: "text-yellow-500",
   },
   {
     id: 3,
-    status: 'Banned',
-    description: 'No Access',
+    status: "Banned",
+    description: "No Access",
     count: 12,
-    color: 'red',
-    bgColor: 'bg-red-500/10',
-    borderColor: 'border-red-500/20',
-    dotColor: 'bg-red-500',
-    textColor: 'text-red-500',
+    color: "red",
+    bgColor: "bg-red-500/10",
+    borderColor: "border-red-500/20",
+    dotColor: "bg-red-500",
+    textColor: "text-red-500",
   },
 ];
 

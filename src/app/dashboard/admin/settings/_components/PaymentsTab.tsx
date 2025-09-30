@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import {
   Search,
   FileText,
@@ -23,106 +23,106 @@ import {
   Users,
   RefreshCw,
   AlertCircle,
-} from 'lucide-react';
+} from "lucide-react";
 
 const statsData = [
   {
     id: 1,
-    title: 'Total Revenue',
-    value: '$47,283',
+    title: "Total Revenue",
+    value: "$47,283",
     icon: DollarSign,
-    iconColor: 'text-green-500',
-    bgColor: 'bg-green-500/20',
+    iconColor: "text-green-500",
+    bgColor: "bg-green-500/20",
     change: null,
   },
   {
     id: 2,
-    title: 'Active Subscriptions',
-    value: '1,240',
+    title: "Active Subscriptions",
+    value: "1,240",
     icon: Users,
-    iconColor: 'text-blue-500',
-    bgColor: 'bg-blue-500/20',
-    change: '+8.2%',
-    changeColor: 'text-green-500',
+    iconColor: "text-blue-500",
+    bgColor: "bg-blue-500/20",
+    change: "+8.2%",
+    changeColor: "text-green-500",
   },
   {
     id: 3,
-    title: 'Pending Payments',
-    value: '127',
+    title: "Pending Payments",
+    value: "127",
     icon: AlertCircle,
-    iconColor: 'text-orange-500',
-    bgColor: 'bg-orange-500/20',
-    change: '$8,540',
-    changeColor: 'text-orange-500',
+    iconColor: "text-orange-500",
+    bgColor: "bg-orange-500/20",
+    change: "$8,540",
+    changeColor: "text-orange-500",
   },
   {
     id: 4,
-    title: 'Refund Requests',
-    value: '18',
+    title: "Refund Requests",
+    value: "18",
     icon: RefreshCw,
-    iconColor: 'text-red-500',
-    bgColor: 'bg-red-500/20',
-    change: '$520',
-    changeColor: 'text-red-500',
+    iconColor: "text-red-500",
+    bgColor: "bg-red-500/20",
+    change: "$520",
+    changeColor: "text-red-500",
   },
 ];
 
 const subscriptionsData = [
   {
     id: 1,
-    name: 'Sarah Johnson',
-    email: 'sarah@gmail.com',
-    plan: 'Premium',
-    billing: 'Monthly',
-    nextPayment: 'Jan 15, 2024',
-    status: 'Active',
+    name: "Sarah Johnson",
+    email: "sarah@gmail.com",
+    plan: "Premium",
+    billing: "Monthly",
+    nextPayment: "Jan 15, 2024",
+    status: "Active",
   },
   {
     id: 2,
-    name: 'Johnson',
-    email: 'johnson@gmail.com',
-    plan: 'Atlantis',
-    billing: 'Monthly',
-    nextPayment: 'Jan 15, 2024',
-    status: 'Active',
+    name: "Johnson",
+    email: "johnson@gmail.com",
+    plan: "Atlantis",
+    billing: "Monthly",
+    nextPayment: "Jan 15, 2024",
+    status: "Active",
   },
   {
     id: 3,
-    name: 'Jihad',
-    email: 'jihad@gmail.com',
-    plan: 'Basic',
-    billing: 'Monthly',
-    nextPayment: 'Jan 15, 2024',
-    status: 'Active',
+    name: "Jihad",
+    email: "jihad@gmail.com",
+    plan: "Basic",
+    billing: "Monthly",
+    nextPayment: "Jan 15, 2024",
+    status: "Active",
   },
   {
     id: 4,
-    name: 'Aminul',
-    email: 'aminul@gmail.com',
-    plan: 'Premium',
-    billing: 'Monthly',
-    nextPayment: 'Jan 15, 2024',
-    status: 'Active',
+    name: "Aminul",
+    email: "aminul@gmail.com",
+    plan: "Premium",
+    billing: "Monthly",
+    nextPayment: "Jan 15, 2024",
+    status: "Active",
   },
 ];
 
 const subscriptionTiers = [
-  { id: 1, name: 'Basic Plan', price: '$29/month' },
-  { id: 2, name: 'Premium Plan', price: '$79/month' },
-  { id: 3, name: 'Atlantis Plan', price: '$199/month' },
+  { id: 1, name: "Basic Plan", price: "$29/month" },
+  { id: 2, name: "Premium Plan", price: "$79/month" },
+  { id: 3, name: "Atlantis Plan", price: "$199/month" },
 ];
 
 const refundPolicyOptions = [
-  { id: '7days', label: 'Allow refunds within 7 days' },
-  { id: '14days', label: 'Allow refunds within 14 days' },
-  { id: '30days', label: 'Allow refunds within 30 days' },
-  { id: 'no-refunds', label: 'No refunds allowed' },
+  { id: "7days", label: "Allow refunds within 7 days" },
+  { id: "14days", label: "Allow refunds within 14 days" },
+  { id: "30days", label: "Allow refunds within 30 days" },
+  { id: "no-refunds", label: "No refunds allowed" },
 ];
 
 const exportButtons = [
-  { id: 1, label: 'Generate PDF', icon: FileText },
-  { id: 2, label: 'Export CSV', icon: Download },
-  { id: 3, label: 'Weekly Summary', icon: BarChart3 },
+  { id: 1, label: "Generate PDF", icon: FileText },
+  { id: 2, label: "Export CSV", icon: Download },
+  { id: 3, label: "Weekly Summary", icon: BarChart3 },
 ];
 
 export function PaymentsTab() {

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Line,
@@ -7,13 +7,13 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-} from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+} from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/components/ui/chart';
+} from "@/components/ui/chart";
 
 interface RPETrendsData {
   day: string;
@@ -35,8 +35,8 @@ export function RPETrendsChart({ data }: RPETrendsChartProps) {
           <ChartContainer
             config={{
               rpe: {
-                label: 'RPE',
-                color: '#10B981',
+                label: "RPE",
+                color: "#10B981",
               },
             }}
             className="w-full h-full"
@@ -55,7 +55,7 @@ export function RPETrendsChart({ data }: RPETrendsChartProps) {
                   dataKey="rpe"
                   stroke="#10B981"
                   strokeWidth={2}
-                  dot={{ fill: '#10B981', strokeWidth: 2, r: 4 }}
+                  dot={{ fill: "#10B981", strokeWidth: 2, r: 4 }}
                 />
               </LineChart>
             </ResponsiveContainer>

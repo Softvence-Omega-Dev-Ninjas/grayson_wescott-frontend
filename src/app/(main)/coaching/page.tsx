@@ -1,6 +1,6 @@
-import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
-import logo from '../../../assets/home/coaching.png';
-import CoachingThatMovesTheNeedle from './_components/coachingthatMoves/CoachingThatMovesTheNeedle';
+import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
+import logo from "../../../assets/home/coaching.png";
+import CoachingThatMovesTheNeedle from "./_components/coachingthatMoves/CoachingThatMovesTheNeedle";
 const CoachingPage = () => {
   return (
     <div>

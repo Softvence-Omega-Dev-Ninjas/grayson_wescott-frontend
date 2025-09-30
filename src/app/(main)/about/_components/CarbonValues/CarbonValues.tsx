@@ -1,36 +1,36 @@
-import Image from 'next/image';
-import pic1 from '@/assets/about/pic1.jpg';
-import pic2 from '@/assets/about/pic2.jpg';
-import pic3 from '@/assets/about/pic3.jpg';
-import pic4 from '@/assets/about/pic4.jpg';
+import Image from "next/image";
+import pic1 from "@/assets/about/pic1.jpg";
+import pic2 from "@/assets/about/pic2.jpg";
+import pic3 from "@/assets/about/pic3.jpg";
+import pic4 from "@/assets/about/pic4.jpg";
 const sections = [
   {
-    title: 'UNCOMPROMISING DISCIPLINE',
+    title: "UNCOMPROMISING DISCIPLINE",
     description:
-      'EXCELLENCE IS NOT AN ACT, BUT A HABIT. WE DEMAND PRECISION IN EVERY DETAIL, CONSISTENCY IN EVERY SESSION, AND COMMITMENT TO THE PROCESS ABOVE ALL ELSE.',
+      "EXCELLENCE IS NOT AN ACT, BUT A HABIT. WE DEMAND PRECISION IN EVERY DETAIL, CONSISTENCY IN EVERY SESSION, AND COMMITMENT TO THE PROCESS ABOVE ALL ELSE.",
     image: pic1.src,
-    layout: 'text-left', // Text on the left, image on the right
+    layout: "text-left", // Text on the left, image on the right
   },
   {
-    title: 'ENGINEERED RESILIENCE',
+    title: "ENGINEERED RESILIENCE",
     description:
       "STRENGTH IS NOT JUST PHYSICAL; IT'S MENTAL, EMOTIONAL, AND SPIRITUAL. WE ARE TRAINED TO THRIVE UNDER PRESSURE AND EMERGE STRONGER FROM EVERY CHALLENGE.",
     image: pic2.src,
-    layout: 'image-left', // Image on the left, text on the right
+    layout: "image-left", // Image on the left, text on the right
   },
   {
-    title: 'RELENTLESS EXCELLENCE',
+    title: "RELENTLESS EXCELLENCE",
     description:
-      'GOOD ENOUGH IS THE ENEMY OF GREATNESS. WE PURSUE PERFECTION IN EVERY ASPECT OF TRAINING, FROM TECHNIQUE TO MINDSET TO LIFESTYLE INTEGRATION.',
+      "GOOD ENOUGH IS THE ENEMY OF GREATNESS. WE PURSUE PERFECTION IN EVERY ASPECT OF TRAINING, FROM TECHNIQUE TO MINDSET TO LIFESTYLE INTEGRATION.",
     image: pic3.src,
-    layout: 'text-left',
+    layout: "text-left",
   },
   {
-    title: 'CONTINUOUS INNOVATION',
+    title: "CONTINUOUS INNOVATION",
     description:
-      'THE FUTURE OF STRENGTH IS WRITTEN BY THOSE WHO DARE TO REDEFINE IT. WE CONSTANTLY EVOLVE OUR METHODS, EMBRACING CUTTING-EDGE SCIENCE AND TECHNOLOGY.',
+      "THE FUTURE OF STRENGTH IS WRITTEN BY THOSE WHO DARE TO REDEFINE IT. WE CONSTANTLY EVOLVE OUR METHODS, EMBRACING CUTTING-EDGE SCIENCE AND TECHNOLOGY.",
     image: pic4.src,
-    layout: 'image-left',
+    layout: "image-left",
   },
 ];
 const CarbonValues = () => {
@@ -42,14 +42,14 @@ const CarbonValues = () => {
           <div
             key={index}
             className={`flex flex-col bs:ml-20 md:flex-row items-center gap-8 ${
-              section.layout === 'image-left'
-                ? 'md:flex-row-reverse justify-center'
-                : 'justify-start '
+              section.layout === "image-left"
+                ? "md:flex-row-reverse justify-center"
+                : "justify-start "
             }`}
           >
             {/* Image container */}
             <div
-              className={` flex item-center ${section.layout === 'image-left' ? 'justify-start' : 'justify-end'} `}
+              className={` flex item-center ${section.layout === "image-left" ? "justify-start" : "justify-end"} `}
             >
               <Image
                 src={section.image}

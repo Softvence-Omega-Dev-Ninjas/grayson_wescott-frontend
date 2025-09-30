@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,13 +7,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { logout } from '@/services/auth';
-import { IUser } from '@/types/user.types';
-import { LayoutDashboard, LogIn, LogOut, UserPlus } from 'lucide-react';
-import Link from 'next/link';
-import { Dispatch, SetStateAction } from 'react';
-import { CgProfile } from 'react-icons/cg';
+} from "@/components/ui/dropdown-menu";
+import { logout } from "@/services/auth";
+import { IUser } from "@/types/user.types";
+import { LayoutDashboard, LogIn, LogOut, UserPlus } from "lucide-react";
+import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
+import { CgProfile } from "react-icons/cg";
 
 export type TProfileAvatar = {
   user: IUser | null;
@@ -38,7 +38,7 @@ const ProfileAvatar = ({ user, setIsLoading, setUser }: TProfileAvatar) => {
           {user ? (
             <Avatar className=" cursor-pointer flex items-center justify-center border-4 border-light-border dark:border-dark-muted-bg ml-4 lg:ml-0 w-12 h-12">
               <AvatarImage
-                src={user ? user?.avatarUrl : 'https://github.com/shadcn.png'}
+                src={user ? user?.avatarUrl : "https://github.com/shadcn.png"}
                 alt="@shadcn"
               />
               <AvatarFallback>DP</AvatarFallback>
@@ -70,21 +70,21 @@ const ProfileAvatar = ({ user, setIsLoading, setUser }: TProfileAvatar) => {
                 </div>
               </div>
             ) : (
-              'My Account'
+              "My Account"
             )}
           </DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-secondary" />
           <DropdownMenuGroup className="space-y-1.5">
             {!user && (
               <>
-                <Link href={'/login'}>
+                <Link href={"/login"}>
                   <DropdownMenuItem className="cursor-pointer text-white flex items-center  hover:bg-secondary py-1 rounded-lg hover:text-white px-3">
                     <LogIn className="w-4 h-4 mr-2 text-white" />
                     Sign In
                   </DropdownMenuItem>
                 </Link>
 
-                <Link href={'/register'}>
+                <Link href={"/register"}>
                   <DropdownMenuItem className="cursor-pointer text-white flex items-center  hover:bg-secondary py-1 rounded-lg hover:text-white px-3">
                     <UserPlus className="w-4 h-4 mr-2 text-white" />
                     Register
@@ -95,9 +95,9 @@ const ProfileAvatar = ({ user, setIsLoading, setUser }: TProfileAvatar) => {
             {user && (
               <Link
                 href={
-                  user?.role === 'ADMIN'
-                    ? '/dashboard/admin/overview'
-                    : '/dashboard/user/overview'
+                  user?.role === "ADMIN"
+                    ? "/dashboard/admin/overview"
+                    : "/dashboard/user/overview"
                 }
               >
                 <DropdownMenuItem className="cursor-pointer flex items-center  hover:bg-secondary py-1 rounded-lg hover:text-white px-3">

@@ -1,12 +1,12 @@
-'use client';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Plus } from 'lucide-react';
-import React, { useState } from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { FaBookmark } from 'react-icons/fa6';
-import { MdDelete } from 'react-icons/md';
-import AssignToClientsModal from './_components/AssignToClientsModal';
+"use client";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Plus } from "lucide-react";
+import React, { useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { FaBookmark } from "react-icons/fa6";
+import { MdDelete } from "react-icons/md";
+import AssignToClientsModal from "./_components/AssignToClientsModal";
 
 interface IExercise {
   exerciseName: string;
@@ -25,10 +25,10 @@ interface FormData {
 }
 
 const dummyClients = [
-  { id: 'client1_id', name: 'Sarah Johnson', level: 'Advanced' },
-  { id: 'client2_id', name: 'Alex Smith', level: 'Intermediate' },
-  { id: 'client3_id', name: 'Chris Evans', level: 'Beginner' },
-  { id: 'client4_id', name: 'Jane Doe', level: 'Advanced' },
+  { id: "client1_id", name: "Sarah Johnson", level: "Advanced" },
+  { id: "client2_id", name: "Alex Smith", level: "Intermediate" },
+  { id: "client3_id", name: "Chris Evans", level: "Beginner" },
+  { id: "client4_id", name: "Jane Doe", level: "Advanced" },
 ];
 
 export default function App() {
@@ -40,17 +40,17 @@ export default function App() {
     trigger,
   } = useForm<FormData>({
     defaultValues: {
-      programName: '',
+      programName: "",
       categories: [],
       exercises: [
         {
-          exerciseName: '',
-          sets: '',
-          reps: '',
-          rpe: '',
-          restMin: '',
-          tempo: '',
-          videoLink: '',
+          exerciseName: "",
+          sets: "",
+          reps: "",
+          rpe: "",
+          restMin: "",
+          tempo: "",
+          videoLink: "",
         },
       ],
     },
@@ -58,18 +58,18 @@ export default function App() {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'exercises',
+    name: "exercises",
   });
 
   const handleAddExercise = () => {
     append({
-      exerciseName: '',
-      sets: '',
-      reps: '',
-      rpe: '',
-      restMin: '',
-      tempo: '',
-      videoLink: '',
+      exerciseName: "",
+      sets: "",
+      reps: "",
+      rpe: "",
+      restMin: "",
+      tempo: "",
+      videoLink: "",
     });
   };
 
@@ -81,7 +81,7 @@ export default function App() {
     // Manually trigger validation for the entire form
     const isValid = await trigger();
     if (!isValid) {
-      console.log('Validation failed. Please fill in all required fields.');
+      console.log("Validation failed. Please fill in all required fields.");
       return;
     }
     console.log(data);
@@ -94,7 +94,7 @@ export default function App() {
     // }
   };
 
-  const exerciseCategories = ['Upper Body', 'Lower Body', 'Core', 'Cardio'];
+  const exerciseCategories = ["Upper Body", "Lower Body", "Core", "Cardio"];
   const [selectedClientIds, setSelectedClientIds] = useState<string[]>([]);
 
   return (
@@ -115,8 +115,8 @@ export default function App() {
                 id="programName"
                 type="text"
                 placeholder="e.g., Elite Squat"
-                {...register('programName', {
-                  required: 'Program name is required.',
+                {...register("programName", {
+                  required: "Program name is required.",
                 })}
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
               />
@@ -136,10 +136,10 @@ export default function App() {
                     <Input
                       id={`category-${category}`}
                       type="checkbox"
-                      {...register('categories', {
+                      {...register("categories", {
                         validate: (value) =>
                           value.length > 0 ||
-                          'At least one category is required.',
+                          "At least one category is required.",
                       })}
                       value={category}
                       className="form-checkbox h-4 w-4 text-black rounded-md border border-zinc-500 bg-zinc-800 cursor-pointer"
@@ -214,7 +214,7 @@ export default function App() {
                     type="text"
                     placeholder="e.g., Back Squat"
                     {...register(`exercises.${index}.exerciseName`, {
-                      required: 'Exercise title is required.',
+                      required: "Exercise title is required.",
                     })}
                     className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                   />
@@ -237,7 +237,7 @@ export default function App() {
                       placeholder="e.g., 4"
                       type="text"
                       {...register(`exercises.${index}.sets`, {
-                        required: 'Sets are required.',
+                        required: "Sets are required.",
                       })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
@@ -259,7 +259,7 @@ export default function App() {
                       placeholder="e.g., 6-8"
                       type="text"
                       {...register(`exercises.${index}.reps`, {
-                        required: 'Reps are required.',
+                        required: "Reps are required.",
                       })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
@@ -281,7 +281,7 @@ export default function App() {
                       placeholder="e.g., 8"
                       type="text"
                       {...register(`exercises.${index}.rpe`, {
-                        required: 'RPE is required.',
+                        required: "RPE is required.",
                       })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
@@ -303,7 +303,7 @@ export default function App() {
                       type="text"
                       placeholder="e.g., 3"
                       {...register(`exercises.${index}.restMin`, {
-                        required: 'Rest time is required.',
+                        required: "Rest time is required.",
                       })}
                       className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                     />
@@ -326,7 +326,7 @@ export default function App() {
                     placeholder="e.g., 3-1-3-0"
                     type="text"
                     {...register(`exercises.${index}.tempo`, {
-                      required: 'Tempo is required.',
+                      required: "Tempo is required.",
                     })}
                     className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
                   />
@@ -347,7 +347,7 @@ export default function App() {
                     id={`videoLink-${index}`}
                     type="text"
                     {...register(`exercises.${index}.videoLink`, {
-                      required: 'Video link is required.',
+                      required: "Video link is required.",
                     })}
                     placeholder="YouTube or Vimeo URL"
                     className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"

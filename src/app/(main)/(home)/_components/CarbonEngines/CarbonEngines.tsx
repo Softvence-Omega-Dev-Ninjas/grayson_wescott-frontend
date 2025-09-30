@@ -1,9 +1,9 @@
-import { OverlayCard } from '@/components/shared/main/OverlayCard/OverlayCard';
-import { Target, RefreshCw, TrendingUp } from 'lucide-react';
-import pic1 from '@/assets/home/carbon_engines/pic1.jpg';
-import pic2 from '@/assets/home/carbon_engines/pic2.png';
-import pic3 from '@/assets/home/carbon_engines/pic3.jpg';
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import { OverlayCard } from "@/components/shared/main/OverlayCard/OverlayCard";
+import { Target, RefreshCw, TrendingUp } from "lucide-react";
+import pic1 from "@/assets/home/carbon_engines/pic1.jpg";
+import pic2 from "@/assets/home/carbon_engines/pic2.png";
+import pic3 from "@/assets/home/carbon_engines/pic3.jpg";
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
 
 export default function CarbonEngines() {
   return (

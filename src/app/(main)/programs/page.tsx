@@ -1,32 +1,32 @@
-import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
-import logo from '../../../assets/programs/pickBanner.png';
-import CTA from '@/components/shared/main/CTA/CTA';
-import img from '../../../assets/home/program.png';
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
-import p1 from '../../../assets/programs/p1.png';
-import p2 from '../../../assets/programs/p2.png';
-import p3 from '../../../assets/programs/p3.png';
+import HeroBanner from "@/components/shared/main/HeroBanner/HeroBanner";
+import logo from "../../../assets/programs/pickBanner.png";
+import CTA from "@/components/shared/main/CTA/CTA";
+import img from "../../../assets/home/program.png";
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import p1 from "../../../assets/programs/p1.png";
+import p2 from "../../../assets/programs/p2.png";
+import p3 from "../../../assets/programs/p3.png";
 
-import { OverlayCard } from '@/components/shared/main/OverlayCard/OverlayCard';
-import ProgramsBuildYou from './_components/ProgramsBuildYou/ProgramsBuildYou';
+import { OverlayCard } from "@/components/shared/main/OverlayCard/OverlayCard";
+import ProgramsBuildYou from "./_components/ProgramsBuildYou/ProgramsBuildYou";
 
-import WhatYouWillDo from './_components/ProgramsBuildYou/WhatYouWillDo';
-import HowItWorks from './_components/ProgramsBuildYou/HowItWorks';
-import WhatsInclude from './_components/ProgramsBuildYou/WhatsInclude';
-import AccordionSection from './_components/ProgramsBuildYou/AccordionSection';
+import WhatYouWillDo from "./_components/ProgramsBuildYou/WhatYouWillDo";
+import HowItWorks from "./_components/ProgramsBuildYou/HowItWorks";
+import WhatsInclude from "./_components/ProgramsBuildYou/WhatsInclude";
+import AccordionSection from "./_components/ProgramsBuildYou/AccordionSection";
 const ProgramsPage = () => {
   const data = [
     {
       img: p1.src,
-      title: 'Periodized Training',
+      title: "Periodized Training",
     },
     {
       img: p2.src,
-      title: 'Measurable Metrics',
+      title: "Measurable Metrics",
     },
     {
       img: p3.src,
-      title: 'Specialized Tracks',
+      title: "Specialized Tracks",
     },
   ];
 

@@ -1,6 +1,6 @@
-import CTA from '@/components/shared/main/CTA/CTA';
-import React from 'react';
-import img from '../../../../../assets/adonisProtocol/adonisCta.png';
+import CTA from "@/components/shared/main/CTA/CTA";
+import React from "react";
+import img from "../../../../../assets/adonisProtocol/adonisCta.png";
 
 function AdonisCtaSection() {
   return (

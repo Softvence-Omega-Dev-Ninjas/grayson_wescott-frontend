@@ -5,11 +5,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { useState } from 'react';
-import { FaUsers } from 'react-icons/fa6';
-import avatar from '@/assets/dashboard/add-excercise/avatar.png';
-import Image from 'next/image';
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import { FaUsers } from "react-icons/fa6";
+import avatar from "@/assets/dashboard/add-excercise/avatar.png";
+import Image from "next/image";
 
 const AssignToClientsModal = ({
   clients,

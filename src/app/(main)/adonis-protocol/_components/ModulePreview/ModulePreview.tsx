@@ -1,6 +1,6 @@
-import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
-import Image from 'next/image';
-import img from '../../../../../assets/adonisProtocol/lock.png';
+import SectionHeader from "@/components/shared/main/SectionHeader/SectionHeader";
+import Image from "next/image";
+import img from "../../../../../assets/adonisProtocol/lock.png";
 
 interface TeamProps {
   title: string;
@@ -13,63 +13,63 @@ function ModulePreview() {
   const data: TeamProps[] = [
     {
       icon: img.src,
-      title: 'Foundation Assessment',
-      description: 'Baseline evaluation and goal setting',
+      title: "Foundation Assessment",
+      description: "Baseline evaluation and goal setting",
     },
     {
       icon: img.src,
-      title: 'Physique Architecture',
-      description: 'Training principles and program design',
+      title: "Physique Architecture",
+      description: "Training principles and program design",
     },
     {
       icon: img.src,
-      title: 'Nutrition Mastery',
-      description: 'Fuel for optimal performance',
+      title: "Nutrition Mastery",
+      description: "Fuel for optimal performance",
     },
     {
       icon: img.src,
-      title: 'Style Foundation',
-      description: 'Wardrobe essentials and fit',
+      title: "Style Foundation",
+      description: "Wardrobe essentials and fit",
     },
     {
       icon: img.src,
-      title: 'Grooming Systems',
-      description: 'Skincare hair and hygiene protocols',
+      title: "Grooming Systems",
+      description: "Skincare hair and hygiene protocols",
     },
     {
       icon: img.src,
-      title: 'Social Dynamics',
-      description: 'Conversation and charisma',
+      title: "Social Dynamics",
+      description: "Conversation and charisma",
     },
     {
       icon: img.src,
-      title: 'Mental Fortitude',
-      description: 'Discipline and resilience building',
+      title: "Mental Fortitude",
+      description: "Discipline and resilience building",
     },
     {
       icon: img.src,
-      title: 'Advanced Aesthetics',
-      description: 'Fine-tuning your physique',
+      title: "Advanced Aesthetics",
+      description: "Fine-tuning your physique",
     },
     {
       icon: img.src,
-      title: 'Elite Networking',
-      description: 'Building powerful connections',
+      title: "Elite Networking",
+      description: "Building powerful connections",
     },
     {
       icon: img.src,
-      title: 'Wealth Mindset',
-      description: 'Financial success principles',
+      title: "Wealth Mindset",
+      description: "Financial success principles",
     },
     {
       icon: img.src,
-      title: 'Legacy Building',
-      description: 'Long-term success strategies',
+      title: "Legacy Building",
+      description: "Long-term success strategies",
     },
     {
       icon: img.src,
-      title: 'Foundation Assessment',
-      description: 'Baseline evaluation and goal setting',
+      title: "Foundation Assessment",
+      description: "Baseline evaluation and goal setting",
     },
   ];
 

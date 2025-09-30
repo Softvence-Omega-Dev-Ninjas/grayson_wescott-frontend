@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Edit, Users, FileText } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Edit, Users, FileText } from "lucide-react";
 
 export function ProgramOverview() {
   return (

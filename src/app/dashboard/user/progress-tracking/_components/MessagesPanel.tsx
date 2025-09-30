@@ -1,25 +1,25 @@
 const messagesData = [
   {
-    type: 'reminder',
-    title: 'Workout Reminder',
-    message: 'You have your workout scheduled for at 5:00',
-    time: '2 hours ago',
-    priority: 'high',
+    type: "reminder",
+    title: "Workout Reminder",
+    message: "You have your workout scheduled for at 5:00",
+    time: "2 hours ago",
+    priority: "high",
   },
   {
-    type: 'message',
-    title: 'Trainer Message',
+    type: "message",
+    title: "Trainer Message",
     message:
       "Great job on yesterday's session! Let's push even harder by 5lbs next time.",
-    time: '1 day ago',
-    priority: 'normal',
+    time: "1 day ago",
+    priority: "normal",
   },
   {
-    type: 'reminder',
-    title: 'Rest Day Reminder',
+    type: "reminder",
+    title: "Rest Day Reminder",
     message: "Don't forget to take your scheduled rest day tomorrow.",
-    time: '3 days ago',
-    priority: 'normal',
+    time: "3 days ago",
+    priority: "normal",
   },
 ];
 
@@ -38,18 +38,18 @@ export function MessagesPanel() {
           <div
             key={index}
             className={`bg-[#2A2D33] rounded-lg p-4 border-l-4 ${
-              message.priority === 'high'
-                ? 'border-slate-600'
-                : 'border-slate-600'
+              message.priority === "high"
+                ? "border-slate-600"
+                : "border-slate-600"
             }`}
           >
             <div className="flex items-start gap-3">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
-                  message.type === 'reminder' ? 'bg-blue-600' : 'bg-slate-600'
+                  message.type === "reminder" ? "bg-blue-600" : "bg-slate-600"
                 }`}
               >
-                {message.type === 'reminder' ? '🔔' : '💬'}
+                {message.type === "reminder" ? "🔔" : "💬"}
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-sm">{message.title}</h4>

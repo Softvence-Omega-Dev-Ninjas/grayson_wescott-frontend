@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Save, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Save, AlertTriangle, CheckCircle, Clock } from "lucide-react";
 
 export function AutomationsAlerts() {
   const [alertSettings, setAlertSettings] = useState({
@@ -15,21 +15,21 @@ export function AutomationsAlerts() {
 
   const recentAlerts = [
     {
-      type: 'success',
-      message: 'New PR Squat 225lbs',
-      time: '2 hours ago',
+      type: "success",
+      message: "New PR Squat 225lbs",
+      time: "2 hours ago",
       icon: CheckCircle,
     },
     {
-      type: 'warning',
-      message: 'Missed workout reminder sent 2 hrs ago',
-      time: '2 hrs ago',
+      type: "warning",
+      message: "Missed workout reminder sent 2 hrs ago",
+      time: "2 hrs ago",
       icon: AlertTriangle,
     },
     {
-      type: 'info',
-      message: 'Data synced with client app',
-      time: '1 hour ago',
+      type: "info",
+      message: "Data synced with client app",
+      time: "1 hour ago",
       icon: Clock,
     },
   ];
@@ -54,7 +54,7 @@ export function AutomationsAlerts() {
                   id="daily-workout"
                   checked={alertSettings.dailyWorkoutReminders}
                   onCheckedChange={() =>
-                    handleCheckboxChange('dailyWorkoutReminders')
+                    handleCheckboxChange("dailyWorkoutReminders")
                   }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
@@ -70,7 +70,7 @@ export function AutomationsAlerts() {
                   id="missed-workout"
                   checked={alertSettings.missedWorkoutAlerts}
                   onCheckedChange={() =>
-                    handleCheckboxChange('missedWorkoutAlerts')
+                    handleCheckboxChange("missedWorkoutAlerts")
                   }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
@@ -86,7 +86,7 @@ export function AutomationsAlerts() {
                   id="new-pr"
                   checked={alertSettings.newPrNotifications}
                   onCheckedChange={() =>
-                    handleCheckboxChange('newPrNotifications')
+                    handleCheckboxChange("newPrNotifications")
                   }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
@@ -99,7 +99,7 @@ export function AutomationsAlerts() {
                   id="auto-progress"
                   checked={alertSettings.autoProgressWithClientDashboard}
                   onCheckedChange={() =>
-                    handleCheckboxChange('autoProgressWithClientDashboard')
+                    handleCheckboxChange("autoProgressWithClientDashboard")
                   }
                   className="border-gray-600 data-[state=checked]:bg-white data-[state=checked]:text-black"
                 />
@@ -150,11 +150,11 @@ export function AutomationsAlerts() {
                   <div className="flex items-start gap-2">
                     <alert.icon
                       className={`h-4 w-4 mt-0.5 ${
-                        alert.type === 'success'
-                          ? 'text-green-500'
-                          : alert.type === 'warning'
-                            ? 'text-yellow-500'
-                            : 'text-blue-500'
+                        alert.type === "success"
+                          ? "text-green-500"
+                          : alert.type === "warning"
+                            ? "text-yellow-500"
+                            : "text-blue-500"
                       }`}
                     />
                     <div className="flex-1">

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Line,
@@ -7,13 +7,13 @@ import {
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
-} from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+} from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/components/ui/chart';
+} from "@/components/ui/chart";
 
 interface LoadProgressionData {
   week: string;
@@ -35,8 +35,8 @@ export function LoadProgressionChart({ data }: LoadProgressionChartProps) {
           <ChartContainer
             config={{
               load: {
-                label: 'Load',
-                color: '#3B82F6',
+                label: "Load",
+                color: "#3B82F6",
               },
             }}
             className="w-full h-full"
@@ -55,7 +55,7 @@ export function LoadProgressionChart({ data }: LoadProgressionChartProps) {
                   dataKey="load"
                   stroke="#3B82F6"
                   strokeWidth={2}
-                  dot={{ fill: '#3B82F6', strokeWidth: 2, r: 4 }}
+                  dot={{ fill: "#3B82F6", strokeWidth: 2, r: 4 }}
                 />
               </LineChart>
             </ResponsiveContainer>

@@ -1,13 +1,13 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { CreditCard } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CreditCard } from "lucide-react";
 
 export function PaymentsSubscription() {
   // Example transactions data
   const transactions = [
-    { date: 'Feb 15, 2024', amount: '$29.99' },
-    { date: 'Jan 15, 2024', amount: '$29.99' },
-    { date: 'Dec 15, 2023', amount: '$29.99' },
+    { date: "Feb 15, 2024", amount: "$29.99" },
+    { date: "Jan 15, 2024", amount: "$29.99" },
+    { date: "Dec 15, 2023", amount: "$29.99" },
   ];
 
   return (

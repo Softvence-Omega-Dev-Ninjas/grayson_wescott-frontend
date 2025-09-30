@@ -1,4 +1,4 @@
-import { TSidebarItem } from '../../page';
+import { TSidebarItem } from "../../page";
 
 const SidebarSection = ({
   title,

@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import React from 'react';
-import { FaDatabase, FaUserPlus, FaEnvelope, FaListUl } from 'react-icons/fa';
-import successIcon from '@/assets/dashboard/add-excercise/tick.png';
-import tickIcon from '@/assets/dashboard/add-excercise/tick.png';
-import { User } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import Image from "next/image";
+import React from "react";
+import { FaDatabase, FaUserPlus, FaEnvelope, FaListUl } from "react-icons/fa";
+import successIcon from "@/assets/dashboard/add-excercise/tick.png";
+import tickIcon from "@/assets/dashboard/add-excercise/tick.png";
+import { User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const ClientAddedSuccessfully = () => {
   return (
@@ -119,7 +119,7 @@ const ClientAddedSuccessfully = () => {
 
         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
           <Link
-            href={'/dashboard/admin/all-clients/add-client'}
+            href={"/dashboard/admin/all-clients/add-client"}
             className="flex-1 w-full"
           >
             <Button className=" bg-[#B9BDC6] hover:bg-[#B9BDC6] cursor-pointer text-black border-0 h-12 text-base  hover:text-black w-full">
@@ -127,7 +127,7 @@ const ClientAddedSuccessfully = () => {
               Add Another Clients
             </Button>
           </Link>
-          <Link href={'/dashboard/admin/all-clients'} className="flex-1 w-full">
+          <Link href={"/dashboard/admin/all-clients"} className="flex-1 w-full">
             <Button className="flex-1 flex items-center justify-center p-3 bg-transparent hover:bg-primary-200 border border-secondary transition-colors duration-200 cursor-pointer w-full">
               <FaListUl className="mr-2" /> View All Clients
             </Button>

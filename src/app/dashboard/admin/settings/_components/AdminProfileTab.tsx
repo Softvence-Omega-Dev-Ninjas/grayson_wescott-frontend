@@ -1,35 +1,35 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Edit, Plus, Trash2 } from 'lucide-react';
-import a1 from '../../../../../assets/dashboard/messages/Avatar1.png';
-import a2 from '../../../../../assets/dashboard/messages/Avatar2.png';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Edit, Plus, Trash2 } from "lucide-react";
+import a1 from "../../../../../assets/dashboard/messages/Avatar1.png";
+import a2 from "../../../../../assets/dashboard/messages/Avatar2.png";
 
 const profileData = {
-  fullName: 'Graysam',
-  email: 'graysam@gmail.com',
+  fullName: "Graysam",
+  email: "graysam@gmail.com",
   twoFactorEnabled: true,
 };
 
 const adminsData = [
   {
     id: 1,
-    name: 'John Smith',
-    email: 'john.smith@company.com',
-    role: 'Admin',
+    name: "John Smith",
+    email: "john.smith@company.com",
+    role: "Admin",
     avatar: a1,
   },
   {
     id: 2,
-    name: 'John Smith',
-    email: 'john.smith@company.com',
-    role: 'Manager',
+    name: "John Smith",
+    email: "john.smith@company.com",
+    role: "Manager",
     avatar: a2,
   },
 ];
@@ -103,7 +103,7 @@ export function AdminProfileTab() {
                   Two-Factor Authentication
                 </p>
                 <p className="text-sm text-gray-300">
-                  {profileData.twoFactorEnabled ? 'Enabled' : 'Disabled'}
+                  {profileData.twoFactorEnabled ? "Enabled" : "Disabled"}
                 </p>
               </div>
               <Switch defaultChecked={profileData.twoFactorEnabled} />
@@ -132,14 +132,14 @@ export function AdminProfileTab() {
                   <div className="flex items-center gap-3 border ">
                     <Avatar className="h-10 w-10">
                       <AvatarImage
-                        src={admin.avatar.src || '/placeholder.svg'}
+                        src={admin.avatar.src || "/placeholder.svg"}
                         alt={admin.name}
                       />
                       <AvatarFallback>
                         {admin.name
-                          .split(' ')
+                          .split(" ")
                           .map((n) => n[0])
-                          .join('')}
+                          .join("")}
                       </AvatarFallback>
                     </Avatar>
                     <div>
@@ -149,7 +149,7 @@ export function AdminProfileTab() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge
-                      variant={admin.role === 'Admin' ? 'default' : 'secondary'}
+                      variant={admin.role === "Admin" ? "default" : "secondary"}
                       className="text-white px-3 py-2 bg-secondary"
                     >
                       {admin.role}

@@ -1,8 +1,8 @@
-'use client';
-import { WorkoutCard } from './_components/WorkoutCard/WorkoutCard';
-import usePagination from '@/hooks/usePagination';
-import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
-import { workoutData } from '@/constant/workoutData';
+"use client";
+import { WorkoutCard } from "./_components/WorkoutCard/WorkoutCard";
+import usePagination from "@/hooks/usePagination";
+import { Pagination } from "@/components/shared/dashboard/Pagination/Pagination";
+import { workoutData } from "@/constant/workoutData";
 
 const AllExercisePage = () => {
   const { currentPage, handlePageChange } = usePagination();
