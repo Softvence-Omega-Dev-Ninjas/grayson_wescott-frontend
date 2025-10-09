@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -9,11 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, Search } from 'lucide-react';
-import { ClientCard } from './_components/ClientCard/ClientCard';
-import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
 import usePagination from '@/hooks/usePagination';
+import { Plus, Search } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { ClientCard } from './_components/ClientCard/ClientCard';
 
 // Sample client data
 const sampleClients = [
@@ -159,7 +159,7 @@ const AllClientPage = () => {
       <div className="flex justify-center my-16">
         <Pagination
           activePage={currentPage}
-          totalPages={7}
+          totalPages={100}
           onPageChange={handlePageChange}
         />
       </div>

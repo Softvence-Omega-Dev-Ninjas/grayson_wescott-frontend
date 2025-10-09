@@ -1,13 +1,14 @@
 'use client';
-import * as React from 'react';
-import logo from '@/assets/header/logo.png';
+import calendarIcon from '@/assets/dashboard/sidebar/calenderIcon.svg';
+import clientIcon from '@/assets/dashboard/sidebar/clientIcon.svg';
 import dashboardIcon from '@/assets/dashboard/sidebar/dashboardIcon.svg';
 import dumballIcon from '@/assets/dashboard/sidebar/dumbalIcon.svg';
-import clientIcon from '@/assets/dashboard/sidebar/clientIcon.svg';
+import categoryIcon from '@/assets/dashboard/sidebar/layers.svg';
 import messageIcon from '@/assets/dashboard/sidebar/messageIcon.svg';
-import settingsIcon from '@/assets/dashboard/sidebar/settingIcon.svg';
 import progressIcon from '@/assets/dashboard/sidebar/progressIcon.svg';
-import calendarIcon from '@/assets/dashboard/sidebar/calenderIcon.svg';
+import settingsIcon from '@/assets/dashboard/sidebar/settingIcon.svg';
+import logo from '@/assets/header/logo.png';
+import * as React from 'react';
 
 import {
   Sidebar,
@@ -18,50 +19,56 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import useUser from '@/hooks/useUser';
+import Image from 'next/image';
+import Link from 'next/link';
 import { NavMain } from './NavMain';
 import { NavUser } from './NavUser';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-const isVisible = (path: string, pathname: string) => {
-  return pathname?.startsWith(path) ?? false;
-};
+// const isVisible = (path: string, pathname: string) => {
+//   return pathname?.startsWith(path) ?? false;
+// };
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const pathname = usePathname();
+  const { user } = useUser();
 
   const navMain = [
     {
       title: 'Dashboard',
       url: '/dashboard/admin/overview',
       icon: dashboardIcon.src,
-      show: isVisible('/dashboard/admin', pathname),
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
+    },
+    {
+      title: 'Manage Categories',
+      url: '/dashboard/admin/manage-categories',
+      icon: categoryIcon.src,
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
     },
     {
       title: 'All Clients',
       url: '/dashboard/admin/all-clients',
       icon: clientIcon.src,
-      show: isVisible('/dashboard/admin', pathname),
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
     },
     {
       title: 'Clients Program Builder',
       url: '/dashboard/admin/clients-programm-builders',
       icon: calendarIcon.src,
-      show: isVisible('/dashboard/admin', pathname),
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
     },
     {
       title: 'Exercise Library',
       icon: dumballIcon.src,
-      show: isVisible('/dashboard/admin', pathname), // parent visible if we’re inside /dashboard/admin/*
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN', // parent visible if we’re inside /dashboard/admin/*
       items: [
         {
           title: 'All Exercise',
           url: '/dashboard/admin/all-exercise',
-          show: isVisible('/dashboard/admin', pathname),
+          show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
         },
         {
           title: 'Add Exercise',
           url: '/dashboard/admin/add-exercise',
-          show: isVisible('/dashboard/admin', pathname),
+          show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
         },
       ],
     },
@@ -69,19 +76,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: 'Progress Tracking',
       url: '/dashboard/admin/progress-tracking',
       icon: progressIcon.src,
-      show: isVisible('/dashboard/admin', pathname),
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
     },
     {
       title: 'Messages',
       url: '/dashboard/admin/messages',
       icon: messageIcon.src,
-      show: isVisible('/dashboard/admin', pathname),
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
     },
     {
       title: 'Settings',
       url: '/dashboard/admin/settings',
       icon: settingsIcon.src,
-      show: isVisible('/dashboard/admin', pathname),
+      show: user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN',
     },
 
     //User Sidebar
@@ -89,37 +96,37 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: 'Dashboard',
       url: '/dashboard/user/overview',
       icon: dashboardIcon.src,
-      show: isVisible('/dashboard/user', pathname),
+      show: user?.role === 'USER',
     },
     {
       title: 'Assigned Programs',
       url: '/dashboard/user/assigned-programs',
       icon: calendarIcon.src,
-      show: isVisible('/dashboard/user', pathname),
+      show: user?.role === 'USER',
     },
     {
       title: 'Exercise Library',
       url: '/dashboard/user/exercise-library',
       icon: dumballIcon.src,
-      show: isVisible('/dashboard/user', pathname),
+      show: user?.role === 'USER',
     },
     {
       title: 'Progress Tracking',
       url: '/dashboard/user/progress-tracking',
       icon: progressIcon.src,
-      show: isVisible('/dashboard/user', pathname),
+      show: user?.role === 'USER',
     },
     {
       title: 'Messages',
       url: '/dashboard/user/messages',
       icon: messageIcon.src,
-      show: isVisible('/dashboard/user', pathname),
+      show: user?.role === 'USER',
     },
     {
       title: 'Settings',
       url: '/dashboard/user/settings',
       icon: settingsIcon.src,
-      show: isVisible('/dashboard/user', pathname),
+      show: user?.role === 'USER',
     },
   ];
 
