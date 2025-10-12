@@ -11,21 +11,13 @@ export const getAllUserProgram = async ({
 }: {
   page: number;
   limit: number;
-  status?: ProgramStatus; // ✅ make it optional
+  status?: ProgramStatus;
 }) => {
   const token = await getValidToken();
 
   try {
-    // Construct URL with conditional query param
-    const query = new URLSearchParams({
-      page: String(page),
-      limit: String(limit),
-    });
-
-    if (status) query.append('status', status);
-
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user/programs?${query.toString()}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/programs?page=${page}&limit=${limit}&status=${status}`,
       {
         method: 'GET',
         headers: {
