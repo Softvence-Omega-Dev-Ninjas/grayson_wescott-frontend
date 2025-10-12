@@ -1,15 +1,15 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import useUser from '@/hooks/useUser';
 import { Menu } from 'lucide-react';
 import Image from 'next/image';
-import logo from '../../../../assets/header/logo.png';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import logo from '../../../../assets/header/logo.png';
 import ProfileAvatar from './_components/ProfileAvatar/ProfileAvatar';
-import useUser from '@/hooks/useUser';
 
 export default function Header() {
   const [open, setOpen] = useState(false);

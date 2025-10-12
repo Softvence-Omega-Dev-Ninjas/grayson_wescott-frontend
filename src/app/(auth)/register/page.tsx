@@ -1,9 +1,5 @@
 'use client';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Form,
   FormField,
@@ -11,19 +7,23 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import Link from 'next/link';
-import bg from '../../../assets/footerbg.png';
-import bg1 from '../../../assets/header/logo.png';
+import { Input } from '@/components/ui/input';
+import { registerUser } from '@/services/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
-import { RiUserLine } from 'react-icons/ri';
-import { MdOutlineEmail } from 'react-icons/md';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { FaFacebookF, FaSpinner, FaTwitter } from 'react-icons/fa6';
 import { IoLogoGoogle } from 'react-icons/io';
-import { useState } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { registerUser } from '@/services/auth';
+import { MdOutlineEmail } from 'react-icons/md';
+import { RiUserLine } from 'react-icons/ri';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
+import * as z from 'zod';
+import bg from '../../../assets/footerbg.png';
+import bg1 from '../../../assets/header/logo.png';
 
 // Corrected the schema by removing the .default() method.
 // This resolves the type mismatch with the useForm's defaultValues.
@@ -56,7 +56,7 @@ export default function SignUpPage() {
     console.log('[v0] Sign up form submitted:', values);
     try {
       const res = await registerUser(values);
-
+      console.log('==============>', res);
       if (res?.success) {
         toast.success(
           'Registration successful! We’ve sent a verification code to your email.',

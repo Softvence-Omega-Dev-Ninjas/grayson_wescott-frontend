@@ -1,6 +1,4 @@
 'use client';
-import { ChevronRight } from 'lucide-react';
-import { VscDebugBreakpointLogUnverified } from 'react-icons/vsc';
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,15 +11,17 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar';
+import { ChevronRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
+import { VscDebugBreakpointLogUnverified } from 'react-icons/vsc';
 
 // Sidebar Item type (icon is now only string for Image)
 export type TSidebarItem = {
   title: string;
   url?: string;
-  icon: string; // only image src
+  icon: string;
   show: boolean;
   isActive?: boolean;
   items?: {

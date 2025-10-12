@@ -1,10 +1,5 @@
 'use client';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Form,
   FormField,
@@ -12,16 +7,21 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import bg from '../../../assets/footerbg.png';
-import bg1 from '../../../assets/header/logo.png';
+import { Input } from '@/components/ui/input';
+import useUser from '@/hooks/useUser';
+import { loginUser } from '@/services/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { FaFacebookF, FaSpinner, FaTwitter } from 'react-icons/fa6';
-import { loginUser } from '@/services/auth';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import useUser from '@/hooks/useUser';
+import * as z from 'zod';
+import bg from '../../../assets/footerbg.png';
+import bg1 from '../../../assets/header/logo.png';
 import GoogleLogin from './_components/GoogleLogin/GoogleLogin';
 
 const loginSchema = z.object({
@@ -51,6 +51,7 @@ export default function LoginPage() {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const res = await loginUser(values);
+      console.log(res);
       if (res?.success) {
         toast.success('Login successful!');
         setUser(res?.data?.user);
@@ -58,7 +59,10 @@ export default function LoginPage() {
         if (res?.data?.user?.role === 'USER') {
           router.push(`/dashboard/user/overview`);
         }
-        if (res?.data?.user?.role === 'ADMIN') {
+        if (
+          res?.data?.user?.role === 'ADMIN' ||
+          res?.data?.user?.role === 'SUPER_ADMIN'
+        ) {
           router.push(`/dashboard/admin/overview`);
         }
       } else {
