@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { workoutData } from '@/constant/workoutData';
 import { getAllUserProgram } from '@/services/user/assigned-program';
-import { ProgramStatus } from '@/types/user-program.types';
 import { FaRegCalendarCheck, FaRegCirclePlay } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { StatesCard } from '../../admin/overview/_components/StatesCard/StatesCard';
@@ -40,15 +39,11 @@ const UserOverview = async ({ searchParams }: Props) => {
       : undefined;
   const page = Number.isNaN(pageParam) || !pageParam ? 1 : pageParam;
 
-  const statusParam =
-    typeof searchParams?.status === 'string' ? searchParams.status : undefined;
-  console.log('🚀 ~ statusParam:', searchParams?.status);
-
   // server fetch — uses your existing server function
   const res = await getAllUserProgram({
     page,
     limit: 10,
-    status: statusParam as ProgramStatus,
+    status: undefined,
   });
   console.log('📦 User programs from server function:', res);
 
