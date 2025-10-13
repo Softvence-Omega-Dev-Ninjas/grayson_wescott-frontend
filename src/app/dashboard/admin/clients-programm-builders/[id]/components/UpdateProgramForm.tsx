@@ -9,66 +9,60 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { getAllCategories } from '@/services/admin/category';
-import { createProgramm } from '@/services/admin/programm';
+import { updateProgramm } from '@/services/admin/programm';
 import { ICategory } from '@/types/category.types';
+import { IProgramDetails } from '@/types/program-details.types';
 import { IProgramm } from '@/types/programm.types';
 import { Loader2, Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { FaBookmark } from 'react-icons/fa6';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'sonner';
-import AssignToClientsModal from './_components/AssignToClientsModal';
+import AssignToClientsModal from '../../add-program/_components/AssignToClientsModal';
+import { daysOfWeek } from '../../add-program/page';
 
-export const daysOfWeek = [
-  'MONDAY',
-  'TUESDAY',
-  'WEDNESDAY',
-  'THURSDAY',
-  'FRIDAY',
-  'SATURDAY',
-  'SUNDAY',
-];
-export default function AddProgramPage() {
-  const [categories, setCategories] = useState<ICategory[] | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const [selectedClientIds, setSelectedClientIds] = useState<string[]>([]);
+type TUpdateProgramProps = {
+  program: IProgramDetails;
+  categories: ICategory[];
+};
+
+const UpdateProgramForm = ({ program, categories }: TUpdateProgramProps) => {
   const router = useRouter();
+  const clients = program?.userPrograms?.map((e) => e.user.id);
+  const [uploading, setUploading] = useState(false);
+  const [selectedClientIds, setSelectedClientIds] = useState<string[]>(
+    clients || [],
+  );
 
-  //Inigrate React hook form
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-    trigger,
-    reset,
   } = useForm<IProgramm & { restSeconds: string }>({
     defaultValues: {
-      name: '',
-      duration: '',
-      description: '',
-      coachNote: '',
-      categories: [],
-      exercises: [
-        {
-          title: '',
-          dayOfWeek: '',
-          description: '',
-          duration: '',
-          restSeconds: '',
-          sets: '',
-          reps: '',
-          tempo: '',
-          videoUrl: '',
-        },
-      ],
+      name: program?.name || '',
+      duration: program?.duration || '',
+      description: program?.description || '',
+      coachNote: program?.coachNote || '',
+      categories: program?.programCategories?.map((c) => c.categoryId) || [],
+      exercises:
+        program.exercises?.map((ex) => ({
+          title: ex.title || '',
+          dayOfWeek: ex.dayOfWeek || '',
+          description: ex.description || '',
+          duration: ex.duration?.toString() || '',
+          restSeconds: ex.rest?.toString() || '',
+          sets: ex.sets?.toString() || '',
+          reps: ex.reps?.toString() || '',
+          tempo: ex.tempo || '',
+          videoUrl: ex.videoUrl || '',
+        })) || [],
     },
   });
 
-  //Add excercise dynamically
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'exercises',
@@ -92,33 +86,13 @@ export default function AddProgramPage() {
     remove(index);
   };
 
-  //Get all category
-  useEffect(() => {
-    const getCategory = async () => {
-      const res = await getAllCategories();
-      setCategories(res?.data);
-    };
-
-    getCategory();
-  }, []);
-
-  //Handle save template
   const handleSaveAsTemplate = async (data: IProgramm) => {
     setUploading(true);
-    // Manually trigger validation for the entire form
-    const isValid = await trigger();
-    if (!isValid) {
-      console.log('Validation failed. Please fill in all required fields.');
-      return;
-    }
     const programmData = { ...data, userIds: [...selectedClientIds] };
-    console.log('programmData================>', programmData);
     try {
-      // Example API call
-      const res = await createProgramm(programmData);
+      const res = await updateProgramm(program?.id, programmData);
       if (res?.success) {
         toast.success('Program updated successfully.');
-        reset();
         router.push('/dashboard/admin/clients-programm-builders');
       } else {
         let errorMessage = 'Failed to update program. Try again later.';
@@ -136,7 +110,7 @@ export default function AddProgramPage() {
         toast.error(errorMessage);
       }
     } catch (err) {
-      console.error('❌ Error submitting category:', err);
+      console.error('❌ Error submitting program:', err);
     } finally {
       setUploading(false);
     }
@@ -144,14 +118,13 @@ export default function AddProgramPage() {
 
   return (
     <div className="p-4 sm:p-8">
-      {/* {userId && <p className="text-right text-gray-500 text-sm mb-4">User ID: {userId}</p>} */}
       <div className="w-full ">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Program Details Section */}
-          <div className="w-full sticky top-20 max-h-[calc(100vh-100px)] overflow-y-scroll lg:w-1/3 space-y-8 p-4 bg-primary-200 border border-secondary h-fit">
+          <div className="w-full sticky top-20 lg:w-1/3 space-y-8 p-4 bg-primary-200 border border-secondary max-h-[calc(100vh-100px)] overflow-y-scroll">
             <h2 className="text-2xl font-semibold">Program Details</h2>
 
-            {/* Program Name  */}
+            {/* Program Name */}
             <div className="space-y-2">
               <Label htmlFor="programName" className="text-lg font-medium">
                 Program Name
@@ -160,79 +133,56 @@ export default function AddProgramPage() {
                 id="name"
                 type="text"
                 placeholder="e.g., Elite Squat"
-                {...register('name', {
-                  required: 'Program name is required.',
-                })}
+                {...register('name')}
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
               />
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name.message}</p>
-              )}
+              {/* {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>} */}
             </div>
 
-            {/* duration  */}
+            {/* Duration */}
             <div className="space-y-2">
               <Label htmlFor="duration" className="text-lg font-medium">
                 Duration
               </Label>
               <Input
                 id="duration"
-                type="text" // 💡 Keeps the type as "text" as requested
+                type="text"
                 placeholder="e.g., 5"
-                {...register('duration', {
-                  required: 'Program duration is required',
-                })}
+                {...register('duration')}
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
               />
-              {/* Note: Corrected the error check to 'errors.duration' */}
-              {errors.duration && (
-                <p className="text-red-500 text-sm">
-                  {errors?.duration?.message}
-                </p>
-              )}
+              {/* {errors.duration && <p className="text-red-500 text-sm">{errors.duration.message}</p>} */}
             </div>
 
-            {/* Description  */}
+            {/* Description */}
             <div className="space-y-2">
               <Label htmlFor="videoDescription" className="text-lg font-medium">
-                Programm Description *
+                Program Description
               </Label>
               <Textarea
                 id="videoDescription"
-                placeholder="Complete guide to performing the perfect barbell back squat"
-                {...register('description', {
-                  required: 'Programm Description is required.',
-                })}
+                placeholder="Program Description"
+                {...register('description')}
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] rounded-none"
               />
-              {errors.description && (
-                <p className="text-red-500 text-sm">
-                  {errors.description.message}
-                </p>
-              )}
+              {/* {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>} */}
             </div>
 
-            {/* Coach Notes  */}
+            {/* Coach Notes */}
             <div className="space-y-2">
-              <Label htmlFor="videoDescription" className="text-lg font-medium">
-                Notes *
+              <Label htmlFor="notes" className="text-lg font-medium">
+                Notes
               </Label>
               <Textarea
                 id="notes"
-                placeholder="Complete guide to performing the perfect barbell back squat"
-                {...register('coachNote', {
-                  required: 'Notes is required.',
-                })}
+                placeholder="Coach notes..."
+                {...register('coachNote')}
                 className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6] rounded-none"
               />
-              {errors.coachNote && (
-                <p className="text-red-500 text-sm">
-                  {errors.coachNote.message}
-                </p>
-              )}
+              {/* {errors.coachNote && <p className="text-red-500 text-sm">{errors.coachNote.message}</p>} */}
             </div>
 
-            {/* Categories  */}
+            {/* Categories */}
             <div className="space-y-2">
               <Label className="text-lg font-medium">Exercise Categories</Label>
               <div className="space-y-2">
@@ -244,11 +194,7 @@ export default function AddProgramPage() {
                     <Input
                       id={`category-${category?.id}`}
                       type="checkbox"
-                      {...register('categories', {
-                        validate: (value) =>
-                          value.length > 0 ||
-                          'At least one category is required.',
-                      })}
+                      {...register('categories')}
                       value={category?.id}
                       className="form-checkbox h-4 w-4 text-black rounded-md border border-zinc-500 bg-zinc-800 cursor-pointer"
                     />
@@ -261,11 +207,7 @@ export default function AddProgramPage() {
                   </div>
                 ))}
               </div>
-              {errors.categories && (
-                <p className="text-red-500 text-sm">
-                  {errors.categories.message}
-                </p>
-              )}
+              {/* {errors.categories && <p className="text-red-500 text-sm">{errors.categories.message}</p>} */}
             </div>
 
             <div className="space-y-4">
@@ -277,12 +219,12 @@ export default function AddProgramPage() {
                 {uploading ? (
                   <div className="flex items-center gap-2">
                     <Loader2 className="animate-spin" />
-                    Adding Program...
+                    Updating Program...
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
                     <FaBookmark />
-                    Add Program
+                    Update Program
                   </div>
                 )}
               </button>
@@ -303,7 +245,7 @@ export default function AddProgramPage() {
                 className="cursor-pointer font-medium py-2 px-4 md:py-2.5 md:px-6 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75"
               >
                 <Plus size={14} />
-                Add Excercise
+                Add Exercise
               </button>
             </div>
 
@@ -552,4 +494,6 @@ export default function AddProgramPage() {
       </div>
     </div>
   );
-}
+};
+
+export default UpdateProgramForm;
