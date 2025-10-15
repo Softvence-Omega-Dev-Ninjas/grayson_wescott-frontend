@@ -148,7 +148,7 @@ export default function AddProgramPage() {
       <div className="w-full ">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Program Details Section */}
-          <div className="w-full sticky top-20 max-h-[calc(100vh-100px)] overflow-y-scroll lg:w-1/3 space-y-8 p-4 bg-primary-200 border border-secondary h-fit">
+          <div className="w-full lg:sticky lg:top-20 lg:max-h-[calc(100vh-100px)] lg:overflow-y-scroll lg:w-1/3 space-y-8 p-4 bg-primary-200 border border-secondary h-fit">
             <h2 className="text-2xl font-semibold">Program Details</h2>
 
             {/* Program Name  */}

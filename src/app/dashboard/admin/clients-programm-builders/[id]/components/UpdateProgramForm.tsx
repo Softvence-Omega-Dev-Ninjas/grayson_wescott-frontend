@@ -121,7 +121,7 @@ const UpdateProgramForm = ({ program, categories }: TUpdateProgramProps) => {
       <div className="w-full ">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Program Details Section */}
-          <div className="w-full sticky top-20 lg:w-1/3 space-y-8 p-4 bg-primary-200 border border-secondary max-h-[calc(100vh-100px)] overflow-y-scroll">
+          <div className="w-full lg:sticky lg:top-20 lg:w-1/3 space-y-8 p-4 bg-primary-200 border border-secondary lg:max-h-[calc(100vh-100px)] lg:overflow-y-scroll">
             <h2 className="text-2xl font-semibold">Program Details</h2>
 
             {/* Program Name */}
