@@ -6,6 +6,7 @@ services:
     environment:
       - NEXT_PUBLIC_BASE_API=https://carbonengines.com/api
       - NEXT_PUBLIC_GOOGLE_CLIENT_ID=1074646902032-5ab3gkkggb7mrejjfnvr7ra65qos4o8s.apps.googleusercontent.com
+      - NEXT_PUBLIC_FACEBOOK_APP_ID=2264393004025713
     ports:
       - "3000:3000"
     restart: always

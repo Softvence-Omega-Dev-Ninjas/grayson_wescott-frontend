@@ -46,7 +46,7 @@ export default function Header() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 py-1 transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-screen z-50 py-1 transition-all duration-300 ${
         isScrolled ? 'bg-black/70 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
     >
