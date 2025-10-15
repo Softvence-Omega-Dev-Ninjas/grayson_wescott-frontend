@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { FaFacebookF, FaSpinner } from 'react-icons/fa6';
+import { FaSpinner } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
 import { RiUserLine } from 'react-icons/ri';
 import { toast } from 'sonner';
@@ -25,6 +25,7 @@ import bg from '../../../assets/footerbg.png';
 import bg1 from '../../../assets/header/logo.png';
 import GoogleLogin from '../login/_components/GoogleLogin/GoogleLogin';
 import TwitterLogin from '../login/_components/TwitterLogin/TwitterLogin';
+import FacebookLogin from '../login/_components/FacebookLogin/FacebookLogin';
 
 // Corrected the schema by removing the .default() method.
 // This resolves the type mismatch with the useForm's defaultValues.
@@ -215,9 +216,7 @@ export default function SignUpPage() {
 
           {/* Social Media Icons */}
           <div className="flex justify-center space-x-4 pt-4">
-            <button className="w-9 h-9 bg-white rounded flex items-center justify-center cursor-pointer mt-0.5">
-              <FaFacebookF className="text-blue-500" />
-            </button>
+            <FacebookLogin />
             <TwitterLogin />
             <GoogleLogin />
           </div>
