@@ -17,12 +17,13 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { FaFacebookF, FaSpinner, FaTwitter } from 'react-icons/fa6';
+import { FaFacebookF, FaSpinner } from 'react-icons/fa6';
 import { toast } from 'sonner';
 import * as z from 'zod';
 import bg from '../../../assets/footerbg.png';
 import bg1 from '../../../assets/header/logo.png';
 import GoogleLogin from './_components/GoogleLogin/GoogleLogin';
+import TwitterLogin from './_components/TwitterLogin/TwitterLogin';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -198,9 +199,7 @@ export default function LoginPage() {
               <button className="w-9 h-9 bg-white rounded flex items-center justify-center cursor-pointer mt-0.5">
                 <FaFacebookF className="text-blue-500" />
               </button>
-              <button className="w-9 h-9 bg-white rounded flex items-center justify-center cursor-pointer mt-0.5">
-                <FaTwitter className="text-sky-400" />
-              </button>
+              <TwitterLogin />
               <GoogleLogin />
             </div>
           </Form>
