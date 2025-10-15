@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dialog,
   DialogContent,
@@ -6,21 +5,34 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useState } from 'react';
-import { FaUsers } from 'react-icons/fa6';
-import avatar from '@/assets/dashboard/add-excercise/avatar.png';
+import { getAllUsers } from '@/services/admin/user';
+import { IMetadata } from '@/types/metadata.types';
+import { IUser } from '@/types/user.types';
+import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { FaUsers } from 'react-icons/fa6';
 
 const AssignToClientsModal = ({
-  clients,
   selectedClientIds,
   setSelectedClientIds,
 }: {
-  clients: any[];
   selectedClientIds: string[];
   setSelectedClientIds: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
   const [open, setOpen] = useState(false);
+  const [users, setUsers] = useState<IUser[] | null>(null);
+  const [metaData, setMetadata] = useState<IMetadata | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    const getCategory = async () => {
+      const res = await getAllUsers({ currentPage });
+      setUsers((prev) => [...(prev ?? []), ...(res?.data || [])]);
+      setMetadata(res?.metadata);
+    };
+
+    getCategory();
+  }, [currentPage]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -42,42 +54,56 @@ const AssignToClientsModal = ({
             </DialogTitle>
           </DialogHeader>
 
-          {clients.map((client) => (
-            <div
-              key={client.id}
-              className="flex items-center justify-between p-3  bg-secondary rounded-none mt-5"
-            >
-              <div className="flex items-center gap-3">
-                <Image
-                  src={avatar}
-                  width={26}
-                  height={26}
-                  alt="Upload Icon"
-                  className="bg-secondary rounded-full"
-                />
-                <div className="flex flex-col">
-                  <span className="text-white text-base font-medium">
-                    {client.name}
-                  </span>
-                  <span className="text-gray-400 text-sm">{client.level}</span>
-                </div>
-              </div>
+          <div className="overflow-hidden">
+            <div className="overflow-y-auto">
+              {users?.map((user: IUser) => (
+                <div
+                  key={user.id}
+                  className="flex items-center justify-between p-3  bg-secondary rounded-none mt-5"
+                >
+                  <div className="flex items-center gap-3">
+                    <Image
+                      src={user?.avatarUrl}
+                      width={26}
+                      height={26}
+                      alt="Upload Icon"
+                      className="bg-secondary rounded-full"
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-white text-base font-medium">
+                        {user?.username}
+                      </span>
+                      <span className="text-gray-400 text-sm">
+                        {user?.email}
+                      </span>
+                    </div>
+                  </div>
 
-              <input
-                type="checkbox"
-                checked={selectedClientIds.includes(client.id)}
-                onChange={(e) => {
-                  setSelectedClientIds(
-                    (prev) =>
-                      e.target.checked
-                        ? [...prev, client.id] // ✅ add
-                        : prev.filter((id) => id !== client.id), // ✅ remove
-                  );
-                }}
-                className="w-5 h-5 form-checkbox rounded-full text-blue-500 bg-gray-700 border-gray-600 focus:ring-blue-500 transition-colors duration-200"
-              />
+                  <input
+                    type="checkbox"
+                    checked={selectedClientIds.includes(user.id)}
+                    onChange={(e) => {
+                      setSelectedClientIds(
+                        (prev) =>
+                          e.target.checked
+                            ? [...prev, user.id] // ✅ add
+                            : prev.filter((id) => id !== user.id), // ✅ remove
+                      );
+                    }}
+                    className="w-5 h-5 form-checkbox rounded-full text-blue-500 bg-gray-700 border-gray-600 focus:ring-blue-500 transition-colors duration-200"
+                  />
+                </div>
+              ))}
             </div>
-          ))}
+            <div className="flex items-center justify-center my-5">
+              <span
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+                className={`hover:bg-secondary cursor-pointer rounded-md w-8 h-8 flex items-center justify-center ${metaData?.totalPage === currentPage ? 'hidden' : 'flex'}`}
+              >
+                <ChevronDown />
+              </span>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

@@ -1,20 +1,10 @@
-interface ClientData {
-  name: string;
-  program: string;
-  currentWeek: string;
-  completion: number;
-  compliance: number;
-  workoutsCompleted: string;
-  lastActive: string;
-}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getAllClients } from '@/services/admin/client';
+import Image from 'next/image';
 
-interface ClientPerformanceTableProps {
-  clients: ClientData[];
-}
+const ClientPerformanceTable = async () => {
+  const clients = await getAllClients();
 
-export function ClientPerformanceTable({
-  clients,
-}: ClientPerformanceTableProps) {
   return (
     <div className="mb-8 border border-secondary">
       {/* Header */}
@@ -28,7 +18,7 @@ export function ClientPerformanceTable({
         <table className="w-full min-w-[800px] border-collapse">
           <thead>
             <tr className="border-b border-gray-800 bg-secondary text-white">
-              <th className="text-left py-3 px-5  font-medium">Client Name</th>
+              <th className="text-left py-3 px-5  font-medium">Client</th>
               <th className="text-left py-3 px-5  font-medium">Program</th>
               <th className="text-left py-3 px-5  font-medium">Current Week</th>
               <th className="text-left py-3 px-5  font-medium">Completion</th>
@@ -40,27 +30,47 @@ export function ClientPerformanceTable({
             </tr>
           </thead>
           <tbody>
-            {clients.map((client, index) => (
+            {clients?.data?.map((client: any, index: number) => (
               <tr key={index} className="border-b border-gray-800/50">
-                <td className="py-4 px-5 text-white">{client.name}</td>
-                <td className="py-4 px-5 text-gray-300">{client.program}</td>
+                <td className="py-4 px-5 text-white">
+                  <div className="flex items-center gap-2.5">
+                    <div className="shrink-0">
+                      <Image
+                        src={client?.userInfo?.avatarUrl}
+                        alt="avatar"
+                        width={40}
+                        height={40}
+                        className="rounded-full shrink-0"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{client?.userInfo?.name}</p>
+                      <p>{client?.userInfo?.email}</p>
+                    </div>
+                  </div>
+                </td>
                 <td className="py-4 px-5 text-gray-300">
-                  {client.currentWeek}
+                  {client?.latestAssignedProgram?.programName}
+                </td>
+                <td className="py-4 px-5 text-gray-300">
+                  {`Week ${client?.latestAssignedProgram?.currentWeekAsPerUser}/${client?.latestAssignedProgram?.programDurationWeeks}`}
                 </td>
                 <td className="py-4 px-5">
                   <span className="bg-green-900/30 text-green-400 border border-green-800 px-2 py-1 rounded text-sm">
-                    {client.completion}%
+                    {client?.latestAssignedProgram?.completionPercentage}%
                   </span>
                 </td>
                 <td className="py-4 px-5">
                   <span className="bg-blue-900/30 text-blue-400 border border-blue-800 px-2 py-1 rounded text-sm">
-                    {client.compliance}%
+                    {client?.latestAssignedProgram?.compliancePercentage}%
                   </span>
                 </td>
                 <td className="py-4 px-5 text-gray-300">
-                  {client.workoutsCompleted}
+                  {`${client?.latestAssignedProgram?.completedWorkouts}/${client?.latestAssignedProgram?.totalWorkouts}`}
                 </td>
-                <td className="py-4 px-5 text-gray-400">{client.lastActive}</td>
+                <td className="py-4 px-5 text-gray-400">
+                  {client?.userInfo?.name}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -68,4 +78,5 @@ export function ClientPerformanceTable({
       </div>
     </div>
   );
-}
+};
+export default ClientPerformanceTable;

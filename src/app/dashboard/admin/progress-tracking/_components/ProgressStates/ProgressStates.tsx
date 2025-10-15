@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface MetricCardProps {
   title: string;
   value: string | number;
@@ -19,51 +20,29 @@ function MetricCard({ title, value, change }: MetricCardProps) {
   );
 }
 
-interface MetricData {
-  title: string;
-  value: string | number;
-  change: string;
-  changeType: 'positive' | 'negative';
-}
-
-export function ProgressStates() {
-  const metricsData: MetricData[] = [
-    {
-      title: 'Active Clients',
-      value: 52,
-      change: '+4 this week',
-      changeType: 'positive',
-    },
-    {
-      title: 'Avg Program Completion',
-      value: '57%',
-      change: '+5%',
-      changeType: 'positive',
-    },
-    {
-      title: 'Adherence Rate',
-      value: '82%',
-      change: '+2%',
-      changeType: 'positive',
-    },
-    {
-      title: 'Total Workouts Completed',
-      value: '1,240',
-      change: '+107 today',
-      changeType: 'positive',
-    },
-  ];
-
+export function ProgressStates({ states }: { states: any }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 bg-primary-200 p-5">
-      {metricsData.map((metric, index) => (
-        <MetricCard
-          key={index}
-          title={metric.title}
-          value={metric.value}
-          change={metric.change}
-        />
-      ))}
+      <MetricCard
+        title={'Total Clients'}
+        value={states?.clients?.totalClients}
+        change={states?.clients?.addedThisWeek}
+      />
+      <MetricCard
+        title={'Avg Program Completion'}
+        value={states?.programCompletion?.total?.overallCompletionRate}
+        change={states?.programCompletion?.total?.completionRateThisWeek}
+      />
+      <MetricCard
+        title={'Adherence Rate'}
+        value={states?.programCompletion?.adherence?.overallAdherenceRate}
+        change={states?.programCompletion?.adherence?.adherenceRateThisWeek}
+      />
+      <MetricCard
+        title={'Total Workouts Completed'}
+        value={states?.workouts?.planned?.total}
+        change={states?.workouts?.planned?.thisWeek}
+      />
     </div>
   );
 }

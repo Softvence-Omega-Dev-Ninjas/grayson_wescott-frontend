@@ -1,10 +1,9 @@
 import { DollarSign, FileText, Users } from 'lucide-react';
-import React from 'react';
+import ActivityTable from './_components/ActivityTable/ActivityTable';
 import {
   IStatesCardProps,
   StatesCard,
 } from './_components/StatesCard/StatesCard';
-import { ActivityTable } from './_components/ActivityTable/ActivityTable';
 
 const statesData: IStatesCardProps[] = [
   {
