@@ -1,11 +1,11 @@
-import { Plus } from 'lucide-react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { getAllProgramms } from '@/services/admin/programm';
+import { Plus, SquarePen } from 'lucide-react';
 import Link from 'next/link';
-const demoProgramm = [
-  { prgrammName: 'Back Squat', category: 'Lower Body' },
-  { prgrammName: 'Front Squat', category: 'Lower Body' },
-  { prgrammName: 'Split Squat', category: 'Lower Body' },
-];
-const ClientsProgrammBuildersPage = () => {
+
+const ClientsProgrammBuildersPage = async () => {
+  const programs = await getAllProgramms();
+  console.log(programs);
   return (
     <div>
       <div className="flex items-center justify-between gap-5 flex-wrap">
@@ -21,17 +21,27 @@ const ClientsProgrammBuildersPage = () => {
         </Link>
       </div>
       <div className="flex flex-col gap-5 mt-10">
-        {demoProgramm.map((item, idx) => {
+        {programs?.data?.map((item: any) => {
           return (
             <div
-              key={idx}
+              key={item?.id}
               className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer"
             >
               <div className="text-left">
-                <p className="font-semibold text-lg">{item.prgrammName}</p>
-                <p className="text-base text-gray-400">{item.category}</p>
+                <p className="font-semibold text-lg">{item?.name}</p>
+                <p className="text-base text-gray-400">
+                  {item?.description?.length > 100
+                    ? item.description.slice(0, 100) + '...'
+                    : item?.description}
+                </p>
               </div>
-              <Plus />
+              <Link
+                href={`/dashboard/admin/clients-programm-builders/${item?.id}`}
+              >
+                <span>
+                  <SquarePen />
+                </span>
+              </Link>
             </div>
           );
         })}
