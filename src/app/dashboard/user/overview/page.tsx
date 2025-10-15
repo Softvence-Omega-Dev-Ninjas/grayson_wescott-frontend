@@ -35,7 +35,7 @@ const UserOverview = async ({ searchParams }: Props) => {
   // parse search params (page & status)
   const pageParam =
     typeof (await searchParams?.page) === 'string'
-      ? parseInt(await searchParams?.page as string, 10)
+      ? parseInt((await searchParams?.page) as string, 10)
       : undefined;
   const page = Number.isNaN(pageParam) || !pageParam ? 1 : pageParam;
 
