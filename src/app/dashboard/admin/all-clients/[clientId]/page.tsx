@@ -23,7 +23,9 @@ const ClientProfilePage = async ({
       <ProgramTable program={clientData?.data?.programs?.data} />
       {/* Middle Section - Workout Log and Weekly Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <DailyWorkoutLog exercises={clientData?.data?.dailyExerciseLogs?.data} />
+        <DailyWorkoutLog
+          exercises={clientData?.data?.dailyExerciseLogs?.data}
+        />
         <CoachNotes />
       </div>
 
