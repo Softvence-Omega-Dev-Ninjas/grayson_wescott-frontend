@@ -106,7 +106,6 @@ export function AssignedProgramTable({
   // Status change
   const handleStatusChange = (status?: ProgramStatus) => {
     setActiveStatus(status);
-    updateSearchParams(1, status);
   };
 
   // Compute filtered programs
