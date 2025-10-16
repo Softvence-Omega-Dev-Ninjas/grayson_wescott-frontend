@@ -25,7 +25,16 @@ import bg from '../../../assets/footerbg.png';
 import bg1 from '../../../assets/header/logo.png';
 import GoogleLogin from '../login/_components/GoogleLogin/GoogleLogin';
 import TwitterLogin from '../login/_components/TwitterLogin/TwitterLogin';
-import FacebookLogin from '../login/_components/FacebookLogin/FacebookLogin';
+
+import dynamic from 'next/dynamic';
+
+// Lazy-load FB login to avoid SSR
+const FacebookLogin = dynamic(
+  () => import('../login/_components/FacebookLogin/FacebookLogin'),
+  {
+    ssr: false,
+  },
+);
 
 // Corrected the schema by removing the .default() method.
 // This resolves the type mismatch with the useForm's defaultValues.
