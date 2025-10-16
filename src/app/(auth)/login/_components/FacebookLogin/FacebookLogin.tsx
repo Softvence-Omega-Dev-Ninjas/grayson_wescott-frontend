@@ -19,6 +19,8 @@ declare global {
 export default function FacebookLogin() {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>('');
+  const [needsEmail, setNeedsEmail] = useState(false);
 
   useEffect(() => {
     // Load FB SDK
@@ -52,42 +54,77 @@ export default function FacebookLogin() {
           toast.error('Facebook login cancelled or failed.');
         }
       },
-      { scope: 'email,public_profile' }, // permissions you need
+      { scope: 'email,public_profile' },
     );
+  };
+
+  const handleEmailSubmit = async () => {
+    if (!accessToken || !email) return;
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/complete-login`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            accessToken,
+            email,
+            provider: AuthProvider.FACEBOOK,
+          }),
+        },
+      );
+
+      const result = await res.json();
+
+      if (!res.ok) throw new Error(result?.message || 'Failed to send email');
+
+      // instruct user to check there inbox
+      if (result?.data?.needsVerification) {
+        toast.success(
+          'A link to complete the verification has been sent to your email. Please check your inbox.',
+        );
+      }
+    } catch (err: any) {
+      toast.error(err.message || 'Something went wrong');
+    }
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      if (accessToken) {
-        const res = await sendAccessToken({
-          accessToken,
-          provider: AuthProvider.FACEBOOK,
-        });
+      if (!accessToken) return;
 
-        switch (res.step) {
-          case 'NEEDS_EMAIL':
-            // open modal to collect email
-            break;
-          case 'NEEDS_VERIFICATION':
-            toast.success(
-              'An Link to complete the verification has send to you email. Pleas check your inbox.',
-            );
-            break;
-          case 'LOGGED_IN':
-            if (res?.user?.role === 'USER') {
-              router.push(`/dashboard/user/overview`);
-            }
-            if (
-              res?.user?.role === 'ADMIN' ||
-              res?.user?.role === 'SUPER_ADMIN'
-            ) {
-              router.push(`/dashboard/admin/overview`);
-            }
-            break;
-          case 'ERROR':
-            toast.error(res.error);
-            break;
-        }
+      const res = await sendAccessToken({
+        accessToken,
+        provider: AuthProvider.FACEBOOK,
+      });
+
+      switch (res.step) {
+        case 'NEEDS_EMAIL':
+          setNeedsEmail(true); // show email input field
+          break;
+
+        case 'NEEDS_VERIFICATION':
+          toast.success(
+            'A link to complete the verification has been sent to your email. Please check your inbox.',
+          );
+          break;
+
+        case 'LOGGED_IN':
+          if (res?.user?.role === 'USER') {
+            router.push(`/dashboard/user/overview`);
+          }
+          if (
+            res?.user?.role === 'ADMIN' ||
+            res?.user?.role === 'SUPER_ADMIN'
+          ) {
+            router.push(`/dashboard/admin/overview`);
+          }
+          break;
+
+        case 'ERROR':
+          toast.error(res.error);
+          break;
       }
     };
 
@@ -95,11 +132,26 @@ export default function FacebookLogin() {
   }, [accessToken]);
 
   return (
-    <Button
-      onClick={handleLogin}
-      className="w-9 h-9 bg-white rounded flex items-center justify-center mt-0.5"
-    >
-      <FaFacebookF className="text-blue-500" />
-    </Button>
+    <div>
+      <Button
+        onClick={handleLogin}
+        className="w-9 h-9 bg-white rounded flex items-center justify-center mt-0.5"
+      >
+        <FaFacebookF className="text-blue-500" />
+      </Button>
+
+      {needsEmail && (
+        <div className="mt-2 flex flex-col gap-2">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="border rounded p-2 w-full"
+          />
+          <Button onClick={handleEmailSubmit}>Submit Email</Button>
+        </div>
+      )}
+    </div>
   );
 }

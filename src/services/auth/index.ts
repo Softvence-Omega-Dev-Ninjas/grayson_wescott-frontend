@@ -222,3 +222,39 @@ export const sendAccessToken = async (data: {
     };
   }
 };
+// Send access token with email
+export const sendAccessTokenWithEmail = async (data: {
+  accessToken: string;
+  email: string;
+  provider: AuthProvider;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/complete-login`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      },
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) throw new Error(result?.message || 'Failed to complete login');
+
+    if (result?.data?.needsVerification) {
+      return {
+        step: 'NEEDS_VERIFICATION',
+        message: result.message,
+        email: result.data.email,
+      };
+    }
+
+    throw new Error('Unexpected response format');
+  } catch (error: any) {
+    return {
+      step: 'ERROR',
+      error: error.message || 'Something went wrong',
+    };
+  }
+};
