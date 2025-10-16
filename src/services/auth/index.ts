@@ -154,6 +154,7 @@ export const sendAccessToken = async (data: {
   accessToken: string;
   provider: AuthProvider;
 }) => {
+  const cookieStore = await cookies();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/init-login`,
