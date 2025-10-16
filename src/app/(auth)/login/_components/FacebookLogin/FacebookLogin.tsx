@@ -20,10 +20,10 @@ export default function FacebookLogin() {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [email, setEmail] = useState<string>('');
-  const [needsEmail, setNeedsEmail] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
+  // Load and init FB SDK
   useEffect(() => {
-    // Load FB SDK
     ((d, s, id) => {
       const fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
@@ -33,7 +33,6 @@ export default function FacebookLogin() {
       fjs.parentNode?.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
 
-    // Initialize FB SDK
     window.fbAsyncInit = function () {
       window.FB.init({
         appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
@@ -49,7 +48,6 @@ export default function FacebookLogin() {
       (response: any) => {
         if (response.authResponse) {
           setAccessToken(response.authResponse.accessToken);
-          console.log('Facebook Access Token:', accessToken);
         } else {
           toast.error('Facebook login cancelled or failed.');
         }
@@ -76,24 +74,23 @@ export default function FacebookLogin() {
       );
 
       const result = await res.json();
-
       if (!res.ok) throw new Error(result?.message || 'Failed to send email');
 
-      // instruct user to check there inbox
-      if (result?.data?.needsVerification) {
-        toast.success(
-          'A link to complete the verification has been sent to your email. Please check your inbox.',
-        );
-      }
+      toast.success(
+        'A link to complete the verification has been sent to your email. Please check your inbox.',
+      );
+      setModalOpen(false); // close modal
     } catch (err: any) {
+      console.error(err);
       toast.error(err.message || 'Something went wrong');
     }
   };
 
+  // Handle access token after login
   useEffect(() => {
-    const fetchData = async () => {
-      if (!accessToken) return;
+    if (!accessToken) return;
 
+    const fetchData = async () => {
       const res = await sendAccessToken({
         accessToken,
         provider: AuthProvider.FACEBOOK,
@@ -101,27 +98,23 @@ export default function FacebookLogin() {
 
       switch (res.step) {
         case 'NEEDS_EMAIL':
-          setNeedsEmail(true); // show email input field
+          setModalOpen(true);
           break;
-
         case 'NEEDS_VERIFICATION':
           toast.success(
             'A link to complete the verification has been sent to your email. Please check your inbox.',
           );
           break;
-
         case 'LOGGED_IN':
           if (res?.user?.role === 'USER') {
             router.push(`/dashboard/user/overview`);
-          }
-          if (
+          } else if (
             res?.user?.role === 'ADMIN' ||
             res?.user?.role === 'SUPER_ADMIN'
           ) {
             router.push(`/dashboard/admin/overview`);
           }
           break;
-
         case 'ERROR':
           toast.error(res.error);
           break;
@@ -129,7 +122,7 @@ export default function FacebookLogin() {
     };
 
     fetchData();
-  }, [accessToken]);
+  }, [accessToken, router]);
 
   return (
     <div>
@@ -140,16 +133,29 @@ export default function FacebookLogin() {
         <FaFacebookF className="text-blue-500" />
       </Button>
 
-      {needsEmail && (
-        <div className="mt-2 flex flex-col gap-2">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border rounded p-2 w-full"
-          />
-          <Button onClick={handleEmailSubmit}>Submit Email</Button>
+      {/* Modal for email input */}
+      {modalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
+          <div className="bg-white p-6 rounded-md w-80 flex flex-col gap-4">
+            <h2 className="text-lg font-semibold">
+              We failed to retrieve your email from the provider. Please enter
+              your email to complete the registration with this provider. This
+              is a one time process.
+            </h2>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border rounded p-2 w-full"
+            />
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleEmailSubmit}>Submit</Button>
+            </div>
+          </div>
         </div>
       )}
     </div>
