@@ -2,6 +2,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import useUser from '@/hooks/useUser';
 import { sendAccessToken } from '@/services/auth';
 import { AuthProvider } from '@/types/user.types';
 import { useRouter } from 'next/navigation';
@@ -19,6 +20,7 @@ declare global {
 export default function FacebookLogin() {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const { setUser, setIsLoading } = useUser();
   const [email, setEmail] = useState<string>('');
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -97,7 +99,10 @@ export default function FacebookLogin() {
 
       switch (res.step) {
         case 'NEEDS_EMAIL':
-          setModalOpen(true);
+          toast.error(
+            'The Provider failed to retrieve your email from your account. Without your email, we cannot verify your account.',
+          );
+          // setModalOpen(true);
           break;
         case 'NEEDS_VERIFICATION':
           toast.success(
@@ -105,6 +110,9 @@ export default function FacebookLogin() {
           );
           break;
         case 'LOGGED_IN':
+          toast.success('Login successful!');
+          setUser(res?.user);
+          setIsLoading(false);
           if (res?.user?.role === 'USER') {
             router.push(`/dashboard/user/overview`);
           } else if (
@@ -115,6 +123,7 @@ export default function FacebookLogin() {
           }
           break;
         case 'ERROR':
+          console.error('Facebook login error:', res.error);
           toast.error(res.error);
           break;
       }
