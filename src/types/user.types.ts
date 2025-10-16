@@ -14,3 +14,14 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
 }
+
+export enum AuthProvider {
+  GOOGLE = 'GOOGLE',
+  FACEBOOK = 'FACEBOOK',
+  TWITTER = 'TWITTER',
+  INSTAGRAM = 'INSTAGRAM',
+  LINKEDIN = 'LINKEDIN',
+  GITHUB = 'GITHUB',
+  APPLE = 'APPLE',
+  TIKTOK = 'TIKTOK',
+}
