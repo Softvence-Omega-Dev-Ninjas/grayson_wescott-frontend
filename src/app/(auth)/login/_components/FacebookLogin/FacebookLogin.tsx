@@ -4,7 +4,7 @@
 import { Button } from '@/components/ui/button';
 import { sendAccessToken } from '@/services/auth';
 import { AuthProvider } from '@/types/user.types';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa6';
 import { toast } from 'sonner';
@@ -86,7 +86,6 @@ export default function FacebookLogin() {
     }
   };
 
-  // Handle access token after login
   useEffect(() => {
     if (!accessToken) return;
 
