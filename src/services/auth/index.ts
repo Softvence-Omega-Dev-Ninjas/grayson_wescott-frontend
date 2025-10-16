@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
+import { AuthProvider } from '@/types/user.types';
 import { cookies } from 'next/headers';
 import { FieldValues } from 'react-hook-form';
 
@@ -146,5 +147,78 @@ export const sendGoogleLogin = async (data: Record<string, any>) => {
     return result;
   } catch (error: any) {
     return { error: error.message };
+  }
+};
+// Send access token for Social Login
+export const sendAccessToken = async (data: {
+  accessToken: string;
+  provider: AuthProvider;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/init-login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      },
+    );
+
+    const result = await res.json();
+
+    // Handle non-200 responses
+    if (!res.ok) {
+      throw new Error(result?.message || 'Social login failed');
+    }
+
+    // ✅ CASE 1: Provider did not return email
+    if (result?.data?.needsEmail) {
+      return {
+        step: 'NEEDS_EMAIL',
+        message: result.message,
+        provider: result.data.provider,
+        providerId: result.data.providerId,
+        accessToken: result.data.accessToken,
+        name: result.data.name,
+        avatarUrl: result.data.avatarUrl,
+      };
+    }
+
+    // ✅ CASE 2: Email exists but user must verify OTP
+    if (result?.data?.needsVerification) {
+      return {
+        step: 'NEEDS_VERIFICATION',
+        message: result.message,
+        email: result.data.email,
+      };
+    }
+
+    // ✅ CASE 3: Successful login (user + token returned)
+    if (result?.data?.user && result?.data?.token) {
+      // Save token in cookies
+      cookieStore.set('accessToken', result?.data?.token);
+
+      // Save user in cookies
+      cookieStore.set('user', JSON.stringify(result?.data?.user));
+
+      return {
+        step: 'LOGGED_IN',
+        message: result.message,
+        user: result.data.user,
+        token: result.data.token,
+        isVerified: result.data.isVerified,
+      };
+    }
+
+    // Fallback: unexpected structure
+    throw new Error('Unexpected response format');
+  } catch (error: any) {
+    console.error('Social login error:', error);
+    return {
+      step: 'ERROR',
+      error: error.message || 'Something went wrong',
+    };
   }
 };
