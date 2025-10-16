@@ -24,16 +24,17 @@ import bg from '../../../assets/footerbg.png';
 import bg1 from '../../../assets/header/logo.png';
 import GoogleLogin from './_components/GoogleLogin/GoogleLogin';
 import TwitterLogin from './_components/TwitterLogin/TwitterLogin';
+import FacebookLogin from './_components/FacebookLogin/FacebookLogin';
 
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
-// Lazy-load FB login to avoid SSR
-const FacebookLogin = dynamic(
-  () => import('./_components/FacebookLogin/FacebookLogin'),
-  {
-    ssr: false,
-  },
-);
+// // Lazy-load FB login to avoid SSR
+// const FacebookLogin = dynamic(
+//   () => import('./_components/FacebookLogin/FacebookLogin'),
+//   {
+//     ssr: false,
+//   },
+// );
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
