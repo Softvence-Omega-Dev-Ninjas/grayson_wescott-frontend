@@ -52,7 +52,7 @@ export default function TwitterLogin() {
       `https://twitter.com/i/oauth2/authorize?response_type=code` +
       `&client_id=${process.env.NEXT_PUBLIC_TWITTER_CLIENT_ID}` +
       `&redirect_uri=${redirectUri}` +
-      `&scope=tweet.read users.read offline.access` +
+      `&scope=tweet.read users.read offline.access` + // TODO: Add email scope
       `&state=${state}` +
       `&code_challenge=${codeChallenge}` +
       `&code_challenge_method=S256`;
