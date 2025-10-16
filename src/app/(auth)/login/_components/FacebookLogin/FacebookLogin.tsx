@@ -3,8 +3,7 @@
 
 import { Button } from '@/components/ui/button';
 import useUser from '@/hooks/useUser';
-import { sendAccessToken } from '@/services/auth';
-import { AuthProvider } from '@/types/user.types';
+import { facebookLogin } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { FaFacebookF } from 'react-icons/fa6';
@@ -60,10 +59,7 @@ export default function FacebookLogin() {
     if (!accessToken) return;
 
     const fetchData = async () => {
-      const res = await sendAccessToken({
-        accessToken,
-        provider: AuthProvider.FACEBOOK,
-      });
+      const res = await facebookLogin({ accessToken });
 
       switch (res.step) {
         case 'NEEDS_EMAIL':
