@@ -149,6 +149,7 @@ export const sendGoogleLogin = async (data: Record<string, any>) => {
     return { error: error.message };
   }
 };
+
 // Send access token for Social Login
 export const sendAccessToken = async (data: {
   accessToken: string;
@@ -157,7 +158,7 @@ export const sendAccessToken = async (data: {
   const cookieStore = await cookies();
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/init-login`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/facebook-login`,
       {
         method: 'POST',
         headers: {
@@ -174,7 +175,7 @@ export const sendAccessToken = async (data: {
       throw new Error(result?.message || 'Social login failed');
     }
 
-    // ✅ CASE 1: Provider did not return email
+    // CASE 1: Provider did not return email
     if (result?.data?.needsEmail) {
       return {
         step: 'NEEDS_EMAIL',
@@ -187,16 +188,7 @@ export const sendAccessToken = async (data: {
       };
     }
 
-    // ✅ CASE 2: Email exists but user must verify OTP
-    if (result?.data?.needsVerification) {
-      return {
-        step: 'NEEDS_VERIFICATION',
-        message: result.message,
-        email: result.data.email,
-      };
-    }
-
-    // ✅ CASE 3: Successful login (user + token returned)
+    // CASE 2: Successful login (user + token returned)
     if (result?.data?.user && result?.data?.token) {
       // Save token in cookies
       cookieStore.set('accessToken', result?.data?.token);
@@ -223,6 +215,7 @@ export const sendAccessToken = async (data: {
     };
   }
 };
+
 // Send access token with email
 export const sendAccessTokenWithEmail = async (data: {
   accessToken: string;
@@ -231,7 +224,7 @@ export const sendAccessTokenWithEmail = async (data: {
 }) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/complete-login`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/social-login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

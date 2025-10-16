@@ -21,8 +21,6 @@ export default function FacebookLogin() {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const { setUser, setIsLoading } = useUser();
-  const [email, setEmail] = useState<string>('');
-  const [modalOpen, setModalOpen] = useState(false);
 
   // Load and init FB SDK
   useEffect(() => {
@@ -58,36 +56,6 @@ export default function FacebookLogin() {
     );
   };
 
-  const handleEmailSubmit = async () => {
-    if (!accessToken || !email) return;
-
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/complete-login`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            accessToken,
-            email,
-            provider: AuthProvider.FACEBOOK,
-          }),
-        },
-      );
-
-      const result = await res.json();
-      if (!res.ok) throw new Error(result?.message || 'Failed to send email');
-
-      toast.success(
-        'A link to complete the verification has been sent to your email. Please check your inbox.',
-      );
-      setModalOpen(false); // close modal
-    } catch (err: any) {
-      console.error(err);
-      toast.error(err.message || 'Something went wrong');
-    }
-  };
-
   useEffect(() => {
     if (!accessToken) return;
 
@@ -101,12 +69,6 @@ export default function FacebookLogin() {
         case 'NEEDS_EMAIL':
           toast.error(
             'The Provider failed to retrieve your email from your account. Without your email, we cannot verify your account.',
-          );
-          // setModalOpen(true);
-          break;
-        case 'NEEDS_VERIFICATION':
-          toast.success(
-            'A link to complete the verification has been sent to your email. Please check your inbox.',
           );
           break;
         case 'LOGGED_IN':
@@ -140,32 +102,6 @@ export default function FacebookLogin() {
       >
         <FaFacebookF className="text-blue-500" />
       </Button>
-
-      {/* Modal for email input */}
-      {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
-          <div className="bg-white p-6 rounded-md w-80 flex flex-col gap-4">
-            <h2 className="text-lg font-semibold">
-              We failed to retrieve your email from the provider. Please enter
-              your email to complete the registration with this provider. This
-              is a one time process.
-            </h2>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border rounded p-2 w-full"
-            />
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" onClick={() => setModalOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleEmailSubmit}>Submit</Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
