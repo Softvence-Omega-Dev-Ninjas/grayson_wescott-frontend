@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
-import { AuthProvider } from '@/types/user.types';
 import { cookies } from 'next/headers';
 import { FieldValues } from 'react-hook-form';
 
@@ -151,10 +150,7 @@ export const sendGoogleLogin = async (data: Record<string, any>) => {
 };
 
 // Send access token for Social Login
-export const sendAccessToken = async (data: {
-  accessToken: string;
-  provider: AuthProvider;
-}) => {
+export const facebookLogin = async (data: { accessToken: string }) => {
   const cookieStore = await cookies();
   try {
     const res = await fetch(
@@ -172,7 +168,7 @@ export const sendAccessToken = async (data: {
 
     // Handle non-200 responses
     if (!res.ok) {
-      throw new Error(result?.message || 'Social login failed');
+      throw new Error(result?.message || 'Facebook login failed');
     }
 
     // CASE 1: Provider did not return email
@@ -208,7 +204,7 @@ export const sendAccessToken = async (data: {
     // Fallback: unexpected structure
     throw new Error('Unexpected response format');
   } catch (error: any) {
-    console.error('Social login error:', error);
+    console.error('Facebook login error:', error);
     return {
       step: 'ERROR',
       error: error.message || 'Something went wrong',
@@ -217,14 +213,13 @@ export const sendAccessToken = async (data: {
 };
 
 // Send access token with email
-export const sendAccessTokenWithEmail = async (data: {
-  accessToken: string;
-  email: string;
-  provider: AuthProvider;
+export const twitterLogin = async (data: {
+  code: string;
+  codeVerifier: string;
 }) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/social-login`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/twitter-login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -234,18 +229,45 @@ export const sendAccessTokenWithEmail = async (data: {
 
     const result = await res.json();
 
-    if (!res.ok) throw new Error(result?.message || 'Failed to complete login');
+    // Handle non-200 responses
+    if (!res.ok) {
+      throw new Error(result?.message || 'Twitter login failed');
+    }
 
-    if (result?.data?.needsVerification) {
+    // CASE 1: Provider did not return email
+    if (result?.data?.needsEmail) {
       return {
-        step: 'NEEDS_VERIFICATION',
+        step: 'NEEDS_EMAIL',
         message: result.message,
-        email: result.data.email,
+        provider: result.data.provider,
+        providerId: result.data.providerId,
+        accessToken: result.data.accessToken,
+        name: result.data.name,
+        avatarUrl: result.data.avatarUrl,
       };
     }
 
+    // CASE 2: Successful login (user + token returned)
+    if (result?.data?.user && result?.data?.token) {
+      // Save token in cookies
+      cookieStore.set('accessToken', result?.data?.token);
+
+      // Save user in cookies
+      cookieStore.set('user', JSON.stringify(result?.data?.user));
+
+      return {
+        step: 'LOGGED_IN',
+        message: result.message,
+        user: result.data.user,
+        token: result.data.token,
+        isVerified: result.data.isVerified,
+      };
+    }
+
+    // Fallback: unexpected structure
     throw new Error('Unexpected response format');
   } catch (error: any) {
+    console.error('Twitter login error:', error);
     return {
       step: 'ERROR',
       error: error.message || 'Something went wrong',
