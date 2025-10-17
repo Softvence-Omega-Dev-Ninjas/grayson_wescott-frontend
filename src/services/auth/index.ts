@@ -218,6 +218,7 @@ export const twitterLogin = async (data: {
   oauthTokenSecret: string;
   oauthVerifier: string;
 }) => {
+  const cookieStore = await cookies();
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/twitter-login`,
