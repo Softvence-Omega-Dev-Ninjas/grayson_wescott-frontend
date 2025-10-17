@@ -11,7 +11,7 @@ export default function TwitterLogin() {
   const handleTwitterLogin = async () => {
     // Call backend to get request token & secret
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/api/auth-social/request-login`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/request-token`,
     );
     const result = await res.json();
 
