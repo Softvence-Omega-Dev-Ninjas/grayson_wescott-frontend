@@ -214,8 +214,9 @@ export const facebookLogin = async (data: { accessToken: string }) => {
 
 // Send access token with email
 export const twitterLogin = async (data: {
-  code: string;
-  codeVerifier: string;
+  oauthToken: string;
+  oauthTokenSecret: string;
+  oauthVerifier: string;
 }) => {
   try {
     const res = await fetch(

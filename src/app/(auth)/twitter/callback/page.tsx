@@ -3,66 +3,63 @@
 import useUser from '@/hooks/useUser';
 import { twitterLogin } from '@/services/auth';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 export default function TwitterCallback() {
   const router = useRouter();
-
-  const [data, setData] = useState({
-    code: '',
-    codeVerifier: '',
-  });
-
   const { setUser, setIsLoading } = useUser();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get('code');
+    const oauthToken = searchParams.get('oauth_token');
+    const oauthVerifier = searchParams.get('oauth_verifier');
+    const oauthTokenSecret = localStorage.getItem('twitter_oauth_token_secret');
 
-    if (!code) return;
+    console.log('oauthToken', oauthToken);
+    console.log('oauthTokenSecret', oauthTokenSecret);
+    console.log('oauthVerifier', oauthVerifier);
 
-    const codeVerifier = localStorage.getItem('twitter_code_verifier') || '';
+    if (!oauthToken || !oauthVerifier || !oauthTokenSecret) {
+      toast.error('Twitter login failed. Missing required tokens.');
+      return;
+    }
 
-    console.log('Code & Code Verifier', code, codeVerifier);
-
-    setData({ code, codeVerifier });
-  }, []);
-
-  useEffect(() => {
-    if (!data.code || !data.codeVerifier) return;
+    const data = { oauthToken, oauthVerifier, oauthTokenSecret };
 
     const fetchData = async () => {
-      const res = await twitterLogin(data);
+      try {
+        const res = await twitterLogin(data);
 
-      switch (res.step) {
-        case 'NEEDS_EMAIL':
-          toast.error(
-            'The Provider failed to retrieve your email from your account. Without your email, we cannot verify your account.',
-          );
-          break;
-        case 'LOGGED_IN':
-          toast.success('Login successful!');
-          setUser(res?.user);
-          setIsLoading(false);
-          if (res?.user?.role === 'USER') {
-            router.push(`/dashboard/user/overview`);
-          } else if (
-            res?.user?.role === 'ADMIN' ||
-            res?.user?.role === 'SUPER_ADMIN'
-          ) {
-            router.push(`/dashboard/admin/overview`);
-          }
-          break;
-        case 'ERROR':
-          console.error('Facebook login error:', res.error);
-          toast.error(res.error);
-          break;
+        switch (res.step) {
+          case 'NEEDS_EMAIL':
+            toast.error(
+              'Twitter did not provide your email. Please provide it to continue.',
+            );
+            break;
+          case 'LOGGED_IN':
+            toast.success('Login successful!');
+            setUser(res.user);
+            setIsLoading(false);
+
+            if (res.user.role === 'USER') {
+              router.push('/dashboard/user/overview');
+            } else {
+              router.push('/dashboard/admin/overview');
+            }
+            break;
+          case 'ERROR':
+            toast.error(res.error);
+            break;
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error('Twitter login failed.');
       }
     };
 
     fetchData();
-  }, [data, router]);
+  }, [router, setUser, setIsLoading]);
 
   return <p>Logging in with Twitter...</p>;
 }
