@@ -148,3 +148,131 @@ export const sendGoogleLogin = async (data: Record<string, any>) => {
     return { error: error.message };
   }
 };
+
+// Send access token for Social Login
+export const facebookLogin = async (data: { accessToken: string }) => {
+  const cookieStore = await cookies();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/facebook-login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      },
+    );
+
+    const result = await res.json();
+
+    // Handle non-200 responses
+    if (!res.ok) {
+      throw new Error(result?.message || 'Facebook login failed');
+    }
+
+    // CASE 1: Provider did not return email
+    if (result?.data?.needsEmail) {
+      return {
+        step: 'NEEDS_EMAIL',
+        message: result.message,
+        provider: result.data.provider,
+        providerId: result.data.providerId,
+        accessToken: result.data.accessToken,
+        name: result.data.name,
+        avatarUrl: result.data.avatarUrl,
+      };
+    }
+
+    // CASE 2: Successful login (user + token returned)
+    if (result?.data?.user && result?.data?.token) {
+      // Save token in cookies
+      cookieStore.set('accessToken', result?.data?.token);
+
+      // Save user in cookies
+      cookieStore.set('user', JSON.stringify(result?.data?.user));
+
+      return {
+        step: 'LOGGED_IN',
+        message: result.message,
+        user: result.data.user,
+        token: result.data.token,
+        isVerified: result.data.isVerified,
+      };
+    }
+
+    // Fallback: unexpected structure
+    throw new Error('Unexpected response format');
+  } catch (error: any) {
+    console.error('Facebook login error:', error);
+    return {
+      step: 'ERROR',
+      error: error.message || 'Something went wrong',
+    };
+  }
+};
+
+// Send access token with email
+export const twitterLogin = async (data: {
+  oauthToken: string;
+  oauthTokenSecret: string;
+  oauthVerifier: string;
+}) => {
+  const cookieStore = await cookies();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth-social/twitter-login`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      },
+    );
+
+    const result = await res.json();
+
+    // Handle non-200 responses
+    if (!res.ok) {
+      throw new Error(result?.message || 'Twitter login failed');
+    }
+
+    // CASE 1: Provider did not return email
+    if (result?.data?.needsEmail) {
+      return {
+        step: 'NEEDS_EMAIL',
+        message: result.message,
+        provider: result.data.provider,
+        providerId: result.data.providerId,
+        accessToken: result.data.accessToken,
+        name: result.data.name,
+        avatarUrl: result.data.avatarUrl,
+      };
+    }
+
+    // CASE 2: Successful login (user + token returned)
+    if (result?.data?.user && result?.data?.token) {
+      // Save token in cookies
+      cookieStore.set('accessToken', result?.data?.token);
+
+      // Save user in cookies
+      cookieStore.set('user', JSON.stringify(result?.data?.user));
+
+      return {
+        step: 'LOGGED_IN',
+        message: result.message,
+        user: result.data.user,
+        token: result.data.token,
+        isVerified: result.data.isVerified,
+      };
+    }
+
+    // Fallback: unexpected structure
+    throw new Error('Unexpected response format');
+  } catch (error: any) {
+    console.error('Twitter login error:', error);
+    return {
+      step: 'ERROR',
+      error: error.message || 'Something went wrong',
+    };
+  }
+};
