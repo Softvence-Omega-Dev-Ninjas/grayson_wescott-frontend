@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Progress } from '@/components/ui/progress';
 import { getAssignedProgramsDetails } from '@/services/user/assigned-program';
 import SidebarBox from '../_components/SidebarBox/SidebarBox';
@@ -134,7 +135,7 @@ const AssignedProgramsDetailsPage = async ({
                 Lower Body Strength
               </span> */}
             </div>
-            {data.workouts.map((workout, index) => (
+            {res?.data?.todaysExercises?.map((workout: any, index: number) => (
               <WorkoutBlock key={index} workout={workout} />
             ))}
           </div>
