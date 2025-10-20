@@ -1,34 +1,9 @@
-const workoutHistoryData = [
-  {
-    date: 'Jan 15, 2024',
-    workout: 'Upper Body Push',
-    details: 'Chest, Shoulders, Triceps',
-    status: 'Completed',
-    duration: '68 min',
-    volume: '8,420 lbs',
-    feedback: 'Great session, felt strong',
-  },
-  {
-    date: 'Jan 13, 2024',
-    workout: 'Lower Body',
-    details: 'Squats, Deadlifts, Legs',
-    status: 'Completed',
-    duration: '72 min',
-    volume: '12,180 lbs',
-    feedback: 'Challenging but good',
-  },
-  {
-    date: 'Jan 11, 2024',
-    workout: 'Upper Body Pull',
-    details: 'Back, Biceps',
-    status: 'Skipped',
-    duration: '-',
-    volume: '-',
-    feedback: 'Work emergency',
-  },
-];
+import { formatISODate } from '@/lib/formatISODate';
 
-export function WorkoutHistory() {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export function WorkoutHistory({ workoutHistory }: { workoutHistory?: any }) {
+  console.log('===============>', workoutHistory);
   return (
     <div className="bg-[#151519] p-2">
       <h2 className="text-lg font-medium ml-4 mb-4">Workout History</h2>
@@ -59,13 +34,15 @@ export function WorkoutHistory() {
               </tr>
             </thead>
             <tbody>
-              {workoutHistoryData.map((workout, index) => (
+              {workoutHistory?.map((workout: any, index: number) => (
                 <tr key={index} className="border-t border-slate-700">
-                  <td className="p-4 text-sm">{workout.date}</td>
+                  <td className="p-4 text-sm">
+                    {formatISODate(workout?.date)}
+                  </td>
                   <td className="p-4">
                     <div>
                       <div className="font-medium text-sm">
-                        {workout.workout}
+                        {workout?.workout?.title}
                       </div>
                       <div className="text-xs text-slate-400">
                         {workout.details}
@@ -74,20 +51,18 @@ export function WorkoutHistory() {
                   </td>
                   <td className="p-4">
                     <span
-                      className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full ${
-                        workout.status === 'Completed'
-                          ? 'bg-green-900 text-green-300'
-                          : 'bg-red-900 text-red-300'
-                      }`}
+                      className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-sm bg-secondary`}
                     >
-                      {workout.status === 'Completed' ? '✓' : '✗'}{' '}
+                      {/* {workout.status === 'Completed' ? '✓' : '✗'}{' '} */}
                       {workout.status}
                     </span>
                   </td>
-                  <td className="p-4 text-sm">{workout.duration}</td>
-                  <td className="p-4 text-sm">{workout.volume}</td>
+                  <td className="p-4 text-sm">{workout?.duration}</td>
+                  <td className="p-4 text-sm">
+                    {workout?.volume ? workout?.volume : '-'}
+                  </td>
                   <td className="p-4 text-sm text-slate-400">
-                    {workout.feedback}
+                    {workout?.feedback ? workout?.feedback : '-'}
                   </td>
                 </tr>
               ))}
