@@ -35,3 +35,25 @@ export const getAllUserProgram = async ({
     return Error(error.message);
   }
 };
+
+export const getAssignedProgramsDetails = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/programs/${id}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['PROGRAMM', 'ASSIGNED_PROGRAM'],
+        },
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};

@@ -1,145 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
+import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import React from 'react';
-import WorkoutBlock from './_components/WorkoutBlock/WorkoutBlock';
-import SidebarSection from './_components/SidebarSection/SidebarSection';
-export type TProgram = {
-  title: string;
-  description: string;
-  status: string;
-  progress: number;
-};
+import { getAllUserProgram } from '@/services/user/assigned-program';
+import Image from 'next/image';
+import Link from 'next/link';
 
-export type TWorkout = {
-  exercise: string;
-  sets: number;
-  reps: string;
-  rpe: string;
-  rest: string;
-  day: number;
+type Props = {
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
+const AssignedProgramsPage = async ({ searchParams }: Props) => {
+  const pageParam =
+    typeof (await searchParams?.page) === 'string'
+      ? parseInt((await searchParams?.page) as string, 10)
+      : undefined;
+  const page = Number.isNaN(pageParam) || !pageParam ? 1 : pageParam;
 
-export type TSidebarItem = {
-  label: string;
-  value: string;
-};
-
-const data = {
-  program: {
-    title: 'Elite Squat Program',
-    description:
-      'Advanced strength building program designed to maximize your squat performance over 12 weeks',
-    status: 'In Progress',
-    progress: 33,
-  },
-  workouts: [
-    {
-      exercise: 'Back Squat',
-      sets: 4,
-      reps: '6-8',
-      rpe: '9-B',
-      rest: '3 min',
-      day: 22,
-    },
-    {
-      exercise: 'Back Squat',
-      sets: 4,
-      reps: '6-8',
-      rpe: '9-B',
-      rest: '3 min',
-      day: 22,
-    },
-    {
-      exercise: 'Back Squat',
-      sets: 4,
-      reps: '6-8',
-      rpe: '9-B',
-      rest: '3 min',
-      day: 22,
-    },
-    {
-      exercise: 'Back Squat',
-      sets: 4,
-      reps: '6-8',
-      rpe: '9-B',
-      rest: '3 min',
-      day: 22,
-    },
-  ],
-  sidebar: [
-    {
-      title: 'Progress Tracking',
-      items: [
-        { label: 'Program Completion', value: '25%' },
-        { label: 'Compliance Score', value: '87%' },
-        { label: 'Training Completed', value: '22/66' },
-      ],
-    },
-    {
-      title: 'Load Progression',
-      items: [
-        { label: 'Program Completion', value: '50%' },
-        { label: 'Compliance Score', value: '87%' },
-        { label: 'Training Completed', value: '22/66' },
-      ],
-    },
-    {
-      title: 'RPE Trends',
-      items: [
-        { label: 'Program Completion', value: '33%' },
-        { label: 'Compliance Score', value: '87%' },
-        { label: 'Training Completed', value: '22/66' },
-      ],
-    },
-  ],
-};
-const AssignedProgramsPage = () => {
+  // server fetch — uses your existing server function
+  const res = await getAllUserProgram({
+    page,
+    limit: 10,
+    status: undefined,
+  });
+  console.log(res);
   return (
-    <div className="">
-      <div className="flex flex-col lg:flex-row lg:space-x-8">
-        {/* Main Content Area */}
-        <div className="w-full lg:w-2/3 mb-8 lg:mb-0">
-          {/* Program Header */}
-          <div className="mb-8 bg-primary-200 p-5">
-            <h1 className="text-3xl font-bold mb-2">{data.program.title}</h1>
-            <p className="text-gray-200 mb-4">{data.program.description}</p>
-            <span className="mb-4 border border-secondary px-4 py-2">
-              {data.program.status}
-            </span>
-            <div className="flex justify-between items-center text-sm mt-5 mb-3">
-              <span className="text-sm text-gray-200">Program Progress</span>
-              <span className="font-semibold text-gray-50">
-                {data.program.progress}%
-              </span>
-            </div>
-            <Progress value={data.program.progress} />
+    <div>
+      <div className="space-y-2">
+        {res?.data?.length === 0 && (
+          <div className="py-6 text-center text-gray-300">
+            No assigned programs found.
           </div>
+        )}
 
-          {/* Today's Workout */}
-          <div className="mb-8 ">
-            <div className="flex justify-between items-center mb-4 bg-primary-200 p-5">
-              <h2 className="text-2xl font-bold">
-                Today&apos;s Workout · Day {data.workouts[0].day}
-              </h2>
-              <span className="text-sm font-semibold text-gray-400">
-                Lower Body Strength
-              </span>
+        {res?.data?.map((program: any) => {
+          const currentWeek = program?.currentWeekAsPerUser ?? 0;
+          const totalWeeks = program?.programDurationWeeks ?? 1;
+          const progressPercentage = Math.round(
+            (currentWeek / Math.max(1, totalWeeks)) * 100,
+          );
+
+          return (
+            <div
+              key={program?.id}
+              className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 border border-secondary transition-colors duration-200"
+            >
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                <div className="w-10 h-10 flex items-center justify-center bg-secondary">
+                  <Image
+                    src={dumbellIcon}
+                    alt="dumbell Icon"
+                    width={20}
+                    height={20}
+                  />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold">
+                    {program?.programName}
+                  </h3>
+                  <p className="text-sm text-gray-400">
+                    {totalWeeks} weeks • {program?.status.replace('_', ' ')}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row items-end md:items-center gap-4 w-full max-w-xl">
+                <div className="flex-1 w-full">
+                  <p className="text-sm mb-1 text-right md:text-left">
+                    Week {currentWeek} of {totalWeeks}
+                  </p>
+                  <Progress value={progressPercentage} />
+                </div>
+                <Link
+                  href={`/dashboard/user/assigned-programs/${program.programId}`}
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full md:w-auto text-white border-none bg-[#0B1A2A] hover:bg-secondary hover:text-white cursor-pointer"
+                  >
+                    View Details
+                  </Button>
+                </Link>
+              </div>
             </div>
-            {data.workouts.map((workout, index) => (
-              <WorkoutBlock key={index} workout={workout} />
-            ))}
-          </div>
-        </div>
-
-        {/* Sidebar */}
-        <div className="w-full lg:w-1/3">
-          {data.sidebar.map((section, index) => (
-            <SidebarSection
-              key={index}
-              title={section.title}
-              items={section.items}
-            />
-          ))}
-        </div>
+          );
+        })}
       </div>
     </div>
   );
