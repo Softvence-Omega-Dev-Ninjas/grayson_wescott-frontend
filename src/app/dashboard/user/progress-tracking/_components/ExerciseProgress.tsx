@@ -1,58 +1,32 @@
-const exerciseData = [
-  {
-    name: 'Bench Press',
-    current: 205,
-    target: 225,
-    unit: 'lbs',
-  },
-  {
-    name: 'Squat',
-    current: 185,
-    target: 205,
-    unit: 'lbs',
-  },
-  {
-    name: 'Deadlift',
-    current: 185,
-    target: 225,
-    unit: 'lbs',
-  },
-];
+import { Progress } from '@/components/ui/progress';
 
-export function ExerciseProgress() {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export function ExerciseProgress({ exerciseData }: { exerciseData?: any }) {
   return (
     <div className="space-y-6">
-      {exerciseData.map((exercise, index) => (
+      {exerciseData.map((exercise: any, index: number) => (
         <div key={index} className="space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="font-medium">{exercise.name}</h3>
-            <button className="text-blue-400 text-sm hover:text-blue-300">
-              View Details
-            </button>
+            <h3 className="font-medium">{exercise?.name}</h3>
           </div>
 
           <div className="flex items-center justify-between text-sm text-slate-400">
             <span>
-              Current: {exercise.current} {exercise.unit}
+              Current: {exercise?.completed} {exercise?.unit}
             </span>
             <span>
-              Target: {exercise.target} {exercise.unit}
+              Target:{' '}
+              {exercise?.target || exercise?.scheduled || exercise?.planned}{' '}
+              {exercise?.unit}
             </span>
           </div>
 
           <div className="w-full bg-[#2A2D33] rounded-full h-2">
-            <div
-              className="bg-[#B9BDC6] h-2 rounded-full transition-all duration-300"
-              style={{
-                width: `${(exercise.current / exercise.target) * 100}%`,
-              }}
-            />
+            <Progress value={exercise?.percent} />
           </div>
 
-          <div className="text-xs text-slate-400">
-            {exercise.current} {exercise.unit} — {exercise.target}{' '}
-            {exercise.unit}
-          </div>
+          <div className="text-xs text-slate-400">{exercise?.label}</div>
         </div>
       ))}
     </div>
