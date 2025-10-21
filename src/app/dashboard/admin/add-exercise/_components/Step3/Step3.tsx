@@ -1,19 +1,21 @@
 'use client';
-import Image from 'next/image';
-import { IFormData } from '../../page';
-import successIcon from '@/assets/dashboard/add-excercise/tick.png';
 import folderIcon from '@/assets/dashboard/add-excercise/folderIcon.png';
-import plusIcon from '@/assets/dashboard/add-excercise/plusIcon.png';
-import { IoIosArrowForward, IoMdArrowBack } from 'react-icons/io';
+import successIcon from '@/assets/dashboard/add-excercise/tick.png';
+import Image from 'next/image';
+import Link from 'next/link';
+import { IoIosArrowForward } from 'react-icons/io';
+import { IFormData } from '../../page';
 
-const Step3 = ({
-  onBack,
-  onDone,
-}: {
-  formData: IFormData;
-  onBack: () => void;
-  onDone: () => void;
-}) => {
+const Step3 = (
+  {
+    // onBack,
+    // onDone,
+  }: {
+    formData: IFormData;
+    onBack: () => void;
+    // onDone: () => void;
+  },
+) => {
   // console.log("FormData================>", formData);
   return (
     <div className="space-y-6">
@@ -59,28 +61,33 @@ const Step3 = ({
       {/* What to do next section */}
 
       <div className="space-y-4 max-w-7xl mx-auto">
-        <h3 className="text-xl font-semibold mt-8">
+        {/* <h3 className="text-xl font-semibold mt-8">
           What would you like to do next?
-        </h3>
-        <button className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
-          <div className="flex gap-2 items-center space-x-4">
-            <Image
-              src={folderIcon}
-              width={24}
-              height={24}
-              alt="Upload Icon"
-              className="bg-secondary w-12 h-12 rounded-lg p-4"
-            />
-            <div className="text-left">
-              <p className="font-semibold text-lg">View in Library</p>
-              <p className="text-base text-gray-400">
-                Browse all of your exercise videos in your library
-              </p>
+        </h3> */}
+        <Link
+          href="/dashboard/admin/all-exercise"
+          className="mx-auto max-w-md "
+        >
+          <button className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
+            <div className="flex gap-2 items-center space-x-4">
+              <Image
+                src={folderIcon}
+                width={24}
+                height={24}
+                alt="Upload Icon"
+                className="bg-secondary w-12 h-12 rounded-lg p-4"
+              />
+              <div className="text-left">
+                <p className="font-semibold text-lg">View in Library</p>
+                <p className="text-base text-gray-400">
+                  Browse all of your exercise videos in your library
+                </p>
+              </div>
             </div>
-          </div>
-          <IoIosArrowForward />
-        </button>
-        <button className="w-full flex items-center justify-between  gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
+            <IoIosArrowForward />
+          </button>
+        </Link>
+        {/* <button className="w-full flex items-center justify-between  gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer">
           <div className="flex gap-2 items-center space-x-4">
             <Image
               src={plusIcon}
@@ -117,10 +124,10 @@ const Step3 = ({
             </div>
           </div>
           <IoIosArrowForward />
-        </button>
+        </button> */}
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between space-x-4 mt-8">
+        {/* <div className="flex justify-between space-x-4 mt-8">
           <div className="flex justify-end space-x-4 mt-8">
             <button
               type="button"
@@ -134,13 +141,15 @@ const Step3 = ({
           <div className="flex justify-end space-x-4 mt-8">
             <button
               type="button"
-              onClick={onDone}
+              // onClick={onDone}
               className="cursor-pointer font-medium py-2 px-4 flex items-center gap-2 bg-secondary text-white hover:bg-secondary/75"
             >
               Done
             </button>
+    one
+                </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
