@@ -1,11 +1,11 @@
 'use client';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import Stepper from './_components/Stepper/Stepper';
 import Step1 from './_components/Step1/Step1';
 import Step2 from './_components/Step2/Step2';
 import Step3 from './_components/Step3/Step3';
-import { useRouter } from 'next/navigation';
+import Stepper from './_components/Stepper/Stepper';
 
 export interface IFormData {
   videoFile: File | null;
@@ -57,6 +57,8 @@ const addExerciseDefaultValue = {
 
 const AddExercisePage = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [videoId, setVideoId] = useState<string | null>(null);
+
   const router = useRouter();
 
   //Handle form state.
@@ -80,6 +82,9 @@ const AddExercisePage = () => {
   const handleBack = () => {
     setCurrentStep((prev) => prev - 1);
   };
+  useEffect(() => {
+    console.log('Video ID updated:', videoId);
+  }, [videoId]);
 
   //Handle Form Submission
   const onSubmit = (data: FormData) => {
@@ -120,6 +125,7 @@ const AddExercisePage = () => {
               control={control}
               errors={errors}
               handleSubmit={handleSubmit}
+              setVideoId={setVideoId}
             />
           )}
           {currentStep === 1 && (
