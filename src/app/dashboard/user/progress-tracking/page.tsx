@@ -3,7 +3,7 @@ import {
   getWorkoutHistory,
 } from '@/services/user/progress-tracking';
 import { ExerciseProgress } from './_components/ExerciseProgress';
-import { MessagesPanel } from './_components/MessagesPanel';
+import MessagesPanel from './_components/MessagesPanel';
 import { StatsCards } from './_components/StatsCards';
 import { WorkoutHistory } from './_components/WorkoutHistory';
 

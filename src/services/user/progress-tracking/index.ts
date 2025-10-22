@@ -44,3 +44,24 @@ export const getWorkoutHistory = async () => {
     return Error(error.message);
   }
 };
+export const getNotification = async () => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/dashboard/notifications/me`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        // next: {
+        //   tags: ['PROGRAMM'],
+        // },
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};

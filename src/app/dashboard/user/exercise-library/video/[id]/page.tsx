@@ -1,103 +1,23 @@
-import { Button } from '@/components/ui/button';
-import { Download, FileText } from 'lucide-react';
-import pic from '@/assets/dashboard/excercise-library/barbell-exercise-training.png';
-import Image from 'next/image';
-import tagIcon from '@/assets/dashboard/excercise-library/tagIcon.png';
-import levelIcon from '@/assets/dashboard/excercise-library/levelIcon.png';
-import clockIcon from '@/assets/dashboard/excercise-library/clockIcon.png';
-import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
-import watchIcon from '@/assets/dashboard/excercise-library/watchIcon.png';
-import { VideoPlayer } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/VideoPlayer/VideoPlayer';
-import { ExerciseSteps } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/ExcerciseSteps/ExcerciseSteps';
-import { NotesTips } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/NotesTips/NotesTips';
 import { RelatedVideos } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/RelatedVideos/RelatedVideos';
+import { VideoPlayer } from '@/app/dashboard/admin/all-exercise/video/[id]/_components/VideoPlayer/VideoPlayer';
+import clockIcon from '@/assets/dashboard/excercise-library/clockIcon.png';
+import crossIcon from '@/assets/dashboard/excercise-library/cross.png';
+import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
+import levelIcon from '@/assets/dashboard/excercise-library/levelIcon.png';
+import tagIcon from '@/assets/dashboard/excercise-library/tagIcon.png';
+import tickIcon from '@/assets/dashboard/excercise-library/tick.png';
+import watchIcon from '@/assets/dashboard/excercise-library/watchIcon.png';
+import { getExcerciseDetailsByUser } from '@/services/user/excercise-library';
+import Image from 'next/image';
 
-const sampleWorkout = {
-  title: 'Barbell Back Squat',
-  description:
-    'Master strength and depth with proper form in this comprehensive barbell back squat tutorial. The fundamental compound movement targets multiple muscle groups for maximum effectiveness.',
-  videoSrc: '/video.mp4',
-  poster: pic.src,
-};
-
-const relatedVideos = [
-  {
-    id: '1',
-    title: 'How Squat Tutorial',
-    thumbnail: pic.src,
-    duration: '6:30',
-    views: '2.1k',
-    level: 'Beginner',
-  },
-  {
-    id: '2',
-    title: 'Barbell Back Squats',
-    thumbnail: pic.src,
-    duration: '4:15',
-    views: '1.8k',
-    level: 'Beginner',
-  },
-  {
-    id: '3',
-    title: 'Deadlift Squat',
-    thumbnail: pic.src,
-    duration: '7:22',
-    views: '3.2k',
-    level: 'Intermediate',
-  },
-  {
-    id: '4',
-    title: 'How Squat Tutorial',
-    thumbnail: pic.src,
-    duration: '5:45',
-    views: '1.5k',
-    level: 'Beginner',
-  },
-];
-
-const exerciseSteps = [
-  {
-    step: 1,
-    title: 'Setup under the barbell rack',
-    description:
-      'Position yourself under the bar with feet shoulder-width apart',
-  },
-  {
-    step: 2,
-    title: 'Engage core, step back',
-    description: 'Brace your core and take a step back from the rack',
-  },
-  {
-    step: 3,
-    title: 'Squat until thighs are parallel',
-    description: 'Lower down slowly maintaining proper knee tracking',
-  },
-  {
-    step: 4,
-    title: 'Drive up keeping chest up',
-    description: 'Push through heels to return to starting position',
-  },
-];
-
-const notesTips = [
-  {
-    id: '1',
-    author: 'Coach Mike',
-    avatar: '/placeholder.svg?height=32&width=32',
-    role: 'Trainer',
-    content:
-      'Remember to keep your knees tracking over your toes throughout the movement. This prevents knee valgus and reduces injury risk.',
-  },
-  {
-    id: '2',
-    author: 'Sarah J',
-    avatar: '/placeholder.svg?height=32&width=32',
-    content:
-      'I found that the step-by-step breakdown really helped me understand the proper form. My squats have improved significantly.',
-  },
-];
-
-const WorkoutPlayVideoPage = () => {
+const ExcercisePlayVideoPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+  const excerciseDetails = await getExcerciseDetailsByUser(id);
+  console.log(excerciseDetails);
   return (
     <div className="mb-20">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -105,13 +25,15 @@ const WorkoutPlayVideoPage = () => {
         <div className="lg:col-span-2">
           {/* Video Player */}
           <VideoPlayer
-            src={sampleWorkout.videoSrc}
-            poster={sampleWorkout.poster}
+            src={excerciseDetails?.data?.videoUrl}
+            poster={excerciseDetails?.data?.thumbnailUrl}
           />
 
           {/* Video Info */}
           <div className="space-y-2 mb-5">
-            <h1 className="text-2xl font-bold">{sampleWorkout.title}</h1>
+            <h1 className="text-2xl font-bold">
+              {excerciseDetails?.data?.title}
+            </h1>
 
             <div className="flex items-center justify-start flex-wrap gap-x-6 gap-y-2">
               <div className="flex items-center gap-1">
@@ -123,7 +45,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white">
-                  {'Legs, Strength, Compound'}
+                  {excerciseDetails?.data?.bodyPartTags.join(', ')}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -135,7 +57,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'Beginner'}
+                  {excerciseDetails?.data?.difficulty}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -147,7 +69,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'1:15'}
+                  {excerciseDetails?.data?.duration} mins
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -159,7 +81,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'Barbell, Rack'}
+                  {excerciseDetails?.data?.equipmentTags.join(', ')}
                 </span>
               </div>
               <div className="flex items-center gap-1">
@@ -171,7 +93,7 @@ const WorkoutPlayVideoPage = () => {
                   className="shrink-0"
                 />
                 <span className="font-medium text-sm text-white mt-0.5">
-                  {'6.3k Views'}
+                  {excerciseDetails?.data?.views} views
                 </span>
               </div>
             </div>
@@ -181,28 +103,69 @@ const WorkoutPlayVideoPage = () => {
           <div className="">
             <h3 className="text-lg font-semibold mb-3">Description</h3>
             <p className="text-gray-300 leading-relaxed">
-              {sampleWorkout.description}
+              {excerciseDetails?.data?.description}
             </p>
 
             <div className="mt-4 space-y-2">
               <p className="text-gray-300">
-                <strong>Benefits:</strong> Builds lower body strength, glute,
-                hamstring, and calf muscle development, improves posture
-                potential for daily activities and athletic performance.
+                <strong>Benefits:</strong>
               </p>
+              {excerciseDetails?.data?.keyBenefits.map(
+                (item: string, idx: number) => (
+                  <div key={idx} className="flex items-center gap-1.5 mt-1">
+                    <Image
+                      src={tickIcon}
+                      alt="Upload Icon"
+                      className="w-3 h-4 shrink-0"
+                    />
+                    <span className="font-medium text-sm">{item}</span>
+                  </div>
+                ),
+              )}
               <p className="text-gray-300">
-                <strong>Common Mistakes to Avoid:</strong> Knee valgus (knees
-                caving in), insufficient depth, and improper bar positioning.
-                Focus on maintaining neutral spine throughout the exercise.
+                <strong>Common Mistakes to Avoid:</strong>
               </p>
+              {excerciseDetails?.data?.commonMistakes.map(
+                (item: string, idx: number) => (
+                  <div key={idx} className="flex items-center gap-1.5 mt-1">
+                    <Image
+                      src={crossIcon}
+                      alt="Upload Icon"
+                      className="w-3 h-4 shrink-0"
+                    />
+                    <span className="font-medium text-sm">{item}</span>
+                  </div>
+                ),
+              )}
             </div>
           </div>
 
           {/* Exercise Steps */}
-          <ExerciseSteps steps={exerciseSteps} />
+          <div className="space-y-4 mt-6">
+            <h3 className="text-lg font-semibold text-white">Exercise Steps</h3>
+            <div className="space-y-3">
+              {excerciseDetails?.data?.steps.map(
+                (step: string, idx: number) => (
+                  <div
+                    key={idx}
+                    className="bg-primary-200 border border-secondary  p-4"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                        {idx + 1}
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium mb-1">{step}</h4>
+                      </div>
+                    </div>
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
 
           {/* Downloadable Resources */}
-          <div className=" mt-6">
+          {/* <div className=" mt-6">
             <h3 className="text-lg font-semibold mb-4">
               Downloadable Resources
             </h3>
@@ -222,19 +185,19 @@ const WorkoutPlayVideoPage = () => {
                 Workout Tracker
               </Button>
             </div>
-          </div>
+          </div> */}
 
           {/* Notes & Tips */}
-          <NotesTips notes={notesTips} />
+          {/* <NotesTips notes={notesTips} /> */}
         </div>
 
         {/* Sidebar */}
         <div className="lg:col-span-1">
-          <RelatedVideos videos={relatedVideos} />
+          <RelatedVideos videos={excerciseDetails?.data?.relatedExercises} />
         </div>
       </div>
     </div>
   );
 };
 
-export default WorkoutPlayVideoPage;
+export default ExcercisePlayVideoPage;

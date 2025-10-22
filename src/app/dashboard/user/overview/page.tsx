@@ -1,37 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@/components/ui/button';
-import { workoutData } from '@/constant/workoutData';
 import { getAllUserProgram } from '@/services/user/assigned-program';
+import { getAllExcerciseByUser } from '@/services/user/excercise-library';
+import { getUserDashboardStates } from '@/services/user/overview';
+import Link from 'next/link';
 import { FaRegCalendarCheck, FaRegCirclePlay } from 'react-icons/fa6';
 import { MdOutlineCalendarMonth } from 'react-icons/md';
 import { StatesCard } from '../../admin/overview/_components/StatesCard/StatesCard';
-import { UserWorkoutCard } from '../exercise-library/_components/userDashboardcard';
+import { UserWorkoutCard } from '../exercise-library/_components/UserWorkoutCard/UserWorkoutCard';
 import { AssignedProgramTable } from './_components/AssignedProgramTable/AssignedProgramTable';
 import DashboardBanner from './_components/DashboardBanner/DashboardBanner';
 import { RecentMessages } from './_components/RecentMessages/RecentMessages';
-
-const statesData = [
-  {
-    title: 'All Video',
-    value: '247',
-    icon: FaRegCirclePlay,
-  },
-  {
-    title: 'Total Training',
-    value: '189',
-    icon: MdOutlineCalendarMonth,
-  },
-  {
-    title: 'Training Completed',
-    value: '55',
-    icon: FaRegCalendarCheck,
-  },
-];
 
 type Props = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 const UserOverview = async ({ searchParams }: Props) => {
+  const dashboardStates = await getUserDashboardStates();
+
+  const statesData = [
+    {
+      title: 'All Video',
+      value: dashboardStates?.data?.totalExerciseLibraryVideos,
+      icon: FaRegCirclePlay,
+    },
+    {
+      title: 'Total Training',
+      value: dashboardStates?.data?.totalAssignedTrainings,
+      icon: MdOutlineCalendarMonth,
+    },
+    {
+      title: 'Training Completed',
+      value: dashboardStates?.data?.totalCompletedTrainings,
+      icon: FaRegCalendarCheck,
+    },
+  ];
+
   // parse search params (page & status)
   const pageParam =
     typeof (await searchParams?.page) === 'string'
@@ -45,6 +50,8 @@ const UserOverview = async ({ searchParams }: Props) => {
     limit: 10,
     status: undefined,
   });
+
+  const allExcercise = await getAllExcerciseByUser();
 
   return (
     <div>
@@ -64,13 +71,15 @@ const UserOverview = async ({ searchParams }: Props) => {
       <div className="mt-10">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <h1 className="text-xl font-bold">Exercise Library</h1>
-          <Button className="bg-secondary border border-slate-400 cursor-pointer">
-            View More
-          </Button>
+          <Link href={'/dashboard/user/exercise-library'}>
+            <Button className="bg-secondary border border-slate-400 cursor-pointer">
+              View More
+            </Button>
+          </Link>
         </div>
-        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-          {workoutData.map((workout) => (
-            <UserWorkoutCard key={workout.id} {...workout} />
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {allExcercise?.data?.slice(0, 4).map((workout: any) => (
+            <UserWorkoutCard key={workout.id} excercise={workout} />
           ))}
         </div>
       </div>
