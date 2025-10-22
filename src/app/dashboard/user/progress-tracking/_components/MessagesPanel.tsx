@@ -8,7 +8,7 @@ const MessagesPanel = async () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium">Messages</h2>
+        <h2 className="text-lg font-medium">Recent Messages</h2>
       </div>
 
       <div className="space-y-3">
