@@ -23,11 +23,14 @@ export const getUserProgress = async () => {
     return Error(error.message);
   }
 };
-export const getWorkoutHistory = async () => {
+export const getWorkoutHistory = async (
+  page: number = 1,
+  limit: number = 1,
+) => {
   const token = await getValidToken();
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user/programs/workout/history`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/programs/workout/history?page=${page}&limit=${limit}`,
       {
         method: 'GET',
         headers: {
@@ -36,6 +39,27 @@ export const getWorkoutHistory = async () => {
         next: {
           tags: ['PROGRAMM'],
         },
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+export const getNotification = async () => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/dashboard/notifications/me`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        // next: {
+        //   tags: ['PROGRAMM'],
+        // },
       },
     );
     const data = await res.json();

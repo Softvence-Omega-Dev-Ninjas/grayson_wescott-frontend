@@ -5,18 +5,24 @@ import { getValidToken } from '@/lib/verifyToken';
 import { ICategoryFormData } from '@/types/category.types';
 import { revalidateTag } from 'next/cache';
 
-export const getAllCategories = async () => {
+export const getAllCategories = async (
+  page: number = 1,
+  limit: number = 10,
+) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/categories`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/categories?page=${page}&limit=${limit}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['CATEGORY'],
+        },
       },
-      next: {
-        tags: ['CATEGORY'],
-      },
-    });
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {

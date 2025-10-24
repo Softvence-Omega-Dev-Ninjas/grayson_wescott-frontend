@@ -88,10 +88,8 @@ const AddExercisePage = () => {
       workoutId: videoId,
     };
     setLoading(true);
-    console.log('Full Form Data:', { ...data, workoutId: videoId });
     try {
       const res = await createExcercise(formattedData);
-      console.log('+++++++++', res);
       if (res?.success) {
         setCurrentStep(2);
       }

@@ -3,13 +3,19 @@ import {
   getWorkoutHistory,
 } from '@/services/user/progress-tracking';
 import { ExerciseProgress } from './_components/ExerciseProgress';
-import { MessagesPanel } from './_components/MessagesPanel';
+import MessagesPanel from './_components/MessagesPanel';
 import { StatsCards } from './_components/StatsCards';
 import { WorkoutHistory } from './_components/WorkoutHistory';
 
-const UserProgress = async () => {
+const UserProgress = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
   const progressData = await getUserProgress();
-  const workoutHistory = await getWorkoutHistory();
+  const workoutHistory = await getWorkoutHistory(page, 8);
   console.log(workoutHistory);
   return (
     <div className=" bg-black text-white p-6">
@@ -36,7 +42,7 @@ const UserProgress = async () => {
             <ExerciseProgress exerciseData={progressData?.data?.summary} />
 
             {/* Workout History */}
-            <WorkoutHistory workoutHistory={workoutHistory?.data} />
+            <WorkoutHistory workoutHistory={workoutHistory} />
           </div>
 
           {/* Messages Panel */}

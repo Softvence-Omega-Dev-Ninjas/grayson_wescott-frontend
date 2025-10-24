@@ -1,6 +1,6 @@
 'use client';
+import Notification from '@/components/shared/dashboard/Notifiaction/Notification';
 import { AppSidebar } from '@/components/shared/dashboard/Sidebar/AppSidebar';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   SidebarInset,
   SidebarProvider,
@@ -8,8 +8,6 @@ import {
 } from '@/components/ui/sidebar';
 import useScrollTrigger from '@/hooks/useScrollTrigger';
 import { ReactNode } from 'react';
-import avatar from '@/assets/dashboard/add-excercise/avatar.png';
-import { MdOutlineNotificationsNone } from 'react-icons/md';
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   const { scrolled } = useScrollTrigger();
@@ -28,13 +26,13 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
                 <SidebarTrigger className="-ml-1 text-white" />
               </div>
               <div className="flex items-center gap-4 mr-2">
-                <MdOutlineNotificationsNone className="text-xl" />
-                <Avatar className="h-10 w-10">
+                <Notification />
+                {/* <Avatar className="h-10 w-10">
                   <AvatarImage src={avatar.src} alt="Sarah Johnson" />
                   <AvatarFallback className="bg-gray-700 text-white">
                     SJ
                   </AvatarFallback>
-                </Avatar>
+                </Avatar> */}
               </div>
             </div>
           </header>

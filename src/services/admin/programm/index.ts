@@ -53,18 +53,21 @@ export const updateProgramm = async (
   }
 };
 
-export const getAllProgramms = async () => {
+export const getAllProgramms = async (page: number = 1, limit: number = 10) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/program`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/program?page=${page}&limit=${limit}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['PROGRAMM'],
+        },
       },
-      next: {
-        tags: ['PROGRAMM'],
-      },
-    });
+    );
     const data = await res.json();
     return data;
   } catch (error: any) {

@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { getAllClients } from '@/services/admin/client';
 import { getProgressTracking } from '@/services/admin/progress-tracking';
 import { Download, FileText, Mail } from 'lucide-react';
 import ClientPerformanceTable from './_components/ClientPerformanceTable/ClientPerformanceTable';
@@ -7,7 +8,14 @@ import { LoadProgressionChart } from './_components/LoadProgressionChart/LoadPro
 import { ProgressStates } from './_components/ProgressStates/ProgressStates';
 import { RPETrendsChart } from './_components/RPETrendsChart/RPETrendsChart';
 
-const ProgressTrackingPage = async () => {
+const ProgressTrackingPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const clients = await getAllClients(page, 10);
   const res = await getProgressTracking();
   console.log(res);
   return (
@@ -16,7 +24,7 @@ const ProgressTrackingPage = async () => {
         <ProgressStates states={res?.data?.stats} />
 
         {/* Client Performance Table */}
-        <ClientPerformanceTable />
+        <ClientPerformanceTable clients={clients} />
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
