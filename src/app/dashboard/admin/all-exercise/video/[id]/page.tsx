@@ -1,4 +1,3 @@
-import pic from '@/assets/dashboard/excercise-library/barbell-exercise-training.png';
 import clockIcon from '@/assets/dashboard/excercise-library/clockIcon.png';
 import crossIcon from '@/assets/dashboard/excercise-library/cross.png';
 import dumbellIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
@@ -10,41 +9,6 @@ import { getExcerciseDetails } from '@/services/admin/excercise-library';
 import Image from 'next/image';
 import { RelatedVideos } from './_components/RelatedVideos/RelatedVideos';
 import { VideoPlayer } from './_components/VideoPlayer/VideoPlayer';
-
-const relatedVideos = [
-  {
-    id: '1',
-    title: 'How Squat Tutorial',
-    thumbnail: pic.src,
-    duration: '6:30',
-    views: '2.1k',
-    level: 'Beginner',
-  },
-  {
-    id: '2',
-    title: 'Barbell Back Squats',
-    thumbnail: pic.src,
-    duration: '4:15',
-    views: '1.8k',
-    level: 'Beginner',
-  },
-  {
-    id: '3',
-    title: 'Deadlift Squat',
-    thumbnail: pic.src,
-    duration: '7:22',
-    views: '3.2k',
-    level: 'Intermediate',
-  },
-  {
-    id: '4',
-    title: 'How Squat Tutorial',
-    thumbnail: pic.src,
-    duration: '5:45',
-    views: '1.5k',
-    level: 'Beginner',
-  },
-];
 
 const WorkoutPlayVideoPage = async ({
   params,
@@ -229,7 +193,7 @@ const WorkoutPlayVideoPage = async ({
 
         {/* Sidebar */}
         <div className="lg:col-span-1">
-          <RelatedVideos videos={relatedVideos} />
+          <RelatedVideos videos={excerciseDetails?.data?.relatedExercises} />
         </div>
       </div>
     </div>

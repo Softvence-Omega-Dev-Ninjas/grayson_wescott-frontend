@@ -49,19 +49,25 @@ export const createExcercise = async (excerciseData: any): Promise<any> => {
   }
 };
 
-export const getAllExcercise = async (): Promise<any> => {
+export const getAllExcercise = async (
+  page: number = 1,
+  limit: number = 10,
+): Promise<any> => {
   const token = await getValidToken();
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/library`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/library?page=${page}&limit=${limit}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['ESXERCISE_LIBRARY'],
+        },
       },
-      next: {
-        tags: ['ESXERCISE_LIBRARY'],
-      },
-    });
+    );
 
     const result = await res.json();
 

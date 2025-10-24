@@ -83,14 +83,14 @@ const ViewExcerciseDetailsPage = async ({
           {/* Video Player */}
           <div className="relative">
             <Image
-              src={excerciseDetails?.data?.thumbnailUrl}
+              src={excerciseDetails?.data?.thumbnailUrl || null}
               alt="Upload Icon"
               width={500}
               height={500}
               className="w-full h-[500px] object-fill"
             />
             <Link
-              href={'/dashboard/admin/all-exercise/video/1'}
+              href={`/dashboard/admin/all-exercise/video/${excerciseDetails?.data?.id}`}
               className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-1/2"
             >
               <Button className="flex items-center justify-center gap-1.5 bg-[#7DA6FF]  py-4  px-10 cursor-pointer">
@@ -111,7 +111,7 @@ const ViewExcerciseDetailsPage = async ({
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <Image
-                    src={starIcon}
+                    src={starIcon || null}
                     alt="Upload Icon"
                     className="w-5 h-4 shrink-0"
                   />

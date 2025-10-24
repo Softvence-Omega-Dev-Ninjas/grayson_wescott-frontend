@@ -26,7 +26,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleUser = async () => {
+    console.log('Handle user function is called');
     const user = await getCurrentUser();
+    console.log('+++++++++++++++++++++++User', user);
     setUser(user);
     setIsLoading(false);
   };
@@ -34,6 +36,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     handleUser();
   }, []);
+  console.log('===============>>>>>>>>>>>>User :', user);
 
   const contextValue = {
     user,

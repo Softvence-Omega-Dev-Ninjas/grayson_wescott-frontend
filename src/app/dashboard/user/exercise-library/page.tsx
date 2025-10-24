@@ -1,8 +1,14 @@
 import { getAllExcerciseByUser } from '@/services/user/excercise-library';
 import UserExcerciseLibrary from './_components/UserExcerciseLibrary/UserExcerciseLibrary';
 
-const ExcerciseLibraryPage = async () => {
-  const res = await getAllExcerciseByUser();
+const ExcerciseLibraryPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const res = await getAllExcerciseByUser(page, 12);
   console.log(res?.data);
   return (
     <div>

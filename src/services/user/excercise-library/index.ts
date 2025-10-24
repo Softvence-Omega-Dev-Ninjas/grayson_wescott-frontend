@@ -2,12 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getValidToken } from '@/lib/verifyToken';
 
-export const getAllExcerciseByUser = async (): Promise<any> => {
+export const getAllExcerciseByUser = async (
+  page: number = 1,
+  limit: number = 1,
+): Promise<any> => {
   const token = await getValidToken();
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/dashboard/library`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/dashboard/library?page=${page}&limit=${limit}`,
       {
         method: 'GET',
         headers: {

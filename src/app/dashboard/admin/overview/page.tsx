@@ -1,48 +1,22 @@
-import { DollarSign, FileText, Users } from 'lucide-react';
+import { getProgressTracking } from '@/services/admin/progress-tracking';
 import ActivityTable from './_components/ActivityTable/ActivityTable';
-import {
-  IStatesCardProps,
-  StatesCard,
-} from './_components/StatesCard/StatesCard';
+import { StatesCard } from './_components/StatesCard/StatesCard';
 
-const statesData: IStatesCardProps[] = [
-  {
-    title: 'Total Clients',
-    value: '247',
-    change: '+12% vs last month',
-    icon: Users,
-  },
-  {
-    title: 'Active Clients',
-    value: '189',
-    change: '+8% vs last month',
-    icon: FileText,
-  },
-  {
-    title: 'Monthly Revenue',
-    value: '$18,240',
-    change: '+5% vs last month',
-    icon: DollarSign,
-  },
-];
-
-const AdminOverviewPage = () => {
+const AdminOverviewPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const res = await getProgressTracking();
   return (
     <div>
       {/* States Cards  */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {statesData.map((metric, index) => (
-          <StatesCard
-            key={index}
-            title={metric.title}
-            value={metric.value}
-            change={metric.change}
-            icon={metric.icon}
-          />
-        ))}
-      </div>
 
-      <ActivityTable />
+      <StatesCard res={res?.data?.overViewStats} />
+
+      <ActivityTable page={page} />
     </div>
   );
 };

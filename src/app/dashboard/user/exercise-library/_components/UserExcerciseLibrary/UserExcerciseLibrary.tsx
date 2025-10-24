@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
-import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
+import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { Input } from '@/components/ui/input';
-import usePagination from '@/hooks/usePagination';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { UserWorkoutCard } from '../UserWorkoutCard/UserWorkoutCard';
@@ -19,7 +18,7 @@ import { UserWorkoutCard } from '../UserWorkoutCard/UserWorkoutCard';
 const UserExcerciseLibrary = ({ allExcercise }: { allExcercise: any }) => {
   const [searchTerm, setSearchTerm] = useState('');
   //   const [activeCategory, setActiveCategory] = useState('Pull');
-  const { currentPage, handlePageChange } = usePagination();
+  // const { currentPage, handlePageChange } = usePagination();
   return (
     <div>
       {/* Header */}
@@ -70,11 +69,11 @@ const UserExcerciseLibrary = ({ allExcercise }: { allExcercise: any }) => {
             <UserWorkoutCard key={workout.id} excercise={workout} />
           ))}
         </div>
-        <div className="flex justify-center my-16">
+        {/* Pagination */}
+        <div className="my-20 flex justify-center">
           <Pagination
-            activePage={currentPage}
-            totalPages={7}
-            onPageChange={handlePageChange}
+            activePage={allExcercise?.metadata?.page || 1}
+            totalPages={allExcercise?.metadata?.totalPage || 1}
           />
         </div>
       </div>

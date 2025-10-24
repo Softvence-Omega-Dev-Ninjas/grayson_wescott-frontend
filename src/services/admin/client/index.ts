@@ -3,22 +3,27 @@
 
 import { getValidToken } from '@/lib/verifyToken';
 
-export const getAllClients = async () => {
+// services/admin/client.ts
+export const getAllClients = async (
+  page: number = 1,
+  limit: number = 20,
+  search: string = '',
+) => {
   const token = await getValidToken();
+  console.log(page);
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/client-analytics`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/client-analytics?page=${page}&limit=${limit}&search=${search}`,
       {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        next: {
-          tags: ['CLIENT'],
-        },
+        next: { tags: ['CLIENT'] },
       },
     );
     const data = await res.json();
+    console.log(data);
     return data;
   } catch (error: any) {
     return Error(error.message);

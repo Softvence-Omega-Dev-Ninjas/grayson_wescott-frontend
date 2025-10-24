@@ -28,9 +28,6 @@ const ClientProfilePage = async ({
         />
         <CoachNotes />
       </div>
-
-      {/* Automations & Alerts */}
-      {/* <AutomationsAlerts /> */}
     </div>
   );
 };

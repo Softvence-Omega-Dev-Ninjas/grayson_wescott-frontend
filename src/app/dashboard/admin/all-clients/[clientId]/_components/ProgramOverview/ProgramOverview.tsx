@@ -5,19 +5,38 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export function ProgramOverview({ userInfo }: { userInfo: any }) {
   return (
-    <div className="bg-primary-200 border border-secondary p-5">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-6">
+    <div className="bg-primary-200 border border-secondary p-5 h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* User Info */}
-        <div className="flex items-center gap-4">
-          <Avatar className="h-16 w-16 ">
+        <div className="flex flex-col md:flex-row items-start gap-4">
+          <Avatar className="h-40 w-40 rounded-none ">
             <AvatarImage src={userInfo?.avatarUrl} alt="Sarah Johnson" />
             <AvatarFallback className="bg-gray-700 text-white">
               SJ
             </AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="text-white font-semibold">{userInfo?.name}</h3>
-            <p className="text-white">{userInfo?.email}</p>
+            <div className="flex flex-col justify-between gap-2">
+              <h3 className="text-white text-2xl font-semibold">
+                {userInfo?.name}
+              </h3>
+              <p className="text-white flex items-center gap-2">
+                <span className="font-semibold">Email: </span>
+                <span>{userInfo?.email}</span>
+              </p>
+              <p className="text-white flex items-center gap-2">
+                <span className="font-semibold">Phone: </span>
+                <span>{userInfo?.phone ? userInfo?.phone : 'N/A'}</span>
+              </p>
+              <p className="text-white flex items-center gap-2">
+                <span className="font-semibold">Last Active: </span>
+                <span>{userInfo?.lastActiveAt}</span>
+              </p>
+              <p className="text-white flex items-center gap-2">
+                <span className="font-semibold">Last Login: </span>
+                <span>{userInfo?.lastLoginAt}</span>
+              </p>
+            </div>
           </div>
         </div>
 

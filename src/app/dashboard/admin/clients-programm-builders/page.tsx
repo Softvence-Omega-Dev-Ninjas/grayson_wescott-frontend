@@ -1,11 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { getAllProgramms } from '@/services/admin/programm';
 import { Plus, SquarePen } from 'lucide-react';
 import Link from 'next/link';
 
-const ClientsProgrammBuildersPage = async () => {
-  const programs = await getAllProgramms();
-  console.log(programs);
+const ClientsProgrammBuildersPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  const { data, metadata } = await getAllProgramms(page);
   return (
     <div>
       <div className="flex items-center justify-between gap-5 flex-wrap">
@@ -21,7 +27,7 @@ const ClientsProgrammBuildersPage = async () => {
         </Link>
       </div>
       <div className="flex flex-col gap-5 mt-10">
-        {programs?.data?.map((item: any) => {
+        {data?.map((item: any) => {
           return (
             <div
               key={item?.id}
@@ -45,6 +51,13 @@ const ClientsProgrammBuildersPage = async () => {
             </div>
           );
         })}
+      </div>
+      {/* Pagination */}
+      <div className="mt-10 flex justify-center">
+        <Pagination
+          activePage={metadata?.page || 1}
+          totalPages={metadata?.totalPage || 1}
+        />
       </div>
     </div>
   );
