@@ -1,5 +1,6 @@
 'use client';
 
+import { UserRole } from '@/types/user.types';
 import React, {
   createContext,
   useContext,
@@ -11,7 +12,8 @@ import { io, Socket } from 'socket.io-client';
 
 interface SocketContextValue {
   socket: Socket | null;
-  userId: string | null;
+  currentUser: SocketUser | null;
+  currentUserRole: UserRole | null;
   sendMessageClient: (
     content: string,
     type?: string,
@@ -25,6 +27,14 @@ interface SocketContextValue {
   ) => void;
 }
 
+interface SocketUser {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  role: UserRole;
+}
+
 const SocketContext = createContext<SocketContextValue | null>(null);
 
 export const SocketProvider = ({
@@ -35,7 +45,8 @@ export const SocketProvider = ({
   children: React.ReactNode;
 }) => {
   const socketRef = useRef<Socket | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<SocketUser | null>(null);
+  const [currentUserRole, setCurrentUserRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -53,8 +64,9 @@ export const SocketProvider = ({
 
     // On successful auth, server sends userId
     socket.on('success', (data) => {
-      setUserId(data);
-      console.log('Authenticated as:', data);
+      setCurrentUser(data?.data);
+      setCurrentUserRole(data?.data?.role);
+      console.log('Authenticated as:', data?.data, data?.data?.role);
     });
 
     socket.on('error', (err) => {
@@ -101,7 +113,8 @@ export const SocketProvider = ({
     <SocketContext.Provider
       value={{
         socket: socketRef.current,
-        userId,
+        currentUser,
+        currentUserRole,
         sendMessageClient,
         sendMessageAdmin,
       }}
