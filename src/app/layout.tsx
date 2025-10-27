@@ -1,5 +1,6 @@
 import { rajdhani } from '@/assets/fonts';
 import Providers from '@/providers/Providers';
+import { getCurrentUser } from '@/services/auth';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -11,17 +12,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getCurrentUser(); // server action
+  const token = user?.accessToken || null;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${rajdhani.variable} antialiased bg-black text-white font-rajdhani max-w-screen overflow-x-hidden`}
       >
-        <Providers>{children}</Providers>
+        <Providers token={token}>{children}</Providers>
       </body>
     </html>
   );
