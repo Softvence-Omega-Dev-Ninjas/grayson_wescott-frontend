@@ -66,7 +66,6 @@ export const SocketProvider = ({
     socket.on('success', (data) => {
       setCurrentUser(data?.data);
       setCurrentUserRole(data?.data?.role);
-      console.log('Authenticated as:', data?.data, data?.data?.role);
     });
 
     socket.on('error', (err) => {
