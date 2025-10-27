@@ -1,5 +1,6 @@
 'use client';
 
+import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
 import { useCallback, useEffect, useState } from 'react';
 import ChatDetails from './ChatDetails';
@@ -21,12 +22,12 @@ export default function ChatLayout() {
     if (!['SUPER_ADMIN', 'ADMIN'].includes(currentUser.role)) return;
 
     // Emit request to load admin conversation list
-    socket.emit('private:load_conversation_list', { page: 1, limit: 20 });
+    socket.emit(EventsEnum.LOAD_CONVERSATION_LIST, { page: 1, limit: 20 });
 
-    socket.on('private:conversation_list', handleConversationList);
+    socket.on(EventsEnum.CONVERSATION_LIST, handleConversationList);
 
     return () => {
-      socket.off('private:conversation_list', handleConversationList);
+      socket.off(EventsEnum.CONVERSATION_LIST, handleConversationList);
     };
   }, [socket, currentUser]);
 
