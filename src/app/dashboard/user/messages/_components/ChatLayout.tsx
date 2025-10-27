@@ -4,7 +4,9 @@ import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
 import { ChatItem, ConversationResponse } from '@/types/chat.types';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import ChatDetails from './ChatDetails';
+import ChatHeader from './components/ChatHeader';
+import ChatInput from './components/ChatInput';
+import ChatMessages from './components/ChatMessages';
 
 const DEFAULT_LIMIT = 15;
 
@@ -122,14 +124,18 @@ export default function ChatLayout() {
   return (
     <div className="h-[calc(100vh-80px-60px)] flex gap-5 w-full bg-black text-white p-2">
       <div className="flex-1 min-w-0">
-        <ChatDetails
-          chat={items}
-          onBack={() => {}}
-          scrollContainerRef={
-            scrollContainerRef as React.RefObject<HTMLDivElement>
-          }
-          loadingMore={loadingMore}
-        />
+        <div className="h-full flex flex-col bg-black text-white rounded-lg">
+          {/* TODO : add back button for mobile */}
+          <ChatHeader onBack={() => fetchPage(1)} />
+          <ChatMessages
+            chat={items}
+            scrollContainerRef={
+              scrollContainerRef as React.RefObject<HTMLDivElement>
+            }
+            loadingMore={loadingMore}
+          />
+          <ChatInput />
+        </div>
       </div>
     </div>
   );
