@@ -2,45 +2,13 @@
 
 import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
+import { ChatMessage, ConversationResponse } from '@/types/chat.types';
 import { useCallback, useEffect, useState } from 'react';
 import ChatDetails from './ChatDetails';
 
-// Type definitions for sender and message
-interface Sender {
-  id: string;
-  name: string;
-  avatarUrl: string;
-  role: 'USER' | 'SUPER_ADMIN';
-  email: string;
-}
-
-interface ChatMessage {
-  id: string;
-  type: 'MESSAGE';
-  createdAt: string;
-  content: string;
-  messageType: 'TEXT' | 'IMAGE' | 'FILE';
-  sender: Sender;
-  file: string | null;
-  isMine: boolean;
-  isSentByClient: boolean;
-}
-
-interface ConversationResponse {
-  success: boolean;
-  message: string;
-  data: ChatMessage[];
-  metadata: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPage: number;
-  };
-}
-
 export default function ChatLayout() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
-  const [chat, setChat] = useState<ChatMessage[]>([]); // <-- type-safe state
+  const [chat, setChat] = useState<ChatMessage[]>([]);
 
   const { socket, currentUser } = useSocket();
   console.log(socket, currentUser, 'Current Socket Client');

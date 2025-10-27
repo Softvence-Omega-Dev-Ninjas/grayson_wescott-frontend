@@ -1,60 +1,47 @@
 'use client';
 
-import { ArrowLeft, Mic, Plus } from 'lucide-react';
+import {
+  ChatCall,
+  ChatItem,
+  ChatMessage,
+  ChatMessageType,
+} from '@/types/chat.types';
+import { ArrowLeft, Mic, Phone, Plus, Video } from 'lucide-react';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import audio from '../../../../../assets/dashboard/messages/audio.png';
 import fallbackAvatar from '../../../../../assets/dashboard/messages/Avatar2.png';
 import video from '../../../../../assets/dashboard/messages/video.png';
 
-type Role = 'USER' | 'SUPER_ADMIN' | 'ADMIN' | string;
-
-interface Sender {
-  id: string;
-  name: string;
-  avatarUrl?: string | null;
-  role?: Role;
-  email?: string;
-}
-
-export interface ChatMessage {
-  id: string;
-  type: 'MESSAGE' | string;
-  createdAt: string;
-  content: string;
-  messageType: 'TEXT' | 'IMAGE' | 'FILE' | string;
-  sender: Sender;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  file: any | null;
-  isMine: boolean;
-  isSentByClient: boolean;
-}
-
 interface ChatDetailsProps {
-  chat: ChatMessage[] | null;
+  chat: ChatItem[] | null;
   onBack: () => void;
 }
 
 export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
-  // If no chat (no messages) show placeholder
   if (!chat || chat.length === 0) {
     return (
       <div className="flex items-center justify-center bg-[#151519] text-gray-400 rounded-lg h-full">
-        Select a chat to start messaging
+        Send a message to get started
       </div>
     );
   }
 
-  // Derive a "participant" to show in header (prefer the client/user)
+  // Determine primary participant (non-admin / client)
   const participant = useMemo(() => {
-    // prefer a sender with role USER or a message that was sent by client
     const byRole = chat.find(
-      (m) => m.sender?.role === 'USER' || m.isSentByClient,
+      (m) =>
+        (m.type === ChatMessageType.MESSAGE &&
+          (m.sender?.role === 'USER' || m.isSentByClient)) ||
+        (m.type === ChatMessageType.CALL && m.isSentByClient),
     );
-    return byRole?.sender ?? chat[0].sender;
+    if (byRole && byRole.type === ChatMessageType.MESSAGE) {
+      return byRole.sender;
+    }
+    return chat.find((i) => i.type === ChatMessageType.MESSAGE)?.sender ?? null;
   }, [chat]);
 
-  // Simple "active" heuristic: last message within 5 minutes -> active
+  // Determine active status based on latest item
   const isActive = useMemo(() => {
     const last = chat[chat.length - 1];
     if (!last) return false;
@@ -81,22 +68,20 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
                   height={50}
                   className="rounded-full object-cover"
                 />
-                {isActive ? (
-                  <div className="w-3 h-3 bg-green-600 rounded-full absolute bottom-0 right-0" />
-                ) : (
-                  <div className="w-3 h-3 bg-gray-600 rounded-full absolute bottom-0 right-0" />
-                )}
+                <div
+                  className={`w-3 h-3 rounded-full absolute bottom-0 right-0 ${
+                    isActive ? 'bg-green-600' : 'bg-gray-600'
+                  }`}
+                />
               </div>
 
               <div>
                 <h3 className="font-semibold">
                   {participant?.name ?? 'Unknown'}
                 </h3>
-                {isActive ? (
-                  <p className="text-green-600">Active Now</p>
-                ) : (
-                  <p className="text-gray-400">Offline</p>
-                )}
+                <p className={isActive ? 'text-green-600' : 'text-gray-400'}>
+                  {isActive ? 'Active Now' : 'Offline'}
+                </p>
               </div>
             </div>
 
@@ -120,56 +105,108 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Chat History */}
       <div className="flex-1 p-4 overflow-y-auto space-y-3">
-        {chat.map((msg) => {
-          const timeLabel = new Date(msg.createdAt).toLocaleTimeString([], {
+        {chat.map((item) => {
+          const timeLabel = new Date(item.createdAt).toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
           });
+          const isMine = item.isMine;
 
-          const isMine = !!msg.isMine;
+          // Message rendering
+          if (item.type === ChatMessageType.MESSAGE) {
+            const msg = item as ChatMessage;
 
-          return (
-            <div
-              key={msg.id}
-              className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}
-            >
-              <div className="flex gap-2 items-end max-w-full">
-                {/* show avatar for non-mine messages */}
-                {!isMine && (
-                  <Image
-                    src={msg.sender?.avatarUrl ?? fallbackAvatar.src}
-                    alt={msg.sender?.name ?? 'avatar'}
-                    className="rounded-full object-cover"
-                    height={30}
-                    width={30}
-                  />
-                )}
+            return (
+              <div
+                key={msg.id}
+                className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}
+              >
+                <div className="flex gap-2 items-end max-w-full">
+                  {!isMine && (
+                    <Image
+                      src={msg.sender?.avatarUrl ?? fallbackAvatar.src}
+                      alt={msg.sender?.name ?? 'avatar'}
+                      className="rounded-full object-cover"
+                      height={30}
+                      width={30}
+                    />
+                  )}
 
-                <div className="flex flex-col">
-                  <div
-                    className={`max-w-xs px-4 py-2 rounded-2xl text-sm break-words ${
-                      isMine
-                        ? 'bg-[#2A2D33] text-white rounded-br-none'
-                        : 'bg-[#2A2D33] text-gray-200 rounded-bl-none'
-                    }`}
-                  >
-                    {/* If message type isn't TEXT, you can extend rendering logic here */}
-                    <p>{msg.content}</p>
+                  <div className="flex flex-col">
+                    <div
+                      className={`max-w-xs px-4 py-2 rounded-2xl text-sm break-words ${
+                        isMine
+                          ? 'bg-[#2A2D33] text-white rounded-br-none'
+                          : 'bg-[#2A2D33] text-gray-200 rounded-bl-none'
+                      }`}
+                    >
+                      {msg.messageType === 'TEXT' && <p>{msg.content}</p>}
+                      {msg.messageType === 'IMAGE' && msg.file && (
+                        <Image
+                          src={msg.file.url}
+                          alt="image"
+                          width={200}
+                          height={200}
+                          className="rounded-lg"
+                        />
+                      )}
+                      {msg.messageType === 'FILE' && msg.file && (
+                        <a
+                          href={msg.file.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline text-blue-400"
+                        >
+                          {msg.file.type} File
+                        </a>
+                      )}
+                    </div>
+                    <span className="block text-xs text-gray-400 mt-1">
+                      {timeLabel}
+                    </span>
                   </div>
-                  <span className="block text-xs text-gray-400 mt-1">
-                    {timeLabel}
-                  </span>
                 </div>
-
-                {/* if message is mine and you want to show small avatar on right, uncomment */}
-                {/* {isMine && (
-                  <Image src={yourAvatar} alt="me" height={30} width={30} />
-                )} */}
               </div>
-            </div>
-          );
+            );
+          }
+
+          // Call rendering
+          if (item.type === ChatMessageType.CALL) {
+            const call = item as ChatCall;
+            const icon =
+              call.callType === 'VIDEO' ? (
+                <Video size={18} />
+              ) : (
+                <Phone size={18} />
+              );
+
+            const callStatusColor =
+              call.status === 'COMPLETED'
+                ? 'text-green-400'
+                : call.status === 'MISSED'
+                  ? 'text-red-400'
+                  : 'text-gray-400';
+
+            return (
+              <div key={call.id} className="flex justify-center">
+                <div className="text-xs flex items-center gap-1 text-gray-400">
+                  {icon}
+                  <span className={callStatusColor}>
+                    {call.status === 'COMPLETED'
+                      ? 'Call completed'
+                      : call.status === 'MISSED'
+                        ? 'Missed call'
+                        : 'Call in progress'}
+                  </span>
+                  <span className="text-gray-500">• {timeLabel}</span>
+                </div>
+              </div>
+            );
+          }
+
+          return null;
         })}
       </div>
 
