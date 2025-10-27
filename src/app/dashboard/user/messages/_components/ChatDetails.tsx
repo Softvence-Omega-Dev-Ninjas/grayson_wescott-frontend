@@ -11,23 +11,72 @@ import Image from 'next/image';
 import { useMemo } from 'react';
 import audio from '../../../../../assets/dashboard/messages/audio.png';
 import fallbackAvatar from '../../../../../assets/dashboard/messages/Avatar2.png';
-import video from '../../../../../assets/dashboard/messages/video.png';
+import videoIcon from '../../../../../assets/dashboard/messages/video.png';
 
 interface ChatDetailsProps {
   chat: ChatItem[] | null;
   onBack: () => void;
+  // parent passes a ref to the scrollable container so it can manage scroll / pagination
+  scrollContainerRef: React.RefObject<HTMLDivElement>;
+  loadingMore?: boolean;
 }
 
-export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
+export default function ChatDetails({
+  chat,
+  onBack,
+  scrollContainerRef,
+  loadingMore,
+}: ChatDetailsProps) {
+  // when no messages yet
   if (!chat || chat.length === 0) {
     return (
-      <div className="flex items-center justify-center bg-[#151519] text-gray-400 rounded-lg h-full">
-        Send a message to get started
+      <div className="h-full flex flex-col bg-black text-white rounded-lg">
+        <div className="bg-[#151519] p-4 border-b border-gray-700 rounded-t-lg">
+          <div className="flex items-center gap-3">
+            <button onClick={onBack} className="lg:hidden text-white">
+              <ArrowLeft size={20} />
+            </button>
+            <div className="flex items-center gap-2">
+              <Image
+                src={fallbackAvatar.src}
+                alt="user"
+                width={40}
+                height={40}
+                className="rounded-full"
+              />
+              <div>
+                <div className="font-semibold">Client</div>
+                <div className="text-sm text-gray-400">Offline</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-1 p-4 flex items-center justify-center text-gray-400">
+          Send a message to get started
+        </div>
+
+        <div className="p-4 border-t border-gray-700 flex items-center gap-2">
+          <button className="cursor-pointer">
+            <Plus className="bg-[#2A2D33] p-2 rounded-full" size={26} />
+          </button>
+          <input
+            type="text"
+            placeholder="Type your message..."
+            className="flex-1 px-3 py-2 rounded-lg bg-[#2A2D33] text-white outline-none"
+          />
+          <button className="cursor-pointer">
+            <Mic className="bg-[#2A2D33] p-2 rounded-full" size={26} />
+          </button>
+          <button className="px-3 py-2 bg-[#2A2D33] rounded-md text-sm cursor-pointer">
+            Send
+          </button>
+        </div>
       </div>
     );
   }
 
-  // Determine primary participant (non-admin / client)
+  // choose participant to show in header
   const participant = useMemo(() => {
     const byRole = chat.find(
       (m) =>
@@ -36,12 +85,12 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
         (m.type === ChatMessageType.CALL && m.isSentByClient),
     );
     if (byRole && byRole.type === ChatMessageType.MESSAGE) {
-      return byRole.sender;
+      return (byRole as ChatMessage).sender;
     }
-    return chat.find((i) => i.type === ChatMessageType.MESSAGE)?.sender ?? null;
+    const firstMessage = chat.find((i) => i.type === ChatMessageType.MESSAGE);
+    return firstMessage ? (firstMessage as ChatMessage).sender : null;
   }, [chat]);
 
-  // Determine active status based on latest item
   const isActive = useMemo(() => {
     const last = chat[chat.length - 1];
     if (!last) return false;
@@ -53,60 +102,45 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
     <div className="h-full flex flex-col bg-black text-white rounded-lg">
       {/* Header */}
       <div className="bg-[#151519] flex items-center justify-between p-4 border-b border-gray-700 rounded-t-lg">
-        <div className="flex w-full items-center gap-2">
+        <div className="flex items-center gap-3">
           <button onClick={onBack} className="lg:hidden text-white">
-            <ArrowLeft size={24} />
+            <ArrowLeft size={20} />
           </button>
-
-          <div className="flex items-center gap-3 w-full justify-between">
-            <div className="flex gap-2 items-center">
-              <div className="relative">
-                <Image
-                  src={participant?.avatarUrl ?? fallbackAvatar.src}
-                  alt={participant?.name ?? 'user'}
-                  width={50}
-                  height={50}
-                  className="rounded-full object-cover"
-                />
-                <div
-                  className={`w-3 h-3 rounded-full absolute bottom-0 right-0 ${
-                    isActive ? 'bg-green-600' : 'bg-gray-600'
-                  }`}
-                />
-              </div>
-
-              <div>
-                <h3 className="font-semibold">
-                  {participant?.name ?? 'Unknown'}
-                </h3>
-                <p className={isActive ? 'text-green-600' : 'text-gray-400'}>
-                  {isActive ? 'Active Now' : 'Offline'}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Image
-                src={audio.src}
-                alt="audio"
-                height={20}
-                width={20}
-                className="cursor-pointer"
-              />
-              <Image
-                src={video.src}
-                alt="video"
-                height={20}
-                width={20}
-                className="cursor-pointer"
-              />
+          <Image
+            src={participant?.avatarUrl ?? fallbackAvatar.src}
+            alt={participant?.name ?? 'user'}
+            width={44}
+            height={44}
+            className="rounded-full object-cover"
+          />
+          <div>
+            <div className="font-semibold">{participant?.name ?? 'Client'}</div>
+            <div className={isActive ? 'text-green-500' : 'text-gray-400'}>
+              {isActive ? 'Active Now' : 'Offline'}
             </div>
           </div>
         </div>
+
+        <div className="flex items-center gap-3">
+          <Image src={audio.src} alt="audio" height={20} width={20} />
+          <Image src={videoIcon.src} alt="video" height={20} width={20} />
+        </div>
       </div>
 
-      {/* Chat History */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-3">
+      {/* Messages container (chronological order: oldest -> newest) */}
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 p-4 overflow-y-auto space-y-3"
+        // note: parent manages infinite-scroll via this ref
+      >
+        {/* show loading more indicator at top when fetching older pages */}
+        {loadingMore && (
+          <div className="text-center text-sm text-gray-400 mb-2">
+            Loading...
+          </div>
+        )}
+
+        {/* render each chat item in chronological order */}
         {chat.map((item) => {
           const timeLabel = new Date(item.createdAt).toLocaleTimeString([], {
             hour: '2-digit',
@@ -114,10 +148,8 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
           });
           const isMine = item.isMine;
 
-          // Message rendering
           if (item.type === ChatMessageType.MESSAGE) {
             const msg = item as ChatMessage;
-
             return (
               <div
                 key={msg.id}
@@ -163,6 +195,7 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
                         </a>
                       )}
                     </div>
+
                     <span className="block text-xs text-gray-400 mt-1">
                       {timeLabel}
                     </span>
@@ -172,16 +205,14 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
             );
           }
 
-          // Call rendering
           if (item.type === ChatMessageType.CALL) {
             const call = item as ChatCall;
             const icon =
               call.callType === 'VIDEO' ? (
-                <Video size={18} />
+                <Video size={16} />
               ) : (
-                <Phone size={18} />
+                <Phone size={16} />
               );
-
             const callStatusColor =
               call.status === 'COMPLETED'
                 ? 'text-green-400'
@@ -191,7 +222,7 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
 
             return (
               <div key={call.id} className="flex justify-center">
-                <div className="text-xs flex items-center gap-1 text-gray-400">
+                <div className="text-xs flex items-center gap-2 text-gray-400">
                   {icon}
                   <span className={callStatusColor}>
                     {call.status === 'COMPLETED'
@@ -213,7 +244,7 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
       {/* Input */}
       <div className="p-4 border-t border-gray-700 flex items-center gap-2">
         <button className="cursor-pointer">
-          <Plus className="bg-[#2A2D33] p-2 rounded-full" size={30} />
+          <Plus className="bg-[#2A2D33] p-2 rounded-full" size={26} />
         </button>
         <input
           type="text"
@@ -221,9 +252,9 @@ export default function ChatDetails({ chat, onBack }: ChatDetailsProps) {
           className="flex-1 px-3 py-2 rounded-lg bg-[#2A2D33] text-white outline-none"
         />
         <button className="cursor-pointer">
-          <Mic className="bg-[#2A2D33] p-2 rounded-full" size={30} />
+          <Mic className="bg-[#2A2D33] p-2 rounded-full" size={26} />
         </button>
-        <button className="md:px-4 px-2 py-2 bg-[#2A2D33] rounded-md md:rounded-2xl text-xs md:text-lg cursor-pointer">
+        <button className="px-3 py-2 bg-[#2A2D33] rounded-md text-sm cursor-pointer">
           Send
         </button>
       </div>
