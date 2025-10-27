@@ -63,12 +63,10 @@ export const getCurrentUser = async () => {
   const accessToken = cookieStore.get('accessToken')?.value;
   const userCookie = cookieStore.get('user')?.value;
 
-  console.log('accesssssssssssssssssssssssss=====>', accessToken);
-  console.log('userCokkkkkkkkkkkkkkkkkkkkkkkkk==>', userCookie);
   if (accessToken && userCookie) {
     try {
-      console.log('user==================>*******', JSON.parse(userCookie));
-      return JSON.parse(userCookie);
+      const user = JSON.parse(userCookie);
+      return { ...user, accessToken };
     } catch (err) {
       console.error('Error parsing user cookie:', err);
       return null;
