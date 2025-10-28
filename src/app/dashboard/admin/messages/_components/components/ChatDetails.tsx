@@ -27,100 +27,104 @@ export default function ChatDetails({
 
   const { socket, currentUser } = useSocket();
 
-  // chronological order: oldest -> newest
   const [items, setItems] = useState<ChatItem[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(DEFAULT_LIMIT);
+  const [limit] = useState<number>(DEFAULT_LIMIT);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
 
-  // ref to scroll container inside ChatDetails
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  // store previous scrollHeight when loading older pages
   const prevScrollHeightRef = useRef<number>(0);
 
-  // handle socket response (paginated)
-  const handleLoadConversation = useCallback(
-    (res: SingleConversationResponse) => {
-      console.log('📤 Conversation:', res);
-      const resPage = res?.metadata?.page ?? 1;
-      const resLimit = res?.metadata?.limit ?? DEFAULT_LIMIT;
-      const resTotalPage = res?.metadata?.totalPage ?? 1;
-      const data = Array.isArray(res.data) ? res.data : [];
-
-      // server sends newest-first (desc). convert to chronological (oldest -> newest)
-      const chronological = [...data].reverse();
-
-      if (resPage === 1) {
-        setItems(chronological);
-        // after initial load, scroll to bottom
-        requestAnimationFrame(() => {
-          if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTop =
-              scrollContainerRef.current.scrollHeight;
-          }
-        });
-      } else {
-        // preserve scroll position: remember previous scrollHeight
-        const prevScroll = scrollContainerRef.current?.scrollHeight ?? 0;
-        prevScrollHeightRef.current = prevScroll;
-
-        // prepend older messages (chronological contains older->newer for that page)
-        setItems((prev) => [...chronological, ...prev]);
-
-        // restore scroll position after DOM updates
-        requestAnimationFrame(() => {
-          const cur = scrollContainerRef.current;
-          if (!cur) return;
-          const newScroll = cur.scrollHeight;
-          // keep the viewport at the same message (anchor)
-          cur.scrollTop = newScroll - prevScrollHeightRef.current;
-        });
-      }
-
-      setPage(resPage);
-      setLimit(resLimit);
-      setTotalPage(resTotalPage);
-      setLoading(false);
-      setLoadingMore(false);
-    },
-    [],
-  );
-
-  // request a page from server
+  // emit request to load a page
   const fetchPage = useCallback(
     (pageToFetch: number) => {
-      if (!socket || !currentUser) return;
+      if (!socket || !currentUser || !selectedConversationId) return;
       setLoadingMore(pageToFetch > 1);
+      if (pageToFetch === 1) setLoading(true);
       socket.emit(EventsEnum.LOAD_SINGLE_CONVERSATION, {
         conversationId: selectedConversationId,
         page: pageToFetch,
         limit,
       });
     },
-    [socket, currentUser, limit],
+    [socket, currentUser, selectedConversationId, limit],
   );
 
-  // initial load
+  // register listeners and reset state when conversation changes
   useEffect(() => {
-    if (!socket || !currentUser) return;
+    if (!socket || !currentUser || !selectedConversationId) return;
+
+    // reset everything for the new conversation
+    setItems([]);
+    setPage(1);
+    setTotalPage(1);
     setLoading(true);
+    setLoadingMore(false);
+    prevScrollHeightRef.current = 0;
+    if (scrollContainerRef.current) scrollContainerRef.current.scrollTop = 0;
+
+    // request first page
     fetchPage(1);
-    socket.on(EventsEnum.SINGLE_CONVERSATION, handleLoadConversation);
+
+    // server -> client: single conversation (paginated)
+    const onSingleConversation = (res: SingleConversationResponse) => {
+      console.log('📤 SINGLE_CONVERSATION', res);
+      const resPage = res?.metadata?.page ?? 1;
+      const resTotalPage = res?.metadata?.totalPage ?? 1;
+      const data = Array.isArray(res.data) ? res.data : [];
+      const chronological = [...data].reverse(); // oldest -> newest
+
+      if (resPage === 1) {
+        setItems(chronological);
+        // after initial load, scroll to bottom
+        requestAnimationFrame(() => {
+          const c = scrollContainerRef.current;
+          if (c) c.scrollTop = c.scrollHeight;
+        });
+      } else {
+        // preserve viewport position when prepending older messages
+        const prevScroll = scrollContainerRef.current?.scrollHeight ?? 0;
+        prevScrollHeightRef.current = prevScroll;
+
+        setItems((prev) => [...chronological, ...prev]);
+
+        requestAnimationFrame(() => {
+          const cur = scrollContainerRef.current;
+          if (!cur) return;
+          const newScroll = cur.scrollHeight;
+          cur.scrollTop = newScroll - prevScrollHeightRef.current;
+        });
+      }
+
+      setPage(resPage);
+      setTotalPage(resTotalPage);
+      setLoading(false);
+      setLoadingMore(false);
+    };
+
+    // server -> client: new message pushed
+    const onNewMessage = (res: NewMessageResponse) => {
+      console.log('📤 NEW_MESSAGE', res);
+      if (!res?.data) return;
+      setItems((prev) => [...prev, res.data]);
+      requestAnimationFrame(() => {
+        const c = scrollContainerRef.current;
+        if (c) c.scrollTop = c.scrollHeight;
+      });
+    };
+
+    socket.on(EventsEnum.SINGLE_CONVERSATION, onSingleConversation);
+    socket.on(EventsEnum.NEW_MESSAGE, onNewMessage);
 
     return () => {
-      socket.off(EventsEnum.SINGLE_CONVERSATION, handleLoadConversation);
+      socket.off(EventsEnum.SINGLE_CONVERSATION, onSingleConversation);
+      socket.off(EventsEnum.NEW_MESSAGE, onNewMessage);
     };
-  }, [
-    socket,
-    currentUser,
-    fetchPage,
-    handleLoadConversation,
-    selectedConversationId,
-  ]);
+  }, [socket, currentUser, selectedConversationId, fetchPage]);
 
-  // attach scroll listener for auto-pagination (load older on scroll top)
+  // scroll -> load older pages when near top
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -130,7 +134,6 @@ export default function ChatDetails({
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        // if near top and more pages exist, fetch next page
         if (container.scrollTop <= 80 && !loadingMore && page < totalPage) {
           fetchPage(page + 1);
         }
@@ -139,36 +142,8 @@ export default function ChatDetails({
     };
 
     container.addEventListener('scroll', onScroll);
-    return () => {
-      container.removeEventListener('scroll', onScroll);
-    };
+    return () => container.removeEventListener('scroll', onScroll);
   }, [page, totalPage, loadingMore, fetchPage]);
-
-  // append new message
-  useEffect(() => {
-    if (!socket) return;
-
-    const handleNewMessage = (res: NewMessageResponse) => {
-      console.log('📤 New message:', res);
-      if (!res?.data) return;
-
-      // append new message
-      setItems((prev) => [...prev, res.data]);
-
-      // scroll to bottom for newest message
-      requestAnimationFrame(() => {
-        const container = scrollContainerRef.current;
-        if (!container) return;
-        container.scrollTop = container.scrollHeight;
-      });
-    };
-
-    socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);
-
-    return () => {
-      socket.off(EventsEnum.NEW_MESSAGE, handleNewMessage);
-    };
-  }, [socket]);
 
   if (loading) return <div>Loading...</div>;
 

@@ -46,7 +46,7 @@ export default function ChatLayout() {
       <div
         className={`${
           selectedConversationId ? 'hidden lg:block' : 'block'
-        } w-full lg:w-80 xl:w-96 flex-shrink-0 border-r border-gray-700`}
+        } w-full lg:w-80 flex-shrink-0 border-r border-gray-700`}
       >
         <ChatList
           chats={conversations}
