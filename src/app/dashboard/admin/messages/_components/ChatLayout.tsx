@@ -2,67 +2,32 @@
 
 import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
-import { useCallback, useEffect, useState } from 'react';
-import ChatDetails from './ChatDetails';
+import { Conversation, ConversationsListResponse } from '@/types/chat.types';
+import { useEffect, useState } from 'react';
 import ChatList from './ChatList';
 
-// shape used by the UI list
-type ChatItem = {
-  id: string;
-  name: string;
-  lastMessage: string;
-  img: string;
-  status: boolean; // online?
-  raw?: any; // keep original server object if you need it
-};
-
 export default function ChatLayout() {
-  const [selectedChat, setSelectedChat] = useState<string | null>(null);
-  const [chats, setChats] = useState<ChatItem[]>([]);
+  const [selectedConversationId, setSelectedConversationId] = useState<
+    string | null
+  >(null);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
 
   const { socket, currentUser } = useSocket();
-  console.log(socket, currentUser, 'Current Admin Socket');
 
-  const mapServerConversationsToUi = (payload: any[]): ChatItem[] => {
-    return payload.map((c) => {
-      const profile = c.profile || {};
-      const last = c.lastMessage || {};
-      let lastMessageText = '';
+  const handleConversationList = (payload: ConversationsListResponse) => {
+    const data: Conversation[] = payload.data;
 
-      if (last.type === 'TEXT') lastMessageText = last.content || '';
-      else if (last.type === 'AUDIO') lastMessageText = 'Voice message';
-      else if (last.type === 'IMAGE') lastMessageText = 'Image';
-      else if (last.type) lastMessageText = last.type.toLowerCase();
+    setConversations(data);
 
-      return {
-        id: c.conversationId,
-        name: profile.name || 'Unnamed',
-        lastMessage: lastMessageText,
-        img: profile.avatarUrl || '/default-avatar.png',
-        status: !!profile.isOnline,
-        raw: c,
-      } as ChatItem;
-    });
+    // auto-select first conversation if none selected
+    if (!selectedConversationId && data.length > 0) {
+      setSelectedConversationId(data[0].conversationId);
+    }
   };
-
-  // handle server event that returns conversation list
-  // Accepts either an array or a single item (be defensive)
-  const handleConversationList = useCallback(
-    (data: any) => {
-      const payload = Array.isArray(data) ? data : (data?.items ?? []);
-      const mapped = mapServerConversationsToUi(payload);
-      setChats(mapped);
-
-      // auto-select the first conversation if none selected
-      if (!selectedChat && mapped.length > 0) {
-        setSelectedChat(mapped[0].id);
-      }
-    },
-    [selectedChat],
-  );
 
   useEffect(() => {
     if (!socket || !currentUser) return;
+
     // request conversation list
     socket.emit(EventsEnum.LOAD_CONVERSATION_LIST, { page: 1, limit: 20 });
 
@@ -73,28 +38,30 @@ export default function ChatLayout() {
     return () => {
       socket.off(EventsEnum.CONVERSATION_LIST, handleConversationList);
     };
-  }, [socket, currentUser, handleConversationList]);
+  }, [socket, currentUser]);
 
   return (
-    <div className="h-[calc(100vh-80px-60px)]  flex gap-5 w-full  bg-black text-white p-2">
+    <div className="h-[calc(100vh-80px-60px)] flex gap-5 w-full bg-black text-white p-2">
       {/* Chat List - Mobile: hidden when chat is selected, Desktop: always visible */}
       <div
         className={`${
-          selectedChat ? 'hidden lg:block' : 'block'
+          selectedConversationId ? 'hidden lg:block' : 'block'
         } w-full lg:w-80 xl:w-96 flex-shrink-0 border-r border-gray-700`}
       >
         <ChatList
-          chats={chats}
-          onSelect={(id) => setSelectedChat(id)}
-          selectedChat={selectedChat}
+          chats={conversations}
+          onSelect={(id) =>
+            selectedConversationId !== id && setSelectedConversationId(id)
+          }
+          selectedChat={selectedConversationId}
         />
       </div>
 
       {/* Chat Details - Mobile: visible when chat is selected, Desktop: always visible */}
       <div
-        className={`${selectedChat ? 'block' : 'hidden lg:block'} flex-1 min-w-0`}
+        className={`${selectedConversationId ? 'block' : 'hidden lg:block'} flex-1 min-w-0`}
       >
-        <ChatDetails chat={null} onBack={() => setSelectedChat(null)} />
+        {/* <ChatDetails chat={null} onBack={() => selectedConversation()} /> */}
       </div>
     </div>
   );

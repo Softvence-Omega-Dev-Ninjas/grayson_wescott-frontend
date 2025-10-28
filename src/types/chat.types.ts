@@ -87,3 +87,42 @@ export interface NewMessageResponse {
   message: string;
   data: ChatMessage;
 }
+
+/** Conversation for admin */
+export type LastMessage = {
+  id: string;
+  conversationId: string;
+  content: string;
+  type: MessageType;
+  fileId?: string | null;
+  senderId: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Profile = {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  role: string;
+  email: string;
+  isOnline: boolean;
+};
+
+export type Conversation = {
+  conversationId: string;
+  lastMessage: LastMessage;
+  profile: Profile;
+};
+
+export type ConversationsListResponse = {
+  success: boolean;
+  message: string;
+  data: Conversation[];
+  metadata: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
+  };
+};
