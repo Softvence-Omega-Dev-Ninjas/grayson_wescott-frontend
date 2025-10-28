@@ -125,23 +125,29 @@ export default function ChatLayout() {
 
   // append new message
   useEffect(() => {
-    if (socket) {
-      console.log('📤 New message:');
-      socket.on(EventsEnum.NEW_MESSAGE, (res: NewMessageResponse) => {
-        if (!res?.data) return;
+    if (!socket) return;
 
-        // append new message
-        setItems((prev) => [...prev, res.data]);
+    const handleNewMessage = (res: NewMessageResponse) => {
+      console.log('📤 New message:', res);
+      if (!res?.data) return;
 
-        // scroll to bottom for newest message
-        requestAnimationFrame(() => {
-          const container = scrollContainerRef.current;
-          if (!container) return;
-          container.scrollTop = container.scrollHeight;
-        });
+      // append new message
+      setItems((prev) => [...prev, res.data]);
+
+      // scroll to bottom for newest message
+      requestAnimationFrame(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+        container.scrollTop = container.scrollHeight;
       });
-    }
-  }, []);
+    };
+
+    socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);
+
+    return () => {
+      socket.off(EventsEnum.NEW_MESSAGE, handleNewMessage);
+    };
+  }, [socket]);
 
   if (loading) return <div>Loading...</div>;
 
