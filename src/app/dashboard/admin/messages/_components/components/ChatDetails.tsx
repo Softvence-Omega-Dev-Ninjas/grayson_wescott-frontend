@@ -1,11 +1,13 @@
 'use client';
 
+import ChatHeader from '@/app/dashboard/user/messages/_components/components/ChatHeader';
 import ChatMessages from '@/app/dashboard/user/messages/_components/components/ChatMessages';
 import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
 import {
   ChatItem,
   NewMessageResponse,
+  Sender,
   SingleConversationResponse,
 } from '@/types/chat.types';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -29,6 +31,7 @@ export default function ChatDetails({
 
   const [items, setItems] = useState<ChatItem[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [participant, setParticipant] = useState<Sender | null>(null);
   const [limit] = useState<number>(DEFAULT_LIMIT);
   const [totalPage, setTotalPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
@@ -102,6 +105,9 @@ export default function ChatDetails({
       setTotalPage(resTotalPage);
       setLoading(false);
       setLoadingMore(false);
+
+      // update participant
+      setParticipant(res.participants[0]);
     };
 
     // server -> client: new message pushed
@@ -149,6 +155,17 @@ export default function ChatDetails({
 
   return (
     <div className="h-full flex flex-col bg-black text-white rounded-lg">
+      <ChatHeader
+        onBack={() => {
+          setItems([]);
+          setPage(1);
+          setTotalPage(1);
+          setLoading(true);
+          setLoadingMore(false);
+          prevScrollHeightRef.current = 0;
+        }}
+        participant={participant as Sender}
+      />
       <ChatMessages
         chat={items}
         scrollContainerRef={
