@@ -12,7 +12,6 @@ const ClientProfilePage = async ({
 }) => {
   const { clientId } = await params;
   const clientData = await getClientsDetails(clientId);
-  console.log('++++++++', clientData);
   return (
     <div className="space-y-6">
       {/* Program Overview */}

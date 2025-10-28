@@ -29,7 +29,6 @@ import { NavUser } from './NavUser';
 // };
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
-  console.log('++++++++++++++++++++', user);
   const navMain = [
     {
       title: 'Dashboard',

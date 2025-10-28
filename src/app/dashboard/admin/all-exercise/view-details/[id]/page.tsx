@@ -19,7 +19,6 @@ const ViewExcerciseDetailsPage = async ({
 }) => {
   const { id } = await params;
   const excerciseDetails = await getExcerciseDetails(id);
-  console.log(excerciseDetails);
   return (
     <div className="mb-20">
       {/* Video Info */}

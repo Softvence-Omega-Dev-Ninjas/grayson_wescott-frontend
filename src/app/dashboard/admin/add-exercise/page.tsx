@@ -1,6 +1,6 @@
 'use client';
 import { createExcercise } from '@/services/admin/excercise-library';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Step1 from './_components/Step1/Step1';
 import Step2 from './_components/Step2/Step2';
@@ -69,9 +69,9 @@ const AddExercisePage = () => {
   const handleBack = () => {
     setCurrentStep((prev) => prev - 1);
   };
-  useEffect(() => {
-    console.log('Video ID updated:', videoId);
-  }, [videoId]);
+  // useEffect(() => {
+  //   console.log('Video ID updated:', videoId);
+  // }, [videoId]);
 
   //Handle Form Submission
   const onSubmit = async (data: IFormData) => {

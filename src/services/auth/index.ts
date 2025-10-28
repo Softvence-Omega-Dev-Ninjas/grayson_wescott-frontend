@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
+import { getValidToken } from '@/lib/verifyToken';
 import { cookies } from 'next/headers';
 import { FieldValues } from 'react-hook-form';
 
@@ -57,17 +58,66 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
+//Login User
+export const updateUser = async (userId: string, userData: FormData) => {
+  const cookieStore = await cookies();
+  const token = await getValidToken();
+
+  try { 
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/update-profile`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: userData,
+      },
+    );
+
+    const result = await res.json();
+    console.log('+++++++++++++++++++++++++', result);
+
+    if (result?.success) {
+      cookieStore.set('user', JSON.stringify(result?.data));
+    }
+
+    return result;
+  } catch (error: any) {
+    return new Error(error);
+  }
+};
+
+export const getUserProfile = async () => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/profile`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['USER_PROFILE'],
+        },
+      },
+    );
+    const data = await res.json();
+    console.log('daaaaaaaaaaaaaaaataaaaaaaaaaaaaaaa', data);
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 //Get Current User
 export const getCurrentUser = async () => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
   const userCookie = cookieStore.get('user')?.value;
-
-  console.log('accesssssssssssssssssssssssss=====>', accessToken);
-  console.log('userCokkkkkkkkkkkkkkkkkkkkkkkkk==>', userCookie);
   if (accessToken && userCookie) {
     try {
-      console.log('user==================>*******', JSON.parse(userCookie));
       return JSON.parse(userCookie);
     } catch (err) {
       console.error('Error parsing user cookie:', err);

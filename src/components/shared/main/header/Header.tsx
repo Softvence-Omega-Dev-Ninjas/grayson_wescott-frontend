@@ -16,7 +16,6 @@ export default function Header() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, setIsLoading, setUser } = useUser();
-  console.log(user);
 
   const navLinks = [
     { href: '/', label: 'Home' },

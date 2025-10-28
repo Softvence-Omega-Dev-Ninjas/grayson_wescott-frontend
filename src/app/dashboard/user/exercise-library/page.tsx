@@ -9,7 +9,6 @@ const ExcerciseLibraryPage = async ({
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const res = await getAllExcerciseByUser(page, 12);
-  console.log(res?.data);
   return (
     <div>
       <h1 className="text-2xl md:text-3xl font-bold">Exercise Library</h1>

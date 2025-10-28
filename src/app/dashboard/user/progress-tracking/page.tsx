@@ -16,7 +16,6 @@ const UserProgress = async ({
   const page = Number(params?.page) || 1;
   const progressData = await getUserProgress();
   const workoutHistory = await getWorkoutHistory(page, 8);
-  console.log(workoutHistory);
   return (
     <div className=" bg-black text-white p-6">
       <div className="container mx-auto space-y-6">

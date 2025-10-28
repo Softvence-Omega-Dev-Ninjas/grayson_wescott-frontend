@@ -16,10 +16,6 @@ export default function TwitterCallback() {
     const oauthVerifier = searchParams.get('oauth_verifier');
     const oauthTokenSecret = localStorage.getItem('twitter_oauth_token_secret');
 
-    console.log('oauthToken', oauthToken);
-    console.log('oauthTokenSecret', oauthTokenSecret);
-    console.log('oauthVerifier', oauthVerifier);
-
     if (!oauthToken || !oauthVerifier || !oauthTokenSecret) {
       toast.error('Twitter login failed. Missing required tokens.');
       return;
