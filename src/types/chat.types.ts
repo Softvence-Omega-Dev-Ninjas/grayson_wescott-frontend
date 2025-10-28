@@ -4,6 +4,10 @@ export enum MessageType {
   TEXT = 'TEXT',
   IMAGE = 'IMAGE',
   FILE = 'FILE',
+  CALL = 'CALL',
+  VIDEO = 'VIDEO',
+  AUDIO = 'AUDIO',
+  CALL_EVENT = 'CALL_EVENT',
 }
 
 export enum ChatMessageType {

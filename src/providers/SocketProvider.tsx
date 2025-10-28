@@ -13,6 +13,7 @@ import { io, Socket } from 'socket.io-client';
 
 interface SocketContextValue {
   socket: Socket | null;
+  socketToken: string | null;
   currentUser: SocketUser | null;
   currentUserRole: UserRole | null;
 }
@@ -35,11 +36,14 @@ export const SocketProvider = ({
   children: React.ReactNode;
 }) => {
   const socketRef = useRef<Socket | null>(null);
+  const [socketToken, setSocketToken] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<SocketUser | null>(null);
   const [currentUserRole, setCurrentUserRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
     if (!token) return;
+
+    setSocketToken(token);
 
     const socket = io(`${process.env.NEXT_PUBLIC_BASE_API}/chat`, {
       transports: ['websocket'],
@@ -72,6 +76,7 @@ export const SocketProvider = ({
     <SocketContext.Provider
       value={{
         socket: socketRef.current,
+        socketToken,
         currentUser,
         currentUserRole,
       }}
