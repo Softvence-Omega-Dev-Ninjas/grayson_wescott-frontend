@@ -63,7 +63,7 @@ export const updateUser = async (userId: string, userData: FormData) => {
   const cookieStore = await cookies();
   const token = await getValidToken();
 
-  try { 
+  try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/auth/update-profile`,
       {

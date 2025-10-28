@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { Edit, Plus, Trash2 } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Edit, Plus, Trash2 } from 'lucide-react';
 import a1 from '../../../../../assets/dashboard/messages/Avatar1.png';
 import a2 from '../../../../../assets/dashboard/messages/Avatar2.png';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 const adminsData = [
   {

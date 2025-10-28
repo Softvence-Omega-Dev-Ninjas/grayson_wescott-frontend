@@ -3,7 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState } from 'react';
 
-import AdminProfileTab from './_components/AdminProfileTab';      
+import AdminProfileTab from './_components/AdminProfileTab';
 import ManageAdmin from './_components/ManageAdmin';
 import { PaymentsTab } from './_components/PaymentsTab';
 
