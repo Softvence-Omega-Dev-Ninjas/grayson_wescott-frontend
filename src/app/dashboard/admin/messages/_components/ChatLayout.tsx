@@ -4,6 +4,7 @@ import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
 import { Conversation, ConversationsListResponse } from '@/types/chat.types';
 import { useEffect, useState } from 'react';
+import ChatDetails from './ChatDetails';
 import ChatList from './ChatList';
 
 export default function ChatLayout() {
@@ -18,11 +19,6 @@ export default function ChatLayout() {
     const data: Conversation[] = payload.data;
 
     setConversations(data);
-
-    // auto-select first conversation if none selected
-    if (!selectedConversationId && data.length > 0) {
-      setSelectedConversationId(data[0].conversationId);
-    }
   };
 
   useEffect(() => {
@@ -61,7 +57,7 @@ export default function ChatLayout() {
       <div
         className={`${selectedConversationId ? 'block' : 'hidden lg:block'} flex-1 min-w-0`}
       >
-        {/* <ChatDetails chat={null} onBack={() => selectedConversation()} /> */}
+        <ChatDetails selectedConversationId={selectedConversationId} />
       </div>
     </div>
   );
