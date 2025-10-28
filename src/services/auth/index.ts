@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
+import { TChangePasswordFormData } from '@/app/dashboard/admin/settings/_components/ChangePassword/schema/changePasswordSchema';
 import { getValidToken } from '@/lib/verifyToken';
 import { cookies } from 'next/headers';
 import { FieldValues } from 'react-hook-form';
@@ -58,8 +59,35 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
-//Login User
-export const updateUser = async (userId: string, userData: FormData) => {
+//Change Password
+export const changePassword = async (
+  userData: Partial<TChangePasswordFormData>,
+) => {
+  const token = await getValidToken();
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/change-password`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      },
+    );
+
+    const result = await res.json();
+    console.log('+++++++++++++++++++++++++', result);
+    return result;
+  } catch (error: any) {
+    return new Error(error);
+  }
+};
+
+//Update User
+export const updateUser = async (userData: FormData) => {
   const cookieStore = await cookies();
   const token = await getValidToken();
 
@@ -76,8 +104,6 @@ export const updateUser = async (userId: string, userData: FormData) => {
     );
 
     const result = await res.json();
-    console.log('+++++++++++++++++++++++++', result);
-
     if (result?.success) {
       cookieStore.set('user', JSON.stringify(result?.data));
     }
