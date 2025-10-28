@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState } from 'react';
 
 import ChangePassword from './_components/ChangePassword/ChangePassword';
-import ManageAdmin from './_components/ManageAdmin';
+import ManageAdmin from './_components/ManageAdmin/ManageAdmin';
 import { PaymentsTab } from './_components/PaymentsTab';
 import AdminProfileTab from './_components/UpdateProfile/UpdateProfile';
 
@@ -12,9 +12,9 @@ export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('admin-profile');
 
   return (
-    <div className="min-h-screen bg-black p-4 md:p-6 lg:p-8">
+    <div className="min-h-screen p-4 md:p-6 lg:p-8">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-[#151519] grid w-full grid-cols-3 p-1 h-auto">
+        <TabsList className="bg-primary-100 grid w-full grid-cols-3 p-1 h-auto rounded-none">
           <TabsTrigger
             value="admin-profile"
             className="text-sm md:text-base font-medium py-2"
