@@ -134,7 +134,12 @@ export default function ChatLayout() {
             }
             loadingMore={loadingMore}
           />
-          <ChatInput />
+          <ChatInput
+            scrollContainerRef={
+              scrollContainerRef as React.RefObject<HTMLDivElement>
+            }
+            setItems={setItems}
+          />
         </div>
       </div>
     </div>

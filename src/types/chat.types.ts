@@ -77,3 +77,12 @@ export interface ConversationResponse {
     totalPage: number;
   };
 }
+
+export interface SendMessageResponse {
+  success: boolean;
+  message: string;
+  data: {
+    conversationId: string;
+    message: ChatMessage;
+  };
+}

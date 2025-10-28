@@ -8,6 +8,7 @@ import {
 } from '@/types/chat.types';
 import { Phone, Video } from 'lucide-react';
 import Image from 'next/image';
+import { v4 as uuid } from 'uuid';
 
 interface Props {
   chat: ChatItem[] | null;
@@ -51,7 +52,7 @@ export default function ChatMessages({
 
           return (
             <div
-              key={msg.id}
+              key={uuid()}
               className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}
             >
               <div className="flex gap-2 items-end max-w-full">
