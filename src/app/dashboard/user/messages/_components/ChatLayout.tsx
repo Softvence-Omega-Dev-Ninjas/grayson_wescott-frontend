@@ -2,7 +2,11 @@
 
 import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
-import { ChatItem, ConversationResponse } from '@/types/chat.types';
+import {
+  ChatItem,
+  ConversationResponse,
+  NewMessageResponse,
+} from '@/types/chat.types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ChatHeader from './components/ChatHeader';
 import ChatInput from './components/ChatInput';
@@ -119,6 +123,26 @@ export default function ChatLayout() {
     };
   }, [page, totalPage, loadingMore, fetchPage]);
 
+  // append new message
+  useEffect(() => {
+    if (socket) {
+      console.log('📤 New message:');
+      socket.on(EventsEnum.NEW_MESSAGE, (res: NewMessageResponse) => {
+        if (!res?.data) return;
+
+        // append new message
+        setItems((prev) => [...prev, res.data]);
+
+        // scroll to bottom for newest message
+        requestAnimationFrame(() => {
+          const container = scrollContainerRef.current;
+          if (!container) return;
+          container.scrollTop = container.scrollHeight;
+        });
+      });
+    }
+  }, []);
+
   if (loading) return <div>Loading...</div>;
 
   return (
@@ -134,12 +158,7 @@ export default function ChatLayout() {
             }
             loadingMore={loadingMore}
           />
-          <ChatInput
-            scrollContainerRef={
-              scrollContainerRef as React.RefObject<HTMLDivElement>
-            }
-            setItems={setItems}
-          />
+          <ChatInput />
         </div>
       </div>
     </div>

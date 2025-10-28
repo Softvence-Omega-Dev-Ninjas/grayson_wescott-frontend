@@ -2,17 +2,10 @@
 
 import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
-import { ChatItem, SendMessageResponse } from '@/types/chat.types';
 import { Mic, Plus } from 'lucide-react';
 import { useState } from 'react';
 
-export default function ChatInput({
-  scrollContainerRef,
-  setItems,
-}: {
-  scrollContainerRef: React.RefObject<HTMLDivElement>;
-  setItems: React.Dispatch<React.SetStateAction<ChatItem[]>>;
-}) {
+export default function ChatInput() {
   const { socket } = useSocket();
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -28,25 +21,14 @@ export default function ChatInput({
       fileId: null,
     };
 
-    socket.emit(
-      EventsEnum.SEND_MESSAGE_CLIENT,
-      payload,
-      (response: SendMessageResponse) => {
-        console.log('📤 Message send response:', response);
-        setIsSending(false);
-        if (response?.success) {
-          setMessage('');
-          setItems((prev) => [...prev, response.data.message]);
-
-          // scroll to bottom for newest message
-          requestAnimationFrame(() => {
-            const container = scrollContainerRef.current;
-            if (!container) return;
-            container.scrollTop = container.scrollHeight;
-          });
-        }
-      },
-    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    socket.emit(EventsEnum.SEND_MESSAGE_CLIENT, payload, (response: any) => {
+      console.log('📤 Message send response:', response);
+      setIsSending(false);
+      if (response?.success) {
+        setMessage('');
+      }
+    });
   };
 
   return (

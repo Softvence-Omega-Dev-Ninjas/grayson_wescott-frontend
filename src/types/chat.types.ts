@@ -78,11 +78,8 @@ export interface ConversationResponse {
   };
 }
 
-export interface SendMessageResponse {
+export interface NewMessageResponse {
   success: boolean;
   message: string;
-  data: {
-    conversationId: string;
-    message: ChatMessage;
-  };
+  data: ChatMessage;
 }
