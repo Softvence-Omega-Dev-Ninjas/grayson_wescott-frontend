@@ -82,6 +82,19 @@ export interface ConversationResponse {
   };
 }
 
+export interface SingleConversationResponse {
+  success: boolean;
+  participants: Sender[];
+  message: string;
+  data: ChatItem[];
+  metadata: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPage: number;
+  };
+}
+
 export interface NewMessageResponse {
   success: boolean;
   message: string;

@@ -19,6 +19,10 @@ export default function ChatLayout() {
     const data: Conversation[] = payload.data;
 
     setConversations(data);
+
+    if (data.length > 0) {
+      setSelectedConversationId(data[0].conversationId);
+    }
   };
 
   useEffect(() => {
@@ -57,7 +61,9 @@ export default function ChatLayout() {
       <div
         className={`${selectedConversationId ? 'block' : 'hidden lg:block'} flex-1 min-w-0`}
       >
-        <ChatDetails selectedConversationId={selectedConversationId} />
+        {selectedConversationId ? (
+          <ChatDetails selectedConversationId={selectedConversationId} />
+        ) : null}
       </div>
     </div>
   );

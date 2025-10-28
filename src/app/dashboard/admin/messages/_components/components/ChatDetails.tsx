@@ -5,8 +5,8 @@ import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
 import {
   ChatItem,
-  ConversationResponse,
   NewMessageResponse,
+  SingleConversationResponse,
 } from '@/types/chat.types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -41,49 +41,52 @@ export default function ChatDetails({
   const prevScrollHeightRef = useRef<number>(0);
 
   // handle socket response (paginated)
-  const handleLoadConversation = useCallback((res: ConversationResponse) => {
-    console.log('📤 Conversation:', res);
-    const resPage = res?.metadata?.page ?? 1;
-    const resLimit = res?.metadata?.limit ?? DEFAULT_LIMIT;
-    const resTotalPage = res?.metadata?.totalPage ?? 1;
-    const data = Array.isArray(res.data) ? res.data : [];
+  const handleLoadConversation = useCallback(
+    (res: SingleConversationResponse) => {
+      console.log('📤 Conversation:', res);
+      const resPage = res?.metadata?.page ?? 1;
+      const resLimit = res?.metadata?.limit ?? DEFAULT_LIMIT;
+      const resTotalPage = res?.metadata?.totalPage ?? 1;
+      const data = Array.isArray(res.data) ? res.data : [];
 
-    // server sends newest-first (desc). convert to chronological (oldest -> newest)
-    const chronological = [...data].reverse();
+      // server sends newest-first (desc). convert to chronological (oldest -> newest)
+      const chronological = [...data].reverse();
 
-    if (resPage === 1) {
-      setItems(chronological);
-      // after initial load, scroll to bottom
-      requestAnimationFrame(() => {
-        if (scrollContainerRef.current) {
-          scrollContainerRef.current.scrollTop =
-            scrollContainerRef.current.scrollHeight;
-        }
-      });
-    } else {
-      // preserve scroll position: remember previous scrollHeight
-      const prevScroll = scrollContainerRef.current?.scrollHeight ?? 0;
-      prevScrollHeightRef.current = prevScroll;
+      if (resPage === 1) {
+        setItems(chronological);
+        // after initial load, scroll to bottom
+        requestAnimationFrame(() => {
+          if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop =
+              scrollContainerRef.current.scrollHeight;
+          }
+        });
+      } else {
+        // preserve scroll position: remember previous scrollHeight
+        const prevScroll = scrollContainerRef.current?.scrollHeight ?? 0;
+        prevScrollHeightRef.current = prevScroll;
 
-      // prepend older messages (chronological contains older->newer for that page)
-      setItems((prev) => [...chronological, ...prev]);
+        // prepend older messages (chronological contains older->newer for that page)
+        setItems((prev) => [...chronological, ...prev]);
 
-      // restore scroll position after DOM updates
-      requestAnimationFrame(() => {
-        const cur = scrollContainerRef.current;
-        if (!cur) return;
-        const newScroll = cur.scrollHeight;
-        // keep the viewport at the same message (anchor)
-        cur.scrollTop = newScroll - prevScrollHeightRef.current;
-      });
-    }
+        // restore scroll position after DOM updates
+        requestAnimationFrame(() => {
+          const cur = scrollContainerRef.current;
+          if (!cur) return;
+          const newScroll = cur.scrollHeight;
+          // keep the viewport at the same message (anchor)
+          cur.scrollTop = newScroll - prevScrollHeightRef.current;
+        });
+      }
 
-    setPage(resPage);
-    setLimit(resLimit);
-    setTotalPage(resTotalPage);
-    setLoading(false);
-    setLoadingMore(false);
-  }, []);
+      setPage(resPage);
+      setLimit(resLimit);
+      setTotalPage(resTotalPage);
+      setLoading(false);
+      setLoadingMore(false);
+    },
+    [],
+  );
 
   // request a page from server
   const fetchPage = useCallback(
@@ -104,12 +107,18 @@ export default function ChatDetails({
     if (!socket || !currentUser) return;
     setLoading(true);
     fetchPage(1);
-    socket.on(EventsEnum.LOAD_SINGLE_CONVERSATION, handleLoadConversation);
+    socket.on(EventsEnum.SINGLE_CONVERSATION, handleLoadConversation);
 
     return () => {
       socket.off(EventsEnum.SINGLE_CONVERSATION, handleLoadConversation);
     };
-  }, [socket, currentUser, fetchPage, handleLoadConversation, selectedConversationId]);
+  }, [
+    socket,
+    currentUser,
+    fetchPage,
+    handleLoadConversation,
+    selectedConversationId,
+  ]);
 
   // attach scroll listener for auto-pagination (load older on scroll top)
   useEffect(() => {
