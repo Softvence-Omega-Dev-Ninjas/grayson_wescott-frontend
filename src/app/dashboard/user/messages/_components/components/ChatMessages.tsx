@@ -5,6 +5,7 @@ import {
   ChatItem,
   ChatMessage,
   ChatMessageType,
+  MessageType,
 } from '@/types/chat.types';
 import { Phone, Video } from 'lucide-react';
 import Image from 'next/image';
@@ -74,8 +75,10 @@ export default function ChatMessages({
                         : 'bg-[#2A2D33] text-gray-200 rounded-bl-none'
                     }`}
                   >
-                    {msg.messageType === 'TEXT' && <p>{msg.content}</p>}
-                    {msg.messageType === 'IMAGE' && msg.file && (
+                    {msg.messageType === MessageType.TEXT && (
+                      <p>{msg.content}</p>
+                    )}
+                    {msg.messageType === MessageType.IMAGE && msg.file && (
                       <Image
                         src={msg.file.url}
                         alt="image"
@@ -84,7 +87,7 @@ export default function ChatMessages({
                         className="rounded-lg"
                       />
                     )}
-                    {msg.messageType === 'FILE' && msg.file && (
+                    {msg.messageType === MessageType.FILE && msg.file && (
                       <a
                         href={msg.file.url}
                         target="_blank"
@@ -93,6 +96,20 @@ export default function ChatMessages({
                       >
                         {msg.file.type} File
                       </a>
+                    )}
+
+                    {msg.messageType === MessageType.VIDEO && msg.file && (
+                      <video controls>
+                        <source src={msg.file.url} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+
+                    {msg.messageType === MessageType.AUDIO && msg.file && (
+                      <audio controls>
+                        <source src={msg.file.url} type="audio/mpeg" />
+                        Your browser does not support the audio element.
+                      </audio>
                     )}
                   </div>
                   <span className="block text-xs text-gray-400 mt-1">
