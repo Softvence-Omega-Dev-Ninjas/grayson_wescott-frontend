@@ -4,8 +4,9 @@ import { EventsEnum } from '@/enum/events.enum';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { useSocket } from '@/hooks/useSocket';
 import { MessageType } from '@/types/chat.types';
-import { Mic, Plus, Send } from 'lucide-react';
+import { Plus, Send } from 'lucide-react';
 import { useRef, useState } from 'react';
+import ChatMicInput from './ChatMicInput';
 
 export default function ChatInput() {
   const { socket, socketToken } = useSocket();
@@ -101,7 +102,7 @@ export default function ChatInput() {
         onClick={() => fileInputRef.current?.click()}
         disabled={uploadingFile || isSending}
       >
-        <Plus className="bg-[#2A2D33] p-2 rounded-full" size={26} />
+        <Plus className="bg-[#2A2D33] p-2 rounded-full" size={36} />
       </button>
 
       <input
@@ -123,14 +124,8 @@ export default function ChatInput() {
         className="flex-1 px-3 py-2 rounded-lg bg-[#2A2D33] text-white outline-none"
       />
 
-      {/* Voice Send */}
-      <button
-        onClick={() => sendMessage(message, MessageType.AUDIO)}
-        disabled={isSending || uploadingFile}
-        className="cursor-pointer"
-      >
-        <Mic className="bg-[#2A2D33] p-2 rounded-full" size={26} />
-      </button>
+      {/* Mic Input */}
+      <ChatMicInput />
 
       {/* Send Button */}
       <button
@@ -139,7 +134,7 @@ export default function ChatInput() {
         disabled={isSending || uploadingFile}
         className="px-3 py-2 bg-[#2A2D33] rounded-md text-sm cursor-pointer flex items-center gap-1"
       >
-        {isSending || uploadingFile ? 'Sending…' : <Send size={16} />}
+        {isSending || uploadingFile ? 'Sending…' : <Send size={24} />}
       </button>
     </div>
   );
