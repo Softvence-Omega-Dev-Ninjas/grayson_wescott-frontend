@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { EventsEnum } from '@/enum/events.enum';
@@ -6,6 +7,7 @@ import { useSocket } from '@/hooks/useSocket';
 import { MessageType } from '@/types/chat.types';
 import { Plus, Send } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { toast } from 'sonner';
 import ChatMicInput from './ChatMicInput';
 
 export default function ChatInput() {
@@ -17,39 +19,42 @@ export default function ChatInput() {
 
   const { uploadFiles } = useFileUpload();
 
-  // ✅ Unified send function (handles text, image, file)
+  // Unified send function that returns a Promise resolved/rejected when server responds
   const sendMessage = async (
     content: string,
     type: MessageType = MessageType.TEXT,
     fileId: string | null = null,
-  ) => {
-    if (!socket) return;
+  ): Promise<any> => {
+    if (!socket) return Promise.reject(new Error('No socket connected'));
 
-    const payload = {
-      content,
-      type,
-      fileId,
-    };
+    const payload = { content, type, fileId };
 
     setIsSending(true);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    socket.emit(EventsEnum.SEND_MESSAGE_CLIENT, payload, (response: any) => {
-      console.log('📤 Send message response:', response);
-      setIsSending(false);
-      if (response?.success) {
-        setMessage('');
-      }
+    return new Promise((resolve, reject) => {
+      socket.emit(EventsEnum.SEND_MESSAGE_CLIENT, payload, (response: any) => {
+        setIsSending(false);
+        console.log('📤 Send message response:', response);
+        if (response?.success) {
+          setMessage('');
+          resolve(response);
+        } else {
+          reject(response || new Error('Unknown send error'));
+        }
+      });
     });
   };
 
-  // ✅ Handle text send
+  // Handle text send
   const handleSendMessage = () => {
     if (!message.trim() || !socket) return;
-    sendMessage(message, MessageType.TEXT);
+    // fire-and-forget or await if you want
+    sendMessage(message, MessageType.TEXT).catch((err) => {
+      console.error('Send failed', err);
+      alert('Failed to send message');
+    });
   };
 
-  // ✅ Handle file/image upload
+  // Handle file/image upload
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -76,18 +81,13 @@ export default function ChatInput() {
           await sendMessage(file.originalName || 'File', fileType, file.id);
         }
       } else {
-        const fileType = data.mimeType?.startsWith('image/')
-          ? MessageType.IMAGE
-          : data.mimeType?.startsWith('video/')
-            ? MessageType.VIDEO
-            : data.mimeType?.startsWith('audio/')
-              ? MessageType.AUDIO
-              : MessageType.FILE;
-        await sendMessage(data.originalName || 'File', fileType, data.id);
+        toast.error('File upload failed');
       }
     } catch (err) {
       console.error('Upload/send error:', err);
-      alert('Failed to upload file');
+      toast.error(
+        'File upload failed. Please try again with a less then 50 MB file.',
+      );
     } finally {
       setUploadingFile(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -125,7 +125,11 @@ export default function ChatInput() {
       />
 
       {/* Mic Input */}
-      <ChatMicInput />
+      <ChatMicInput
+        sendMessage={sendMessage}
+        uploadFiles={uploadFiles as any}
+        socketToken={socketToken}
+      />
 
       {/* Send Button */}
       <button

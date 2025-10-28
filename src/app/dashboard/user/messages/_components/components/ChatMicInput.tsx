@@ -1,17 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { EventsEnum } from '@/enum/events.enum';
-import { useFileUpload } from '@/hooks/useFileUpload';
-import { useSocket } from '@/hooks/useSocket';
 import { MessageType } from '@/types/chat.types';
 import { Mic, Send, StopCircle, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
-export default function ChatMicInput() {
-  const { socket, socketToken } = useSocket();
-  const { uploadFiles } = useFileUpload();
+type Props = {
+  sendMessage: (
+    content: string,
+    type?: MessageType,
+    fileId?: string | null,
+  ) => Promise<any>;
+  uploadFiles: (formData: FormData, token?: string) => Promise<any>;
+  socketToken?: string | null;
+};
 
+export default function ChatMicInput({
+  sendMessage,
+  uploadFiles,
+  socketToken,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -28,7 +36,6 @@ export default function ChatMicInput() {
 
   useEffect(() => {
     return () => {
-      // cleanup on unmount
       stopTimer();
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((t) => t.stop());
@@ -125,7 +132,6 @@ export default function ChatMicInput() {
         setAudioUrl(url);
         stopTimer();
         setIsRecording(false);
-        // stop tracks
         if (streamRef.current) {
           streamRef.current.getTracks().forEach((t) => t.stop());
           streamRef.current = null;
@@ -155,9 +161,9 @@ export default function ChatMicInput() {
     if (!socketToken) return alert('Socket not authenticated');
 
     setIsUploading(true);
+    setError(null);
 
     try {
-      // convert blob to File to preserve name/type
       const now = Date.now();
       const ext = recordedBlob.type.includes('ogg')
         ? 'ogg'
@@ -174,38 +180,22 @@ export default function ChatMicInput() {
 
       const data = await uploadFiles(formData, socketToken);
 
-      // uploadFiles may return an array or single object like in your ChatInput
+      // call parent sendMessage so all messages go through same flow
       if (Array.isArray(data)) {
         for (const f of data) {
           const fileType = f.mimeType?.startsWith('audio/')
             ? MessageType.AUDIO
             : MessageType.FILE;
-          socket?.emit(
-            EventsEnum.SEND_MESSAGE_CLIENT,
-            {
-              content: f.originalName || 'Voice message',
-              type: fileType,
-              fileId: f.id,
-            },
-            (resp: any) => {
-              console.log('send voice resp', resp);
-            },
-          );
+          await sendMessage(f.originalName || 'Voice message', fileType, f.id);
         }
       } else {
         const fileType = data.mimeType?.startsWith('audio/')
           ? MessageType.AUDIO
           : MessageType.FILE;
-        socket?.emit(
-          EventsEnum.SEND_MESSAGE_CLIENT,
-          {
-            content: data.originalName || 'Voice message',
-            type: fileType,
-            fileId: data.id,
-          },
-          (resp: any) => {
-            console.log('send voice resp', resp);
-          },
+        await sendMessage(
+          data.originalName || 'Voice message',
+          fileType,
+          data.id,
         );
       }
 
@@ -242,7 +232,6 @@ export default function ChatMicInput() {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6"
           onClick={() => {
-            // click outside closes if not recording
             if (!isRecording && !isUploading) closeModal();
           }}
         >
@@ -254,10 +243,7 @@ export default function ChatMicInput() {
               <h3 className="text-lg font-medium">Voice Message</h3>
               <button
                 onClick={() => {
-                  if (isRecording) {
-                    // don't allow closing while recording
-                    return;
-                  }
+                  if (isRecording) return;
                   closeModal();
                 }}
                 className="p-1 rounded hover:bg-white/5"
@@ -269,7 +255,6 @@ export default function ChatMicInput() {
 
             <div className="flex flex-col items-center gap-3">
               <div className="flex items-center gap-3">
-                {/* large record/stop button */}
                 {!isRecording ? (
                   <button
                     onClick={startRecording}
@@ -298,7 +283,6 @@ export default function ChatMicInput() {
                 </div>
               </div>
 
-              {/* Small visual meter (very simple) */}
               <div className="w-full h-2 bg-white/5 rounded overflow-hidden">
                 <div
                   style={{
@@ -310,7 +294,6 @@ export default function ChatMicInput() {
                 />
               </div>
 
-              {/* Playback + actions */}
               {recordedBlob && audioUrl && (
                 <>
                   <audio
@@ -353,10 +336,8 @@ export default function ChatMicInput() {
                 </>
               )}
 
-              {/* error */}
               {error && <div className="text-sm text-red-400">{error}</div>}
 
-              {/* Info */}
               {!recordedBlob && !isRecording && (
                 <div className="text-xs text-gray-400">
                   Press Record to start. Stop to preview and send.
