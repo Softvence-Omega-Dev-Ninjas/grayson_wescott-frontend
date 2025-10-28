@@ -4,8 +4,8 @@ import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
 import { Conversation, ConversationsListResponse } from '@/types/chat.types';
 import { useEffect, useState } from 'react';
-import ChatDetails from './ChatDetails';
-import ChatList from './ChatList';
+import ChatDetails from './components/ChatDetails';
+import ChatList from './components/ChatList';
 
 export default function ChatLayout() {
   const [selectedConversationId, setSelectedConversationId] = useState<

@@ -47,7 +47,7 @@ export default function ChatList({
       {chats.map((chat) => {
         const profile = chat.profile ?? {};
         const lastMessageText = renderLastMessage(chat.lastMessage);
-        const avatar = profile.avatarUrl ?? '/default-avatar.png';
+        const avatar = profile.avatarUrl;
         const name = profile.name ?? 'Unnamed';
 
         return (
