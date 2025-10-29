@@ -1,23 +1,24 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   activePage: number;
   totalPages?: number;
-  onPageChange?: (page: number) => void;
 }
 
-export function Pagination({
-  activePage,
-  totalPages = 20,
-  onPageChange,
-}: PaginationProps) {
+const Pagination = ({ activePage, totalPages = 1 }: PaginationProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handlePageChange = (page: number) => {
-    if (onPageChange && page >= 1 && page <= totalPages) {
-      onPageChange(page);
+    if (page >= 1 && page <= totalPages) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('page', page.toString());
+      router.push(`?${params.toString()}`);
     }
   };
 
@@ -29,7 +30,6 @@ export function Pagination({
     const maxVisiblePages = 5;
 
     if (totalPages <= maxVisiblePages) {
-      // Show all pages if total is 5 or less
       for (let i = 1; i <= totalPages; i++) {
         pages.push(
           <Button
@@ -38,7 +38,7 @@ export function Pagination({
             size="sm"
             className={cn(
               baseBtnClasses,
-              i === activePage && 'bg-secondary text-white ',
+              i === activePage && 'bg-secondary text-white',
             )}
             onClick={() => handlePageChange(i)}
           >
@@ -47,16 +47,13 @@ export function Pagination({
         );
       }
     } else {
-      // Calculate start and end page numbers
       let startPage = Math.max(1, activePage - 2);
       const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-      // Adjust start page if we're near the end
       if (endPage - startPage < maxVisiblePages - 1) {
         startPage = Math.max(1, endPage - maxVisiblePages + 1);
       }
 
-      // Show ellipsis at the beginning if needed
       if (startPage > 1) {
         pages.push(
           <Button
@@ -69,20 +66,14 @@ export function Pagination({
             1
           </Button>,
         );
-
-        if (startPage > 2) {
+        if (startPage > 2)
           pages.push(
-            <span
-              key="start-ellipsis"
-              className="flex h-8 w-8 items-center justify-center text-sm text-gray-400"
-            >
+            <span key="start-ellipsis" className="text-gray-400">
               ...
             </span>,
           );
-        }
       }
 
-      // Show the visible page numbers
       for (let i = startPage; i <= endPage; i++) {
         pages.push(
           <Button
@@ -100,19 +91,13 @@ export function Pagination({
         );
       }
 
-      // Show ellipsis at the end if needed
       if (endPage < totalPages) {
-        if (endPage < totalPages - 1) {
+        if (endPage < totalPages - 1)
           pages.push(
-            <span
-              key="end-ellipsis"
-              className="flex h-8 w-8 items-center justify-center text-sm text-gray-400"
-            >
+            <span key="end-ellipsis" className="text-gray-400">
               ...
             </span>,
           );
-        }
-
         pages.push(
           <Button
             key={totalPages}
@@ -155,4 +140,5 @@ export function Pagination({
       </Button>
     </div>
   );
-}
+};
+export default Pagination;

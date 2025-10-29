@@ -10,7 +10,7 @@ export function WeeklySummary({ stats }: { stats: any }) {
   // ];
 
   return (
-    <div className="bg-primary-200 p-5 border border-secondary flex-2">
+    <div className="bg-primary-200 p-5 border border-secondary flex-2 min-h-full">
       <h1 className="text-white text-xl sm:text-2xl font-semibold mb-7">
         Weekly Summary
       </h1>

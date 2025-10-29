@@ -1,13 +1,11 @@
 'use client';
 
 import dumbleIcon from '@/assets/dashboard/excercise-library/dumbellIcon.png';
-import { Pagination } from '@/components/shared/dashboard/Pagination/Pagination';
+import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import usePagination from '@/hooks/usePagination';
 import Image from 'next/image';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 
 type ProgramStatus = 'IN_PROGRESS' | 'PAUSED' | 'COMPLETED';
 
@@ -47,75 +45,35 @@ interface AssignedProgramTableProps {
 
 export function AssignedProgramTable({
   serverPrograms,
-  initialPage = 1,
-  initialStatus,
 }: AssignedProgramTableProps) {
+  const programs = serverPrograms?.data || [];
+  // const totalPages = serverPrograms?.metadata?.totalPage ?? 1;
   // Pagination hook
-  const { currentPage, handlePageChange, setCurrentPage } = usePagination();
 
   // Programs state
-  const [programs, setPrograms] = useState<UserProgram[]>(
-    serverPrograms?.data || [],
-  );
-  const totalPages = serverPrograms?.metadata?.totalPage ?? 1;
-
-  // Router + search params
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const [programs, setPrograms] = useState<UserProgram[]>(
+  //   serverPrograms?.data || [],
+  // );
+  // const totalPages = serverPrograms?.metadata?.totalPage ?? 1;
 
   // Local status filter state
-  const [activeStatus, setActiveStatus] = useState<ProgramStatus | undefined>(
-    initialStatus,
-  );
-
-  // Sync pagination with initial page
-  useEffect(() => {
-    setCurrentPage(initialPage);
-  }, [initialPage, setCurrentPage]);
-
-  // Sync programs when serverPrograms prop changes
-  useEffect(() => {
-    setPrograms(serverPrograms?.data || []);
-  }, [serverPrograms]);
-
-  // Update URL search params
-  const updateSearchParams = (
-    page: number,
-    status?: ProgramStatus | undefined,
-  ) => {
-    const params = new URLSearchParams(
-      Array.from(searchParams?.entries() || []),
-    );
-
-    params.set('page', String(page));
-    if (status) params.set('status', status);
-    else params.delete('status');
-
-    const queryString = params.toString();
-    const url = queryString ? `${pathname}?${queryString}` : pathname;
-    router.push(url);
-  };
-
-  // Pagination click
-  const handlePageClick = (page: number) => {
-    handlePageChange(page);
-    updateSearchParams(page, activeStatus);
-  };
+  // const [activeStatus, setActiveStatus] = useState<ProgramStatus | undefined>(
+  //   initialStatus,
+  // );
 
   // Status change
-  const handleStatusChange = (status?: ProgramStatus) => {
-    setActiveStatus(status);
-  };
+  // const handleStatusChange = (status?: ProgramStatus) => {
+  //   setActiveStatus(status);
+  // };
 
   // Compute filtered programs
-  const filteredPrograms = useMemo(
-    () =>
-      activeStatus
-        ? programs.filter((p) => p.status === activeStatus)
-        : programs,
-    [programs, activeStatus],
-  );
+  // const filteredPrograms = useMemo(
+  //   () =>
+  //     activeStatus
+  //       ? programs.filter((p) => p.status === activeStatus)
+  //       : programs,
+  //   [programs, activeStatus],
+  // );
 
   return (
     <div className="mt-10 overflow-hidden bg-primary-200 text-white p-5">
@@ -123,17 +81,17 @@ export function AssignedProgramTable({
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 py-3">
         <div>
           <h1 className="text-lg font-semibold">Assigned Programs</h1>
-          <p className="text-sm text-gray-200 font-medium">
+          {/* <p className="text-sm text-gray-200 font-medium">
             {filteredPrograms?.filter((p) => p.status === 'IN_PROGRESS').length}{' '}
             Active Programs
-          </p>
+          </p> */}
         </div>
 
         {/* Status filter buttons */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-gray-300 mr-2">Status:</span>
 
-          {['All', 'IN_PROGRESS', 'PAUSED', 'COMPLETED'].map((status) => (
+          {/* {['All', 'IN_PROGRESS', 'PAUSED', 'COMPLETED'].map((status) => (
             <Button
               key={status}
               variant={
@@ -151,19 +109,19 @@ export function AssignedProgramTable({
             >
               {status === 'All' ? 'All' : status.replace('_', ' ')}
             </Button>
-          ))}
+          ))} */}
         </div>
       </div>
 
       {/* Program List */}
       <div className="space-y-2">
-        {filteredPrograms?.length === 0 && (
+        {programs?.length === 0 && (
           <div className="py-6 text-center text-gray-300">
             No assigned programs found.
           </div>
         )}
 
-        {filteredPrograms?.map((program) => {
+        {programs?.map((program) => {
           const currentWeek = program.currentWeekAsPerUser ?? 0;
           const totalWeeks = program.programDurationWeeks ?? 1;
           const progressPercentage = Math.round(
@@ -201,12 +159,16 @@ export function AssignedProgramTable({
                   </p>
                   <Progress value={progressPercentage} />
                 </div>
-                <Button
-                  variant="outline"
-                  className="w-full md:w-auto text-white border-none bg-[#0B1A2A] hover:bg-secondary hover:text-white cursor-pointer"
+                <Link
+                  href={`/dashboard/user/assigned-programs/${program.programId}`}
                 >
-                  View Details
-                </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full md:w-auto text-white border-none bg-[#0B1A2A] hover:bg-secondary hover:text-white cursor-pointer"
+                  >
+                    View Details
+                  </Button>
+                </Link>
               </div>
             </div>
           );
@@ -214,12 +176,11 @@ export function AssignedProgramTable({
       </div>
 
       {/* Pagination */}
-      {totalPages > 0 && (
-        <div className="mt-4 flex items-center justify-center">
+      {(serverPrograms?.metadata?.totalPage ?? 0) > 0 && (
+        <div className="mt-4 flex justify-end">
           <Pagination
-            activePage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageClick}
+            activePage={serverPrograms?.metadata?.page ?? 1}
+            totalPages={serverPrograms?.metadata?.totalPage ?? 1}
           />
         </div>
       )}

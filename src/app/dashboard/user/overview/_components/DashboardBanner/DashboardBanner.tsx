@@ -1,7 +1,11 @@
-import Image from 'next/image';
 import dashboardBanner from '@/assets/dashboard/excercise-library/dashboardBanner.jpg';
 import { Button } from '@/components/ui/button';
-const DashboardBanner = () => {
+import { getCurrentUser } from '@/services/auth';
+import Image from 'next/image';
+import Link from 'next/link';
+const DashboardBanner = async () => {
+  const user = await getCurrentUser();
+  console.log(user);
   return (
     <section className="relative w-full h-[200px] md:h-[300px] overflow-hidden rounded-2xl">
       {/* Background Image with Overlay */}
@@ -22,14 +26,19 @@ const DashboardBanner = () => {
       <div className="relative z-10 flex h-full items-center justify-start px-5 md:px-10  text-white">
         <div className="max-w-4xl space-y-2">
           <h1 className="text-xl sm:text-3xl font-bold ">
-            Welcome Back, Alex Jhnson
+            Welcome Back, {user.name}
           </h1>
           <p className="text-sm sm:text-lg ">
             Your Build. Your Rules. Execute.
           </p>
-          <Button size="sm" className="mt-4 px-3 py-2 text-start">
-            Start Today&apos;s Workout
-          </Button>
+          <Link href="/dashboard/user/assigned-programs">
+            <Button
+              size="sm"
+              className="mt-4 px-3 py-2 text-start cursor-pointer"
+            >
+              Start Today&apos;s Workout
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

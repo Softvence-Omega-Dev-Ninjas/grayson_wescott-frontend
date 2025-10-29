@@ -65,7 +65,8 @@ export const getCurrentUser = async () => {
 
   if (accessToken && userCookie) {
     try {
-      return JSON.parse(userCookie);
+      const user = JSON.parse(userCookie);
+      return { ...user, accessToken };
     } catch (err) {
       console.error('Error parsing user cookie:', err);
       return null;

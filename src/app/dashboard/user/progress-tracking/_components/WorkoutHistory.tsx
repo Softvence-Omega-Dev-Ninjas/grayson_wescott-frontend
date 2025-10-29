@@ -1,3 +1,4 @@
+import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { formatISODate } from '@/lib/formatISODate';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -34,7 +35,7 @@ export function WorkoutHistory({ workoutHistory }: { workoutHistory?: any }) {
               </tr>
             </thead>
             <tbody>
-              {workoutHistory?.map((workout: any, index: number) => (
+              {workoutHistory?.data?.map((workout: any, index: number) => (
                 <tr key={index} className="border-t border-slate-700">
                   <td className="p-4 text-sm">
                     {formatISODate(workout?.date)}
@@ -69,6 +70,13 @@ export function WorkoutHistory({ workoutHistory }: { workoutHistory?: any }) {
             </tbody>
           </table>
         </div>
+      </div>
+      {/* Pagination */}
+      <div className="my-8 flex justify-start">
+        <Pagination
+          activePage={workoutHistory?.metadata?.page || 1}
+          totalPages={workoutHistory?.metadata?.totalPage || 1}
+        />
       </div>
     </div>
   );

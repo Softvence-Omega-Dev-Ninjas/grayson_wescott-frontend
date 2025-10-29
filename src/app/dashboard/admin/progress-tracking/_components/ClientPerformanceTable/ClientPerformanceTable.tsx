@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getAllClients } from '@/services/admin/client';
+import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import Image from 'next/image';
 
-const ClientPerformanceTable = async () => {
-  const clients = await getAllClients();
+const ClientPerformanceTable = async ({ clients }: { clients: any }) => {
+  console.log(clients);
 
   return (
     <div className="mb-8 border border-secondary">
@@ -75,6 +75,13 @@ const ClientPerformanceTable = async () => {
             ))}
           </tbody>
         </table>
+      </div>
+      {/* Pagination */}
+      <div className="my-10 flex justify-end">
+        <Pagination
+          activePage={clients?.metadata?.page || 1}
+          totalPages={clients?.metadata?.totalPage || 1}
+        />
       </div>
     </div>
   );
