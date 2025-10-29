@@ -1,6 +1,7 @@
+// components/ChatHeader.tsx
 'use client';
 
-import { EventsEnum } from '@/enum/events.enum';
+import { useCall } from '@/hooks/useCall';
 import { useSocket } from '@/hooks/useSocket';
 import { Sender } from '@/types/chat.types';
 import { ArrowLeft, Phone, Video } from 'lucide-react';
@@ -13,32 +14,11 @@ export default function ChatHeader({
   onBack: () => void;
   participant?: Sender;
 }) {
-  const { socket, currentUser, currentUserRole, currentConversationId } =
-    useSocket();
+  const { socket, currentUser, currentUserRole } = useSocket();
+
+  const { initiateCall } = useCall();
 
   if (!socket || !currentUser || !currentUserRole) return null;
-
-  const handleInitiateCall = (type: 'AUDIO' | 'VIDEO') => {
-    if (!currentConversationId) {
-      console.warn('No active conversation found.');
-      return;
-    }
-
-    socket.emit(
-      EventsEnum.CALL_INITIATE,
-      {
-        conversationId: currentConversationId,
-        type,
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (response: any) => {
-        console.log('📤 Call initiate response:', response);
-      },
-    );
-
-    // optional local UI feedback — e.g., show a "Calling..." state
-    console.log(`Initiating ${type} call...`);
-  };
 
   return (
     <div className="bg-[#151519] flex items-center justify-between p-4 border-b border-gray-700 rounded-t-lg">
@@ -72,13 +52,13 @@ export default function ChatHeader({
 
       <div className="flex items-center gap-3">
         <button
-          onClick={() => handleInitiateCall('AUDIO')}
+          onClick={() => initiateCall('AUDIO')}
           className="text-gray-300 hover:text-white transition"
         >
           <Phone size={20} />
         </button>
         <button
-          onClick={() => handleInitiateCall('VIDEO')}
+          onClick={() => initiateCall('VIDEO')}
           className="text-gray-300 hover:text-white transition"
         >
           <Video size={20} />
