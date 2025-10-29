@@ -12,17 +12,12 @@ const WorkoutBlock = ({ workout }: { workout: any }) => {
   const [weight, setWeight] = useState('');
   const [note, setNote] = useState('');
   const handleStatus = async (status: string) => {
-    console.log(weight);
-    console.log(note);
-    console.log(`Workout marked as ${status}`);
-    // console.log(workout?.programExerciseI);
     try {
       const res = await handleExcerciseStatusUpdate(workout?.id, {
         note: note,
         equipmentUsed: weight,
         status: status,
       });
-      console.log(res);
       if (res?.success) {
         toast.success('Excercise status updated successfully!');
       } else {

@@ -54,8 +54,6 @@ const CreateCategoryModal = () => {
   const onSubmit = async (data: TFormValues) => {
     setUploading(true);
     try {
-      console.log('✅ Submitted Category:', data);
-
       // Example API call
       const res = await createCategory(data);
       console.log(res);

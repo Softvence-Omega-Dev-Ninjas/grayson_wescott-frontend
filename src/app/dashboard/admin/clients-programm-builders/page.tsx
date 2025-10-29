@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { getAllProgramms } from '@/services/admin/programm';
+import { getUserProfile } from '@/services/auth';
 import { Plus, SquarePen } from 'lucide-react';
 import Link from 'next/link';
 
@@ -12,6 +13,9 @@ const ClientsProgrammBuildersPage = async ({
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const { data, metadata } = await getAllProgramms(page);
+
+  const userProfile = await getUserProfile();
+  console.log('Profilllllllllllllllllllllllllllllllllll', userProfile);
   return (
     <div>
       <div className="flex items-center justify-between gap-5 flex-wrap">

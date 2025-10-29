@@ -4,7 +4,6 @@ import { BiSolidMessageRounded } from 'react-icons/bi';
 
 const MessagesPanel = async () => {
   const res = await getNotification();
-  console.log('notification', res);
   return (
     <div>
       <div className="flex items-center justify-between mb-4">

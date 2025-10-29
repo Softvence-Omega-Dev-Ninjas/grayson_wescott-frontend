@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 const DashboardBanner = async () => {
   const user = await getCurrentUser();
-  console.log(user);
   return (
     <section className="relative w-full h-[200px] md:h-[300px] overflow-hidden rounded-2xl">
       {/* Background Image with Overlay */}

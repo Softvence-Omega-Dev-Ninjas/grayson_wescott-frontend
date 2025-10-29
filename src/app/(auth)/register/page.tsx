@@ -23,9 +23,9 @@ import { toast } from 'sonner';
 import * as z from 'zod';
 import bg from '../../../assets/footerbg.png';
 import bg1 from '../../../assets/header/logo.png';
+import FacebookLogin from '../login/_components/FacebookLogin/FacebookLogin';
 import GoogleLogin from '../login/_components/GoogleLogin/GoogleLogin';
 import TwitterLogin from '../login/_components/TwitterLogin/TwitterLogin';
-import FacebookLogin from '../login/_components/FacebookLogin/FacebookLogin';
 
 // Corrected the schema by removing the .default() method.
 // This resolves the type mismatch with the useForm's defaultValues.
@@ -58,7 +58,6 @@ export default function SignUpPage() {
     console.log('[v0] Sign up form submitted:', values);
     try {
       const res = await registerUser(values);
-      console.log('==============>', res);
       if (res?.success) {
         toast.success(
           'Registration successful! We’ve sent a verification code to your email.',

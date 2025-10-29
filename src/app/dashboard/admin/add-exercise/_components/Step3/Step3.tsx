@@ -16,7 +16,6 @@ const Step3 = (
     // onDone: () => void;
   },
 ) => {
-  // console.log("FormData================>", formData);
   return (
     <div className="space-y-6">
       <div className="text-center space-y-4 my-20">

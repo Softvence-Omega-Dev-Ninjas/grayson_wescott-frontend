@@ -22,7 +22,6 @@ const AssignedProgramsPage = async ({ searchParams }: Props) => {
     limit: 10,
     status: undefined,
   });
-  console.log(res);
   return (
     <div>
       <div className="space-y-2">

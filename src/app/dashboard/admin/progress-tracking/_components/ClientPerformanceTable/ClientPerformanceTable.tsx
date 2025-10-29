@@ -3,8 +3,6 @@ import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import Image from 'next/image';
 
 const ClientPerformanceTable = async ({ clients }: { clients: any }) => {
-  console.log(clients);
-
   return (
     <div className="mb-8 border border-secondary">
       {/* Header */}

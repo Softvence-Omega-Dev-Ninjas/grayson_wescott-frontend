@@ -1,7 +1,9 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import useUser from '@/hooks/useUser';
 import { StaticImageData } from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 interface BannerProps {
@@ -22,6 +24,7 @@ function HeroBanner({
   users,
 }: BannerProps) {
   const path = usePathname();
+  const { user } = useUser();
   return (
     <section
       className="relative w-full h-[700px] sm:h-screen flex items-center"
@@ -64,14 +67,18 @@ function HeroBanner({
 
         <div className="flex flex-col items-center md:justify-start  w-full  md:flex-row  gap-4 mt-4">
           {button1 && (
-            <Button className="bg-[#B9BDC6]/80 hover:bg-[#B9BDC6]/70  text-black text-lg px-6 py-4 font-medium cursor-pointer hover:text-white  ">
-              {button1}
-            </Button>
+            <Link href={user ? '/' : '/login'}>
+              <Button className="bg-[#B9BDC6]/80 hover:bg-[#B9BDC6]/70  text-black text-lg px-6 py-4 font-medium cursor-pointer hover:text-white  ">
+                {button1}
+              </Button>
+            </Link>
           )}
           {path === '/' ? (
-            <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-4 font-medium cursor-pointer hover:text-white">
-              {button2}
-            </Button>
+            <Link href={'/pricing'}>
+              <Button className="bg-transparent border-1 border-white  text-white text-lg px-6 py-4 font-medium cursor-pointer hover:text-white">
+                {button2}
+              </Button>
+            </Link>
           ) : (
             ''
           )}
