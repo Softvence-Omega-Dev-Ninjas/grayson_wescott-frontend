@@ -15,7 +15,7 @@ import { X } from 'lucide-react';
 import { toast } from 'sonner';
 import { profileSchema, TProfileFormData } from './schema/profileSchema';
 
-const AdminProfileTab = () => {
+const UpdateProfile = () => {
   const { user, setUser } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -121,7 +121,7 @@ const AdminProfileTab = () => {
 
   return (
     <div className="">
-      <Card className="bg-[#151519] border-gray-700 rounded-none">
+      <Card className="bg-primary-200 border-2 border-secondary rounded-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-white text-lg font-semibold flex items-center gap-2">
             {/* <User className="w-4 h-4" /> */}
@@ -226,4 +226,4 @@ const AdminProfileTab = () => {
   );
 };
 
-export default AdminProfileTab;
+export default UpdateProfile;

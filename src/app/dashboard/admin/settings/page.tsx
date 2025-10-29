@@ -6,7 +6,7 @@ import { useState } from 'react';
 import ChangePassword from './_components/ChangePassword/ChangePassword';
 import ManageAdmin from './_components/ManageAdmin/ManageAdmin';
 import { PaymentsTab } from './_components/PaymentsTab';
-import AdminProfileTab from './_components/UpdateProfile/UpdateProfile';
+import UpdateProfile from './_components/UpdateProfile/UpdateProfile';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('admin-profile');
@@ -38,7 +38,7 @@ export default function SettingsPage() {
 
         <div className="mt-6">
           <TabsContent value="admin-profile" className="space-y-6">
-            <AdminProfileTab />
+            <UpdateProfile />
             <ChangePassword />
           </TabsContent>
           <TabsContent value="manage-admin" className="space-y-6">

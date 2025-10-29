@@ -71,7 +71,7 @@ const ChangePassword = () => {
 
   return (
     <div className="h-auto">
-      <Card className="bg-[#151519] border-gray-700 rounded-none">
+      <Card className="bg-primary-200 border-2 border-secondary rounded-none">
         <CardHeader className="pb-3">
           <CardTitle className="text-white text-lg font-semibold flex items-center gap-2">
             Change Password

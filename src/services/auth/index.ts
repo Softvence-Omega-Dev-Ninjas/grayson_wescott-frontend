@@ -154,6 +154,35 @@ export const getCurrentUser = async () => {
   return null;
 };
 
+export const updateMessagingPreferences = async (preferences: any) => {
+  const cookieStore = await cookies();
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/update-preferences`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify(preferences),
+      },
+    );
+
+    const result = await res.json();
+    if (result?.success) {
+      cookieStore.set('user', JSON.stringify(result?.data));
+    }
+
+    return result;
+  } catch (err) {
+    console.error('❌ Error updating preferences:', err);
+    throw err;
+  }
+};
+
 //Logout User
 export const logout = async () => {
   const cookieStore = await cookies();

@@ -1,30 +1,19 @@
-import { AssignedProgram } from './_components/AssignedProgram';
-import { EliteStrengthProgram } from './_components/EliteStrengthProgram';
-import { MessagingPreferences } from './_components/MessagingPreferences';
-import { PaymentsSubscription } from './_components/PaymentsSubscription';
-import { ProfileAccount } from './_components/ProfileAccount';
-import { ProgressTracking } from './_components/ProgressTracking';
+import ChangePassword from '../../admin/settings/_components/ChangePassword/ChangePassword';
+import UpdateProfile from '../../admin/settings/_components/UpdateProfile/UpdateProfile';
+import MessagingPreferences from './_components/MessagingPreferences';
+// import { MessagingPreferences } from './_components/MessagingPreferences';
 
-export default function UserSettingPage() {
+const UserSettingPage = () => {
   return (
     <div className="  p-6">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Top Row */}
-          <ProfileAccount />
-          <AssignedProgram />
-
-          {/* Middle Row */}
-          <ProgressTracking />
-          <EliteStrengthProgram />
-
-          {/* Bottom Row */}
-          <div className="grid gap-6">
-            <MessagingPreferences />
-          </div>
-          <PaymentsSubscription />
+        <div className="space-y-6">
+          <UpdateProfile />
+          <ChangePassword />
+          <MessagingPreferences />
         </div>
       </div>
     </div>
   );
-}
+};
+export default UserSettingPage;
