@@ -1,20 +1,13 @@
 'use client';
 
+import { useSocket } from '@/hooks/useSocket';
 import { Conversation } from '@/types/chat.types';
 import { EllipsisVertical } from 'lucide-react';
 import Image from 'next/image';
 
-interface ChatListProps {
-  chats: Conversation[];
-  onSelect: (id: string) => void;
-  selectedChat: string | null;
-}
+export default function ChatList({ chats }: { chats: Conversation[] }) {
+  const { currentConversationId, setCurrentConversationId } = useSocket();
 
-export default function ChatList({
-  chats,
-  onSelect,
-  selectedChat,
-}: ChatListProps) {
   // helper to render last message safely without mutating the object
   const renderLastMessage = (m: Conversation['lastMessage']) => {
     if (!m) return '';
@@ -54,12 +47,12 @@ export default function ChatList({
           <div
             key={chat.conversationId}
             className={`flex justify-between items-center ${
-              selectedChat === chat.conversationId ? 'bg-gray-800' : ''
+              currentConversationId === chat.conversationId ? 'bg-gray-800' : ''
             } hover:bg-gray-800 p-4 cursor-pointer`}
             title={name}
           >
             <div
-              onClick={() => onSelect(chat.conversationId)}
+              onClick={() => setCurrentConversationId(chat.conversationId)}
               className="flex gap-2 items-center flex-1"
             >
               <div className="relative">

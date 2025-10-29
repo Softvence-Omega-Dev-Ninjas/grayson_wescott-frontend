@@ -15,12 +15,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 const DEFAULT_LIMIT = 15;
 
-export default function ChatDetails({
-  selectedConversationId,
-}: {
-  selectedConversationId: string | null;
-}) {
-  if (!selectedConversationId) {
+export default function ChatDetails() {
+  const { currentConversationId } = useSocket();
+
+  if (!currentConversationId) {
     return (
       <div className="flex items-center justify-center bg-[#151519] text-gray-400 rounded-lg">
         Select a chat to start messaging
@@ -44,21 +42,21 @@ export default function ChatDetails({
   // emit request to load a page
   const fetchPage = useCallback(
     (pageToFetch: number) => {
-      if (!socket || !currentUser || !selectedConversationId) return;
+      if (!socket || !currentUser || !currentConversationId) return;
       setLoadingMore(pageToFetch > 1);
       if (pageToFetch === 1) setLoading(true);
       socket.emit(EventsEnum.LOAD_SINGLE_CONVERSATION, {
-        conversationId: selectedConversationId,
+        conversationId: currentConversationId,
         page: pageToFetch,
         limit,
       });
     },
-    [socket, currentUser, selectedConversationId, limit],
+    [socket, currentUser, currentConversationId, limit],
   );
 
   // register listeners and reset state when conversation changes
   useEffect(() => {
-    if (!socket || !currentUser || !selectedConversationId) return;
+    if (!socket || !currentUser || !currentConversationId) return;
 
     // reset everything for the new conversation
     setItems([]);
@@ -111,27 +109,14 @@ export default function ChatDetails({
       setParticipant(res.participants[0]);
     };
 
-    // server -> client: new message pushed
-    const onNewMessage = (res: NewMessageResponse) => {
-      console.log('📤 NEW_MESSAGE', res);
-      if (!res?.data) return;
-      setItems((prev) => [...prev, res.data]);
-      requestAnimationFrame(() => {
-        const c = scrollContainerRef.current;
-        if (c) c.scrollTop = c.scrollHeight;
-      });
-    };
-
     socket.on(EventsEnum.SINGLE_CONVERSATION, onSingleConversation);
-    socket.on(EventsEnum.NEW_MESSAGE, onNewMessage);
 
     return () => {
       socket.off(EventsEnum.SINGLE_CONVERSATION, onSingleConversation);
-      socket.off(EventsEnum.NEW_MESSAGE, onNewMessage);
     };
-  }, [socket, currentUser, selectedConversationId, fetchPage]);
+  }, [socket, currentUser, currentConversationId, fetchPage]);
 
-  // scroll -> load older pages when near top
+  // attach scroll listener for auto-pagination (load older on scroll top)
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -141,6 +126,7 @@ export default function ChatDetails({
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
+        // if near top and more pages exist, fetch next page
         if (container.scrollTop <= 80 && !loadingMore && page < totalPage) {
           fetchPage(page + 1);
         }
@@ -149,8 +135,42 @@ export default function ChatDetails({
     };
 
     container.addEventListener('scroll', onScroll);
-    return () => container.removeEventListener('scroll', onScroll);
+    return () => {
+      container.removeEventListener('scroll', onScroll);
+    };
   }, [page, totalPage, loadingMore, fetchPage]);
+
+  // append new message
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNewMessage = (res: NewMessageResponse) => {
+      console.log('📤 New message:', res);
+      if (!res?.data) return;
+
+      // * if the sender is either the current user or the other participant, append it
+      if (
+        res.data.sender.id === currentUser?.id ||
+        res.data.sender.id === participant?.id
+      ) {
+        // append new message
+        setItems((prev) => [...prev, res.data]);
+
+        // scroll to bottom for newest message
+        requestAnimationFrame(() => {
+          const container = scrollContainerRef.current;
+          if (!container) return;
+          container.scrollTop = container.scrollHeight;
+        });
+      }
+    };
+
+    socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);
+
+    return () => {
+      socket.off(EventsEnum.NEW_MESSAGE, handleNewMessage);
+    };
+  }, [socket]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -174,7 +194,7 @@ export default function ChatDetails({
         }
         loadingMore={loadingMore}
       />
-      <ChatInput conversationId={selectedConversationId} />
+      <ChatInput participantId={participant?.id} />
     </div>
   );
 }

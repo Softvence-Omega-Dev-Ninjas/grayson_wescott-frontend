@@ -16,6 +16,8 @@ interface SocketContextValue {
   socketToken: string | null;
   currentUser: SocketUser | null;
   currentUserRole: UserRole | null;
+  currentConversationId: string | null;
+  setCurrentConversationId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 interface SocketUser {
@@ -39,6 +41,9 @@ export const SocketProvider = ({
   const [socketToken, setSocketToken] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<SocketUser | null>(null);
   const [currentUserRole, setCurrentUserRole] = useState<UserRole | null>(null);
+  const [currentConversationId, setCurrentConversationId] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     if (!token) return;
@@ -79,6 +84,8 @@ export const SocketProvider = ({
         socketToken,
         currentUser,
         currentUserRole,
+        currentConversationId,
+        setCurrentConversationId,
       }}
     >
       {children}
