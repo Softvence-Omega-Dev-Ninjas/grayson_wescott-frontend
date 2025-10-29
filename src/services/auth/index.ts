@@ -79,7 +79,6 @@ export const changePassword = async (
     );
 
     const result = await res.json();
-    console.log('+++++++++++++++++++++++++', result);
     return result;
   } catch (error: any) {
     return new Error(error);
@@ -130,7 +129,6 @@ export const getUserProfile = async () => {
       },
     );
     const data = await res.json();
-    console.log('daaaaaaaaaaaaaaaataaaaaaaaaaaaaaaa', data);
     return data;
   } catch (error: any) {
     return Error(error.message);
@@ -147,7 +145,6 @@ export const getCurrentUser = async () => {
     try {
       const user = JSON.parse(userCookie);
       return { ...user, accessToken };
-      return JSON.parse(userCookie);
     } catch (err) {
       console.error('Error parsing user cookie:', err);
       return null;
