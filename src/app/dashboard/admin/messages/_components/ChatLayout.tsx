@@ -10,7 +10,7 @@ import ChatList from './components/ChatList';
 export default function ChatLayout() {
   const { socket, currentUser, currentConversationId } = useSocket();
 
-  if (!socket || !currentUser) return null;
+  if (!socket || !currentUser) return;
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
 
