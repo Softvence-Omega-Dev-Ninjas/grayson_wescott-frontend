@@ -146,13 +146,12 @@ export default function ChatDetails() {
 
     const handleNewMessage = (res: NewMessageResponse) => {
       console.log('📤 New message:', res);
+      console.log('📤 New message belongs to conversation', res.data);
+      console.log('📤 Current conversation', currentConversationId);
       if (!res?.data) return;
 
-      // * if the sender is either the current user or the other participant, append it
-      if (
-        res.data.sender.id === currentUser?.id ||
-        res.data.sender.id === participant?.id
-      ) {
+      // * only append to current conversation
+      if (res.data.conversationId === currentConversationId) {
         // append new message
         setItems((prev) => [...prev, res.data]);
 
@@ -163,6 +162,7 @@ export default function ChatDetails() {
           container.scrollTop = container.scrollHeight;
         });
       }
+      console.log('📤 New message belongs to', res.data.sender.email);
     };
 
     socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);
