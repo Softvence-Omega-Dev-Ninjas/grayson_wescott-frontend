@@ -11,9 +11,9 @@ import { toast } from 'sonner';
 import ChatMicInput from './ChatMicInput';
 
 export default function ChatInput({
-  conversationId,
+  participantId,
 }: {
-  conversationId?: string | null;
+  participantId?: string | null;
 }) {
   const { socket, socketToken } = useSocket();
   const [message, setMessage] = useState('');
@@ -32,23 +32,21 @@ export default function ChatInput({
     if (!socket) return Promise.reject(new Error('No socket connected'));
 
     const payload = {
-      ...(conversationId && { conversationId }),
+      clientId: participantId,
       content,
       type,
       fileId,
     };
 
-    const event = conversationId
+    const event = participantId
       ? EventsEnum.SEND_MESSAGE_ADMIN
       : EventsEnum.SEND_MESSAGE_CLIENT;
-
-    console.log('Event', event);
 
     setIsSending(true);
     return new Promise((resolve, reject) => {
       socket.emit(event, payload, (response: any) => {
         setIsSending(false);
-        console.log('📤 Send message response:', response);
+        // console.log('📤 Send message response:', response);
         if (response?.success) {
           setMessage('');
           resolve(response);
@@ -63,10 +61,7 @@ export default function ChatInput({
   const handleSendMessage = () => {
     if (!message.trim() || !socket) return;
     // fire-and-forget or await if you want
-    sendMessage(message, MessageType.TEXT).catch((err) => {
-      console.error('Send failed', err);
-      alert('Failed to send message');
-    });
+    sendMessage(message, MessageType.TEXT);
   };
 
   // Handle file/image upload

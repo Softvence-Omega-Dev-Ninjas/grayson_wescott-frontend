@@ -72,7 +72,7 @@ export default function ChatMessages({
                   />
                 )}
 
-                {/* ✅ Show sender profile when current user is an admin or super admin */}
+                {/* Show sender profile when current user is an admin or super admin */}
                 {(currentUserRole === UserRole.ADMIN ||
                   currentUserRole === UserRole.SUPER_ADMIN) &&
                   msg.sender && (

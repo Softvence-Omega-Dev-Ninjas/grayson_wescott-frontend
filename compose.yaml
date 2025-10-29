@@ -6,9 +6,9 @@ services:
     environment:
       - NEXT_PUBLIC_BASE_URL=https://carbonengines.com
       - NEXT_PUBLIC_BASE_API=https://carbonengines.com/api
-      - NEXT_PUBLIC_GOOGLE_CLIENT_ID=1074646902032-5ab3gkkggb7mrejjfnvr7ra65qos4o8s.apps.googleusercontent.com
-      - NEXT_PUBLIC_FACEBOOK_APP_ID=2264393004025713
-      - NEXT_PUBLIC_TWITTER_CLIENT_ID=c1Z2TEhUQmtybFJjd3Z5UEF2V2g6MTpjaQ
+      - NEXT_PUBLIC_GOOGLE_CLIENT_ID=125659000169-4incakt8jp20jhifol0h39u9pipe6g0r.apps.googleusercontent.com
+      # - NEXT_PUBLIC_FACEBOOK_APP_ID=2264393004025713
+      - NEXT_PUBLIC_FACEBOOK_APP_ID=25474619458797594
     ports:
       - "3000:3000"
     restart: always

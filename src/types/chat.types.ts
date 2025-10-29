@@ -32,6 +32,7 @@ export interface FileAttachment {
 
 export interface ChatMessage {
   id: string;
+  conversationId: string;
   type: ChatMessageType.MESSAGE;
   createdAt: string; // ISO string
   content: string;
@@ -54,6 +55,7 @@ export interface CallParticipant {
 
 export interface ChatCall {
   id: string;
+  conversationId: string;
   type: ChatMessageType.CALL;
   createdAt: string;
   callType: string;
