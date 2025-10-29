@@ -1,5 +1,6 @@
 'use client';
 
+import { useSocket } from '@/hooks/useSocket';
 import {
   ChatCall,
   ChatItem,
@@ -7,6 +8,7 @@ import {
   ChatMessageType,
   MessageType,
 } from '@/types/chat.types';
+import { UserRole } from '@/types/user.types';
 import { Phone, Video } from 'lucide-react';
 import Image from 'next/image';
 import { v4 as uuid } from 'uuid';
@@ -22,6 +24,8 @@ export default function ChatMessages({
   scrollContainerRef,
   loadingMore,
 }: Props) {
+  const { currentUserRole } = useSocket();
+
   if (!chat || chat.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-400">
@@ -57,7 +61,8 @@ export default function ChatMessages({
               className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}
             >
               <div className="flex gap-2 items-end max-w-full">
-                {showTrainer && (
+                {/* Show default avatar when the current user is a client and the message is from the trainer */}
+                {showTrainer && currentUserRole === UserRole.USER && (
                   <Image
                     src={`https://ui-avatars.com/api/?name=Carbon Engines`}
                     alt="Trainer"
@@ -66,6 +71,24 @@ export default function ChatMessages({
                     width={30}
                   />
                 )}
+
+                {/* ✅ Show sender profile when current user is an admin or super admin */}
+                {(currentUserRole === UserRole.ADMIN ||
+                  currentUserRole === UserRole.SUPER_ADMIN) &&
+                  msg.sender && (
+                    <Image
+                      src={
+                        msg.sender.avatarUrl ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          msg.sender.name || 'Carbon Engines',
+                        )}`
+                      }
+                      alt={msg.sender.name || 'Your Trainer'}
+                      className="rounded-full object-cover flex-shrink-0"
+                      height={30}
+                      width={30}
+                    />
+                  )}
 
                 <div className="flex flex-col">
                   <div
