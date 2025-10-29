@@ -15,6 +15,11 @@ export enum ChatMessageType {
   CALL = 'CALL',
 }
 
+export enum CallType {
+  AUDIO = 'AUDIO',
+  VIDEO = 'VIDEO',
+}
+
 export interface Sender {
   id: string;
   name: string;
@@ -58,7 +63,7 @@ export interface ChatCall {
   conversationId: string;
   type: ChatMessageType.CALL;
   createdAt: string;
-  callType: string;
+  callType: CallType;
   status: string;
   startedAt: string;
   endedAt: string | null;

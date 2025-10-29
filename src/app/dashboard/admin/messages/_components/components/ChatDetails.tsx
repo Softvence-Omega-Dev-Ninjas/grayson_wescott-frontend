@@ -150,8 +150,12 @@ export default function ChatDetails() {
       console.log('📤 Current conversation', currentConversationId);
       if (!res?.data) return;
 
-      // * only append to current conversation
-      if (res.data.conversationId === currentConversationId) {
+      // * only append if message belongs to current conversation
+      if (
+        res.data.sender.id === currentUser?.id || // send by admin
+        (res.data.isMine === false && res.data.sender.id === participant?.id) || // send by participant
+        res.data.conversationId === currentConversationId
+      ) {
         // append new message
         setItems((prev) => [...prev, res.data]);
 
