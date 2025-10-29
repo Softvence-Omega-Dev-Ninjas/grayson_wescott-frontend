@@ -49,6 +49,9 @@ export default function ChatHeader({
         callType: data?.type,
       });
     };
+
+    socket.on(EventsEnum.CALL_INCOMING, onIncoming);
+
     return () => {
       socket.off(EventsEnum.CALL_INCOMING, onIncoming);
     };
