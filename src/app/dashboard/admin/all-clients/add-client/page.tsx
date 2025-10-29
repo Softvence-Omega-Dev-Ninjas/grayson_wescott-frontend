@@ -43,7 +43,6 @@ const ClientForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
     router.push('/dashboard/admin/all-clients/add-client/success');
   };
 

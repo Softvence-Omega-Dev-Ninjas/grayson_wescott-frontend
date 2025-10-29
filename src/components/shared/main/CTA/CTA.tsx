@@ -15,7 +15,6 @@ interface CTATYPE {
 }
 function CTA({ title, description, btn1, btn2, img }: CTATYPE) {
   const path = usePathname();
-  console.log(path);
 
   return (
     <>

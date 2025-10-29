@@ -20,8 +20,6 @@ export default function TwitterLogin() {
       toast.error('Twitter login failed.');
       return;
     }
-
-    console.log('Result', result);
     const data = result?.data;
 
     if (!data?.url || !data?.oauthToken || !data?.oauthTokenSecret) {

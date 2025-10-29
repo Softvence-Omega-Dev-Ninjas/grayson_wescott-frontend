@@ -17,7 +17,6 @@ const ExcercisePlayVideoPage = async ({
 }) => {
   const { id } = await params;
   const excerciseDetails = await getExcerciseDetailsByUser(id);
-  console.log(excerciseDetails);
   return (
     <div className="mb-20">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -1,20 +1,25 @@
-import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
-import logo from '../../../assets/programs/pickBanner.png';
 import CTA from '@/components/shared/main/CTA/CTA';
-import img from '../../../assets/home/program.png';
+import HeroBanner from '@/components/shared/main/HeroBanner/HeroBanner';
 import SectionHeader from '@/components/shared/main/SectionHeader/SectionHeader';
+import img from '../../../assets/home/program.png';
 import p1 from '../../../assets/programs/p1.png';
 import p2 from '../../../assets/programs/p2.png';
 import p3 from '../../../assets/programs/p3.png';
+import logo from '../../../assets/programs/pickBanner.png';
 
 import { OverlayCard } from '@/components/shared/main/OverlayCard/OverlayCard';
 import ProgramsBuildYou from './_components/ProgramsBuildYou/ProgramsBuildYou';
 
-import WhatYouWillDo from './_components/ProgramsBuildYou/WhatYouWillDo';
+import { getAllPublicProgram } from '@/services/user/public-program';
+import AccordionSection from './_components/ProgramsBuildYou/AccordionSection';
 import HowItWorks from './_components/ProgramsBuildYou/HowItWorks';
 import WhatsInclude from './_components/ProgramsBuildYou/WhatsInclude';
-import AccordionSection from './_components/ProgramsBuildYou/AccordionSection';
-const ProgramsPage = () => {
+import WhatYouWillDo from './_components/ProgramsBuildYou/WhatYouWillDo';
+const ProgramsPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; status?: string; search?: string }>;
+}) => {
   const data = [
     {
       img: p1.src,
@@ -29,6 +34,12 @@ const ProgramsPage = () => {
       title: 'Specialized Tracks',
     },
   ];
+
+  const params = await searchParams;
+  const page = Number(params?.page) || 1;
+  // const search = params?.search || '';
+  const programms = await getAllPublicProgram(page, 9);
+  console.log(programms);
 
   return (
     <div className="pb-20">
@@ -55,7 +66,7 @@ const ProgramsPage = () => {
         {/* Program that build you */}
 
         <div className="md:py-12">
-          <ProgramsBuildYou />
+          <ProgramsBuildYou programs={programms} />
         </div>
 
         {/* what build you */}

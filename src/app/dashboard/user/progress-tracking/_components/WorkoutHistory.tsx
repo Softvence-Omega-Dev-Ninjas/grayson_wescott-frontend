@@ -4,7 +4,6 @@ import { formatISODate } from '@/lib/formatISODate';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function WorkoutHistory({ workoutHistory }: { workoutHistory?: any }) {
-  console.log('===============>', workoutHistory);
   return (
     <div className="bg-[#151519] p-2">
       <h2 className="text-lg font-medium ml-4 mb-4">Workout History</h2>

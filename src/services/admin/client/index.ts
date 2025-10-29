@@ -10,7 +10,6 @@ export const getAllClients = async (
   search: string = '',
 ) => {
   const token = await getValidToken();
-  console.log(page);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API}/client-analytics?page=${page}&limit=${limit}&search=${search}`,
@@ -23,7 +22,6 @@ export const getAllClients = async (
       },
     );
     const data = await res.json();
-    console.log(data);
     return data;
   } catch (error: any) {
     return Error(error.message);

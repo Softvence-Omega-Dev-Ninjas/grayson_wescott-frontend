@@ -42,7 +42,6 @@ export const createExcercise = async (excerciseData: any): Promise<any> => {
 
     revalidateTag('ESXERCISE_LIBRARY');
     const result = await res.json();
-    console.log('++++++++++++++++++', result);
     return result;
   } catch (error: any) {
     return Error(error);

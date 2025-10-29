@@ -63,7 +63,6 @@ export default function LoginPage() {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const res = await loginUser(values);
-      console.log(res);
       if (res?.success) {
         toast.success('Login successful!');
         setUser(res?.data?.user);

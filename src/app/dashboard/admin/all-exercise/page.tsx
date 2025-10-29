@@ -9,7 +9,6 @@ const AllExercisePage = async ({
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const res = await getAllExcercise(page, 12);
-  console.log(res?.data);
   return (
     <div>
       <AllExcercise allExcercise={res} />

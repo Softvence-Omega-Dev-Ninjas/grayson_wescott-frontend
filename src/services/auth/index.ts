@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use server';
 
+import { TChangePasswordFormData } from '@/app/dashboard/admin/settings/_components/ChangePassword/schema/changePasswordSchema';
+import { getValidToken } from '@/lib/verifyToken';
 import { cookies } from 'next/headers';
 import { FieldValues } from 'react-hook-form';
 
@@ -57,6 +59,84 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
+//Change Password
+export const changePassword = async (
+  userData: Partial<TChangePasswordFormData>,
+) => {
+  const token = await getValidToken();
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/change-password`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      },
+    );
+
+    const result = await res.json();
+    console.log('+++++++++++++++++++++++++', result);
+    return result;
+  } catch (error: any) {
+    return new Error(error);
+  }
+};
+
+//Update User
+export const updateUser = async (userData: FormData) => {
+  const cookieStore = await cookies();
+  const token = await getValidToken();
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/update-profile`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: userData,
+      },
+    );
+
+    const result = await res.json();
+    if (result?.success) {
+      cookieStore.set('user', JSON.stringify(result?.data));
+    }
+
+    return result;
+  } catch (error: any) {
+    return new Error(error);
+  }
+};
+
+export const getUserProfile = async () => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/profile`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        next: {
+          tags: ['USER_PROFILE'],
+        },
+      },
+    );
+    const data = await res.json();
+    console.log('daaaaaaaaaaaaaaaataaaaaaaaaaaaaaaa', data);
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
+
 //Get Current User
 export const getCurrentUser = async () => {
   const cookieStore = await cookies();
@@ -67,6 +147,7 @@ export const getCurrentUser = async () => {
     try {
       const user = JSON.parse(userCookie);
       return { ...user, accessToken };
+      return JSON.parse(userCookie);
     } catch (err) {
       console.error('Error parsing user cookie:', err);
       return null;
@@ -74,6 +155,35 @@ export const getCurrentUser = async () => {
   }
 
   return null;
+};
+
+export const updateMessagingPreferences = async (preferences: any) => {
+  const cookieStore = await cookies();
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/auth/update-preferences`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify(preferences),
+      },
+    );
+
+    const result = await res.json();
+    if (result?.success) {
+      cookieStore.set('user', JSON.stringify(result?.data));
+    }
+
+    return result;
+  } catch (err) {
+    console.error('❌ Error updating preferences:', err);
+    throw err;
+  }
 };
 
 //Logout User

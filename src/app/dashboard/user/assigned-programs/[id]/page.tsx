@@ -99,9 +99,7 @@ const AssignedProgramsDetailsPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  console.log(id);
   const res = await getAssignedProgramsDetails(id);
-  console.log(res);
   return (
     <div className="">
       <div className="flex flex-col lg:flex-row lg:space-x-8">

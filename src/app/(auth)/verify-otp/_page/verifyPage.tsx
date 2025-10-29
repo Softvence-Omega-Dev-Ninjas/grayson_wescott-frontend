@@ -62,7 +62,6 @@ export default function TwoStepVerificationPage() {
     setIsSubmitting(true);
     try {
       const res = await verifyEmail(verificationData);
-      console.log('=============>', res);
       if (res?.success) {
         toast.success(
           'Your email has been verified successfully! You can now log in.',

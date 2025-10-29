@@ -19,6 +19,8 @@ export interface IUser {
   twoFAMethod: 'SMS' | 'EMAIL' | 'AUTH_APP' | null;
   createdAt: string;
   updatedAt: string;
+  allowEmailMessages: boolean;
+  allowDirectMessages: boolean;
 }
 
 export enum AuthProvider {

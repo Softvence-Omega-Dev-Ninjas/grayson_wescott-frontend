@@ -112,7 +112,6 @@ export default function AddProgramPage() {
       return;
     }
     const programmData = { ...data, userIds: [...selectedClientIds] };
-    console.log('programmData================>', programmData);
     try {
       // Example API call
       const res = await createProgramm(programmData);
