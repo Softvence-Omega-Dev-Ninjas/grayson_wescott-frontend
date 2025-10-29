@@ -217,7 +217,6 @@ export default function ChatList() {
             title={name}
           >
             <button
-              
               onClick={() => setCurrentConversationId(chat.conversationId)}
               className="flex gap-2 items-center flex-1"
             >

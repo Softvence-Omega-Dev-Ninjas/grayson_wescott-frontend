@@ -138,6 +138,7 @@ export function useCall() {
 
     // incoming call
     const onIncoming = (payload: any) => {
+      console.log('onIncoming', payload);
       const data: ChatCall = payload.data ?? payload;
       // If it's our own initiated call, server might return it - treat accordingly
       setCurrentCall(data);
