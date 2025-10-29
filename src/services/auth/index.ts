@@ -142,8 +142,11 @@ export const getCurrentUser = async () => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
   const userCookie = cookieStore.get('user')?.value;
+
   if (accessToken && userCookie) {
     try {
+      const user = JSON.parse(userCookie);
+      return { ...user, accessToken };
       return JSON.parse(userCookie);
     } catch (err) {
       console.error('Error parsing user cookie:', err);
