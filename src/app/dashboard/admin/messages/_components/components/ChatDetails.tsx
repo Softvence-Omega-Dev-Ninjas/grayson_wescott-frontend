@@ -146,26 +146,19 @@ export default function ChatDetails() {
 
     const handleNewMessage = (res: NewMessageResponse) => {
       console.log('📤 New message:', res);
-      console.log('📤 New message belongs to conversation', res.data);
       console.log('📤 Current conversation', currentConversationId);
       if (!res?.data) return;
 
       // * only append if message belongs to current conversation
-      if (
-        res.data.sender.id === currentUser?.id || // send by admin
-        (res.data.isMine === false && res.data.sender.id === participant?.id) || // send by participant
-        res.data.conversationId === currentConversationId
-      ) {
-        // append new message
-        setItems((prev) => [...prev, res.data]);
+      // append new message
+      setItems((prev) => [...prev, res.data]);
 
-        // scroll to bottom for newest message
-        requestAnimationFrame(() => {
-          const container = scrollContainerRef.current;
-          if (!container) return;
-          container.scrollTop = container.scrollHeight;
-        });
-      }
+      // scroll to bottom for newest message
+      requestAnimationFrame(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+        container.scrollTop = container.scrollHeight;
+      });
     };
 
     socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);
