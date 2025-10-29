@@ -147,7 +147,13 @@ export default function ChatDetails() {
     const handleNewMessage = (res: NewMessageResponse) => {
       console.log('📤 New message:', res);
       console.log('📤 Current conversation', currentConversationId);
+      console.log('📤 New message conversation', res.data.conversationId);
       if (!res?.data) return;
+
+      if (res.data.conversationId !== currentConversationId) {
+        console.log('📤 Message does not belong to current conversation');
+        return;
+      }
 
       // * only append if message belongs to current conversation
       // append new message
@@ -166,7 +172,7 @@ export default function ChatDetails() {
     return () => {
       socket.off(EventsEnum.NEW_MESSAGE, handleNewMessage);
     };
-  }, [socket]);
+  }, [socket, currentConversationId, setItems, scrollContainerRef]);
 
   if (loading) return <div>Loading...</div>;
 
