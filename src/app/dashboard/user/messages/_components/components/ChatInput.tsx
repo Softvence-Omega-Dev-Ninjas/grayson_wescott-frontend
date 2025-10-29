@@ -10,7 +10,11 @@ import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import ChatMicInput from './ChatMicInput';
 
-export default function ChatInput() {
+export default function ChatInput({
+  conversationId,
+}: {
+  conversationId?: string | null;
+}) {
   const { socket, socketToken } = useSocket();
   const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
@@ -27,11 +31,22 @@ export default function ChatInput() {
   ): Promise<any> => {
     if (!socket) return Promise.reject(new Error('No socket connected'));
 
-    const payload = { content, type, fileId };
+    const payload = {
+      ...(conversationId && { conversationId }),
+      content,
+      type,
+      fileId,
+    };
+
+    const event = conversationId
+      ? EventsEnum.SEND_MESSAGE_ADMIN
+      : EventsEnum.SEND_MESSAGE_CLIENT;
+
+    console.log('Event', event);
 
     setIsSending(true);
     return new Promise((resolve, reject) => {
-      socket.emit(EventsEnum.SEND_MESSAGE_CLIENT, payload, (response: any) => {
+      socket.emit(event, payload, (response: any) => {
         setIsSending(false);
         console.log('📤 Send message response:', response);
         if (response?.success) {

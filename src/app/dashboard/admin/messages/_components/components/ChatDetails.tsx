@@ -1,6 +1,7 @@
 'use client';
 
 import ChatHeader from '@/app/dashboard/user/messages/_components/components/ChatHeader';
+import ChatInput from '@/app/dashboard/user/messages/_components/components/ChatInput';
 import ChatMessages from '@/app/dashboard/user/messages/_components/components/ChatMessages';
 import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
@@ -173,6 +174,7 @@ export default function ChatDetails({
         }
         loadingMore={loadingMore}
       />
+      <ChatInput conversationId={selectedConversationId} />
     </div>
   );
 }
