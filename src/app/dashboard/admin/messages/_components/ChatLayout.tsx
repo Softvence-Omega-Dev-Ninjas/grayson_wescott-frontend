@@ -1,55 +1,69 @@
 'use client';
 
+import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
-import { useCallback, useEffect, useState } from 'react';
-import ChatDetails from './ChatDetails';
-import ChatList from './ChatList';
+import { Conversation, ConversationsListResponse } from '@/types/chat.types';
+import { useEffect, useState } from 'react';
+import ChatDetails from './components/ChatDetails';
+import ChatList from './components/ChatList';
 
 export default function ChatLayout() {
-  const [selectedChat, setSelectedChat] = useState<string | null>(null);
+  const [selectedConversationId, setSelectedConversationId] = useState<
+    string | null
+  >(null);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
 
   const { socket, currentUser } = useSocket();
-  console.log(socket, currentUser, 'Current Admin Socket');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleConversationList = useCallback((data: any) => {
-    console.log(data, 'Conversation List');
-  }, []);
+  const handleConversationList = (payload: ConversationsListResponse) => {
+    const data: Conversation[] = payload.data;
+
+    setConversations(data);
+
+    if (data.length > 0) {
+      setSelectedConversationId(data[0].conversationId);
+    }
+  };
 
   useEffect(() => {
     if (!socket || !currentUser) return;
-    if (!['SUPER_ADMIN', 'ADMIN'].includes(currentUser.role)) return;
 
-    // Emit request to load admin conversation list
-    socket.emit('private:load_conversation_list', { page: 1, limit: 20 });
+    // request conversation list
+    socket.emit(EventsEnum.LOAD_CONVERSATION_LIST, { page: 1, limit: 20 });
 
-    socket.on('private:conversation_list', handleConversationList);
+    // listen
+    socket.on(EventsEnum.CONVERSATION_LIST, handleConversationList);
 
+    // cleanup
     return () => {
-      socket.off('private:conversation_list', handleConversationList);
+      socket.off(EventsEnum.CONVERSATION_LIST, handleConversationList);
     };
   }, [socket, currentUser]);
 
   return (
-    <div className="h-[calc(100vh-80px-60px)]  flex gap-5 w-full  bg-black text-white p-2">
+    <div className="h-[calc(100vh-80px-60px)] flex gap-5 w-full bg-black text-white p-2">
       {/* Chat List - Mobile: hidden when chat is selected, Desktop: always visible */}
       <div
         className={`${
-          selectedChat ? 'hidden lg:block' : 'block'
-        } w-full lg:w-80 xl:w-96 flex-shrink-0 border-r border-gray-700`}
+          selectedConversationId ? 'hidden lg:block' : 'block'
+        } w-full lg:w-80 flex-shrink-0 border-r border-gray-700`}
       >
         <ChatList
-          chats={[]}
-          onSelect={setSelectedChat}
-          selectedChat={selectedChat}
+          chats={conversations}
+          onSelect={(id) =>
+            selectedConversationId !== id && setSelectedConversationId(id)
+          }
+          selectedChat={selectedConversationId}
         />
       </div>
 
       {/* Chat Details - Mobile: visible when chat is selected, Desktop: always visible */}
       <div
-        className={`${selectedChat ? 'block' : 'hidden lg:block'} flex-1 min-w-0`}
+        className={`${selectedConversationId ? 'block' : 'hidden lg:block'} flex-1 min-w-0`}
       >
-        <ChatDetails chat={null} onBack={() => setSelectedChat(null)} />
+        {selectedConversationId ? (
+          <ChatDetails selectedConversationId={selectedConversationId} />
+        ) : null}
       </div>
     </div>
   );

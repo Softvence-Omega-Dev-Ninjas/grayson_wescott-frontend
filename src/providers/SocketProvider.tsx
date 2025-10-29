@@ -1,5 +1,6 @@
 'use client';
 
+import { EventsEnum } from '@/enum/events.enum';
 import { UserRole } from '@/types/user.types';
 import React, {
   createContext,
@@ -12,19 +13,9 @@ import { io, Socket } from 'socket.io-client';
 
 interface SocketContextValue {
   socket: Socket | null;
+  socketToken: string | null;
   currentUser: SocketUser | null;
   currentUserRole: UserRole | null;
-  sendMessageClient: (
-    content: string,
-    type?: string,
-    fileId?: string | null,
-  ) => void;
-  sendMessageAdmin: (
-    clientId: string,
-    content: string,
-    type?: string,
-    fileId?: string | null,
-  ) => void;
 }
 
 interface SocketUser {
@@ -45,11 +36,14 @@ export const SocketProvider = ({
   children: React.ReactNode;
 }) => {
   const socketRef = useRef<Socket | null>(null);
+  const [socketToken, setSocketToken] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<SocketUser | null>(null);
   const [currentUserRole, setCurrentUserRole] = useState<UserRole | null>(null);
 
   useEffect(() => {
     if (!token) return;
+
+    setSocketToken(token);
 
     const socket = io(`${process.env.NEXT_PUBLIC_BASE_API}/chat`, {
       transports: ['websocket'],
@@ -62,18 +56,15 @@ export const SocketProvider = ({
 
     socketRef.current = socket;
 
-    // On successful auth, server sends userId
-    socket.on('success', (data) => {
+    // On successful auth, server sends user data
+    socket.on(EventsEnum.SUCCESS, (data) => {
       setCurrentUser(data?.data);
       setCurrentUserRole(data?.data?.role);
     });
 
-    socket.on('error', (err) => {
+    // On error
+    socket.on(EventsEnum.ERROR, (err) => {
       console.error('Socket Error:', err);
-    });
-
-    socket.on('private:new_message', (msg) => {
-      console.log('📩 New Message:', msg);
     });
 
     return () => {
@@ -81,41 +72,13 @@ export const SocketProvider = ({
     };
   }, [token]);
 
-  // ✅ Emit helpers
-  const sendMessageClient = (
-    content: string,
-    type = 'TEXT',
-    fileId: string | null = null,
-  ) => {
-    socketRef.current?.emit('private:send_message_client', {
-      content,
-      type,
-      fileId,
-    });
-  };
-
-  const sendMessageAdmin = (
-    clientId: string,
-    content: string,
-    type = 'TEXT',
-    fileId: string | null = null,
-  ) => {
-    socketRef.current?.emit('private:send_message_admin', {
-      clientId,
-      content,
-      type,
-      fileId,
-    });
-  };
-
   return (
     <SocketContext.Provider
       value={{
         socket: socketRef.current,
+        socketToken,
         currentUser,
         currentUserRole,
-        sendMessageClient,
-        sendMessageAdmin,
       }}
     >
       {children}

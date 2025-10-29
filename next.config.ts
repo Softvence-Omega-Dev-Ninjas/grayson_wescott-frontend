@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'carbonengines.s3.us-east-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
         hostname: '**', // allow any https domain
       },
       {
