@@ -162,7 +162,6 @@ export default function ChatDetails() {
           container.scrollTop = container.scrollHeight;
         });
       }
-      console.log('📤 New message belongs to', res.data.sender.email);
     };
 
     socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);

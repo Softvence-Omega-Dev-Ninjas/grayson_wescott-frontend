@@ -1,12 +1,49 @@
 'use client';
 
+import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
-import { Conversation } from '@/types/chat.types';
+import { Conversation, ConversationsListResponse } from '@/types/chat.types';
 import { EllipsisVertical } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
-export default function ChatList({ chats }: { chats: Conversation[] }) {
-  const { currentConversationId, setCurrentConversationId } = useSocket();
+export default function ChatList() {
+  const {
+    socket,
+    currentUser,
+    currentConversationId,
+    setCurrentConversationId,
+  } = useSocket();
+
+  if (!socket || !currentUser) return;
+
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const handleConversationList = (payload: ConversationsListResponse) => {
+    const data: Conversation[] = payload.data;
+
+    setConversations(data);
+  };
+
+  useEffect(() => {
+    if (!socket || !currentUser) return;
+
+    // request conversation list
+    socket.emit(EventsEnum.LOAD_CONVERSATION_LIST, {
+      page: 1,
+      limit: 20,
+      search: searchTerm,
+    });
+
+    // listen
+    socket.on(EventsEnum.CONVERSATION_LIST, handleConversationList);
+
+    // cleanup
+    return () => {
+      socket.off(EventsEnum.CONVERSATION_LIST, handleConversationList);
+    };
+  }, [socket, currentUser, searchTerm]);
 
   // helper to render last message safely without mutating the object
   const renderLastMessage = (m: Conversation['lastMessage']) => {
@@ -31,13 +68,28 @@ export default function ChatList({ chats }: { chats: Conversation[] }) {
     }
   };
 
+  if (!conversations) return <div>Loading...</div>;
+
   return (
     <div className="flex flex-col h-full bg-black text-white overflow-y-auto">
-      {chats.length === 0 && (
-        <div className="p-4 text-gray-400">No conversations yet.</div>
+      {/* Search */}
+      <div className="p-4">
+        <input
+          type="text"
+          placeholder="Search conversations..."
+          className="bg-gray-800 text-white rounded-lg p-2 w-full"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      {conversations.length === 0 && (
+        <div className="p-4">
+          <p className="text-gray-400">No conversations found.</p>
+        </div>
       )}
 
-      {chats.map((chat) => {
+      {conversations.map((chat) => {
         const profile = chat.profile ?? {};
         const lastMessageText = renderLastMessage(chat.lastMessage);
         const avatar = profile.avatarUrl;
