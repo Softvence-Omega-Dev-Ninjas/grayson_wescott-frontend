@@ -26,6 +26,7 @@ const AssignedProgramsPage = async ({ searchParams }: Props) => {
   console.log(res);
   return (
     <div>
+      <h1 className="text-xl md:text-2xl font-bold mb-8">Assigned Programs</h1>
       <div className="space-y-2">
         {res?.data?.length === 0 && (
           <div className="py-20 text-center text-gray-300">

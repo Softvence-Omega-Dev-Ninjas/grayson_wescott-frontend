@@ -138,7 +138,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg" asChild>
               <div className="mt-2">
                 <div className="text-2xl font-bold text-white">
-                  <Link href="/">
+                  <Link className="cursor-pointer" href="/">
                     <Image src={logo} alt="logo"></Image>
                   </Link>
                 </div>

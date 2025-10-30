@@ -5,12 +5,13 @@ import { getValidToken } from '@/lib/verifyToken';
 export const getAllExcerciseByUser = async (
   page: number = 1,
   limit: number = 1,
+  search: string = '',
 ): Promise<any> => {
   const token = await getValidToken();
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/dashboard/library?page=${page}&limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/dashboard/library?page=${page}&limit=${limit}&search=${search}`,
       {
         method: 'GET',
         headers: {
