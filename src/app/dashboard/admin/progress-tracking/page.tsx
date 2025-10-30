@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button';
 import { getAllClients } from '@/services/admin/client';
 import { getProgressTracking } from '@/services/admin/progress-tracking';
-import { Download, FileText, Mail } from 'lucide-react';
 import ClientPerformanceTable from './_components/ClientPerformanceTable/ClientPerformanceTable';
 import { ConsistencyChart } from './_components/ConsistencyChart/ConsistencyChart';
 import { LoadProgressionChart } from './_components/LoadProgressionChart/LoadProgressionChart';
@@ -36,7 +34,7 @@ const ProgressTrackingPage = async ({
         </div>
 
         {/* Reports & Export */}
-        <div className=" flex items-center justify-between flex-wrap gap-4 mb-20">
+        {/* <div className=" flex items-center justify-between flex-wrap gap-4 mb-20">
           <h3 className="text-white text-lg font-semibold mb-4">
             Reports & Export
           </h3>
@@ -63,7 +61,7 @@ const ProgressTrackingPage = async ({
               Weekly Summary
             </Button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

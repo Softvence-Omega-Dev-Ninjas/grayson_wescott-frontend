@@ -19,12 +19,14 @@ const ManageCategoriesPage = async ({
       </div>
       <CategoryTable categoryData={data} />
       {/* Pagination */}
-      <div className="mt-4 flex justify-center">
-        <Pagination
-          activePage={metadata?.page || 1}
-          totalPages={metadata?.totalPage || 1}
-        />
-      </div>
+      {data?.length > 0 && (
+        <div className="mt-4 flex justify-center">
+          <Pagination
+            activePage={metadata?.page || 1}
+            totalPages={metadata?.totalPage || 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

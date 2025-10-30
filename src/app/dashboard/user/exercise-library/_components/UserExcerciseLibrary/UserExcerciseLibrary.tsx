@@ -3,22 +3,41 @@
 import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
-import { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { UserWorkoutCard } from '../UserWorkoutCard/UserWorkoutCard';
 
-// const categories = [
-//   { name: 'Squat', icon: squatIcon.src },
-//   { name: 'Push', icon: pushIcon.src },
-//   { name: 'Pull', icon: pullIcon.src },
-//   { name: 'Hinge', icon: hingeIcon.src },
-//   { name: 'Core', icon: coreIcon.src },
-//   { name: 'Mobility', icon: mobilityIcon.src },
-// ];
-
 const UserExcerciseLibrary = ({ allExcercise }: { allExcercise: any }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  //   const [activeCategory, setActiveCategory] = useState('Pull');
-  // const { currentPage, handlePageChange } = usePagination();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get('search') || '',
+  );
+  // const [statusFilter, setStatusFilter] = useState(
+  //   searchParams.get('status') || '',
+  // );
+
+  // ✅ debounce timer
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (searchTerm) params.set('search', searchTerm);
+      else params.delete('search');
+
+      // if (statusFilter) params.set('status', statusFilter);
+      // else params.delete('status');
+
+      // ✅ Reset page to 1 when searching/filtering
+      params.set('page', '1');
+
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm]);
   return (
     <div>
       {/* Header */}

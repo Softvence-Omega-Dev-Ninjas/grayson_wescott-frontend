@@ -1,18 +1,11 @@
-'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
 import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Search } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ClientCard } from '../ClientCard/ClientCard';
+import ClientCard from '../ClientCard/ClientCard';
 
 export const clientStatusOptions = [
   { label: 'Active', value: 'ACTIVE' },
@@ -23,47 +16,42 @@ export const clientStatusOptions = [
 
 const AllClients = ({ clients }: { clients: any }) => {
   const searchParams = useSearchParams();
-  // const pathname = usePathname();
-  // const router = useRouter();
-  // ✅ Get initial params
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get('search') || '',
+  );
   // const [statusFilter, setStatusFilter] = useState(
-  //   searchParams.get('status') || 'all',
+  //   searchParams.get('status') || '',
   // );
 
-  // ✅ Update URL when searchTerm or statusFilter changes
+  // ✅ debounce timer
   useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    if (searchTerm) params.set('search', searchTerm);
-    else params.delete('search');
+      if (searchTerm) params.set('search', searchTerm);
+      else params.delete('search');
 
-    if (statusFilter) params.set('status', statusFilter);
-    else params.delete('status');
+      // if (statusFilter) params.set('status', statusFilter);
+      // else params.delete('status');
 
-    // ✅ Use replace instead of push + enable shallow update
-    // router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [searchTerm, statusFilter]);
+      // ✅ Reset page to 1 when searching/filtering
+      params.set('page', '1');
+
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [searchTerm]);
 
   return (
     <div className="space-y-6">
-      {/* Add Client Button */}
-      {/* <div className="flex justify-end">
-        <Link href={'/dashboard/admin/all-clients/add-client'}>
-          <Button
-            onClick={handleAddClient}
-            className="w-full sm:w-auto bg-secondary border border-primary-200 text-white cursor-pointer"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Add New Client
-          </Button>
-        </Link>
-      </div> */}
-      {/* Header */}
+      {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center bg-primary-200 p-4">
         <div className="flex flex-col sm:flex-row gap-4 sm:flex-1 w-full">
-          {/* Search Input  */}
+          {/* Search */}
           <div className="relative flex-1 w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
@@ -73,9 +61,9 @@ const AllClients = ({ clients }: { clients: any }) => {
               className="pl-10 border border-secondary text-white placeholder:text-gray-400 w-full rounded-none"
             />
           </div>
-          {/* Filter by Status */}
-          {/* value={statusFilter} onValueChange={setStatusFilter} */}
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+
+          {/* Status Filter */}
+          {/* <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger className="w-full sm:w-[140px] border-gray-700 text-white">
               <SelectValue placeholder="Select Status" />
             </SelectTrigger>
@@ -90,16 +78,17 @@ const AllClients = ({ clients }: { clients: any }) => {
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </Select> */}
         </div>
       </div>
 
-      {/* Client Card Grid */}
+      {/* Client list */}
       {clients?.data?.length === 0 && (
-        <div className=" min-h-96 my-auto flex items-center justify-center">
+        <div className="min-h-96 flex items-center justify-center">
           <p className="text-center text-gray-400">No clients found.</p>
         </div>
       )}
+
       {clients?.data?.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {clients?.data?.map((client: any) => (
@@ -108,14 +97,17 @@ const AllClients = ({ clients }: { clients: any }) => {
         </div>
       )}
 
-      {/* Pagination */}
-      <div className="mt-4 flex justify-center">
-        <Pagination
-          activePage={clients?.metadata?.page || 1}
-          totalPages={clients?.metadata?.totalPage || 1}
-        />
-      </div>
+      {clients?.data?.length > 0 && (
+        /* Pagination */
+        <div className="mt-16 flex justify-center">
+          <Pagination
+            activePage={clients?.metadata?.page || 1}
+            totalPages={clients?.metadata?.totalPage || 1}
+          />
+        </div>
+      )}
     </div>
   );
 };
+
 export default AllClients;
