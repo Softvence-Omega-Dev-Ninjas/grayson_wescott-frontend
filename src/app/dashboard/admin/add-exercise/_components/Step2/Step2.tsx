@@ -194,7 +194,7 @@ const Step2 = ({
                 )}
               />
               <label
-                htmlFor={`equipment-${tag}`}
+                htmlFor={`equipment-${tag.label}`}
                 className="text-sm cursor-pointer"
               >
                 {tag.label}

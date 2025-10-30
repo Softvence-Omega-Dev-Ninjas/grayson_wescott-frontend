@@ -91,7 +91,7 @@ const Step1 = ({ onNext, register, errors, handleSubmit, setVideoId }: any) => {
           <Input
             id="videoLink"
             ref={inputRef}
-            placeholder="Write the video name for search"
+            placeholder="Search HyperHuman videos by name..."
             className="bg-secondary border-none text-white p-2.5 flex-1 placeholder:text-[#B9BDC6]"
           />
           <Button
@@ -124,7 +124,7 @@ const Step1 = ({ onNext, register, errors, handleSubmit, setVideoId }: any) => {
                   onClick={() => handleVideoSelect(video.id)}
                   className={`p-2 cursor-pointer bg-secondary hover:bg-secondary/75 ${
                     selectedVideoId === video.id
-                      ? 'ring-3 ring-secondary' // 👈 highlight selected video
+                      ? 'ring-3 ring-slate-400' // 👈 highlight selected video
                       : ''
                   }`}
                 >

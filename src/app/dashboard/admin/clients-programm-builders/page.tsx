@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { getAllProgramms } from '@/services/admin/programm';
-import { getUserProfile } from '@/services/auth';
 import { Plus, SquarePen } from 'lucide-react';
 import Link from 'next/link';
+import DeleteProgram from './_components/DeleteProgram/DeleteProgram';
 
 const ClientsProgrammBuildersPage = async ({
   searchParams,
@@ -13,9 +13,8 @@ const ClientsProgrammBuildersPage = async ({
   const params = await searchParams;
   const page = Number(params?.page) || 1;
   const { data, metadata } = await getAllProgramms(page);
-
-  const userProfile = await getUserProfile();
-  console.log('Profilllllllllllllllllllllllllllllllllll', userProfile);
+  console.log('progrrrrrrrrrrrrrrrrrr', data);
+  // const userProfile = await getUserProfile();
   return (
     <div>
       <div className="flex items-center justify-between gap-5 flex-wrap">
@@ -31,38 +30,51 @@ const ClientsProgrammBuildersPage = async ({
         </Link>
       </div>
       <div className="flex flex-col gap-5 mt-10">
-        {data?.map((item: any) => {
-          return (
-            <div
-              key={item?.id}
-              className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer"
-            >
-              <div className="text-left">
-                <p className="font-semibold text-lg">{item?.name}</p>
-                <p className="text-base text-gray-400">
-                  {item?.description?.length > 100
-                    ? item.description.slice(0, 100) + '...'
-                    : item?.description}
-                </p>
-              </div>
-              <Link
-                href={`/dashboard/admin/clients-programm-builders/${item?.id}`}
+        {data?.length === 0 && (
+          <div>
+            <p className="px-5 text-white py-20 text-center">
+              No Program available!
+            </p>
+          </div>
+        )}
+        {data?.length > 0 &&
+          data?.map((item: any) => {
+            return (
+              <div
+                key={item?.id}
+                className="w-full flex items-center justify-between gap-5  bg-primary-200 hover:bg-primary-200/85 border border-secondary h-auto font-medium py-4 px-4 transition-colors duration-200 cursor-pointer"
               >
-                <span>
-                  <SquarePen />
-                </span>
-              </Link>
-            </div>
-          );
-        })}
+                <div className="text-left">
+                  <p className="font-semibold text-lg">{item?.name}</p>
+                  <p className="text-base text-gray-400">
+                    {item?.description?.length > 100
+                      ? item.description.slice(0, 100) + '...'
+                      : item?.description}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/dashboard/admin/clients-programm-builders/${item?.id}`}
+                  >
+                    <span>
+                      <SquarePen />
+                    </span>
+                  </Link>
+                  <DeleteProgram id={item?.id} />
+                </div>
+              </div>
+            );
+          })}
       </div>
       {/* Pagination */}
-      <div className="mt-10 flex justify-center">
-        <Pagination
-          activePage={metadata?.page || 1}
-          totalPages={metadata?.totalPage || 1}
-        />
-      </div>
+      {data?.length > 0 && (
+        <div className="mt-10 flex justify-center">
+          <Pagination
+            activePage={metadata?.page || 1}
+            totalPages={metadata?.totalPage || 1}
+          />
+        </div>
+      )}
     </div>
   );
 };

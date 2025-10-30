@@ -96,3 +96,23 @@ export const getProgrammsDetails = async (id: string) => {
     return Error(error.message);
   }
 };
+
+export const deleteProgram = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/program/${id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    revalidateTag('PROGRAMM');
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error.message);
+  }
+};
