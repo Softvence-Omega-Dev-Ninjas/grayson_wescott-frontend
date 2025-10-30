@@ -105,8 +105,12 @@ export default function ChatDetails() {
       setLoading(false);
       setLoadingMore(false);
 
-      // update participant
-      setParticipant(res.participants[0]);
+      // update participant (the one with role of "USER")
+      const userParticipant = res.participants.find((p) => p.role === 'USER');
+
+      if (userParticipant) {
+        setParticipant(userParticipant);
+      }
     };
 
     socket.on(EventsEnum.SINGLE_CONVERSATION, onSingleConversation);
@@ -145,37 +149,28 @@ export default function ChatDetails() {
     if (!socket) return;
 
     const handleNewMessage = (res: NewMessageResponse) => {
-      console.log('📤 New message:', res);
-      console.log('📤 Current conversation', currentConversationId);
-      console.log('📤 New message conversation', res.data.conversationId);
-      if (!res?.data) return;
+      const message = res?.data;
+      if (!message) return;
 
-      // * if sender is current user then append to items
-      if (res.data.sender.id === currentUser?.id) {
-        setItems((prev) => [...prev, res.data]);
+      const isMine = message.sender.id === currentUser?.id;
+      const isCurrentConversation =
+        message.conversationId === currentConversationId;
 
-        requestAnimationFrame(() => {
-          const container = scrollContainerRef.current;
-          if (!container) return;
-          container.scrollTop = container.scrollHeight;
-        });
-        return;
-      }
-
-      if (res.data.conversationId !== currentConversationId) {
+      // Ignore messages not relevant to current conversation (unless it's ours)
+      if (!isMine && !isCurrentConversation) {
         console.log('📤 Message does not belong to current conversation');
         return;
       }
 
-      // * only append if message belongs to current conversation
-      // append new message
-      setItems((prev) => [...prev, res.data]);
+      // Append message to items
+      setItems((prev) => [...prev, message]);
 
-      // scroll to bottom for newest message
+      // Scroll to bottom for newest message
       requestAnimationFrame(() => {
         const container = scrollContainerRef.current;
-        if (!container) return;
-        container.scrollTop = container.scrollHeight;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
       });
     };
 
@@ -184,7 +179,13 @@ export default function ChatDetails() {
     return () => {
       socket.off(EventsEnum.NEW_MESSAGE, handleNewMessage);
     };
-  }, [socket, currentConversationId, setItems, scrollContainerRef]);
+  }, [
+    socket,
+    currentConversationId,
+    currentUser?.id,
+    setItems,
+    scrollContainerRef,
+  ]);
 
   if (loading) return <div>Loading...</div>;
 
