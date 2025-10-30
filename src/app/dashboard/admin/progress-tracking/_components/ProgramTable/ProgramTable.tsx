@@ -27,36 +27,44 @@ const ProgramTable = async ({ program }: { program: any }) => {
             </tr>
           </thead>
           <tbody>
-            {program?.map((item: any, index: number) => (
-              <tr key={index} className="border-b border-secondary">
-                <td className="py-4 px-5 text-white">{item?.programName}</td>
-                <td className="py-4 px-5 text-gray-300">
-                  {`Week ${item?.currentWeekAsPerUser}/${item?.programDurationWeeks}`}
-                </td>
-
-                <td className="py-4 px-5">
-                  <span className="bg-green-900/30 text-green-400 border border-green-800 px-2 py-1 rounded text-sm">
-                    {item?.completionPercentage}%
-                  </span>
-                </td>
-                <td className="py-4 px-5">
-                  <span className="bg-blue-900/30 text-blue-400 border border-blue-800 px-2 py-1 rounded text-sm">
-                    {item?.compliancePercentage}%
-                  </span>
-                </td>
-                <td className="py-4 px-5 text-gray-300 ">
-                  <span className="bg-secondary px-3 py-1.5">
-                    {item?.status}
-                  </span>
-                </td>
-                <td className="py-4 px-5 text-gray-300">
-                  {formatISODate(item?.startDate)}
-                </td>
-                <td className="py-4 px-5 text-gray-300">
-                  {formatISODate(item?.endDate)}
+            {program?.length === 0 && (
+              <tr>
+                <td colSpan={7} className="px-5 text-white py-20 text-center">
+                  No programs available!
                 </td>
               </tr>
-            ))}
+            )}
+            {program?.length > 0 &&
+              program?.map((item: any, index: number) => (
+                <tr key={index} className="border-b border-secondary">
+                  <td className="py-4 px-5 text-white">{item?.programName}</td>
+                  <td className="py-4 px-5 text-gray-300">
+                    {`Week ${item?.currentWeekAsPerUser}/${item?.programDurationWeeks}`}
+                  </td>
+
+                  <td className="py-4 px-5">
+                    <span className="bg-green-900/30 text-green-400 border border-green-800 px-2 py-1 rounded text-sm">
+                      {item?.completionPercentage}%
+                    </span>
+                  </td>
+                  <td className="py-4 px-5">
+                    <span className="bg-blue-900/30 text-blue-400 border border-blue-800 px-2 py-1 rounded text-sm">
+                      {item?.compliancePercentage}%
+                    </span>
+                  </td>
+                  <td className="py-4 px-5 text-gray-300 ">
+                    <span className="bg-secondary px-3 py-1.5">
+                      {item?.status}
+                    </span>
+                  </td>
+                  <td className="py-4 px-5 text-gray-300">
+                    {formatISODate(item?.startDate)}
+                  </td>
+                  <td className="py-4 px-5 text-gray-300">
+                    {formatISODate(item?.endDate)}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

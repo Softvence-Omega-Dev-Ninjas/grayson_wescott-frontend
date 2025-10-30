@@ -52,6 +52,13 @@ export function CategoryTable({ categoryData }: { categoryData: ICategory[] }) {
             </tr>
           </thead>
           <tbody>
+            {categoryData?.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-5 text-white py-20 text-center">
+                  No Categories available!
+                </td>
+              </tr>
+            )}
             {categoryData?.map((item, index) => (
               <tr key={index} className="border-b border-gray-800/50">
                 <td className="py-4 px-5 text-white">{item?.name}</td>

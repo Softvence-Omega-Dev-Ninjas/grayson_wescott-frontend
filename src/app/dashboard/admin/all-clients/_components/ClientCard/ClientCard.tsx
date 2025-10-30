@@ -9,10 +9,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Progress } from '@/components/ui/progress';
+import { EventsEnum } from '@/enum/events.enum';
+import { useSocket } from '@/hooks/useSocket';
+import { deleteClient } from '@/services/admin/client';
 import { MessageCircle, MoreHorizontal, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa6';
+import { toast } from 'sonner';
 
-export function ClientCard(client: any) {
+const ClientCard = (client: any) => {
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(false);
+  console.log(client);
   const getStatusClasses = (status: string) => {
     switch (status) {
       case 'ACTIVE':
@@ -34,6 +45,46 @@ export function ClientCard(client: any) {
       .map((n) => n[0])
       .join('')
       .toUpperCase();
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      setLoading(true);
+      const res = await deleteClient(id);
+      if (res?.success) {
+        toast.success('Client deleted successfully!');
+      } else {
+        toast.error(
+          res?.message || 'Failed to delete client. Please try again later.',
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Something went wrong. Please try again in a moment.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const { socket, setCurrentConversationId } = useSocket();
+
+  const handleChat = (clientId: string) => {
+    if (!socket) return;
+
+    socket.emit(
+      EventsEnum.INIT_CONVERSATION_WITH_CLIENT,
+      {
+        clientId,
+      },
+      (response: any) => {
+        console.log(response, 'Init conversation response');
+        if (response?.success) {
+          setCurrentConversationId(response?.conversationId);
+
+          router.push('/dashboard/admin/messages');
+        }
+      },
+    );
   };
 
   return (
@@ -100,7 +151,10 @@ export function ClientCard(client: any) {
             </Button>
           </Link>
           <div className="flex items-center gap-1">
+            {/* init chat */}
             <Button
+              type="button"
+              onClick={() => handleChat(client?.userInfo?.id)}
               variant="ghost"
               size="sm"
               className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 rounded-none"
@@ -112,7 +166,7 @@ export function ClientCard(client: any) {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 rounded-none"
+                  className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 rounded-none cursor-pointer"
                 >
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
@@ -122,13 +176,23 @@ export function ClientCard(client: any) {
                 className="bg-primary-200 border border-gray-800"
               >
                 <DropdownMenuItem className="text-white hover:bg-gray-800">
-                  Edit Client
+                  <Link
+                    href={`/dashboard/admin/all-clients/${client?.userInfo?.id}`}
+                  >
+                    View Details
+                  </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-white hover:bg-gray-800">
-                  View Details
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-400 hover:bg-gray-800">
-                  Delete Client
+                <DropdownMenuItem className="text-white hover:text-red-400 hover:bg-gray-800">
+                  <span
+                    className="flex items-center justify-center cursor-pointer"
+                    onClick={() => handleDelete(client?.userInfo?.id)}
+                  >
+                    {loading ? (
+                      <FaSpinner className="animate-spin mr-2" />
+                    ) : (
+                      ' Delete Client'
+                    )}
+                  </span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -137,4 +201,5 @@ export function ClientCard(client: any) {
       </div>
     </div>
   );
-}
+};
+export default ClientCard;

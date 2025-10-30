@@ -45,7 +45,6 @@ const UserOverview = async ({
   });
 
   const allExcercise = await getAllExcerciseByUser();
-
   return (
     <div>
       <DashboardBanner />
@@ -91,10 +90,18 @@ const UserOverview = async ({
             </Button>
           </Link>
         </div>
+        {allExcercise?.data?.length === 0 && (
+          <div className="px-5 text-white py-20 text-center">
+            No Excercise available!
+          </div>
+        )}
         <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {allExcercise?.data?.slice(0, 4).map((workout: any) => (
-            <UserWorkoutCard key={workout.id} excercise={workout} />
-          ))}
+          {allExcercise?.data?.length > 0 &&
+            allExcercise?.data
+              ?.slice(0, 4)
+              .map((workout: any) => (
+                <UserWorkoutCard key={workout.id} excercise={workout} />
+              ))}
         </div>
       </div>
 

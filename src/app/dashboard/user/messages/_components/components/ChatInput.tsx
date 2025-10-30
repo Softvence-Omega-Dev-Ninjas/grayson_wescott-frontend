@@ -46,7 +46,7 @@ export default function ChatInput({
     return new Promise((resolve, reject) => {
       socket.emit(event, payload, (response: any) => {
         setIsSending(false);
-        // console.log('📤 Send message response:', response);
+        console.log('📤 Send message response:', response);
         if (response?.success) {
           setMessage('');
           resolve(response);

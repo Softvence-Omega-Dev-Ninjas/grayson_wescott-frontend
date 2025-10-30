@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import Pagination from '@/components/shared/dashboard/Pagination/Pagination';
 import { getAllClients } from '@/services/admin/client';
 import { ChevronRight } from 'lucide-react';
@@ -58,6 +57,13 @@ const ActivityTable = async ({ page = 1 }: ActivityTableProps) => {
             </tr>
           </thead>
           <tbody>
+            {data?.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-5 text-white py-20 text-center">
+                  No Active clients available!
+                </td>
+              </tr>
+            )}
             {data?.map((client: any, index: number) => (
               <tr key={index} className="border-b border-gray-800/50">
                 <td className="py-4 px-5 text-white">
@@ -106,9 +112,14 @@ const ActivityTable = async ({ page = 1 }: ActivityTableProps) => {
       </div>
 
       {/* Pagination */}
-      <div className="mt-4 flex justify-center">
-        <Pagination activePage={metadata?.page || 1} totalPages={totalPages} />
-      </div>
+      {data?.length > 0 && (
+        <div className="mt-4 flex justify-center">
+          <Pagination
+            activePage={metadata?.page || 1}
+            totalPages={totalPages}
+          />
+        </div>
+      )}
     </div>
   );
 };

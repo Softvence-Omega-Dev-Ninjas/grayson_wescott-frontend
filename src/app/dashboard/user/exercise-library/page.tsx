@@ -4,11 +4,12 @@ import UserExcerciseLibrary from './_components/UserExcerciseLibrary/UserExcerci
 const ExcerciseLibraryPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; search?: string }>;
 }) => {
   const params = await searchParams;
   const page = Number(params?.page) || 1;
-  const res = await getAllExcerciseByUser(page, 12);
+  const searchTerm = params?.search || '';
+  const res = await getAllExcerciseByUser(page, 12, searchTerm);
   return (
     <div>
       <h1 className="text-2xl md:text-3xl font-bold">Exercise Library</h1>

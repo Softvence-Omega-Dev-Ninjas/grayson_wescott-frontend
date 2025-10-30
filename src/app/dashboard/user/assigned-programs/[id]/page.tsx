@@ -100,6 +100,7 @@ const AssignedProgramsDetailsPage = async ({
 }) => {
   const { id } = await params;
   const res = await getAssignedProgramsDetails(id);
+  console.log('ressssssssssssssssssss', res);
   return (
     <div className="">
       <div className="flex flex-col lg:flex-row lg:space-x-8">
@@ -133,6 +134,11 @@ const AssignedProgramsDetailsPage = async ({
                 Lower Body Strength
               </span> */}
             </div>
+            {res?.data?.todaysExercises?.length === 0 && (
+              <div className="text-center text-gray-400 py-20">
+                No workouts scheduled for today
+              </div>
+            )}
             {res?.data?.todaysExercises?.map((workout: any, index: number) => (
               <WorkoutBlock key={index} workout={workout} />
             ))}

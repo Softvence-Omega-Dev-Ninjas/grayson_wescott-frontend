@@ -89,7 +89,7 @@ export function AssignedProgramTable({
 
         {/* Status filter buttons */}
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-300 mr-2">Status:</span>
+          {/* <span className="text-sm text-gray-300 mr-2">Status:</span> */}
 
           {/* {['All', 'IN_PROGRESS', 'PAUSED', 'COMPLETED'].map((status) => (
             <Button

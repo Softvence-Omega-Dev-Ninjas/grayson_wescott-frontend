@@ -2,12 +2,11 @@
 'use client';
 
 import tickIcon from '@/assets/dashboard/all-clients/tickICon.svg';
-import { Input } from '@/components/ui/input';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export function DailyWorkoutLog({ exercises }: { exercises: any }) {
-  const [selectedDate, setSelectedDate] = useState('');
+  // const [selectedDate, setSelectedDate] = useState('');
+  console.log('++++++++++', exercises);
 
   return (
     <div className="bg-primary-200  p-5 border border-secondary">
@@ -15,18 +14,24 @@ export function DailyWorkoutLog({ exercises }: { exercises: any }) {
         <h1 className="text-white text-xl sm:text-2xl font-semibold">
           Daily Workout Log
         </h1>
-        <Input
+        {/* <Input
           type="text"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
           className="w-32 bg-transparent border border-secondary text-white placeholder:text-slate-400"
           placeholder="mm/dd/yyyy"
-        />
+        /> */}
       </div>
       <div className="space-y-4">
+        {exercises?.length === 0 && (
+          <div className="py-20 text-center text-gray-300">
+            No workouts logged yet. Your daily workout log will update soon—stay
+            tuned!
+          </div>
+        )}
         {/* Exercise List */}
         <div className="space-y-3">
-          {exercises.map((exercise: any, index: number) => (
+          {exercises?.map((exercise: any, index: number) => (
             <div
               key={index}
               className="space-y-2 border border-secondary py-4 px-2.5  mt-2"
@@ -59,7 +64,7 @@ export function DailyWorkoutLog({ exercises }: { exercises: any }) {
                 <div>
                   <span className="text-sm text-white">Rest</span>
                   <p className="text-white bg-secondary p-2 mt-1.5">
-                    {exercise.rest}
+                    {exercise?.rest}
                   </p>
                 </div>
               </div>
