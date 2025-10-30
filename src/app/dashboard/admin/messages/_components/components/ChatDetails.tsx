@@ -150,6 +150,18 @@ export default function ChatDetails() {
       console.log('📤 New message conversation', res.data.conversationId);
       if (!res?.data) return;
 
+      // * if sender is current user then append to items
+      if (res.data.sender.id === currentUser?.id) {
+        setItems((prev) => [...prev, res.data]);
+
+        requestAnimationFrame(() => {
+          const container = scrollContainerRef.current;
+          if (!container) return;
+          container.scrollTop = container.scrollHeight;
+        });
+        return;
+      }
+
       if (res.data.conversationId !== currentConversationId) {
         console.log('📤 Message does not belong to current conversation');
         return;
