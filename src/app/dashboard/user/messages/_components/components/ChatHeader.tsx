@@ -17,6 +17,7 @@ export default function ChatHeader({
   participant?: Sender;
 }) {
   const { socket, currentUser, currentConversationId } = useSocket();
+
   const [incomingCall, setIncomingCall] = useState<{
     visible: boolean;
     callerId: string;
@@ -26,18 +27,20 @@ export default function ChatHeader({
 
   if (!socket || !currentUser) return null;
 
-  // --- handle initiate call ---
+  /** ────────────── Initiate Call ────────────── */
   const handleInitiateCall = (type: 'AUDIO' | 'VIDEO') => {
     if (!currentConversationId) return console.warn('No active conversation.');
 
     socket.emit(
       EventsEnum.CALL_INITIATE,
       { conversationId: currentConversationId, type },
-      (response: any) => console.log('📤 CALL_INITIATE response:', response),
+      (response: any) => {
+        console.log('📤 CALL_INITIATE response:', response);
+      },
     );
   };
 
-  // --- listen for CALL_INCOMING ---
+  /** ────────────── Listen for Incoming Call ────────────── */
   useEffect(() => {
     const onIncoming = (payload: any) => {
       console.log('📥 CALL_INCOMING received:', payload);
@@ -57,10 +60,18 @@ export default function ChatHeader({
     };
   }, [socket]);
 
-  // --- accept / reject handlers ---
+  /** ────────────── Accept / Reject ────────────── */
   const handleAccept = () => {
     if (!incomingCall.callId) return;
-    socket.emit(EventsEnum.CALL_ACCEPT, { callId: incomingCall.callId });
+    console.log('✅ Accepting call:', incomingCall.callId);
+
+    socket.emit(
+      EventsEnum.CALL_ACCEPT,
+      { callId: incomingCall.callId },
+      (response: any) => console.log('📤 CALL_ACCEPT response:', response),
+    );
+
+    // Hide modal after accepting
     setIncomingCall({
       visible: false,
       callerId: '',
@@ -71,7 +82,15 @@ export default function ChatHeader({
 
   const handleReject = () => {
     if (!incomingCall.callId) return;
-    socket.emit(EventsEnum.CALL_REJECT, { callId: incomingCall.callId });
+    console.log('❌ Rejecting call:', incomingCall.callId);
+
+    socket.emit(
+      EventsEnum.CALL_REJECT,
+      { callId: incomingCall.callId },
+      (response: any) => console.log('📤 CALL_REJECT response:', response),
+    );
+
+    // Hide modal after rejecting
     setIncomingCall({
       visible: false,
       callerId: '',
@@ -128,10 +147,10 @@ export default function ChatHeader({
       </div>
 
       {/* Incoming Call Modal */}
-      {socket && (
+      {incomingCall.visible && (
         <IncomingCallModal
           visible={incomingCall.visible}
-          callerId={currentUser.id}
+          callerId={incomingCall.callerId}
           callType={incomingCall.callType}
           onAccept={handleAccept}
           onReject={handleReject}
