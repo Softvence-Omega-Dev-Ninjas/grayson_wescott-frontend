@@ -216,7 +216,7 @@ export default function ChatList() {
             } hover:bg-gray-800 p-4 cursor-pointer`}
             title={name}
           >
-            <div
+            <button
               onClick={() => setCurrentConversationId(chat.conversationId)}
               className="flex gap-2 items-center flex-1"
             >
@@ -241,7 +241,7 @@ export default function ChatList() {
                   {lastMessageText}
                 </p>
               </div>
-            </div>
+            </button>
 
             <div className="pr-5 md:pr-0">
               <button className="cursor-pointer" aria-label="More actions">
