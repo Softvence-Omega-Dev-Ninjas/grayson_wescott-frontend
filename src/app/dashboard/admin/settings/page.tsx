@@ -3,6 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState } from 'react';
 
+import useUser from '@/hooks/useUser';
 import ChangePassword from './_components/ChangePassword/ChangePassword';
 import ManageAdmin from './_components/ManageAdmin/ManageAdmin';
 import { PaymentsTab } from './_components/PaymentsTab';
@@ -10,23 +11,30 @@ import UpdateProfile from './_components/UpdateProfile/UpdateProfile';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('admin-profile');
+  const { user } = useUser();
+
+  console.log('userrrrrrrrrrrrrrr', user);
 
   return (
     <div className="min-h-screen p-4 md:p-6 lg:p-8">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-primary-100 grid w-full grid-cols-3 p-1 h-auto rounded-none">
+        <TabsList
+          className={`bg-primary-100 grid w-full ${user?.role === 'SUPER_ADMIN' ? 'grid-cols-3' : 'grid-cols-2'} p-1 h-auto rounded-none`}
+        >
           <TabsTrigger
             value="admin-profile"
             className="text-sm md:text-base font-medium py-2"
           >
             Admin Profile
           </TabsTrigger>
-          <TabsTrigger
-            value="manage-admin"
-            className="text-sm md:text-base font-medium py-2"
-          >
-            Manage Admin
-          </TabsTrigger>
+          {user?.role === 'SUPER_ADMIN' && (
+            <TabsTrigger
+              value="manage-admin"
+              className="text-sm md:text-base font-medium py-2"
+            >
+              Manage Admin
+            </TabsTrigger>
+          )}
 
           <TabsTrigger
             value="payments"
