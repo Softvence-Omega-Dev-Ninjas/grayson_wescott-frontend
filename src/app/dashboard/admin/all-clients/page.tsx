@@ -6,7 +6,7 @@ const AllClientsPage = async ({
 }: {
   searchParams: { page?: string; status?: string; search?: string };
 }) => {
-  const { page, search } = searchParams;
+  const { page, search } = await searchParams;
   // const page = Number(searchParams?.page) || 1;
   // const search = searchParams?.search || '';
   // const status = searchParams?.status || '';

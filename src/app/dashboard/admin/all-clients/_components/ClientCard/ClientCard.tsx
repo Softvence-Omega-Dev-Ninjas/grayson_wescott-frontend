@@ -9,14 +9,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Progress } from '@/components/ui/progress';
+import { EventsEnum } from '@/enum/events.enum';
+import { useSocket } from '@/hooks/useSocket';
 import { deleteClient } from '@/services/admin/client';
 import { MessageCircle, MoreHorizontal, User } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaSpinner } from 'react-icons/fa6';
 import { toast } from 'sonner';
 
 const ClientCard = (client: any) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   console.log(client);
   const getStatusClasses = (status: string) => {
@@ -59,6 +64,27 @@ const ClientCard = (client: any) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const { socket, setCurrentConversationId } = useSocket();
+
+  const handleChat = (clientId: string) => {
+    if (!socket) return;
+
+    socket.emit(
+      EventsEnum.INIT_CONVERSATION_WITH_CLIENT,
+      {
+        clientId,
+      },
+      (response: any) => {
+        console.log(response, 'Init conversation response');
+        if (response?.success) {
+          setCurrentConversationId(response?.conversationId);
+
+          router.push('/dashboard/admin/messages');
+        }
+      },
+    );
   };
 
   return (
@@ -125,7 +151,10 @@ const ClientCard = (client: any) => {
             </Button>
           </Link>
           <div className="flex items-center gap-1">
+            {/* init chat */}
             <Button
+              type="button"
+              onClick={() => handleChat(client?.userInfo?.id)}
               variant="ghost"
               size="sm"
               className="h-8 w-8 p-0 border border-gray-700 text-gray-400 hover:text-white hover:bg-gray-800 rounded-none"
