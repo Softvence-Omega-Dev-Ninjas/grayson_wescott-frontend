@@ -161,7 +161,7 @@ export default function ChatMessages({
 
           return (
             <div
-              key={call.id}
+              key={uuid()}
               className="flex justify-center text-xs text-gray-400"
             >
               {icon}
