@@ -26,7 +26,7 @@ export default function ChatHeader({
 }) {
   const { socket, currentUser, currentConversationId } = useSocket();
 
-  if(!socket || !currentUser) return null;
+  if (!socket || !currentUser) return null;
 
   const [incomingCall, setIncomingCall] = useState<{
     visible: boolean;
