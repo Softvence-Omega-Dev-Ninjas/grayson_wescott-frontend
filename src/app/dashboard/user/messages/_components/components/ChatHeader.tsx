@@ -19,10 +19,10 @@ export default function ChatHeader({
   const { socket, currentUser, currentConversationId } = useSocket();
   const [incomingCall, setIncomingCall] = useState<{
     visible: boolean;
-    callerName?: string;
-    callId?: string;
-    callType?: 'AUDIO' | 'VIDEO';
-  }>({ visible: false });
+    callerId: string;
+    callId: string;
+    callType: CallType;
+  }>({ visible: false, callerId: '', callId: '', callType: CallType.AUDIO });
 
   if (!socket || !currentUser) return null;
 
@@ -44,7 +44,7 @@ export default function ChatHeader({
       const { data } = payload;
       setIncomingCall({
         visible: true,
-        callerName: data?.initiatorId || 'Unknown',
+        callerId: data?.initiatorId,
         callId: data?.id,
         callType: data?.type,
       });
@@ -61,13 +61,23 @@ export default function ChatHeader({
   const handleAccept = () => {
     if (!incomingCall.callId) return;
     socket.emit(EventsEnum.CALL_ACCEPT, { callId: incomingCall.callId });
-    setIncomingCall({ visible: false });
+    setIncomingCall({
+      visible: false,
+      callerId: '',
+      callId: '',
+      callType: CallType.AUDIO,
+    });
   };
 
   const handleReject = () => {
     if (!incomingCall.callId) return;
     socket.emit(EventsEnum.CALL_REJECT, { callId: incomingCall.callId });
-    setIncomingCall({ visible: false });
+    setIncomingCall({
+      visible: false,
+      callerId: '',
+      callId: '',
+      callType: CallType.AUDIO,
+    });
   };
 
   return (
@@ -118,13 +128,15 @@ export default function ChatHeader({
       </div>
 
       {/* Incoming Call Modal */}
-      <IncomingCallModal
-        visible={incomingCall.visible}
-        callerName={incomingCall.callerName as string}
-        callType={incomingCall.callType as CallType}
-        onAccept={handleAccept}
-        onReject={handleReject}
-      />
+      {socket && (
+        <IncomingCallModal
+          visible={incomingCall.visible}
+          callerId={currentUser.id}
+          callType={incomingCall.callType}
+          onAccept={handleAccept}
+          onReject={handleReject}
+        />
+      )}
     </>
   );
 }
