@@ -13,7 +13,7 @@ import {
 } from '@/types/chat.types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const DEFAULT_LIMIT = 15;
+const DEFAULT_LIMIT = 60;
 
 export default function ChatDetails() {
   const { currentConversationId } = useSocket();
@@ -146,22 +146,25 @@ export default function ChatDetails() {
 
     const handleNewMessage = (res: NewMessageResponse) => {
       console.log('📤 New message:', res);
-      console.log('📤 New message belongs to conversation', res.data);
       console.log('📤 Current conversation', currentConversationId);
+      console.log('📤 New message conversation', res.data.conversationId);
       if (!res?.data) return;
 
-      // * only append to current conversation
-      if (res.data.conversationId === currentConversationId) {
-        // append new message
-        setItems((prev) => [...prev, res.data]);
-
-        // scroll to bottom for newest message
-        requestAnimationFrame(() => {
-          const container = scrollContainerRef.current;
-          if (!container) return;
-          container.scrollTop = container.scrollHeight;
-        });
+      if (res.data.conversationId !== currentConversationId) {
+        console.log('📤 Message does not belong to current conversation');
+        return;
       }
+
+      // * only append if message belongs to current conversation
+      // append new message
+      setItems((prev) => [...prev, res.data]);
+
+      // scroll to bottom for newest message
+      requestAnimationFrame(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+        container.scrollTop = container.scrollHeight;
+      });
     };
 
     socket.on(EventsEnum.NEW_MESSAGE, handleNewMessage);
@@ -169,7 +172,7 @@ export default function ChatDetails() {
     return () => {
       socket.off(EventsEnum.NEW_MESSAGE, handleNewMessage);
     };
-  }, [socket]);
+  }, [socket, currentConversationId, setItems, scrollContainerRef]);
 
   if (loading) return <div>Loading...</div>;
 

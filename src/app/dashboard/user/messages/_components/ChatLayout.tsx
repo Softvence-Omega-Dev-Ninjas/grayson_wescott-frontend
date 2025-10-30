@@ -12,7 +12,7 @@ import ChatHeader from './components/ChatHeader';
 import ChatInput from './components/ChatInput';
 import ChatMessages from './components/ChatMessages';
 
-const DEFAULT_LIMIT = 15;
+const DEFAULT_LIMIT = 60;
 
 export default function ChatLayout() {
   const { socket, currentUser } = useSocket();
@@ -152,9 +152,9 @@ export default function ChatLayout() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="h-[calc(100vh-80px-60px)] flex gap-5 w-full bg-black text-white p-2">
+    <div className="h-[calc(100vh-120px-60px)] flex gap-5 w-full bg-black text-white p-2">
       <div className="flex-1 min-w-0">
-        <div className="h-full flex flex-col bg-black text-white rounded-lg">
+        <div className="h-[calc(100vh-120px-60px)] flex flex-col bg-black text-white rounded-lg">
           {/* TODO : add back button for mobile */}
           <ChatHeader onBack={() => fetchPage(1)} />
           <ChatMessages
