@@ -12,7 +12,7 @@ import ChatHeader from './components/ChatHeader';
 import ChatInput from './components/ChatInput';
 import ChatMessages from './components/ChatMessages';
 
-const DEFAULT_LIMIT = 15;
+const DEFAULT_LIMIT = 60;
 
 export default function ChatLayout() {
   const { socket, currentUser } = useSocket();

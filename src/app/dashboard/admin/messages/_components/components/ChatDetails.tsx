@@ -13,7 +13,7 @@ import {
 } from '@/types/chat.types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const DEFAULT_LIMIT = 15;
+const DEFAULT_LIMIT = 60;
 
 export default function ChatDetails() {
   const { currentConversationId } = useSocket();
