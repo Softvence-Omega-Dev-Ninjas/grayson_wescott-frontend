@@ -8,14 +8,7 @@ import { ArrowLeft, Phone, Video, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import IncomingCallModal from './call/IncomingCallModal';
-
-/**
- * ChatHeader with call flow (initiate -> incoming -> accept/reject -> WebRTC signaling)
- * - two-party flow assumed: a single remote participant per conversation
- * - uses socket events your backend emits/forwards:
- *   CALL_INITIATE, CALL_INCOMING, CALL_ACCEPT, CALL_REJECT, CALL_END
- *   RTC_OFFER, RTC_ANSWER, RTC_ICE_CANDIDATE
- */
+import OutgoingCallModal from './call/OutgoingCallModal';
 
 export default function ChatHeader({
   onBack,
@@ -184,12 +177,17 @@ export default function ChatHeader({
     const onIncoming = (payload: any) => {
       console.log('📥 CALL_INCOMING', payload);
       const data = payload.data ?? payload;
-      setIncomingCall({
-        visible: true,
-        callerId: data?.initiatorId,
-        callId: data?.id,
-        callType: data?.type,
-      });
+      const initiatorId = data?.initiatorId;
+      if (!initiatorId) return;
+
+      if (initiatorId !== currentUser?.id) {
+        setIncomingCall({
+          visible: true,
+          callerId: data?.initiatorId,
+          callId: data?.id,
+          callType: data?.type,
+        });
+      }
       setCallSession({
         callId: data?.id,
         status: 'RINGING',
@@ -495,8 +493,17 @@ export default function ChatHeader({
         </div>
       </div>
 
+      {/* out going call modal */}
+      {callSession.status === 'RINGING' && (
+        <OutgoingCallModal
+          visible={callSession.status === 'RINGING'}
+          callType={callSession.type}
+          onEnd={handleEnd}
+        />
+      )}
+
       {/* Incoming Call Modal */}
-      {incomingCall.visible && (
+      {incomingCall.visible && callSession.status === 'RINGING' && (
         <IncomingCallModal
           visible={incomingCall.visible}
           callerId={incomingCall.callerId}
