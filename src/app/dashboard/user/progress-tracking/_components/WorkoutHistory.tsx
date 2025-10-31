@@ -34,49 +34,59 @@ export function WorkoutHistory({ workoutHistory }: { workoutHistory?: any }) {
               </tr>
             </thead>
             <tbody>
-              {workoutHistory?.data?.map((workout: any, index: number) => (
-                <tr key={index} className="border-t border-slate-700">
-                  <td className="p-4 text-sm">
-                    {formatISODate(workout?.date)}
-                  </td>
-                  <td className="p-4">
-                    <div>
-                      <div className="font-medium text-sm">
-                        {workout?.workout?.title}
-                      </div>
-                      <div className="text-xs text-slate-400">
-                        {workout.details}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="p-4">
-                    <span
-                      className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-sm bg-secondary`}
-                    >
-                      {/* {workout.status === 'Completed' ? '✓' : '✗'}{' '} */}
-                      {workout.status}
-                    </span>
-                  </td>
-                  <td className="p-4 text-sm">{workout?.duration}</td>
-                  <td className="p-4 text-sm">
-                    {workout?.volume ? workout?.volume : '-'}
-                  </td>
-                  <td className="p-4 text-sm text-slate-400">
-                    {workout?.feedback ? workout?.feedback : '-'}
+              {workoutHistory?.data?.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-5 text-white py-20 text-center">
+                    No workouts available!
                   </td>
                 </tr>
-              ))}
+              )}
+              {workoutHistory?.data?.length > 0 &&
+                workoutHistory?.data?.map((workout: any, index: number) => (
+                  <tr key={index} className="border-t border-slate-700">
+                    <td className="p-4 text-sm">
+                      {formatISODate(workout?.date)}
+                    </td>
+                    <td className="p-4">
+                      <div>
+                        <div className="font-medium text-sm">
+                          {workout?.workout?.title}
+                        </div>
+                        <div className="text-xs text-slate-400">
+                          {workout.details}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4">
+                      <span
+                        className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded-sm bg-secondary`}
+                      >
+                        {/* {workout.status === 'Completed' ? '✓' : '✗'}{' '} */}
+                        {workout.status}
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm">{workout?.duration}</td>
+                    <td className="p-4 text-sm">
+                      {workout?.volume ? workout?.volume : '-'}
+                    </td>
+                    <td className="p-4 text-sm text-slate-400">
+                      {workout?.feedback ? workout?.feedback : '-'}
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
       </div>
       {/* Pagination */}
-      <div className="my-8 flex justify-start">
-        <Pagination
-          activePage={workoutHistory?.metadata?.page || 1}
-          totalPages={workoutHistory?.metadata?.totalPage || 1}
-        />
-      </div>
+      {workoutHistory?.data?.length > 0 && (
+        <div className="my-8 flex justify-start">
+          <Pagination
+            activePage={workoutHistory?.metadata?.page || 1}
+            totalPages={workoutHistory?.metadata?.totalPage || 1}
+          />
+        </div>
+      )}
     </div>
   );
 }

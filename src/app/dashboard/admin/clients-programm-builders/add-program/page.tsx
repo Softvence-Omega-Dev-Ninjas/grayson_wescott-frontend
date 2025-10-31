@@ -116,11 +116,11 @@ export default function AddProgramPage() {
       // Example API call
       const res = await createProgramm(programmData);
       if (res?.success) {
-        toast.success('Program updated successfully.');
+        toast.success('Program Added successfully.');
         reset();
         router.push('/dashboard/admin/clients-programm-builders');
       } else {
-        let errorMessage = 'Failed to update program. Try again later.';
+        let errorMessage = 'Failed to add program. Try again later.';
 
         if (res?.message) {
           if (typeof res.message === 'string') {
