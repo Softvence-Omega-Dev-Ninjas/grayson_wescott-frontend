@@ -43,6 +43,62 @@ export default function ChatHeader({
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
   const answeringRef = useRef<Map<string, boolean>>(new Map());
+  const pendingAnswersRef = useRef<Map<string, any>>(new Map());
+  const pendingCandidatesRef = useRef<Map<string, any[]>>(new Map());
+
+  const waitForLocalOffer = (pc: RTCPeerConnection, timeout = 3000) =>
+    new Promise<void>((resolve, reject) => {
+      if (!pc) return reject(new Error('no-pc'));
+      const okStates = ['have-local-offer', 'have-local-pranswer'];
+      if (okStates.includes(pc.signalingState)) return resolve();
+
+      const start = Date.now();
+      const int = setInterval(() => {
+        if (okStates.includes(pc.signalingState)) {
+          clearInterval(int);
+          return resolve();
+        }
+        if (Date.now() - start > timeout) {
+          clearInterval(int);
+          return reject(new Error('waitForLocalOffer timeout'));
+        }
+      }, 50);
+    });
+
+  /** Try to apply any pending answers/candidates for a remote */
+  const tryApplyPendingFor = async (from: string) => {
+    const pc = pcsRef.current.get(from);
+    if (!pc) return;
+
+    // apply answer if pending
+    const pendingAnswer = pendingAnswersRef.current.get(from);
+    if (pendingAnswer) {
+      try {
+        await waitForLocalOffer(pc, 3000);
+        await pc.setRemoteDescription({
+          type: 'answer',
+          sdp: pendingAnswer.sdp,
+        });
+        pendingAnswersRef.current.delete(from);
+        console.log('Applied queued remote answer for', from);
+      } catch (err) {
+        console.warn('Could not apply queued answer for', from, err);
+      }
+    }
+
+    // apply any pending ice candidates
+    const cands = pendingCandidatesRef.current.get(from) || [];
+    if (cands.length) {
+      for (const c of cands) {
+        try {
+          await pc.addIceCandidate(c as any);
+        } catch (err) {
+          console.warn('Failed to add queued candidate', err);
+        }
+      }
+      pendingCandidatesRef.current.delete(from);
+    }
+  };
 
   // small helper: create/get peer connection for a remote user
   const createPeerConnection = (remoteUserId: string) => {
@@ -324,12 +380,57 @@ export default function ChatHeader({
       const { callId, sdp, from } = data;
       if (callId !== callSession.callId) return;
       console.log('⤵️ RTC_ANSWER from', from);
-      const pc = pcsRef.current.get(from);
-      if (!pc) return;
+
+      // find pc for that remote
+      let pc = pcsRef.current.get(from);
+
+      if (!pc) {
+        // No pc found — this is a red flag (offer/answer routing mismatch).
+        console.warn(
+          'No PC when answer arrived for',
+          from,
+          ' — queueing answer and creating pc',
+        );
+        // create a pc so we can later try applying the answer (but we need a local offer to be set first).
+        pc = createPeerConnection(from);
+        // store answer for later
+        pendingAnswersRef.current.set(from, { sdp });
+        // also attempt to apply after a short delay to allow the local offer path to complete
+        setTimeout(() => tryApplyPendingFor(from), 200);
+        return;
+      }
+
       try {
+        // If pc is in stable state, the local offer probably wasn't set yet — queue.
+        if (pc.signalingState === 'stable' || !pc.localDescription) {
+          console.warn(
+            'pc not ready to accept answer, queuing for',
+            from,
+            'state:',
+            pc.signalingState,
+          );
+          pendingAnswersRef.current.set(from, { sdp });
+          // try applying later when localDescription arrives or after short delay
+          setTimeout(() => tryApplyPendingFor(from), 200);
+          return;
+        }
+
         await pc.setRemoteDescription({ type: 'answer', sdp });
+        console.log('Applied remote answer for', from);
       } catch (err) {
         console.warn('Failed to set remote description (answer)', err);
+        // queue as fallback
+        pendingAnswersRef.current.set(from, { sdp });
+        // diagnostic logging
+        try {
+          console.warn('pc.signalingState (error):', pc.signalingState);
+          console.warn('pc.localDescription:', pc.localDescription);
+          console.warn('pc.remoteDescription:', pc.remoteDescription);
+        } catch (error) {
+          console.error('Failed to print pc state', error);
+        }
+        // try again later
+        setTimeout(() => tryApplyPendingFor(from), 300);
       }
     };
 
@@ -338,11 +439,25 @@ export default function ChatHeader({
       const { callId, candidate, sdpMid, sdpMLineIndex, from } = data;
       if (callId !== callSession.callId) return;
       const pc = pcsRef.current.get(from);
-      if (!pc) return;
+      const cand = { candidate, sdpMid, sdpMLineIndex };
+      if (!pc) {
+        // store candidate until pc is created
+        const arr = pendingCandidatesRef.current.get(from) || [];
+        arr.push(cand);
+        pendingCandidatesRef.current.set(from, arr);
+        return;
+      }
+
       try {
-        await pc.addIceCandidate({ candidate, sdpMid, sdpMLineIndex } as any);
+        await pc.addIceCandidate(cand as any);
       } catch (err) {
         console.warn('Failed to add ice candidate', err);
+        // if addIceCandidate fails, queue it for later
+        const arr = pendingCandidatesRef.current.get(from) || [];
+        arr.push(cand);
+        pendingCandidatesRef.current.set(from, arr);
+        // and try applying later
+        setTimeout(() => tryApplyPendingFor(from), 200);
       }
     };
 
