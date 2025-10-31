@@ -100,7 +100,7 @@ export default function ChatMessages({
 
           return (
             <div
-              key={msg.id ?? uuid()}
+              key={uuid()}
               className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}
             >
               <div className="flex gap-2 items-end max-w-full">
@@ -237,7 +237,7 @@ export default function ChatMessages({
 
           return (
             <div
-              key={call.id ?? uuid()}
+              key={uuid()}
               className="flex justify-center text-xs text-gray-400"
             >
               <div className="flex flex-col items-center gap-2">

@@ -49,6 +49,7 @@ export default function ChatHeader({
   const pcsRef = useRef<Map<string, RTCPeerConnection>>(new Map());
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
+  const answeringRef = useRef<Map<string, boolean>>(new Map());
 
   // small helper: create/get peer connection for a remote user
   const createPeerConnection = (remoteUserId: string) => {
@@ -249,21 +250,74 @@ export default function ChatHeader({
       if (callId !== callSession.callId) return;
       console.log('⤴️ RTC_OFFER received from', from);
 
+      // simple per-peer lock to avoid concurrent answers
+      if (answeringRef.current.get(from)) {
+        console.warn('Already answering for', from);
+        return;
+      }
+      answeringRef.current.set(from, true);
+
       try {
-        // prepare local stream and pc
         const callType =
           callSession.type ?? (incomingCall.callType || CallType.AUDIO);
         await ensureLocalStream(callType!);
+
         const pc = createPeerConnection(from);
 
-        await pc.setRemoteDescription({ type: 'offer', sdp });
-        const answer = await pc.createAnswer();
-        await pc.setLocalDescription(answer);
+        console.log(
+          'pc.signalingState before setRemoteDescription:',
+          pc.signalingState,
+        );
 
+        // Use RTCSessionDescription for clarity
+        const remoteDesc = new RTCSessionDescription({ type: 'offer', sdp });
+        await pc.setRemoteDescription(remoteDesc);
+
+        console.log(
+          'pc.signalingState after setRemoteDescription:',
+          pc.signalingState,
+        );
+        // expected: 'have-remote-offer' (or 'have-remote-pranswer' in some flows)
+        if (
+          !['have-remote-offer', 'have-remote-pranswer'].includes(
+            pc.signalingState,
+          )
+        ) {
+          console.warn(
+            'Unexpected signalingState after setRemoteDescription:',
+            pc.signalingState,
+          );
+          // bail out to avoid InvalidStateError
+          return;
+        }
+
+        const answer = await pc.createAnswer();
+
+        // OPTIONAL: log answer.sdp length to ensure it's valid
+        console.log('Created answer, sdp length:', answer.sdp?.length ?? 0);
+
+        await pc.setLocalDescription(answer); // this should succeed now
         // send answer
-        socket.emit(EventsEnum.RTC_ANSWER, { callId, sdp: answer.sdp });
+        socket.emit(EventsEnum.RTC_ANSWER, {
+          callId,
+          sdp: answer.sdp,
+          to: from,
+        });
       } catch (err) {
         console.error('Failed to handle offer', err);
+        // helpful debug: print current pc state if available
+        try {
+          const pc = pcsRef.current.get(from);
+          if (pc) {
+            console.warn('pc.signalingState (error):', pc.signalingState);
+            console.warn('pc.localDescription:', pc.localDescription);
+            console.warn('pc.remoteDescription:', pc.remoteDescription);
+          }
+        } catch (error) {
+          console.error('Failed to print pc state', error);
+        }
+      } finally {
+        answeringRef.current.set(from, false);
       }
     };
 
