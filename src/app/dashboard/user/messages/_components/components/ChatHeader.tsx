@@ -93,15 +93,17 @@ export default function ChatHeader({
     };
 
     console.log('Initiating call:', dto);
-    socket.emit(EventsEnum.CALL_INITIATE, dto);
+    socket.emit(EventsEnum.CALL_INITIATE, dto, (response: any) => {
+      console.log('Call Id for init', response);
 
-    setCallState({
-      callId: null,
-      status: CallStatus.INITIATED,
-      type,
-      isIncoming: false,
-      isOutgoing: true,
-      remoteUserId: participant?.id || null,
+      setCallState({
+        callId: response?.data?.id ?? null,
+        status: CallStatus.INITIATED,
+        type,
+        isIncoming: false,
+        isOutgoing: true,
+        remoteUserId: participant?.id || null,
+      });
     });
   };
 
@@ -128,6 +130,7 @@ export default function ChatHeader({
   };
 
   const handleEnd = () => {
+    console.log(`Ending call ${callState.callId}`);
     if (!callState.callId) return;
 
     const dto: CallActionDto = { callId: callState.callId };
