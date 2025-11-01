@@ -47,12 +47,45 @@ export default function ChatHeader({
   const pendingCandidatesRef = useRef<Map<string, any[]>>(new Map());
   const remoteStreamsRef = useRef<Map<string, MediaStream>>(new Map());
 
+  // ----------------- DEBUG CONSOLE -----------------
+  const logger = {
+    tag: 'ChatHeader',
+    meta() {
+      return {
+        callId: callSession.callId ?? 'no-call',
+        userId: currentUser?.id ?? 'anon',
+      };
+    },
+    log(...args: any[]) {
+      // use collapsed group for compactness
+      console.groupCollapsed(`[${this.tag}] LOG`, this.meta());
+      console.log(...args);
+      console.groupEnd();
+    },
+    debug(...args: any[]) {
+      console.groupCollapsed(`[${this.tag}] DEBUG`, this.meta());
+      console.debug(...args);
+      console.groupEnd();
+    },
+    warn(...args: any[]) {
+      console.groupCollapsed(`[${this.tag}] WARN`, this.meta());
+      console.warn(...args);
+      console.groupEnd();
+    },
+    error(...args: any[]) {
+      console.groupCollapsed(`[${this.tag}] ERROR`, this.meta());
+      console.error(...args);
+      console.groupEnd();
+    },
+  };
+
+  // simple wait helper for local offer
   const waitForLocalOffer = (pc: RTCPeerConnection, timeout = 5000) =>
     new Promise<void>((resolve, reject) => {
       if (!pc) return reject(new Error('no-pc'));
       const okStates = ['have-local-offer', 'have-local-pranswer'];
       if (okStates.includes(pc.signalingState)) {
-        console.log('✓ PC already has local offer');
+        logger.debug('PC already has local offer');
         return resolve();
       }
 
@@ -60,7 +93,7 @@ export default function ChatHeader({
       const int = setInterval(() => {
         if (okStates.includes(pc.signalingState)) {
           clearInterval(int);
-          console.log('✓ PC reached local offer state');
+          logger.debug('PC reached local offer state');
           return resolve();
         }
         if (Date.now() - start > timeout) {
@@ -74,7 +107,7 @@ export default function ChatHeader({
   const tryApplyPendingFor = async (from: string) => {
     const pc = pcsRef.current.get(from);
     if (!pc) {
-      console.warn('tryApplyPending: no PC for', from);
+      logger.warn('tryApplyPending: no PC for', from);
       return;
     }
 
@@ -82,14 +115,11 @@ export default function ChatHeader({
     const pendingAnswer = pendingAnswersRef.current.get(from);
     if (pendingAnswer) {
       try {
-        console.log('⏳ Waiting for local offer before applying answer...');
+        logger.debug('Waiting for local offer before applying answer...');
         await waitForLocalOffer(pc, 5000);
 
         if (pc.signalingState !== 'have-local-offer') {
-          console.warn(
-            'PC not in correct state for answer:',
-            pc.signalingState,
-          );
+          logger.warn('PC not in correct state for answer:', pc.signalingState);
           return;
         }
 
@@ -98,44 +128,41 @@ export default function ChatHeader({
           sdp: pendingAnswer.sdp,
         });
         pendingAnswersRef.current.delete(from);
-        console.log('✓ Applied queued remote answer for', from);
+        logger.log('Applied queued remote answer for', from);
       } catch (err) {
-        console.error('❌ Could not apply queued answer for', from, err);
+        logger.error('Could not apply queued answer for', from, err);
       }
     }
 
     // apply any pending ice candidates
     const cands = pendingCandidatesRef.current.get(from) || [];
     if (cands.length > 0) {
-      console.log(
-        `📤 Applying ${cands.length} queued ICE candidates for`,
-        from,
-      );
+      logger.debug(`Applying ${cands.length} queued ICE candidates for`, from);
       for (const c of cands) {
         try {
           if (pc.remoteDescription) {
             await pc.addIceCandidate(c as any);
           } else {
-            console.warn('Skipping candidate - no remote description yet');
+            logger.warn('Skipping candidate - no remote description yet');
           }
         } catch (err) {
-          console.warn('Failed to add queued candidate', err);
+          logger.warn('Failed to add queued candidate', err);
         }
       }
       pendingCandidatesRef.current.delete(from);
-      console.log('✓ Processed queued ICE candidates');
+      logger.log('Processed queued ICE candidates');
     }
   };
 
-  // create/get peer connection for a remote user
+  // ----------------- Peer Connection -----------------
   const createPeerConnection = (remoteUserId: string) => {
     const existing = pcsRef.current.get(remoteUserId);
     if (existing) {
-      console.log('♻️ Reusing existing PC for', remoteUserId);
+      logger.debug('Reusing existing PC for', remoteUserId);
       return existing;
     }
 
-    console.log('🔧 Creating new RTCPeerConnection for', remoteUserId);
+    logger.debug('Creating new RTCPeerConnection for', remoteUserId);
 
     const config: RTCConfiguration = {
       iceServers: [
@@ -149,26 +176,26 @@ export default function ChatHeader({
     // attach local tracks
     const local = localStreamRef.current;
     if (local) {
-      console.log(`📤 Adding ${local.getTracks().length} local tracks to PC`);
+      logger.debug(`Adding ${local.getTracks().length} local tracks to PC`);
       for (const track of local.getTracks()) {
         pc.addTrack(track, local);
       }
     } else {
-      console.warn('⚠️ No local stream when creating PC');
+      logger.warn('No local stream when creating PC');
     }
 
     // send ICE candidates to server
     pc.onicecandidate = (ev) => {
       if (!ev.candidate) {
-        console.log('✓ ICE gathering complete');
+        logger.debug('ICE gathering complete');
         return;
       }
       if (!socket || !callSession.callId) {
-        console.warn('⚠️ Cannot send ICE candidate - no socket or callId');
+        logger.warn('Cannot send ICE candidate - no socket or callId');
         return;
       }
 
-      console.log('📤 Sending ICE candidate to', remoteUserId);
+      logger.debug('Sending ICE candidate to', remoteUserId);
       try {
         socket.emit(EventsEnum.RTC_ICE_CANDIDATE, {
           callId: callSession.callId,
@@ -178,82 +205,79 @@ export default function ChatHeader({
           to: remoteUserId,
         });
       } catch (err) {
-        console.error('❌ Failed to emit ICE candidate', err);
+        logger.error('Failed to emit ICE candidate', err);
       }
     };
 
     // ICE connection state monitoring
     pc.oniceconnectionstatechange = () => {
-      console.log(
-        `🧊 ICE connection state for ${remoteUserId}:`,
+      logger.debug(
+        `ICE connection state for ${remoteUserId}:`,
         pc.iceConnectionState,
       );
       if (pc.iceConnectionState === 'failed') {
-        console.error('❌ ICE connection failed for', remoteUserId);
+        logger.error('ICE connection failed for', remoteUserId);
       }
     };
 
     pc.onconnectionstatechange = () => {
-      console.log(
-        `🔗 Connection state for ${remoteUserId}:`,
-        pc.connectionState,
-      );
+      logger.debug(`Connection state for ${remoteUserId}:`, pc.connectionState);
     };
 
     // Create dedicated remote stream for this peer
     const remoteStream = new MediaStream();
     remoteStreamsRef.current.set(remoteUserId, remoteStream);
 
-    // attach remote stream - FIXED: proper track handling
     pc.ontrack = (ev) => {
-      console.log(`📥 Received ${ev.track.kind} track from ${remoteUserId}`);
+      logger.debug(
+        `Received ${ev.track?.kind ?? 'track'} from ${remoteUserId}`,
+      );
 
-      // CRITICAL FIX: Use ev.track, not undefined 't'
       if (ev.streams && ev.streams[0]) {
-        console.log('Using track from ev.streams[0]');
+        logger.debug('Using track from ev.streams[0]');
         ev.streams[0].getTracks().forEach((track) => {
           if (!remoteStream.getTracks().find((t) => t.id === track.id)) {
             remoteStream.addTrack(track);
-            console.log(`✓ Added ${track.kind} track to remote stream`);
+            logger.log(`Added ${track.kind} track to remote stream`);
           }
         });
       } else if (ev.track) {
-        console.log('Using ev.track directly');
+        logger.debug('Using ev.track directly');
         if (!remoteStream.getTracks().find((t) => t.id === ev.track.id)) {
           remoteStream.addTrack(ev.track);
-          console.log(`✓ Added ${ev.track.kind} track to remote stream`);
+          logger.log(`Added ${ev.track.kind} track to remote stream`);
         }
       }
 
-      // CRITICAL FIX: Attach stream and force play
       if (
         remoteVideoRef.current &&
         remoteVideoRef.current.srcObject !== remoteStream
       ) {
-        console.log('🎥 Attaching remote stream to video element');
+        logger.debug('Attaching remote stream to video element');
         remoteVideoRef.current.srcObject = remoteStream;
-
-        // Force play for audio/video
         remoteVideoRef.current.play().catch((err) => {
-          console.error('❌ Autoplay failed:', err);
-          console.log('💡 User interaction may be required to play video');
+          logger.warn(
+            'Autoplay failed:',
+            err,
+            'User interaction may be required',
+          );
         });
       }
     };
 
     pcsRef.current.set(remoteUserId, pc);
-    console.log('✓ PC created and stored for', remoteUserId);
+    logger.log('PC created and stored for', remoteUserId);
     return pc;
   };
 
-  // prepare local media (audio/video)
+  // ----------------- Local media -----------------
   const ensureLocalStream = async (type: CallType) => {
     if (localStreamRef.current) {
-      console.log('♻️ Reusing existing local stream');
+      logger.debug('Reusing existing local stream');
       return localStreamRef.current;
     }
 
-    console.log(`🎤 Requesting ${type} permissions...`);
+    logger.debug(`Requesting ${type} permissions...`);
     try {
       const constraints =
         type === CallType.VIDEO
@@ -265,59 +289,53 @@ export default function ChatHeader({
       );
       localStreamRef.current = stream;
 
-      console.log(
-        `✓ Got local stream with ${stream.getTracks().length} tracks`,
-      );
+      logger.log(`Got local stream with ${stream.getTracks().length} tracks`);
       stream.getTracks().forEach((track) => {
-        console.log(`  - ${track.kind}: ${track.label}`);
+        logger.debug(`- ${track.kind}: ${track.label}`);
       });
 
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream;
         localVideoRef.current.muted = true;
         await localVideoRef.current.play().catch((err) => {
-          console.warn('Local video autoplay issue:', err);
+          logger.warn('Local video autoplay issue:', err);
         });
       }
 
       return stream;
     } catch (err) {
-      console.error('❌ getUserMedia error:', err);
+      logger.error('getUserMedia error:', err);
       throw err;
     }
   };
 
   // cleanup call resources
   const cleanupCall = () => {
-    console.log('🧹 Cleaning up call resources');
+    logger.log('Cleaning up call resources');
 
-    // stop local tracks
     if (localStreamRef.current) {
       localStreamRef.current.getTracks().forEach((t) => {
         t.stop();
-        console.log(`Stopped ${t.kind} track`);
+        logger.debug('Stopped', t.kind, 'track');
       });
       localStreamRef.current = null;
     }
 
-    // close peer connections
     pcsRef.current.forEach((pc, userId) => {
       try {
         pc.close();
-        console.log('Closed PC for', userId);
+        logger.debug('Closed PC for', userId);
       } catch (err) {
-        console.error('Error closing PC:', err);
+        logger.error('Error closing PC:', err);
       }
     });
     pcsRef.current.clear();
     remoteStreamsRef.current.clear();
 
-    // clear pending queues
     pendingAnswersRef.current.clear();
     pendingCandidatesRef.current.clear();
     answeringRef.current.clear();
 
-    // reset video src
     if (localVideoRef.current) localVideoRef.current.srcObject = null;
     if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null;
 
@@ -328,17 +346,17 @@ export default function ChatHeader({
       remoteUserId: null,
     });
 
-    console.log('✓ Cleanup complete');
+    logger.log('Cleanup complete');
   };
 
   // create offer to remote participant (initiator side)
   const createAndSendOffer = async (remoteUserId: string) => {
     if (!callSession.callId) {
-      console.error('❌ No callId when creating offer');
+      logger.error('No callId when creating offer');
       return;
     }
 
-    console.log('📤 Creating offer for', remoteUserId);
+    logger.debug('Creating offer for', remoteUserId);
     const pc = createPeerConnection(remoteUserId);
 
     try {
@@ -347,134 +365,148 @@ export default function ChatHeader({
         offerToReceiveVideo: callSession.type === CallType.VIDEO,
       });
 
-      console.log('✓ Created offer, setting local description');
+      logger.debug('Created offer, setting local description');
       await pc.setLocalDescription(offer);
-      console.log(
-        '✓ Local description set, signaling state:',
+      logger.debug(
+        'Local description set, signaling state:',
         pc.signalingState,
       );
 
-      // Send offer immediately - don't wait for ICE gathering (trickle ICE)
       socket?.emit(EventsEnum.RTC_OFFER, {
         callId: callSession.callId,
         sdp: offer.sdp,
         from: currentUser?.id,
         to: remoteUserId,
       });
-      console.log('✓ Offer sent to server');
+      logger.log('Offer sent to server');
 
-      // Try to apply any queued answers/candidates
       setTimeout(() => tryApplyPendingFor(remoteUserId), 100);
     } catch (err) {
-      console.error('❌ Failed to create/send offer:', err);
+      logger.error('Failed to create/send offer:', err);
     }
   };
 
-  // handle incoming socket events
+  // ----------------- Socket event handlers -----------------
   useEffect(() => {
     if (!socket) return;
 
-    const onIncoming = (payload: any) => {
-      console.log('📥 CALL_INCOMING', payload);
-      const data = payload.data ?? payload;
-      const initiatorId = data?.initiatorId;
+    // helper to normalize payloads coming from server
+    const unwrap = (payload: any) =>
+      payload?.data ?? payload?.payload ?? payload;
 
-      if (!initiatorId) {
-        console.warn('No initiatorId in CALL_INCOMING');
+    const onIncoming = (payload: any) => {
+      const data = unwrap(payload);
+      logger.log('CALL_INCOMING', payload, data);
+      // backend uses: successResponse({ call, from })
+      const callObj = data?.call ?? data;
+      const initiatorId =
+        data?.from ?? callObj?.initiatorId ?? callObj?.initiator?.id;
+      const callId = callObj?.id ?? data?.id;
+
+      if (!callId || !initiatorId) {
+        logger.warn('Malformed CALL_INCOMING payload', data);
         return;
       }
 
-      if (initiatorId !== currentUser?.id) {
-        setIncomingCall({
-          visible: true,
-          callerId: data?.initiatorId,
-          callId: data?.id,
-          callType: data?.type,
-        });
-      }
+      // determine remote user id: if I'm the initiator, remote is other participant; otherwise remote is initiator
+      const remoteUserId =
+        initiatorId === currentUser?.id
+          ? ((callObj?.participants || []).find(
+              (p: any) => p.userId !== currentUser?.id,
+            )?.userId ?? null)
+          : initiatorId;
+
+      setIncomingCall({
+        visible: initiatorId === currentUser?.id ? false : true,
+        callerId: initiatorId,
+        callId,
+        callType: callObj?.type ?? CallType.AUDIO,
+      });
 
       setCallSession({
-        callId: data?.id,
+        callId,
         status: 'RINGING',
-        type: data?.type,
+        type: callObj?.type ?? CallType.AUDIO,
         isInitiator: initiatorId === currentUser?.id,
-        remoteUserId: initiatorId === currentUser?.id ? null : initiatorId,
+        remoteUserId,
       });
     };
 
     const onCallAccept = async (payload: any) => {
-      const data = payload.data ?? payload;
-      console.log('📤 CALL_ACCEPT received', data);
+      const data = unwrap(payload);
+      logger.log('CALL_ACCEPT received', data);
       const call = data?.call ?? data;
 
       if (!call || call.id !== callSession.callId) {
-        console.warn('CALL_ACCEPT for different call, ignoring');
+        logger.warn(
+          'CALL_ACCEPT for different call, ignoring',
+          call?.id,
+          callSession.callId,
+        );
         return;
       }
 
-      console.log('✓ Call moved to ONGOING');
+      logger.log('Call moved to ONGOING');
       setCallSession((s) => ({ ...s, status: 'ONGOING', type: call.type }));
 
       try {
-        // Prepare local stream first
         await ensureLocalStream(call.type);
-        console.log('✓ Local stream ready');
+        logger.debug('Local stream ready');
 
-        // if we are initiator, create offer to remote participant
         if (call.initiatorId === currentUser?.id) {
-          console.log('I am initiator, finding remote participant...');
+          // initiator: find remote and create offer
           const remote = (call.participants || []).find(
             (p: any) => p.userId !== currentUser?.id,
           );
           const remoteId = remote?.userId;
-
           if (remoteId) {
-            console.log('Found remote participant:', remoteId);
+            logger.debug('Found remote participant:', remoteId);
             setCallSession((s) => ({ ...s, remoteUserId: remoteId }));
             await createAndSendOffer(remoteId);
           } else {
-            console.error('❌ No remote participant found');
+            logger.error('No remote participant found in ACCEPT payload');
           }
         } else {
-          console.log('I am receiver, waiting for offer...');
+          logger.debug('Receiver: waiting for offer from initiator');
         }
       } catch (err) {
-        console.error('❌ Error in CALL_ACCEPT handler:', err);
+        logger.error('Error in CALL_ACCEPT handler:', err);
       }
     };
 
     const onCallReject = (payload: any) => {
-      const data = payload.data ?? payload;
-      console.log('📤 CALL_REJECT', data);
+      const data = unwrap(payload);
+      logger.log('CALL_REJECT', data);
       if (data?.callId === callSession.callId) {
-        console.log('My call was rejected, cleaning up');
+        logger.log('My call was rejected, cleaning up');
         cleanupCall();
       }
     };
 
     const onCallEnd = (payload: any) => {
-      const data = payload.data ?? payload;
-      console.log('📤 CALL_END', data);
+      const data = unwrap(payload);
+      logger.log('CALL_END', data);
       if (data?.callId === callSession.callId) {
-        console.log('Call ended, cleaning up');
+        logger.log('Call ended, cleaning up');
         cleanupCall();
       }
     };
 
     const onOffer = async (payload: any) => {
-      const data = payload.data ?? payload;
-      const { callId, sdp, from } = data;
+      const data = unwrap(payload);
+      const callId = data?.callId ?? data?.id;
+      const sdp = data?.sdp;
+      const from = data?.from;
 
       if (callId !== callSession.callId) {
-        console.warn('Offer for different call, ignoring');
+        logger.warn('Offer for different call, ignoring', callId);
         return;
       }
 
-      console.log('⤴️ RTC_OFFER received from', from);
+      logger.log('RTC_OFFER received from', from);
 
-      // simple per-peer lock to avoid concurrent answers
       if (answeringRef.current.get(from)) {
-        console.warn('Already answering for', from);
+        logger.warn('Already answering for', from);
         return;
       }
       answeringRef.current.set(from, true);
@@ -482,86 +514,70 @@ export default function ChatHeader({
       try {
         const callType =
           callSession.type ?? (incomingCall.callType || CallType.AUDIO);
-        console.log('Ensuring local stream for', callType);
-        await ensureLocalStream(callType!);
+        await ensureLocalStream(callType);
 
         const pc = createPeerConnection(from);
-        console.log(
+        logger.debug(
           'PC signaling state before setRemoteDescription:',
           pc.signalingState,
         );
 
         const remoteDesc = new RTCSessionDescription({ type: 'offer', sdp });
         await pc.setRemoteDescription(remoteDesc);
-        console.log('✓ Remote description set, state:', pc.signalingState);
-
-        if (
-          !['have-remote-offer', 'have-remote-pranswer'].includes(
-            pc.signalingState,
-          )
-        ) {
-          throw new Error(`Unexpected signaling state: ${pc.signalingState}`);
-        }
+        logger.log('Remote description set, state:', pc.signalingState);
 
         const answer = await pc.createAnswer();
-        console.log('✓ Created answer, SDP length:', answer.sdp?.length ?? 0);
+        logger.log('Created answer, SDP length:', answer.sdp?.length ?? 0);
 
         await pc.setLocalDescription(answer);
-        console.log(
-          '✓ Local description (answer) set, state:',
-          pc.signalingState,
-        );
+        logger.log('Local description (answer) set, state:', pc.signalingState);
 
-        // send answer
         socket.emit(EventsEnum.RTC_ANSWER, {
           callId,
           sdp: answer.sdp,
           to: from,
           from: currentUser?.id,
         });
-        console.log('✓ Answer sent to', from);
+        logger.log('Answer sent to', from);
       } catch (err) {
-        console.error('❌ Failed to handle offer:', err);
+        logger.error('Failed to handle offer:', err);
       } finally {
         answeringRef.current.set(from, false);
       }
     };
 
     const onAnswer = async (payload: any) => {
-      const data = payload.data ?? payload;
-      const { callId, sdp, from } = data;
+      const data = unwrap(payload);
+      const callId = data?.callId ?? data?.id;
+      const sdp = data?.sdp;
+      const from = data?.from;
 
       if (callId !== callSession.callId) {
-        console.warn('Answer for different call, ignoring');
+        logger.warn('Answer for different call, ignoring', callId);
         return;
       }
 
-      console.log('⤵️ RTC_ANSWER from', from);
+      logger.log('RTC_ANSWER from', from);
 
       const pc = pcsRef.current.get(from);
 
       if (!pc) {
-        console.warn(
-          '⚠️ No PC when answer arrived for',
-          from,
-          '- queuing answer',
-        );
+        logger.warn('No PC when answer arrived for', from, '- queuing answer');
         pendingAnswersRef.current.set(from, { sdp });
         setTimeout(() => tryApplyPendingFor(from), 200);
         return;
       }
 
       try {
-        console.log(
+        logger.debug(
           'PC state:',
           pc.signalingState,
           'has localDesc:',
           !!pc.localDescription,
         );
 
-        // If pc not ready, queue the answer
         if (pc.signalingState === 'stable' || !pc.localDescription) {
-          console.warn(
+          logger.warn(
             'PC not ready for answer, queuing. State:',
             pc.signalingState,
           );
@@ -570,17 +586,11 @@ export default function ChatHeader({
           return;
         }
 
-        // If state is 'have-local-offer', we can apply the answer
         if (pc.signalingState === 'have-local-offer') {
           await pc.setRemoteDescription({ type: 'answer', sdp });
-          console.log(
-            '✓ Applied remote answer for',
-            from,
-            'new state:',
-            pc.signalingState,
-          );
+          logger.log('Applied remote answer for', from);
         } else {
-          console.warn(
+          logger.warn(
             'Unexpected state when applying answer:',
             pc.signalingState,
           );
@@ -588,24 +598,25 @@ export default function ChatHeader({
           setTimeout(() => tryApplyPendingFor(from), 300);
         }
       } catch (err) {
-        console.error('❌ Failed to set remote description (answer):', err);
+        logger.error('Failed to set remote description (answer):', err);
         pendingAnswersRef.current.set(from, { sdp });
         setTimeout(() => tryApplyPendingFor(from), 300);
       }
     };
 
     const onCandidate = async (payload: any) => {
-      const data = payload.data ?? payload;
-      const { callId, candidate, sdpMid, sdpMLineIndex, from } = data;
+      const data = unwrap(payload);
+      const callId = data?.callId;
+      const { candidate, sdpMid, sdpMLineIndex, from } = data;
 
       if (callId !== callSession.callId) return;
 
-      console.log('🧊 ICE candidate from', from);
+      logger.debug('ICE candidate from', from);
       const pc = pcsRef.current.get(from);
       const cand = { candidate, sdpMid, sdpMLineIndex };
 
       if (!pc) {
-        console.warn('No PC yet, queuing candidate for', from);
+        logger.warn('No PC yet, queuing candidate for', from);
         const arr = pendingCandidatesRef.current.get(from) || [];
         arr.push(cand);
         pendingCandidatesRef.current.set(from, arr);
@@ -614,7 +625,7 @@ export default function ChatHeader({
 
       try {
         if (!pc.remoteDescription) {
-          console.warn('No remote description yet, queuing candidate');
+          logger.warn('No remote description yet, queuing candidate');
           const arr = pendingCandidatesRef.current.get(from) || [];
           arr.push(cand);
           pendingCandidatesRef.current.set(from, arr);
@@ -622,9 +633,9 @@ export default function ChatHeader({
         }
 
         await pc.addIceCandidate(cand as any);
-        console.log('✓ Added ICE candidate from', from);
+        logger.log('Added ICE candidate from', from);
       } catch (err) {
-        console.warn('Failed to add ICE candidate:', err);
+        logger.warn('Failed to add ICE candidate:', err);
         const arr = pendingCandidatesRef.current.get(from) || [];
         arr.push(cand);
         pendingCandidatesRef.current.set(from, arr);
@@ -656,21 +667,23 @@ export default function ChatHeader({
     currentUser?.id,
   ]);
 
-  /** Initiator: start call flow */
+  // ----------------- Initiator: start call flow -----------------
   const handleInitiateCall = (type: 'AUDIO' | 'VIDEO') => {
     if (!currentConversationId) {
-      console.error('❌ No active conversation');
+      logger.error('No active conversation');
       return;
     }
 
-    console.log(`📞 Initiating ${type} call`);
+    logger.log(`Initiating ${type} call`);
     socket?.emit(
       EventsEnum.CALL_INITIATE,
       { conversationId: currentConversationId, type },
       (res: any) => {
-        const call = res?.data ?? res;
+        // unwrap successResponse variations
+        const maybe = res?.data?.call ?? res?.data ?? res;
+        const call = maybe?.call ?? maybe;
         if (!call) {
-          console.error('❌ No call returned from CALL_INITIATE');
+          logger.error('No call returned from CALL_INITIATE', res);
           return;
         }
 
@@ -679,7 +692,7 @@ export default function ChatHeader({
         );
         const remoteId = remote?.userId ?? null;
 
-        console.log('✓ Call initiated:', call.id, 'Remote:', remoteId);
+        logger.log('Call initiated:', call.id, 'Remote:', remoteId);
         setCallSession({
           callId: call.id,
           status: 'RINGING',
@@ -691,16 +704,16 @@ export default function ChatHeader({
     );
   };
 
-  /** Accept incoming call (callee) */
+  // ----------------- Callee actions -----------------
   const handleAccept = () => {
     if (!incomingCall.callId) return;
-    console.log('✅ Accepting call', incomingCall.callId);
+    logger.log('Accepting call', incomingCall.callId);
 
     socket.emit(
       EventsEnum.CALL_ACCEPT,
       { callId: incomingCall.callId },
       (res: any) => {
-        console.log('CALL_ACCEPT callback', res);
+        logger.log('CALL_ACCEPT callback', res);
       },
     );
 
@@ -714,13 +727,13 @@ export default function ChatHeader({
 
   const handleReject = () => {
     if (!incomingCall.callId) return;
-    console.log('❌ Rejecting', incomingCall.callId);
+    logger.log('Rejecting', incomingCall.callId);
 
     socket?.emit(
       EventsEnum.CALL_REJECT,
       { callId: incomingCall.callId },
       (res: any) => {
-        console.log('CALL_REJECT callback', res);
+        logger.log('CALL_REJECT callback', res);
       },
     );
 
@@ -734,19 +747,20 @@ export default function ChatHeader({
 
   const handleEnd = () => {
     if (!callSession.callId) return;
-    console.log('🔴 Ending call', callSession.callId);
+    logger.log('Ending call', callSession.callId);
 
     socket?.emit(
       EventsEnum.CALL_END,
       { callId: callSession.callId },
       (res: any) => {
-        console.log('CALL_END callback', res);
+        logger.log('CALL_END callback', res);
       },
     );
 
     cleanupCall();
   };
 
+  // ----------------- UI -----------------
   return (
     <>
       <div className="bg-[#151519] flex items-center justify-between p-4 border-b border-gray-700 rounded-t-lg">
@@ -781,6 +795,7 @@ export default function ChatHeader({
             onClick={() => handleInitiateCall('AUDIO')}
             className="text-gray-300 hover:text-white transition"
             disabled={callSession.status !== 'IDLE'}
+            title="Start audio call"
           >
             <Phone size={20} />
           </button>
@@ -788,6 +803,7 @@ export default function ChatHeader({
             onClick={() => handleInitiateCall('VIDEO')}
             className="text-gray-300 hover:text-white transition"
             disabled={callSession.status !== 'IDLE'}
+            title="Start video call"
           >
             <Video size={20} />
           </button>
