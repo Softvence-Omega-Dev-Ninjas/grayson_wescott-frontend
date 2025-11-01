@@ -1,14 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { EventsEnum } from '@/enum/events.enum';
 import { useSocket } from '@/hooks/useSocket';
-import { CallType, Sender } from '@/types/chat.types';
-import { ArrowLeft, Phone, Video, X } from 'lucide-react';
+import { Sender } from '@/types/chat.types';
+import {
+  ArrowLeft,
+  Mic,
+  MicOff,
+  Phone,
+  PhoneOff,
+  Video,
+  VideoOff,
+} from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import IncomingCallModal from './call/IncomingCallModal';
-import OutgoingCallModal from './call/OutgoingCallModal';
+
+// Import types (adjust path as needed)
+import { EventsEnum } from '@/enum/events.enum';
+import {
+  AcceptCallResponse,
+  ApiResponse,
+  CallActionDto,
+  CallStatus,
+  CallType,
+  IncomingCallPayload,
+  InitiateCallDto,
+  RTCAnswerPayload,
+  RTCIceCandidatePayload,
+  RTCOfferPayload,
+  WebRTCEvents,
+} from '@/types/call.types';
+
+type CallState = {
+  callId: string | null;
+  status: CallStatus | null;
+  type: CallType | null;
+  isIncoming: boolean;
+  isOutgoing: boolean;
+  remoteUserId: string | null;
+};
 
 export default function ChatHeader({
   onBack,
@@ -19,746 +49,347 @@ export default function ChatHeader({
 }) {
   const { socket, currentUser, currentConversationId } = useSocket();
 
+  // Call state
+  const [callState, setCallState] = useState<CallState>({
+    callId: null,
+    status: null,
+    type: null,
+    isIncoming: false,
+    isOutgoing: false,
+    remoteUserId: null,
+  });
+
+  // Media controls
+  const [isMuted, setIsMuted] = useState(false);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(true);
+
+  // WebRTC refs
+  const localVideoRef = useRef<HTMLVideoElement>(null);
+  const remoteVideoRef = useRef<HTMLVideoElement>(null);
+  const peerConnectionRef = useRef<RTCPeerConnection | null>(null);
+  const localStreamRef = useRef<MediaStream | null>(null);
+  const remoteStreamRef = useRef<MediaStream | null>(null);
+
+  // ICE servers configuration
+  const iceServers = {
+    iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' },
+    ],
+  };
+
   if (!socket || !currentUser) return null;
 
-  const [incomingCall, setIncomingCall] = useState<{
-    visible: boolean;
-    callerId: string;
-    callId: string;
-    callType: CallType;
-  }>({ visible: false, callerId: '', callId: '', callType: CallType.AUDIO });
-
-  // call session state
-  const [callSession, setCallSession] = useState<{
-    callId: string | null;
-    status: 'IDLE' | 'RINGING' | 'ONGOING' | 'ENDED';
-    type?: CallType;
-    isInitiator?: boolean;
-    remoteUserId?: string | null;
-  }>({ callId: null, status: 'IDLE', isInitiator: false, remoteUserId: null });
-
-  // media & RTCPeerConnections
-  const localStreamRef = useRef<MediaStream | null>(null);
-  const pcsRef = useRef<Map<string, RTCPeerConnection>>(new Map());
-  const localVideoRef = useRef<HTMLVideoElement | null>(null);
-  const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
-  const answeringRef = useRef<Map<string, boolean>>(new Map());
-  const pendingAnswersRef = useRef<Map<string, any>>(new Map());
-  const pendingCandidatesRef = useRef<Map<string, any[]>>(new Map());
-  const remoteStreamsRef = useRef<Map<string, MediaStream>>(new Map());
-
-  // ----------------- DEBUG CONSOLE -----------------
-  const logger = {
-    tag: 'ChatHeader',
-    meta() {
-      return {
-        callId: callSession.callId ?? 'no-call',
-        userId: currentUser?.id ?? 'anon',
-      };
-    },
-    log(...args: any[]) {
-      // use collapsed group for compactness
-      console.groupCollapsed(`[${this.tag}] LOG`, this.meta());
-      console.log(...args);
-      console.groupEnd();
-    },
-    debug(...args: any[]) {
-      console.groupCollapsed(`[${this.tag}] DEBUG`, this.meta());
-      console.debug(...args);
-      console.groupEnd();
-    },
-    warn(...args: any[]) {
-      console.groupCollapsed(`[${this.tag}] WARN`, this.meta());
-      console.warn(...args);
-      console.groupEnd();
-    },
-    error(...args: any[]) {
-      console.groupCollapsed(`[${this.tag}] ERROR`, this.meta());
-      console.error(...args);
-      console.groupEnd();
-    },
-  };
-
-  // simple wait helper for local offer
-  const waitForLocalOffer = (pc: RTCPeerConnection, timeout = 5000) =>
-    new Promise<void>((resolve, reject) => {
-      if (!pc) return reject(new Error('no-pc'));
-      const okStates = ['have-local-offer', 'have-local-pranswer'];
-      if (okStates.includes(pc.signalingState)) {
-        logger.debug('PC already has local offer');
-        return resolve();
-      }
-
-      const start = Date.now();
-      const int = setInterval(() => {
-        if (okStates.includes(pc.signalingState)) {
-          clearInterval(int);
-          logger.debug('PC reached local offer state');
-          return resolve();
-        }
-        if (Date.now() - start > timeout) {
-          clearInterval(int);
-          return reject(new Error('waitForLocalOffer timeout'));
-        }
-      }, 50);
-    });
-
-  /** Try to apply any pending answers/candidates for a remote */
-  const tryApplyPendingFor = async (from: string) => {
-    const pc = pcsRef.current.get(from);
-    if (!pc) {
-      logger.warn('tryApplyPending: no PC for', from);
-      return;
-    }
-
-    // apply answer if pending
-    const pendingAnswer = pendingAnswersRef.current.get(from);
-    if (pendingAnswer) {
-      try {
-        logger.debug('Waiting for local offer before applying answer...');
-        await waitForLocalOffer(pc, 5000);
-
-        if (pc.signalingState !== 'have-local-offer') {
-          logger.warn('PC not in correct state for answer:', pc.signalingState);
-          return;
-        }
-
-        await pc.setRemoteDescription({
-          type: 'answer',
-          sdp: pendingAnswer.sdp,
-        });
-        pendingAnswersRef.current.delete(from);
-        logger.log('Applied queued remote answer for', from);
-      } catch (err) {
-        logger.error('Could not apply queued answer for', from, err);
-      }
-    }
-
-    // apply any pending ice candidates
-    const cands = pendingCandidatesRef.current.get(from) || [];
-    if (cands.length > 0) {
-      logger.debug(`Applying ${cands.length} queued ICE candidates for`, from);
-      for (const c of cands) {
-        try {
-          if (pc.remoteDescription) {
-            await pc.addIceCandidate(c as any);
-          } else {
-            logger.warn('Skipping candidate - no remote description yet');
-          }
-        } catch (err) {
-          logger.warn('Failed to add queued candidate', err);
-        }
-      }
-      pendingCandidatesRef.current.delete(from);
-      logger.log('Processed queued ICE candidates');
-    }
-  };
-
-  // ----------------- Peer Connection -----------------
-  const createPeerConnection = (remoteUserId: string) => {
-    const existing = pcsRef.current.get(remoteUserId);
-    if (existing) {
-      logger.debug('Reusing existing PC for', remoteUserId);
-      return existing;
-    }
-
-    logger.debug('Creating new RTCPeerConnection for', remoteUserId);
-
-    const config: RTCConfiguration = {
-      iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },
-        { urls: 'stun:stun1.l.google.com:19302' },
-      ],
-    };
-
-    const pc = new RTCPeerConnection(config);
-
-    // attach local tracks
-    const local = localStreamRef.current;
-    if (local) {
-      logger.debug(`Adding ${local.getTracks().length} local tracks to PC`);
-      for (const track of local.getTracks()) {
-        pc.addTrack(track, local);
-      }
-    } else {
-      logger.warn('No local stream when creating PC');
-    }
-
-    // send ICE candidates to server
-    pc.onicecandidate = (ev) => {
-      if (!ev.candidate) {
-        logger.debug('ICE gathering complete');
-        return;
-      }
-      if (!socket || !callSession.callId) {
-        logger.warn('Cannot send ICE candidate - no socket or callId');
-        return;
-      }
-
-      logger.debug('Sending ICE candidate to', remoteUserId);
-      try {
-        socket.emit(EventsEnum.RTC_ICE_CANDIDATE, {
-          callId: callSession.callId,
-          candidate: ev.candidate.candidate,
-          sdpMid: ev.candidate.sdpMid,
-          sdpMLineIndex: ev.candidate.sdpMLineIndex,
-          to: remoteUserId,
-        });
-      } catch (err) {
-        logger.error('Failed to emit ICE candidate', err);
-      }
-    };
-
-    // ICE connection state monitoring
-    pc.oniceconnectionstatechange = () => {
-      logger.debug(
-        `ICE connection state for ${remoteUserId}:`,
-        pc.iceConnectionState,
-      );
-      if (pc.iceConnectionState === 'failed') {
-        logger.error('ICE connection failed for', remoteUserId);
-      }
-    };
-
-    pc.onconnectionstatechange = () => {
-      logger.debug(`Connection state for ${remoteUserId}:`, pc.connectionState);
-    };
-
-    // Create dedicated remote stream for this peer
-    const remoteStream = new MediaStream();
-    remoteStreamsRef.current.set(remoteUserId, remoteStream);
-
-    pc.ontrack = (ev) => {
-      logger.debug(
-        `Received ${ev.track?.kind ?? 'track'} from ${remoteUserId}`,
-      );
-
-      if (ev.streams && ev.streams[0]) {
-        logger.debug('Using track from ev.streams[0]');
-        ev.streams[0].getTracks().forEach((track) => {
-          if (!remoteStream.getTracks().find((t) => t.id === track.id)) {
-            remoteStream.addTrack(track);
-            logger.log(`Added ${track.kind} track to remote stream`);
-          }
-        });
-      } else if (ev.track) {
-        logger.debug('Using ev.track directly');
-        if (!remoteStream.getTracks().find((t) => t.id === ev.track.id)) {
-          remoteStream.addTrack(ev.track);
-          logger.log(`Added ${ev.track.kind} track to remote stream`);
-        }
-      }
-
-      if (
-        remoteVideoRef.current &&
-        remoteVideoRef.current.srcObject !== remoteStream
-      ) {
-        logger.debug('Attaching remote stream to video element');
-        remoteVideoRef.current.srcObject = remoteStream;
-        remoteVideoRef.current.play().catch((err) => {
-          logger.warn(
-            'Autoplay failed:',
-            err,
-            'User interaction may be required',
-          );
-        });
-      }
-    };
-
-    pcsRef.current.set(remoteUserId, pc);
-    logger.log('PC created and stored for', remoteUserId);
-    return pc;
-  };
-
-  // ----------------- Local media -----------------
-  const ensureLocalStream = async (type: CallType) => {
-    if (localStreamRef.current) {
-      logger.debug('Reusing existing local stream');
-      return localStreamRef.current;
-    }
-
-    logger.debug(`Requesting ${type} permissions...`);
-    try {
-      const constraints =
-        type === CallType.VIDEO
-          ? { audio: true, video: { width: 640, height: 480 } }
-          : { audio: true, video: false };
-
-      const stream = await navigator.mediaDevices.getUserMedia(
-        constraints as any,
-      );
-      localStreamRef.current = stream;
-
-      logger.log(`Got local stream with ${stream.getTracks().length} tracks`);
-      stream.getTracks().forEach((track) => {
-        logger.debug(`- ${track.kind}: ${track.label}`);
-      });
-
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-        localVideoRef.current.muted = true;
-        await localVideoRef.current.play().catch((err) => {
-          logger.warn('Local video autoplay issue:', err);
-        });
-      }
-
-      return stream;
-    } catch (err) {
-      logger.error('getUserMedia error:', err);
-      throw err;
-    }
-  };
-
-  // cleanup call resources
-  const cleanupCall = () => {
-    logger.log('Cleaning up call resources');
-
-    if (localStreamRef.current) {
-      localStreamRef.current.getTracks().forEach((t) => {
-        t.stop();
-        logger.debug('Stopped', t.kind, 'track');
-      });
-      localStreamRef.current = null;
-    }
-
-    pcsRef.current.forEach((pc, userId) => {
-      try {
-        pc.close();
-        logger.debug('Closed PC for', userId);
-      } catch (err) {
-        logger.error('Error closing PC:', err);
-      }
-    });
-    pcsRef.current.clear();
-    remoteStreamsRef.current.clear();
-
-    pendingAnswersRef.current.clear();
-    pendingCandidatesRef.current.clear();
-    answeringRef.current.clear();
-
-    if (localVideoRef.current) localVideoRef.current.srcObject = null;
-    if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null;
-
-    setCallSession({
-      callId: null,
-      status: 'IDLE',
-      isInitiator: false,
-      remoteUserId: null,
-    });
-
-    logger.log('Cleanup complete');
-  };
-
-  // create offer to remote participant (initiator side)
-  const createAndSendOffer = async (remoteUserId: string) => {
-    if (!callSession.callId) {
-      logger.error('No callId when creating offer');
-      return;
-    }
-
-    logger.debug('Creating offer for', remoteUserId);
-    const pc = createPeerConnection(remoteUserId);
-
-    try {
-      const offer = await pc.createOffer({
-        offerToReceiveAudio: true,
-        offerToReceiveVideo: callSession.type === CallType.VIDEO,
-      });
-
-      logger.debug('Created offer, setting local description');
-      await pc.setLocalDescription(offer);
-      logger.debug(
-        'Local description set, signaling state:',
-        pc.signalingState,
-      );
-
-      socket?.emit(EventsEnum.RTC_OFFER, {
-        callId: callSession.callId,
-        sdp: offer.sdp,
-        from: currentUser?.id,
-        to: remoteUserId,
-      });
-      logger.log('Offer sent to server');
-
-      setTimeout(() => tryApplyPendingFor(remoteUserId), 100);
-    } catch (err) {
-      logger.error('Failed to create/send offer:', err);
-    }
-  };
-
-  // ----------------- Socket event handlers -----------------
-  useEffect(() => {
-    if (!socket) return;
-
-    // helper to normalize payloads coming from server
-    const unwrap = (payload: any) =>
-      payload?.data ?? payload?.payload ?? payload;
-
-    const onIncoming = (payload: any) => {
-      const data = unwrap(payload);
-      logger.log('CALL_INCOMING', payload, data);
-      // backend uses: successResponse({ call, from })
-      const callObj = data?.call ?? data;
-      const initiatorId =
-        data?.from ?? callObj?.initiatorId ?? callObj?.initiator?.id;
-      const callId = callObj?.id ?? data?.id;
-
-      if (!callId || !initiatorId) {
-        logger.warn('Malformed CALL_INCOMING payload', data);
-        return;
-      }
-
-      // determine remote user id: if I'm the initiator, remote is other participant; otherwise remote is initiator
-      const remoteUserId =
-        initiatorId === currentUser?.id
-          ? ((callObj?.participants || []).find(
-              (p: any) => p.userId !== currentUser?.id,
-            )?.userId ?? null)
-          : initiatorId;
-
-      setIncomingCall({
-        visible: initiatorId === currentUser?.id ? false : true,
-        callerId: initiatorId,
-        callId,
-        callType: callObj?.type ?? CallType.AUDIO,
-      });
-
-      setCallSession({
-        callId,
-        status: 'RINGING',
-        type: callObj?.type ?? CallType.AUDIO,
-        isInitiator: initiatorId === currentUser?.id,
-        remoteUserId,
-      });
-    };
-
-    const onCallAccept = async (payload: any) => {
-      const data = unwrap(payload);
-      logger.log('CALL_ACCEPT received', data);
-      const call = data?.call ?? data;
-
-      if (!call || call.id !== callSession.callId) {
-        logger.warn(
-          'CALL_ACCEPT for different call, ignoring',
-          call?.id,
-          callSession.callId,
-        );
-        return;
-      }
-
-      logger.log('Call moved to ONGOING');
-      setCallSession((s) => ({ ...s, status: 'ONGOING', type: call.type }));
-
-      try {
-        await ensureLocalStream(call.type);
-        logger.debug('Local stream ready');
-
-        if (call.initiatorId === currentUser?.id) {
-          // initiator: find remote and create offer
-          const remote = (call.participants || []).find(
-            (p: any) => p.userId !== currentUser?.id,
-          );
-          const remoteId = remote?.userId;
-          if (remoteId) {
-            logger.debug('Found remote participant:', remoteId);
-            setCallSession((s) => ({ ...s, remoteUserId: remoteId }));
-            await createAndSendOffer(remoteId);
-          } else {
-            logger.error('No remote participant found in ACCEPT payload');
-          }
-        } else {
-          logger.debug('Receiver: waiting for offer from initiator');
-        }
-      } catch (err) {
-        logger.error('Error in CALL_ACCEPT handler:', err);
-      }
-    };
-
-    const onCallReject = (payload: any) => {
-      const data = unwrap(payload);
-      logger.log('CALL_REJECT', data);
-      if (data?.callId === callSession.callId) {
-        logger.log('My call was rejected, cleaning up');
-        cleanupCall();
-      }
-    };
-
-    const onCallEnd = (payload: any) => {
-      const data = unwrap(payload);
-      logger.log('CALL_END', data);
-      if (data?.callId === callSession.callId) {
-        logger.log('Call ended, cleaning up');
-        cleanupCall();
-      }
-    };
-
-    const onOffer = async (payload: any) => {
-      const data = unwrap(payload);
-      const callId = data?.callId ?? data?.id;
-      const sdp = data?.sdp;
-      const from = data?.from;
-
-      if (callId !== callSession.callId) {
-        logger.warn('Offer for different call, ignoring', callId);
-        return;
-      }
-
-      logger.log('RTC_OFFER received from', from);
-
-      if (answeringRef.current.get(from)) {
-        logger.warn('Already answering for', from);
-        return;
-      }
-      answeringRef.current.set(from, true);
-
-      try {
-        const callType =
-          callSession.type ?? (incomingCall.callType || CallType.AUDIO);
-        await ensureLocalStream(callType);
-
-        const pc = createPeerConnection(from);
-        logger.debug(
-          'PC signaling state before setRemoteDescription:',
-          pc.signalingState,
-        );
-
-        const remoteDesc = new RTCSessionDescription({ type: 'offer', sdp });
-        await pc.setRemoteDescription(remoteDesc);
-        logger.log('Remote description set, state:', pc.signalingState);
-
-        const answer = await pc.createAnswer();
-        logger.log('Created answer, SDP length:', answer.sdp?.length ?? 0);
-
-        await pc.setLocalDescription(answer);
-        logger.log('Local description (answer) set, state:', pc.signalingState);
-
-        socket.emit(EventsEnum.RTC_ANSWER, {
-          callId,
-          sdp: answer.sdp,
-          to: from,
-          from: currentUser?.id,
-        });
-        logger.log('Answer sent to', from);
-      } catch (err) {
-        logger.error('Failed to handle offer:', err);
-      } finally {
-        answeringRef.current.set(from, false);
-      }
-    };
-
-    const onAnswer = async (payload: any) => {
-      const data = unwrap(payload);
-      const callId = data?.callId ?? data?.id;
-      const sdp = data?.sdp;
-      const from = data?.from;
-
-      if (callId !== callSession.callId) {
-        logger.warn('Answer for different call, ignoring', callId);
-        return;
-      }
-
-      logger.log('RTC_ANSWER from', from);
-
-      const pc = pcsRef.current.get(from);
-
-      if (!pc) {
-        logger.warn('No PC when answer arrived for', from, '- queuing answer');
-        pendingAnswersRef.current.set(from, { sdp });
-        setTimeout(() => tryApplyPendingFor(from), 200);
-        return;
-      }
-
-      try {
-        logger.debug(
-          'PC state:',
-          pc.signalingState,
-          'has localDesc:',
-          !!pc.localDescription,
-        );
-
-        if (pc.signalingState === 'stable' || !pc.localDescription) {
-          logger.warn(
-            'PC not ready for answer, queuing. State:',
-            pc.signalingState,
-          );
-          pendingAnswersRef.current.set(from, { sdp });
-          setTimeout(() => tryApplyPendingFor(from), 200);
-          return;
-        }
-
-        if (pc.signalingState === 'have-local-offer') {
-          await pc.setRemoteDescription({ type: 'answer', sdp });
-          logger.log('Applied remote answer for', from);
-        } else {
-          logger.warn(
-            'Unexpected state when applying answer:',
-            pc.signalingState,
-          );
-          pendingAnswersRef.current.set(from, { sdp });
-          setTimeout(() => tryApplyPendingFor(from), 300);
-        }
-      } catch (err) {
-        logger.error('Failed to set remote description (answer):', err);
-        pendingAnswersRef.current.set(from, { sdp });
-        setTimeout(() => tryApplyPendingFor(from), 300);
-      }
-    };
-
-    const onCandidate = async (payload: any) => {
-      const data = unwrap(payload);
-      const callId = data?.callId;
-      const { candidate, sdpMid, sdpMLineIndex, from } = data;
-
-      if (callId !== callSession.callId) return;
-
-      logger.debug('ICE candidate from', from);
-      const pc = pcsRef.current.get(from);
-      const cand = { candidate, sdpMid, sdpMLineIndex };
-
-      if (!pc) {
-        logger.warn('No PC yet, queuing candidate for', from);
-        const arr = pendingCandidatesRef.current.get(from) || [];
-        arr.push(cand);
-        pendingCandidatesRef.current.set(from, arr);
-        return;
-      }
-
-      try {
-        if (!pc.remoteDescription) {
-          logger.warn('No remote description yet, queuing candidate');
-          const arr = pendingCandidatesRef.current.get(from) || [];
-          arr.push(cand);
-          pendingCandidatesRef.current.set(from, arr);
-          return;
-        }
-
-        await pc.addIceCandidate(cand as any);
-        logger.log('Added ICE candidate from', from);
-      } catch (err) {
-        logger.warn('Failed to add ICE candidate:', err);
-        const arr = pendingCandidatesRef.current.get(from) || [];
-        arr.push(cand);
-        pendingCandidatesRef.current.set(from, arr);
-      }
-    };
-
-    socket.on(EventsEnum.CALL_INCOMING, onIncoming);
-    socket.on(EventsEnum.CALL_ACCEPT, onCallAccept);
-    socket.on(EventsEnum.CALL_REJECT, onCallReject);
-    socket.on(EventsEnum.CALL_END, onCallEnd);
-    socket.on(EventsEnum.RTC_OFFER, onOffer);
-    socket.on(EventsEnum.RTC_ANSWER, onAnswer);
-    socket.on(EventsEnum.RTC_ICE_CANDIDATE, onCandidate);
-
-    return () => {
-      socket.off(EventsEnum.CALL_INCOMING, onIncoming);
-      socket.off(EventsEnum.CALL_ACCEPT, onCallAccept);
-      socket.off(EventsEnum.CALL_REJECT, onCallReject);
-      socket.off(EventsEnum.CALL_END, onCallEnd);
-      socket.off(EventsEnum.RTC_OFFER, onOffer);
-      socket.off(EventsEnum.RTC_ANSWER, onAnswer);
-      socket.off(EventsEnum.RTC_ICE_CANDIDATE, onCandidate);
-    };
-  }, [
-    socket,
-    callSession.callId,
-    callSession.type,
-    incomingCall.callType,
-    currentUser?.id,
-  ]);
-
-  // ----------------- Initiator: start call flow -----------------
-  const handleInitiateCall = (type: 'AUDIO' | 'VIDEO') => {
+  // ----------------- Caller actions -----------------
+  const handleInitiateCall = (type: CallType) => {
     if (!currentConversationId) {
-      logger.error('No active conversation');
+      console.error('No active conversation');
       return;
     }
 
-    logger.log(`Initiating ${type} call`);
-    socket?.emit(
-      EventsEnum.CALL_INITIATE,
-      { conversationId: currentConversationId, type },
-      (res: any) => {
-        // unwrap successResponse variations
-        const maybe = res?.data?.call ?? res?.data ?? res;
-        const call = maybe?.call ?? maybe;
-        if (!call) {
-          logger.error('No call returned from CALL_INITIATE', res);
-          return;
-        }
+    const dto: InitiateCallDto = {
+      conversationId: currentConversationId,
+      type,
+    };
 
-        const remote = (call.participants || []).find(
-          (p: any) => p.userId !== currentUser?.id,
-        );
-        const remoteId = remote?.userId ?? null;
+    console.log('Initiating call:', dto);
+    socket.emit(EventsEnum.CALL_INITIATE, dto);
 
-        logger.log('Call initiated:', call.id, 'Remote:', remoteId);
-        setCallSession({
-          callId: call.id,
-          status: 'RINGING',
-          type: call.type,
-          isInitiator: true,
-          remoteUserId: remoteId,
-        });
-      },
-    );
+    setCallState({
+      callId: null,
+      status: CallStatus.INITIATED,
+      type,
+      isIncoming: false,
+      isOutgoing: true,
+      remoteUserId: participant?.id || null,
+    });
   };
 
   // ----------------- Callee actions -----------------
-  const handleAccept = () => {
-    if (!incomingCall.callId) return;
-    logger.log('Accepting call', incomingCall.callId);
+  const handleAccept = async () => {
+    if (!callState.callId) return;
 
-    socket.emit(
-      EventsEnum.CALL_ACCEPT,
-      { callId: incomingCall.callId },
-      (res: any) => {
-        logger.log('CALL_ACCEPT callback', res);
-      },
-    );
+    const dto: CallActionDto = { callId: callState.callId };
+    socket.emit(EventsEnum.CALL_ACCEPT, dto);
 
-    setIncomingCall({
-      visible: false,
-      callerId: '',
-      callId: '',
-      callType: CallType.AUDIO,
-    });
+    setCallState((prev) => ({ ...prev, status: CallStatus.ONGOING }));
+
+    // Start local media
+    await startLocalMedia(callState.type === CallType.VIDEO);
   };
 
   const handleReject = () => {
-    if (!incomingCall.callId) return;
-    logger.log('Rejecting', incomingCall.callId);
+    if (!callState.callId) return;
 
-    socket?.emit(
-      EventsEnum.CALL_REJECT,
-      { callId: incomingCall.callId },
-      (res: any) => {
-        logger.log('CALL_REJECT callback', res);
-      },
-    );
+    const dto: CallActionDto = { callId: callState.callId };
+    socket.emit(EventsEnum.CALL_REJECT, dto);
 
-    setIncomingCall({
-      visible: false,
-      callerId: '',
-      callId: '',
-      callType: CallType.AUDIO,
-    });
+    resetCallState();
   };
 
   const handleEnd = () => {
-    if (!callSession.callId) return;
-    logger.log('Ending call', callSession.callId);
+    if (!callState.callId) return;
 
-    socket?.emit(
-      EventsEnum.CALL_END,
-      { callId: callSession.callId },
-      (res: any) => {
-        logger.log('CALL_END callback', res);
-      },
-    );
+    const dto: CallActionDto = { callId: callState.callId };
+    socket.emit(EventsEnum.CALL_END, dto);
 
     cleanupCall();
   };
+
+  // ----------------- WebRTC Setup -----------------
+  const startLocalMedia = async (video: boolean) => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video,
+      });
+
+      localStreamRef.current = stream;
+
+      if (localVideoRef.current) {
+        localVideoRef.current.srcObject = stream;
+      }
+
+      // Initialize peer connection
+      await initializePeerConnection();
+    } catch (error) {
+      console.error('Failed to get user media:', error);
+    }
+  };
+
+  const initializePeerConnection = async () => {
+    const pc = new RTCPeerConnection(iceServers);
+    peerConnectionRef.current = pc;
+
+    // Add local tracks
+    localStreamRef.current?.getTracks().forEach((track) => {
+      pc.addTrack(track, localStreamRef.current!);
+    });
+
+    // Handle remote stream
+    pc.ontrack = (event) => {
+      if (remoteVideoRef.current && event.streams[0]) {
+        remoteVideoRef.current.srcObject = event.streams[0];
+        remoteStreamRef.current = event.streams[0];
+      }
+    };
+
+    // Handle ICE candidates
+    pc.onicecandidate = (event) => {
+      if (event.candidate && callState.callId) {
+        socket.emit(WebRTCEvents.SEND_ICE_CANDIDATE, {
+          callId: callState.callId,
+          candidate: JSON.stringify(event.candidate),
+          sdpMid: event.candidate.sdpMid || '',
+          sdpMLineIndex: event.candidate.sdpMLineIndex || 0,
+          to: callState.remoteUserId || participant?.id || '',
+        });
+      }
+    };
+
+    // Connection state monitoring
+    pc.onconnectionstatechange = () => {
+      console.log('Connection state:', pc.connectionState);
+      if (
+        pc.connectionState === 'disconnected' ||
+        pc.connectionState === 'failed'
+      ) {
+        cleanupCall();
+      }
+    };
+
+    // If we're the caller (outgoing), create and send offer
+    if (callState.isOutgoing) {
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+
+      socket.emit(WebRTCEvents.SEND_OFFER, {
+        callId: callState.callId,
+        sdp: offer.sdp || '',
+        to: participant?.id || '',
+      });
+    }
+  };
+
+  // ----------------- Cleanup -----------------
+  const resetCallState = () => {
+    setCallState({
+      callId: null,
+      status: null,
+      type: null,
+      isIncoming: false,
+      isOutgoing: false,
+      remoteUserId: null,
+    });
+  };
+
+  const cleanupCall = () => {
+    // Stop all tracks
+    localStreamRef.current?.getTracks().forEach((track) => track.stop());
+    remoteStreamRef.current?.getTracks().forEach((track) => track.stop());
+
+    // Close peer connection
+    peerConnectionRef.current?.close();
+
+    // Reset refs
+    localStreamRef.current = null;
+    remoteStreamRef.current = null;
+    peerConnectionRef.current = null;
+
+    // Clear video elements
+    if (localVideoRef.current) localVideoRef.current.srcObject = null;
+    if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null;
+
+    resetCallState();
+    setIsMuted(false);
+    setIsVideoEnabled(true);
+  };
+
+  // ----------------- Media Controls -----------------
+  const toggleMute = () => {
+    if (localStreamRef.current) {
+      localStreamRef.current.getAudioTracks().forEach((track) => {
+        track.enabled = !track.enabled;
+      });
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const toggleVideo = () => {
+    if (localStreamRef.current) {
+      localStreamRef.current.getVideoTracks().forEach((track) => {
+        track.enabled = !track.enabled;
+      });
+      setIsVideoEnabled(!isVideoEnabled);
+    }
+  };
+
+  // ----------------- Socket Listeners -----------------
+  useEffect(() => {
+    if (!socket) return;
+
+    // Incoming call
+    socket.on(
+      EventsEnum.CALL_INCOMING,
+      (response: ApiResponse<IncomingCallPayload>) => {
+        console.log('Incoming call:', response);
+        const { call, from } = response.data;
+
+        setCallState({
+          callId: call.id,
+          status: call.status,
+          type: call.type,
+          isIncoming: true,
+          isOutgoing: false,
+          remoteUserId: from,
+        });
+      },
+    );
+
+    // Call accepted
+    socket.on(
+      EventsEnum.CALL_ACCEPT,
+      async (response: ApiResponse<AcceptCallResponse>) => {
+        console.log('Call accepted:', response);
+        setCallState((prev) => ({ ...prev, status: CallStatus.ONGOING }));
+
+        // Start media if we're the caller
+        if (callState.isOutgoing) {
+          await startLocalMedia(callState.type === CallType.VIDEO);
+        }
+      },
+    );
+
+    // Call missed/rejected
+    socket.on(EventsEnum.CALL_MISSED, (response: any) => {
+      console.log('Call missed:', response);
+      cleanupCall();
+    });
+
+    // Call ended
+    socket.on(EventsEnum.CALL_END, (response: any) => {
+      console.log('Call ended:', response);
+      cleanupCall();
+    });
+
+    // WebRTC: Receive offer
+    socket.on(
+      WebRTCEvents.RTC_OFFER,
+      async (response: ApiResponse<RTCOfferPayload>) => {
+        console.log('Received RTC offer:', response);
+        const { sdp, callId } = response.data;
+
+        if (!peerConnectionRef.current) {
+          await initializePeerConnection();
+        }
+
+        const pc = peerConnectionRef.current!;
+        await pc.setRemoteDescription(
+          new RTCSessionDescription({ type: 'offer', sdp }),
+        );
+
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+
+        socket.emit(WebRTCEvents.SEND_ANSWER, {
+          callId,
+          sdp: answer.sdp || '',
+          to: callState.remoteUserId || participant?.id || '',
+        });
+      },
+    );
+
+    // WebRTC: Receive answer
+    socket.on(
+      WebRTCEvents.RTC_ANSWER,
+      async (response: ApiResponse<RTCAnswerPayload>) => {
+        console.log('Received RTC answer:', response);
+        const { sdp } = response.data;
+
+        if (peerConnectionRef.current) {
+          await peerConnectionRef.current.setRemoteDescription(
+            new RTCSessionDescription({ type: 'answer', sdp }),
+          );
+        }
+      },
+    );
+
+    // WebRTC: Receive ICE candidate
+    socket.on(
+      WebRTCEvents.RTC_ICE_CANDIDATE,
+      async (response: ApiResponse<RTCIceCandidatePayload>) => {
+        console.log('Received ICE candidate:', response);
+        const { candidate } = response.data;
+
+        if (peerConnectionRef.current && candidate) {
+          try {
+            await peerConnectionRef.current.addIceCandidate(
+              JSON.parse(candidate),
+            );
+          } catch (error) {
+            console.error('Error adding ICE candidate:', error);
+          }
+        }
+      },
+    );
+
+    return () => {
+      socket.off(EventsEnum.CALL_INCOMING);
+      socket.off(EventsEnum.CALL_ACCEPT);
+      socket.off(EventsEnum.CALL_MISSED);
+      socket.off(EventsEnum.CALL_END);
+      socket.off(WebRTCEvents.RTC_OFFER);
+      socket.off(WebRTCEvents.RTC_ANSWER);
+      socket.off(WebRTCEvents.RTC_ICE_CANDIDATE);
+    };
+  }, [socket, callState]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      cleanupCall();
+    };
+  }, []);
 
   // ----------------- UI -----------------
   return (
@@ -792,18 +423,18 @@ export default function ChatHeader({
 
         <div className="flex items-center gap-3">
           <button
-            onClick={() => handleInitiateCall('AUDIO')}
+            onClick={() => handleInitiateCall(CallType.AUDIO)}
             className="text-gray-300 hover:text-white transition"
-            disabled={callSession.status !== 'IDLE'}
             title="Start audio call"
+            disabled={callState.status !== null}
           >
             <Phone size={20} />
           </button>
           <button
-            onClick={() => handleInitiateCall('VIDEO')}
+            onClick={() => handleInitiateCall(CallType.VIDEO)}
             className="text-gray-300 hover:text-white transition"
-            disabled={callSession.status !== 'IDLE'}
             title="Start video call"
+            disabled={callState.status !== null}
           >
             <Video size={20} />
           </button>
@@ -811,79 +442,165 @@ export default function ChatHeader({
       </div>
 
       {/* Outgoing call modal */}
-      {callSession.status === 'RINGING' && callSession.isInitiator && (
-        <OutgoingCallModal
-          visible={true}
-          callType={callSession.type}
-          onEnd={handleEnd}
-        />
+      {callState.isOutgoing && callState.status === CallStatus.INITIATED && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-[#1a1a1f] rounded-lg p-8 max-w-md w-full mx-4">
+            <div className="flex flex-col items-center gap-4">
+              <Image
+                src={
+                  participant?.avatarUrl ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(participant?.name || 'User')}`
+                }
+                alt={participant?.name || 'User'}
+                width={80}
+                height={80}
+                className="rounded-full"
+              />
+              <h3 className="text-xl font-semibold text-white">
+                Calling {participant?.name || 'User'}...
+              </h3>
+              <p className="text-gray-400">
+                {callState.type === CallType.VIDEO ? 'Video' : 'Audio'} call
+              </p>
+              <div className="flex items-center gap-2 mt-4">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+                <span className="text-gray-400 text-sm">Ringing...</span>
+              </div>
+              <button
+                onClick={handleEnd}
+                className="mt-6 bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full flex items-center gap-2 transition"
+              >
+                <PhoneOff size={20} />
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Incoming Call Modal */}
-      {incomingCall.visible &&
-        callSession.status === 'RINGING' &&
-        !callSession.isInitiator && (
-          <IncomingCallModal
-            visible={incomingCall.visible}
-            callerId={incomingCall.callerId}
-            callType={incomingCall.callType}
-            onAccept={handleAccept}
-            onReject={handleReject}
-          />
-        )}
-
-      {/* In-call UI */}
-      {callSession.status === 'ONGOING' && (
-        <div className="fixed bottom-4 right-4 z-50 bg-[#0b0b0b]/95 p-4 rounded-lg shadow-2xl text-white w-[380px]">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center animate-pulse">
-                {callSession.type === CallType.VIDEO ? '📹' : '🎤'}
-              </div>
-              <div>
-                <div className="font-semibold">{callSession.type} Call</div>
-                <div className="text-xs text-gray-400">
-                  {participant?.name || 'Remote User'}
-                </div>
+      {callState.isIncoming && callState.status === CallStatus.INITIATED && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-[#1a1a1f] rounded-lg p-8 max-w-md w-full mx-4">
+            <div className="flex flex-col items-center gap-4">
+              <Image
+                src={
+                  participant?.avatarUrl ||
+                  `https://ui-avatars.com/api/?name=${encodeURIComponent(participant?.name || 'User')}`
+                }
+                alt={participant?.name || 'User'}
+                width={80}
+                height={80}
+                className="rounded-full"
+              />
+              <h3 className="text-xl font-semibold text-white">
+                {participant?.name || 'User'} is calling...
+              </h3>
+              <p className="text-gray-400">
+                Incoming {callState.type === CallType.VIDEO ? 'video' : 'audio'}{' '}
+                call
+              </p>
+              <div className="flex gap-4 mt-6">
+                <button
+                  onClick={handleReject}
+                  className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full flex items-center gap-2 transition"
+                >
+                  <PhoneOff size={20} />
+                  Decline
+                </button>
+                <button
+                  onClick={handleAccept}
+                  className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-full flex items-center gap-2 transition"
+                >
+                  <Phone size={20} />
+                  Accept
+                </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* In-call UI Modal */}
+      {callState.status === CallStatus.ONGOING && (
+        <div className="fixed inset-0 bg-black z-50 flex flex-col">
+          {/* Video container */}
+          <div className="flex-1 relative">
+            {/* Remote video */}
+            <video
+              ref={remoteVideoRef}
+              autoPlay
+              playsInline
+              className="w-full h-full object-cover"
+            />
+
+            {/* Local video (Picture-in-Picture) */}
+            {callState.type === CallType.VIDEO && (
+              <div className="absolute top-4 right-4 w-48 h-36 bg-gray-900 rounded-lg overflow-hidden shadow-lg">
+                <video
+                  ref={localVideoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Call info overlay */}
+            <div className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-white font-medium">
+                  {participant?.name || 'User'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Controls */}
+          <div className="bg-[#1a1a1f] p-6 flex items-center justify-center gap-4">
+            <button
+              onClick={toggleMute}
+              className={`p-4 rounded-full transition ${
+                isMuted
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-gray-700 hover:bg-gray-600'
+              }`}
+              title={isMuted ? 'Unmute' : 'Mute'}
+            >
+              {isMuted ? (
+                <MicOff size={24} className="text-white" />
+              ) : (
+                <Mic size={24} className="text-white" />
+              )}
+            </button>
+
+            {callState.type === CallType.VIDEO && (
+              <button
+                onClick={toggleVideo}
+                className={`p-4 rounded-full transition ${
+                  !isVideoEnabled
+                    ? 'bg-red-500 hover:bg-red-600'
+                    : 'bg-gray-700 hover:bg-gray-600'
+                }`}
+                title={isVideoEnabled ? 'Turn off camera' : 'Turn on camera'}
+              >
+                {isVideoEnabled ? (
+                  <Video size={24} className="text-white" />
+                ) : (
+                  <VideoOff size={24} className="text-white" />
+                )}
+              </button>
+            )}
 
             <button
               onClick={handleEnd}
-              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition"
+              className="p-4 rounded-full bg-red-500 hover:bg-red-600 transition"
+              title="End call"
             >
-              <X size={16} /> End
+              <PhoneOff size={24} className="text-white" />
             </button>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="relative w-full h-32 bg-gray-900 rounded-lg overflow-hidden">
-              <video
-                ref={localVideoRef}
-                autoPlay
-                playsInline
-                muted
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-2 left-2 bg-black/70 px-2 py-1 rounded text-xs">
-                You
-              </div>
-            </div>
-            <div className="relative w-full h-32 bg-gray-900 rounded-lg overflow-hidden">
-              <video
-                ref={remoteVideoRef}
-                autoPlay
-                playsInline
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-2 left-2 bg-black/70 px-2 py-1 rounded text-xs">
-                {participant?.name || 'Remote'}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-2 text-xs text-gray-500 text-center">
-            Call ID: {callSession.callId?.slice(0, 8)}...
           </div>
         </div>
       )}
