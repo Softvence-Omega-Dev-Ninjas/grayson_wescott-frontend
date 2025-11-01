@@ -30,6 +30,7 @@ import {
   RTCOfferPayload,
   WebRTCEvents,
 } from '@/types/call.types';
+import { toast } from 'sonner';
 
 type CallState = {
   callId: string | null;
@@ -84,6 +85,7 @@ export default function ChatHeader({
   const handleInitiateCall = (type: CallType) => {
     if (!currentConversationId) {
       console.error('No active conversation');
+      toast.error('Only Trainer can call');
       return;
     }
 
