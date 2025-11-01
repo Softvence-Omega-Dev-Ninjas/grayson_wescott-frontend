@@ -3,15 +3,7 @@
 
 import { useSocket } from '@/hooks/useSocket';
 import { Sender } from '@/types/chat.types';
-import {
-  ArrowLeft,
-  Mic,
-  MicOff,
-  Phone,
-  PhoneOff,
-  Video,
-  VideoOff,
-} from 'lucide-react';
+import { Mic, MicOff, Phone, PhoneOff, Video, VideoOff } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
@@ -41,13 +33,7 @@ type CallState = {
   remoteUserId: string | null;
 };
 
-export default function ChatHeader({
-  onBack,
-  participant,
-}: {
-  onBack: () => void;
-  participant?: Sender;
-}) {
+export default function ChatHeader({ participant }: { participant?: Sender }) {
   const { socket, currentUser, currentConversationId } = useSocket();
 
   // Call state
@@ -401,10 +387,6 @@ export default function ChatHeader({
     <>
       <div className="bg-[#151519] flex items-center justify-between p-4 border-b border-gray-700 rounded-t-lg">
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="lg:hidden text-white">
-            <ArrowLeft size={20} />
-          </button>
-
           <Image
             src={
               participant?.avatarUrl ||
