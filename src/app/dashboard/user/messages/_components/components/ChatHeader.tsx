@@ -395,7 +395,11 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
             alt={participant?.name || 'Your Trainer'}
             width={44}
             height={44}
-            className="rounded-full object-cover"
+            className={
+              participant
+                ? 'pl-10 rounded-full object-cover'
+                : 'rounded-full object-cover'
+            }
           />
 
           <div>

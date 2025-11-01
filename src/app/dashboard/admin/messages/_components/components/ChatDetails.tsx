@@ -191,9 +191,7 @@ export default function ChatDetails() {
 
   return (
     <div className="h-full flex flex-col bg-black text-white rounded-lg">
-      <div className={participant ? 'pl-10' : ''}>
-        <ChatHeader participant={participant as Sender} />
-      </div>
+      <ChatHeader participant={participant as Sender} />
       <ChatMessages
         chat={items}
         scrollContainerRef={
