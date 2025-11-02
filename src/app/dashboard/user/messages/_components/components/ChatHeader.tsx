@@ -20,7 +20,6 @@ import {
   RTCAnswerPayload,
   RTCIceCandidatePayload,
   RTCOfferPayload,
-  WebRTCEvents,
 } from '@/types/call.types';
 import { toast } from 'sonner';
 
@@ -168,7 +167,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
     // Handle ICE candidates
     pc.onicecandidate = (event) => {
       if (event.candidate && callState.callId) {
-        socket.emit(WebRTCEvents.SEND_ICE_CANDIDATE, {
+        socket.emit(EventsEnum.SEND_ICE_CANDIDATE, {
           callId: callState.callId,
           candidate: JSON.stringify(event.candidate),
           sdpMid: event.candidate.sdpMid || '',
@@ -194,7 +193,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
       const offer = await pc.createOffer();
       await pc.setLocalDescription(offer);
 
-      socket.emit(WebRTCEvents.SEND_OFFER, {
+      socket.emit(EventsEnum.SEND_OFFER, {
         callId: callState.callId,
         sdp: offer.sdp || '',
         to: participant?.id || '',
@@ -305,7 +304,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
 
     // WebRTC: Receive offer
     socket.on(
-      WebRTCEvents.RTC_OFFER,
+      EventsEnum.RTC_OFFER,
       async (response: ApiResponse<RTCOfferPayload>) => {
         console.log('Received RTC offer:', response);
         const { sdp, callId } = response.data;
@@ -322,7 +321,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
         const answer = await pc.createAnswer();
         await pc.setLocalDescription(answer);
 
-        socket.emit(WebRTCEvents.SEND_ANSWER, {
+        socket.emit(EventsEnum.SEND_ANSWER, {
           callId,
           sdp: answer.sdp || '',
           to: callState.remoteUserId || participant?.id || '',
@@ -332,7 +331,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
 
     // WebRTC: Receive answer
     socket.on(
-      WebRTCEvents.RTC_ANSWER,
+      EventsEnum.RTC_ANSWER,
       async (response: ApiResponse<RTCAnswerPayload>) => {
         console.log('Received RTC answer:', response);
         const { sdp } = response.data;
@@ -347,7 +346,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
 
     // WebRTC: Receive ICE candidate
     socket.on(
-      WebRTCEvents.RTC_ICE_CANDIDATE,
+      EventsEnum.RTC_ICE_CANDIDATE,
       async (response: ApiResponse<RTCIceCandidatePayload>) => {
         console.log('Received ICE candidate:', response);
         const { candidate } = response.data;
@@ -369,9 +368,9 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
       socket.off(EventsEnum.CALL_ACCEPT);
       socket.off(EventsEnum.CALL_MISSED);
       socket.off(EventsEnum.CALL_END);
-      socket.off(WebRTCEvents.RTC_OFFER);
-      socket.off(WebRTCEvents.RTC_ANSWER);
-      socket.off(WebRTCEvents.RTC_ICE_CANDIDATE);
+      socket.off(EventsEnum.RTC_OFFER);
+      socket.off(EventsEnum.RTC_ANSWER);
+      socket.off(EventsEnum.RTC_ICE_CANDIDATE);
     };
   }, [socket, callState]);
 
@@ -397,7 +396,7 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
             height={44}
             className={
               participant
-                ? 'pl-10 rounded-full object-cover'
+                ? 'ml-10 rounded-full object-cover'
                 : 'rounded-full object-cover'
             }
           />
