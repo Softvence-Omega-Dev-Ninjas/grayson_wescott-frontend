@@ -191,17 +191,7 @@ export default function ChatDetails() {
 
   return (
     <div className="h-full flex flex-col bg-black text-white rounded-lg">
-      <ChatHeader
-        onBack={() => {
-          setItems([]);
-          setPage(1);
-          setTotalPage(1);
-          setLoading(true);
-          setLoadingMore(false);
-          prevScrollHeightRef.current = 0;
-        }}
-        participant={participant as Sender}
-      />
+      <ChatHeader participant={participant as Sender} />
       <ChatMessages
         chat={items}
         scrollContainerRef={

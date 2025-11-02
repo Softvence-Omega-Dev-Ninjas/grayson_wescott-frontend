@@ -223,7 +223,7 @@ export default function ChatMicInput({
           className="cursor-pointer bg-[#2A2D33] p-2 rounded-full"
           title="Record voice"
         >
-          <Mic size={26} />
+          <Mic size={10} />
         </button>
       </div>
 

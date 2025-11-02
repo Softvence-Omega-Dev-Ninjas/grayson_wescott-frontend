@@ -3,7 +3,7 @@
 # ---------------------------------------
 COMPOSE_FILE := compose.yaml
 SERVICE := frontend
-IMAGE := sajibsv/grayson_frontend:latest
+IMAGE := softvence/grayson_frontend:latest
 
 .PHONY: all build rebuild push up down restart deploy logs
 

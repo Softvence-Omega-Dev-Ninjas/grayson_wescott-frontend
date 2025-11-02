@@ -155,8 +155,7 @@ export default function ChatLayout() {
     <div className="h-[calc(100vh-120px-60px)] flex gap-5 w-full bg-black text-white p-2">
       <div className="flex-1 min-w-0">
         <div className="h-[calc(100vh-120px-60px)] flex flex-col bg-black text-white rounded-lg">
-          {/* TODO : add back button for mobile */}
-          <ChatHeader onBack={() => fetchPage(1)} />
+          <ChatHeader />
           <ChatMessages
             chat={items}
             scrollContainerRef={

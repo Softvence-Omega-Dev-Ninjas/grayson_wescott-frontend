@@ -105,14 +105,14 @@ export default function ChatInput({
   };
 
   return (
-    <div className="p-4 border-t border-gray-700 flex items-center gap-2">
+    <div className="pt-1 md:p-4 border-t border-gray-700 flex items-center gap-1">
       {/* File/Image Picker */}
       <button
         className="cursor-pointer relative"
         onClick={() => fileInputRef.current?.click()}
         disabled={uploadingFile || isSending}
       >
-        <Plus className="bg-[#2A2D33] p-2 rounded-full" size={36} />
+        <Plus className="bg-[#2A2D33] p-2 rounded-full" size={30} />
       </button>
 
       <input
@@ -131,7 +131,7 @@ export default function ChatInput({
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
         disabled={isSending || uploadingFile}
-        className="flex-1 px-3 py-2 rounded-lg bg-[#2A2D33] text-white outline-none"
+        className="md:flex-1 p-1 text-xm rounded-lg bg-[#2A2D33] text-white outline-none"
       />
 
       {/* Mic Input */}
@@ -146,9 +146,9 @@ export default function ChatInput({
         type="button"
         onClick={handleSendMessage}
         disabled={isSending || uploadingFile}
-        className="px-3 py-2 bg-[#2A2D33] rounded-md text-sm cursor-pointer flex items-center gap-1"
+        className="p-2 bg-[#2A2D33] rounded-md text-sm cursor-pointer flex items-center gap-1"
       >
-        {isSending || uploadingFile ? 'Sending…' : <Send size={24} />}
+        {isSending || uploadingFile ? 'Sending…' : <Send size={10} />}
       </button>
     </div>
   );

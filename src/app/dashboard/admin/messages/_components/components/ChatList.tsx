@@ -9,7 +9,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 const PAGE_LIMIT = 10;
 
-export default function ChatList() {
+export default function ChatList({ onSelect }: { onSelect?: () => void }) {
   const {
     socket,
     currentUser,
@@ -184,7 +184,10 @@ export default function ChatList() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-black text-white overflow-y-auto">
+    <div
+      onClick={() => onSelect?.()}
+      className="flex flex-col h-full bg-black text-white overflow-y-auto"
+    >
       {/* Search */}
       <div className="p-4">
         <input
