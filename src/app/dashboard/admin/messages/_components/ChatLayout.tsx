@@ -1,6 +1,11 @@
 'use client';
 
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 import { useSocket } from '@/hooks/useSocket';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
@@ -16,6 +21,7 @@ export default function ChatLayout() {
       {/* mobile trigger button */}
       <div className="lg:hidden absolute left-4 top-4 z-50">
         <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTitle>Chats</SheetTitle>
           <SheetTrigger asChild>
             <button className="p-2 border rounded-lg">
               <Menu />

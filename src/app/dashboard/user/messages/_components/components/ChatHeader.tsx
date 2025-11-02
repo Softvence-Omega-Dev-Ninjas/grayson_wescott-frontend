@@ -79,7 +79,6 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
       type,
     };
 
-    console.log('Initiating call:', dto);
     socket.emit(EventsEnum.CALL_INITIATE, dto, (response: any) => {
       console.log('Call Id for init', response);
 
@@ -153,51 +152,87 @@ export default function ChatHeader({ participant }: { participant?: Sender }) {
 
     // Add local tracks
     localStreamRef.current?.getTracks().forEach((track) => {
+      console.log(
+        `[LOCAL] Adding track -> kind: ${track.kind}, id: ${track.id}`,
+      );
       pc.addTrack(track, localStreamRef.current!);
+
+      track.onended = () => {
+        console.log(
+          `[LOCAL] Track ended -> kind: ${track.kind}, id: ${track.id}`,
+        );
+      };
     });
 
-    // Handle remote stream
+    // Handle remote tracks
     pc.ontrack = (event) => {
-      if (remoteVideoRef.current && event.streams[0]) {
-        remoteVideoRef.current.srcObject = event.streams[0];
-        remoteStreamRef.current = event.streams[0];
+      const remoteStream = event.streams[0];
+      console.log(
+        `[REMOTE] Track received -> kind: ${event.track.kind}, id: ${event.track.id}`,
+      );
+      console.log('[REMOTE] Full stream object:', remoteStream);
+
+      if (remoteVideoRef.current && remoteStream) {
+        remoteVideoRef.current.srcObject = remoteStream;
+        remoteStreamRef.current = remoteStream;
       }
+
+      event.streams[0].getTracks().forEach((track) => {
+        track.onunmute = () => {
+          console.log(
+            `[REMOTE] Track unmuted -> kind: ${track.kind}, id: ${track.id}`,
+          );
+        };
+        track.onended = () => {
+          console.log(
+            `[REMOTE] Track ended -> kind: ${track.kind}, id: ${track.id}`,
+          );
+        };
+      });
     };
 
-    // Handle ICE candidates
+    // ICE candidate handling
     pc.onicecandidate = (event) => {
-      if (event.candidate && callState.callId) {
-        socket.emit(EventsEnum.SEND_ICE_CANDIDATE, {
-          callId: callState.callId,
-          candidate: JSON.stringify(event.candidate),
-          sdpMid: event.candidate.sdpMid || '',
-          sdpMLineIndex: event.candidate.sdpMLineIndex || 0,
-          to: callState.remoteUserId || participant?.id || '',
-        });
+      console.log('[ICE] Candidate event:', event);
+      if (event.candidate) {
+        console.log('[ICE] Sending candidate:', event.candidate);
+        if (callState.callId) {
+          socket.emit(EventsEnum.SEND_ICE_CANDIDATE, {
+            callId: callState.callId,
+            candidate: JSON.stringify(event.candidate),
+            sdpMid: event.candidate.sdpMid || '',
+            sdpMLineIndex: event.candidate.sdpMLineIndex || 0,
+            to: callState.remoteUserId || participant?.id || '',
+          });
+        }
       }
     };
 
     // Connection state monitoring
     pc.onconnectionstatechange = () => {
-      console.log('Connection state:', pc.connectionState);
+      console.log('[STATE] Connection state changed:', pc.connectionState);
       if (
         pc.connectionState === 'disconnected' ||
         pc.connectionState === 'failed'
       ) {
+        console.warn('[STATE] Connection failed/disconnected');
         cleanupCall();
       }
     };
 
-    // If we're the caller (outgoing), create and send offer
+    // Outgoing call: create and send offer
     if (callState.isOutgoing) {
+      console.log('[CALL] Creating offer...');
       const offer = await pc.createOffer();
       await pc.setLocalDescription(offer);
+      console.log('[CALL] Local description set with offer:', offer);
 
       socket.emit(EventsEnum.SEND_OFFER, {
         callId: callState.callId,
         sdp: offer.sdp || '',
         to: participant?.id || '',
       });
+      console.log('[CALL] Offer sent to remote peer');
     }
   };
 
